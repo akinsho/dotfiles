@@ -90,10 +90,10 @@ end
 
 --- Autosize quickfix to match its minimum content
 --- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
----@param minheight number
----@param maxheight number
-function as.adjust_split_height(minheight, maxheight)
-  api.nvim_win_set_height(0, math.max(math.min(fn.line('$'), maxheight), minheight))
+---@param min_height number
+---@param max_height number
+function as.adjust_split_height(min_height, max_height)
+  api.nvim_win_set_height(0, math.max(math.min(fn.line('$'), max_height), min_height))
 end
 
 ---------------------------------------------------------------------------------

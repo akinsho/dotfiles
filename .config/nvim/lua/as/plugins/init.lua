@@ -208,13 +208,14 @@ return {
   },
   {
     'cbochs/portal.nvim',
+    version = '*',
     cmd = { 'Portal' },
+    dependencies = { 'cbochs/grapple.nvim' },
     keys = {
       { '<leader>jb', '<cmd>Portal jumplist backward<cr>', desc = 'jump: backwards' },
       { '<leader>jf', '<cmd>Portal jumplist forward<cr>', desc = 'jump: forwards' },
       { '<leader>jg', '<cmd>Portal grapple<cr>', desc = 'jump: grapple' },
     },
-    dependencies = { 'cbochs/grapple.nvim' },
     opts = {
       filter = function(v)
         if v.buffer == api.nvim_get_current_buf() then return false end
