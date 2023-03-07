@@ -106,6 +106,7 @@ local function general_overrides()
     { ['@error'] = { foreground = 'fg', background = 'NONE' } },
     { ['@text.diff.add'] = { link = 'DiffAdd' } },
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
+    { ['@text.title.markdown'] = { underdouble = true } },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
