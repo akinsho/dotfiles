@@ -9,7 +9,6 @@ return {
       -- NOTE: org mode's grammar must be setup before nvim-treesitter is configured see: https://github.com/nvim-orgmode/orgmode/issues/481
       local ok, orgmode = pcall(require, 'orgmode')
       if ok then orgmode.setup_ts_grammar() end
-      local parsers = require('nvim-treesitter.parsers')
       require('nvim-treesitter.install').compilers = { 'gcc-12' }
       require('nvim-treesitter.configs').setup({
         -- stylua: ignore
@@ -60,15 +59,9 @@ return {
         },
         rainbow = {
           enable = true, -- TODO: contribute dart support to ts-rainbow
-          disable = vim.tbl_filter(function(p)
-            local disable = true
-            for _, lang in pairs({ 'dart' }) do
-              if p == lang then disable = false end
-            end
-            return disable
-          end, parsers.available_parsers()),
+          disable = false,
           query = 'rainbow-parens',
-          strategy = { require('ts-rainbow.strategy.local') },
+          strategy = { require('ts-rainbow.strategy.global') },
         },
         autopairs = { enable = true },
         context_commentstring = { enable = true },
