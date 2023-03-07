@@ -528,24 +528,6 @@ return {
   -- Syntax {{{1
   --------------------------------------------------------------------------------
   {
-    'm-demare/hlargs.nvim',
-    event = 'VeryLazy',
-    config = function()
-      highlight.plugin('hlargs', {
-        theme = {
-          ['*'] = { { Hlargs = { italic = true, foreground = '#A5D6FF' } } },
-          ['horizon'] = { { Hlargs = { italic = true, foreground = { from = 'Normal' } } } },
-        },
-      })
-      require('hlargs').setup({
-        excluded_argnames = {
-          declarations = { 'use', '_' },
-          usages = { go = { '_' }, lua = { 'self', 'use', '_' } },
-        },
-      })
-    end,
-  },
-  {
     'psliwka/vim-dirtytalk',
     lazy = false,
     build = ':DirtytalkUpdate',

@@ -33,7 +33,6 @@
   "grapple.nvim": { "branch": "main", "commit": "17a359c526e81e251e5de82d6c4d92ed95869add" },
   "headlines.nvim": { "branch": "master", "commit": "6496b6229ce708253a906daed07067c1d32a427b" },
   "helpful.vim": { "branch": "master", "commit": "60cf6b0d4f20d6a351e2662f589e8ce545779893" },
-  "hlargs.nvim": { "branch": "main", "commit": "a7ad6ed8d6e27ea4dd13fda63fa732e9196ba4ea" },
   "horizon.nvim": { "branch": "master", "commit": "f7c758f0ebd47a72dd2832a8744340e72dad62f8" },
   "hydra.nvim": { "branch": "master", "commit": "3ced42c0b6a6c85583ff0f221635a7f4c1ab0dd0" },
   "inc-rename.nvim": { "branch": "main", "commit": "21c23c379342a731a0c90f226601ec0434627b26" },
