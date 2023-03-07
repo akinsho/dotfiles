@@ -5,7 +5,7 @@ local function sync(path) return fmt('%s/notes/%s', fn.expand('$SYNC_DIR'), path
 return {
   {
     'vhyrro/neorg',
-    ft = 'norg',
+    event = 'CursorHold',
     build = ':Neorg sync-parsers',
     dependencies = { 'vhyrro/neorg-telescope' },
     opts = {
