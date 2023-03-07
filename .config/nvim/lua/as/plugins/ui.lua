@@ -95,7 +95,7 @@ return {
       local notify = require('notify')
 
       notify.setup({
-        timeout = 3000,
+        timeout = 5000,
         stages = 'fade_in_slide_out',
         top_down = false,
         background_colour = 'NormalFloat',
@@ -106,8 +106,8 @@ return {
           api.nvim_win_set_config(win, { border = as.ui.current.border })
         end,
         render = function(...)
-          local notif = select(2, ...)
-          local style = as.empty(notif.title[1]) and 'minimal' or 'default'
+          local notification = select(2, ...)
+          local style = as.empty(notification.title[1]) and 'minimal' or 'default'
           require('notify.render')[style](...)
         end,
       })
