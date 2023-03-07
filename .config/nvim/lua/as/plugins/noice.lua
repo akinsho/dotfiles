@@ -1,3 +1,4 @@
+local fn = vim.fn
 local border, highlight, L = as.ui.current.border, as.highlight, vim.log.levels
 
 return {
@@ -62,6 +63,7 @@ return {
         win_options = { winhighlight = { Normal = 'NormalFloat', FloatBorder = 'FloatBorder' } },
       },
     },
+    redirect = { view = 'popup', filter = { event = 'msg_show' } },
     routes = {
       {
         opts = { skip = true },
@@ -83,11 +85,7 @@ return {
       },
       {
         view = 'mini',
-        filter = {
-          any = {
-            { event = 'msg_show', find = '^E486:' }, -- minimise pattern not found messages
-          },
-        },
+        filter = { any = { { event = 'msg_show', find = '^E486:' } } }, -- minimise pattern not found messages
       },
       {
         view = 'notify',
@@ -164,5 +162,9 @@ return {
     map({ 'n', 'i', 's' }, '<c-b>', function()
       if not require('noice.lsp').scroll(-4) then return '<c-b>' end
     end, { silent = true, expr = true })
+
+    map('c', '<M-CR>', function() require('noice').redirect(fn.getcmdline()) end, {
+      desc = 'redirect Cmdline',
+    })
   end,
 }
