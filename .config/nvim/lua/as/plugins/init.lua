@@ -217,8 +217,8 @@ return {
     dependencies = { 'cbochs/grapple.nvim' },
     opts = {
       filter = function(v)
-        local file_path = api.nvim_buf_get_name(v.buffer)
-        return vim.startswith(file_path, fn.getcwd())
+        if v.buffer == api.nvim_get_current_buf() then return false end
+        return vim.startswith(api.nvim_buf_get_name(v.buffer), fn.getcwd())
       end,
       window_options = {
         -- TODO: this grapple/portal.nvim should allow customising the border highlights
