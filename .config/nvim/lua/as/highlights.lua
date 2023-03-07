@@ -21,6 +21,7 @@ as.highlight = { win_hl = {} }
 ---@field undercurl boolean
 ---@field underline boolean
 ---@field underdot boolean
+---@field clear boolean
 
 ---@class NvimHighlightData
 ---@field foreground string
@@ -110,17 +111,21 @@ function as.highlight.set(namespace, name, opts)
     namespace = { namespace, 'number' },
   })
 
-  local hl = get_highlight(opts.inherit or name)
-  local errs = {}
+  local clear = opts.clear
+  if clear then opts.clear = nil end
 
-  for attr, value in pairs(opts) do
-    if type(value) == 'table' and value.from then
-      local new_attr, err = as.highlight.get(value.from, value.attr or attr)
-      if value.alter then new_attr = as.highlight.alter_color(new_attr, value.alter) end
-      if err then table.insert(errs, err) end
-      hl[attr] = new_attr
-    elseif attr ~= 'inherit' then
-      hl[attr] = value
+  local errs, hl = {}, {}
+  if not clear then
+    hl = get_highlight(opts.inherit or name)
+    for attr, value in pairs(opts) do
+      if type(value) == 'table' and value.from then
+        local new_attr, err = as.highlight.get(value.from, value.attr or attr)
+        if value.alter then new_attr = as.highlight.alter_color(new_attr, value.alter) end
+        if err then table.insert(errs, err) end
+        hl[attr] = new_attr
+      elseif attr ~= 'inherit' then
+        hl[attr] = value
+      end
     end
   end
 
@@ -138,11 +143,6 @@ function as.highlight.set_winhl(name, win_id, hls)
   local namespace = api.nvim_create_namespace(name)
   as.highlight.all(hls, namespace)
   api.nvim_win_set_hl_ns(win_id, namespace)
-end
-
-function as.highlight.clear(name)
-  assert(name, 'name is required to clear a highlight')
-  api.nvim_set_hl(0, name, {})
 end
 
 ---Apply a list of highlights
