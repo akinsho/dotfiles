@@ -80,7 +80,24 @@ local function general_overrides()
     ------------------------------------------------------------------------------//
     --  Semantic tokens
     ------------------------------------------------------------------------------//
-    { ['@global'] = { bold = true, italic = true, inherit = '@namespace' } },
+    { ['@lsp.type.namespace'] = { link = '@namespace' } },
+    { ['@lsp.type.type'] = { link = '@type' } },
+    { ['@lsp.type.class'] = { link = '@type' } },
+    { ['@lsp.type.enum'] = { link = '@type' } },
+    { ['@lsp.type.interface'] = { link = '@type' } },
+    { ['@lsp.type.struct'] = { link = '@structure' } },
+    { ['@lsp.type.typeParameter'] = { link = 'TypeDef' } },
+    { ['@lsp.type.parameter'] = { link = '@parameter' } },
+    { ['@lsp.type.variable'] = { link = '@variable' } },
+    { ['@lsp.type.property'] = { link = '@property' } },
+    { ['@lsp.type.enumMember'] = { link = '@constant' } },
+    { ['@lsp.type.function'] = { link = '@function' } },
+    { ['@lsp.type.method'] = { link = '@method' } },
+    { ['@lsp.type.macro'] = { link = '@macro' } },
+    { ['@lsp.type.decorator'] = { link = '@function' } },
+    { ['@lsp.typemod.variable.readonly'] = { link = '@constant' } },
+    { ['@lsp.mod.deprecated'] = { strikethrough = true } },
+    { ['@lsp.mod.global'] = { bold = true, italic = true, inherit = '@namespace' } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
