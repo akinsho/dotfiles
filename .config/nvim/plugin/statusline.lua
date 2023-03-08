@@ -290,9 +290,10 @@ local function filename(ctx)
   if as.empty(parent) then return { fname = fname } end
 
   local dir = path_sep(table.concat(parts, sep))
-  if api.nvim_strwidth(dir) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
-
   local new_dir, env = dir_env(dir)
+  local segment = not as.empty(env) and env .. new_dir or dir
+  if api.nvim_strwidth(segment) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
+
   return { env = env, dir = new_dir, parent = path_sep(parent), fname = fname }
 end
 
