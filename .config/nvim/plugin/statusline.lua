@@ -378,7 +378,8 @@ end
 -----------------------------------------------------------------------------//
 
 local function search_count()
-  local result = fn.searchcount({ recompute = 0 })
+  local ok, result = pcall(fn.searchcount, { recompute = 0 })
+  if not ok then return '' end
   if vim.tbl_isempty(result) then return '' end
   if result.incomplete == 1 then -- timed out
     return ' ?/?? '
