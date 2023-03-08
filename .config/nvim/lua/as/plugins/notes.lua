@@ -29,8 +29,6 @@ return {
           config = {
             workspaces = {
               notes = sync('neorg/notes/'),
-              tasks = sync('neorg/tasks/'),
-              work = sync('neorg/work/'),
               dotfiles = fn.expand('$DOTFILES/neorg/'),
             },
           },
