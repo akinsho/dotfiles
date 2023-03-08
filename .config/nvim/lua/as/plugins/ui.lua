@@ -28,12 +28,8 @@ return {
     lazy = false,
     init = function()
       highlight.plugin('indentline', {
-        theme = {
-          horizon = {
-            { IndentBlanklineContextChar = { fg = { from = 'Directory' } } },
-            { IndentBlanklineContextStart = { sp = { from = 'Directory', attr = 'fg' } } },
-          },
-        },
+        { IndentBlanklineContextChar = { fg = { from = 'Directory' } } },
+        { IndentBlanklineContextStart = { sp = { from = 'Directory', attr = 'fg' } } },
       })
     end,
     opts = {
