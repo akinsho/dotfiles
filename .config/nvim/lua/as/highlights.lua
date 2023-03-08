@@ -130,7 +130,9 @@ function as.highlight.set(namespace, name, opts)
   end
 
   if not pcall(api.nvim_set_hl, namespace, name, hl) then
-    table.insert(errs, { msg = fmt('failed to set highlight %s with values %s', name, hl) })
+    table.insert(errs, {
+      msg = fmt('failed to set highlight %s with values %s', name, vim.inspect(hl)),
+    })
   end
   if #errs > 0 then return errs end
 end
