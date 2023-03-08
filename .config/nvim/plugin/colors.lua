@@ -114,14 +114,14 @@ local function general_overrides()
     { LspCodeLensSeparator = { bold = false, italic = false } },
     {
       LspReferenceText = {
-        underline = true,
+        underdotted = true,
         background = 'NONE',
         special = { from = 'Comment', attr = 'fg' },
       },
     },
     {
       LspReferenceRead = {
-        underline = true,
+        underdotted = true,
         background = 'NONE',
         special = { from = 'Comment', attr = 'fg' },
       },
