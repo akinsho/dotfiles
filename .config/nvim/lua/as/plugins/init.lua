@@ -116,7 +116,7 @@ return {
   },
   {
     'smjonas/inc-rename.nvim',
-    opts = { hl_group = 'Visual' },
+    opts = { hl_group = 'Visual', preview_empty_name = true },
     keys = {
       {
         '<leader>rn',
