@@ -54,14 +54,16 @@ return {
         if ls.choice_active() then ls.change_choice(1) end
       end)
 
-      map({ 's', 'i' }, '<c-j>', function()
-        if ls.expand_or_jumpable() then ls.expand_or_jump() end
-      end)
+      map({ 's', 'i' }, '<Tab>', function()
+        if not ls.expand_or_jumpable() then return '<Tab>' end
+        ls.expand_or_jump()
+      end, { expr = true })
 
       -- <C-K> is easier to hit but swallows the digraph key
-      map({ 's', 'i' }, '<c-b>', function()
-        if ls.jumpable(-1) then ls.jump(-1) end
-      end)
+      map({ 's', 'i' }, '<S-Tab>', function()
+        if not ls.jumpable(-1) then return '<S-Tab>' end
+        ls.jump(-1)
+      end, { expr = true })
 
       require('luasnip.loaders.from_lua').lazy_load()
       -- NOTE: the loader is called twice so it picks up the defaults first then my custom textmate

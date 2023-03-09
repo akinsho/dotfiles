@@ -48,26 +48,6 @@ return {
         return accum
       end, kind_hls, menu_hls))
 
-      local function tab(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_locally_jumpable() then
-          luasnip.expand_or_jump()
-        else
-          fallback()
-        end
-      end
-
-      local function shift_tab(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end
-
       local cmp_window = {
         border = border,
         winhighlight = table.concat({
@@ -89,18 +69,27 @@ return {
         snippet = {
           expand = function(args) require('luasnip').lsp_expand(args.body) end,
         },
-        mapping = {
+        mapping = cmp.mapping.preset.insert({
           ['<C-]>'] = cmp.mapping(
             function(_) api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
           ),
-          ['<Tab>'] = cmp.mapping(tab, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(shift_tab, { 'i', 's' }),
-          ['<C-q>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
           ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i' }),
           ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
           ['<C-space>'] = cmp.mapping.complete(),
-          ['<CR>'] = cmp.mapping.confirm({ select = false }), -- If nothing is selected don't complete
-        },
+          ['<CR>'] = cmp.mapping.confirm({ select = false }),
+          ['<TAB>'] = cmp.mapping(function(fallback) -- make TAB behave like Android Studio
+            if not cmp.visible() then return fallback() end
+            if not cmp.get_selected_entry() then
+              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+            else
+              if luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+              else
+                cmp.confirm()
+              end
+            end
+          end, { 'i', 's' }),
+        }),
         formatting = {
           deprecated = true,
           fields = { 'abbr', 'kind', 'menu' },
