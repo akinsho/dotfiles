@@ -312,9 +312,11 @@ nmap(
 -----------------------------------------------------------------------------//
 -- Open Common files
 -----------------------------------------------------------------------------//
-nnoremap('<leader>ez', '<Cmd>edit $ZDOTDIR/.zshrc<CR>', { desc = 'open zshrc' })
-nnoremap('<leader>et', '<Cmd>edit ~/.tmux.conf<CR>', { desc = 'open tmux.conf' })
 nnoremap('<leader>ev', [[<Cmd>edit $MYVIMRC<CR>]], { desc = 'open $VIMRC' })
+nnoremap('<leader>ez', '<Cmd>edit $ZDOTDIR/.zshrc<CR>', { desc = 'open zshrc' })
+nnoremap('<leader>et', '<Cmd>edit $XDG_CONFIG_HOME/tmux/tmux.conf<CR>', {
+  desc = 'open tmux.conf',
+})
 nnoremap('<leader>ep', fmt('<Cmd>edit %s/lua/as/plugins/init.lua<CR>', fn.stdpath('config')), {
   desc = 'open plugins file',
 })
