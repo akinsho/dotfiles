@@ -6,6 +6,7 @@ tap "homebrew/bundle"
 tap "homebrew/services"
 tap "jesseduffield/lazygit"
 tap "neovim/neovim"
+tap "romkatv/powerlevel10k"
 # General-purpose data compression with high compression ratio
 brew "xz"
 # Color management engine supporting ICC profiles
@@ -32,6 +33,8 @@ brew "llvm"
 brew "ccls"
 # Cross-platform make
 brew "cmake"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
 # OpenType text shaping engine
 brew "harfbuzz"
 # LLVM bytecode to JavaScript compiler
@@ -40,14 +43,20 @@ brew "emscripten"
 brew "exa"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# Fast and simple Node.js version manager
+brew "fnm"
 # Generic library support script
 brew "libtool"
 # Command-line outline and bitmap font editor/converter
 brew "fontforge"
+# Infamous electronic fortune-cookie generator
+brew "fortune"
 # GNU compiler collection
 brew "gcc@11"
 # GitHub command-line tool
 brew "gh"
+# Automatic git commit --fixup
+brew "git-absorb"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
 # Extensions to follow Vincent Driessen's branching model
@@ -106,8 +115,6 @@ brew "tree-sitter"
 brew "neovim-remote"
 # Small build system for use with gyp or CMake
 brew "ninja"
-# Platform built on V8 to build network applications
-brew "node@16"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
 # Swiss-army knife of markup format conversion
@@ -154,8 +161,6 @@ brew "zlib"
 brew "zoxide"
 # Additional completion definitions for zsh
 brew "zsh-completions"
-# A new way of working with Protocol Buffers.
-brew "bufbuild/buf/buf"
 # A git command extension for switching git branches more efficiently.
 brew "craciuncezar/tap/git-smart-checkout"
 # Enable Windows-like alt-tab
@@ -176,6 +181,8 @@ cask "flutter"
 cask "google-chrome"
 # Set of tools to manage resources and applications hosted on Google Cloud
 cask "google-cloud-sdk"
+# Desktop automation application
+cask "hammerspoon"
 # Free and open-source media player
 cask "iina"
 # GPU-based terminal emulator
@@ -196,6 +203,8 @@ cask "telegram-desktop"
 cask "vlc"
 # Torrent streaming application
 cask "webtorrent"
+# HTML to PDF renderer
+cask "wkhtmltopdf"
 mas "Amphetamine", id: 937984704
 mas "Color Picker", id: 1545870783
 mas "Dropover", id: 1355679052
