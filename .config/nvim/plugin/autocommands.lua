@@ -278,3 +278,13 @@ as.augroup('TerminalAutocommands', {
     if not vim.v.event.status == 0 then vim.cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
   end,
 })
+
+-- tmux and kitty are no longer able to access the current working directory of neovim
+-- since the TUI became a separate process
+-- see: https://github.com/neovim/neovim/issues/21771#issuecomment-1461710157
+as.augroup('NvimCwd', {
+  event = { 'DirChanged' },
+  command = function()
+    vim.fn.chansend(vim.v.stderr, fmt('\033]7;file://%s\033\\', vim.v.event.cwd))
+  end,
+})
