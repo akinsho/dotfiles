@@ -177,6 +177,7 @@ local identifiers = {
     ['dbui'] = 'Dadbod UI',
     ['tsplayground'] = 'Treesitter',
     ['NeogitStatus'] = 'Neogit Status',
+    ['Neogit.*'] = 'Neogit',
     ['Trouble'] = 'Lsp Trouble',
     ['gitcommit'] = 'Git commit',
     ['help'] = 'help',
