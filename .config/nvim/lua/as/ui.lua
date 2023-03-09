@@ -291,6 +291,7 @@ local buftypes = {
 --- again but check if there is matching lua pattern. This is useful for filetypes for
 --- plugins like Neogit which have a filetype of Neogit<something>.
 local filetypes = as.p_table({
+  ['startuptime'] = presets.tool_panel,
   ['checkhealth'] = presets.tool_panel,
   ['help'] = presets.tool_panel,
   ['dapui'] = presets.tool_panel,
