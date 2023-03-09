@@ -388,7 +388,7 @@ return {
     'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
     event = 'VeryLazy',
     opts = {
-      mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>', '<C-y>', 'zt', 'zz', 'zb' },
+      mappings = { '<C-d>', '<C-u>', '<C-y>', 'zt', 'zz', 'zb' },
       hide_cursor = true,
     },
   },
