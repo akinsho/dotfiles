@@ -7,18 +7,16 @@ if not as then return end
 ----------------------------------------------------------------------------------------------------
 -- HLSEARCH
 ----------------------------------------------------------------------------------------------------
---[[
-In order to get hlsearch working the way I like i.e. on when using /,?,N,n,*,#, etc. and off when
-When I'm not using them, I need to set the following:
-The mappings below are essentially faked user input this is because in order to automatically turn off
-the search highlight just changing the value of 'hlsearch' inside a function does not work
-read `:h nohlsearch`. So to have this work I check that the current mouse position is not a search
-result, if it is we leave highlighting on, otherwise I turn it off on cursor moved by faking my input
-using the expr mappings below.
-
-This is based on the implementation discussed here:
-https://github.com/neovim/neovim/issues/5581
---]]
+-- In order to get hlsearch working the way I like i.e. on when using /,?,N,n,*,#, etc. and off when
+-- When I'm not using them, I need to set the following:
+-- The mappings below are essentially faked user input this is because in order to automatically turn off
+-- the search highlight just changing the value of 'hlsearch' inside a function does not work
+-- read `:h nohlsearch`. So to have this work I check that the current mouse position is not a search
+-- result, if it is we leave highlighting on, otherwise I turn it off on cursor moved by faking my input
+-- using the expr mappings below.
+--
+-- This is based on the implementation discussed here:
+-- https://github.com/neovim/neovim/issues/5581
 
 map({ 'n', 'v', 'o', 'i', 'c' }, '<Plug>(StopHL)', 'execute("nohlsearch")[-1]', { expr = true })
 
@@ -57,25 +55,20 @@ as.augroup('VimrcIncSearchHighlight', {
   command = function() vim.o.hlsearch = true end,
 })
 
-local smart_close_filetypes = {
-  'help',
-  'query',
-  'git-status',
-  'git-log',
-  'gitcommit',
-  'dbui',
-  'fugitive',
-  'fugitiveblame',
-  'LuaTree',
-  'log',
-  'tsplayground',
-  'qf',
-  'startuptime',
-  'lspinfo',
-  'neotest-summary',
-}
-
-local smart_close_buftypes = {} -- Don't include no file buffers as diff buffers are nofile
+local smart_close_filetypes = as.p_table({
+  ['qf'] = true,
+  ['log'] = true,
+  ['help'] = true,
+  ['query'] = true,
+  ['dbui'] = true,
+  ['lspinfo'] = true,
+  ['git.*'] = true,
+  ['Neogit.*'] = true,
+  ['neotest.*'] = true,
+  ['fugitive.*'] = true,
+  ['tsplayground'] = true,
+  ['startuptime'] = true,
+})
 
 local function smart_close()
   if fn.winnr('$') ~= 1 then api.nvim_win_close(0, true) end
@@ -91,12 +84,7 @@ as.augroup('SmartClose', {
   event = { 'FileType' },
   command = function()
     local is_unmapped = fn.hasmapto('q', 'n') == 0
-
-    local is_eligible = is_unmapped
-      or vim.wo.previewwindow
-      or vim.tbl_contains(smart_close_buftypes, vim.bo.buftype)
-      or vim.tbl_contains(smart_close_filetypes, vim.bo.filetype)
-
+    local is_eligible = is_unmapped or vim.wo.previewwindow or smart_close_filetypes[vim.bo.ft]
     if is_eligible then map('n', 'q', smart_close, { buffer = 0, nowait = true }) end
   end,
 }, {
