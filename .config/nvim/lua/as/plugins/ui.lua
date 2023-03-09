@@ -13,7 +13,7 @@ return {
         { VirtColumn = { fg = { from = 'Comment', alter = 10 } } },
       })
       as.augroup('VirtCol', {
-        event = { 'BufEnter', 'WinEnter' },
+        event = { 'VimEnter', 'BufEnter', 'WinEnter' },
         command = function(args)
           ui.decorations.set_colorcolumn(
             args.buf,
