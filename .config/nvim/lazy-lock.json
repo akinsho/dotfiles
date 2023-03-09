@@ -88,7 +88,7 @@
   "persisted.nvim": { "branch": "main", "commit": "7d91c6013589412e44e9d37c3ddb0211810cf5e3" },
   "playground": { "branch": "master", "commit": "4044b53c4d4fcd7a78eae20b8627f78ce7dc6f56" },
   "plenary.nvim": { "branch": "master", "commit": "253d34830709d690f013daf2853a9d21ad7accab" },
-  "portal.nvim": { "branch": "main", "commit": "c52cabfab414074fd3c010e6474ea9475aa30138" },
+  "portal.nvim": { "branch": "main", "commit": "cd662fb97fe00fadaf0d001dbfb9bb73e2ceed41" },
   "promise-async": { "branch": "main", "commit": "7fa127fa80e7d4d447e0e2c78e99af4355f4247b" },
   "readline.nvim": { "branch": "master", "commit": "cab666cbd026dea9c817182e22255ecb3b3419b1" },
   "rust-tools.nvim": { "branch": "master", "commit": "71d2cf67b5ed120a0e31b2c8adb210dd2834242f" },

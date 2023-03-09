@@ -208,9 +208,15 @@ return {
   },
   {
     'cbochs/portal.nvim',
-    version = '*',
     cmd = { 'Portal' },
     dependencies = { 'cbochs/grapple.nvim' },
+    init = function()
+      highlight.plugin('portal', {
+        { PortalNormal = { link = 'Normal' } },
+        { PortalBorder = { link = 'Label' } },
+        { PortalTitle = { link = 'Label' } },
+      })
+    end,
     keys = {
       { '<leader>jb', '<cmd>Portal jumplist backward<cr>', desc = 'jump: backwards' },
       { '<leader>jf', '<cmd>Portal jumplist forward<cr>', desc = 'jump: forwards' },
@@ -221,19 +227,6 @@ return {
         if v.buffer == api.nvim_get_current_buf() then return false end
         return vim.startswith(api.nvim_buf_get_name(v.buffer), fn.getcwd())
       end,
-      window_options = {
-        -- TODO: this grapple/portal.nvim should allow customising the border highlights
-        border = {
-          { '┌', 'Label' },
-          { '─', 'Label' },
-          { '┐', 'Label' },
-          { '│', 'Label' },
-          { '┘', 'Label' },
-          { '─', 'Label' },
-          { '└', 'Label' },
-          { '│', 'Label' },
-        },
-      },
     },
   },
   {
