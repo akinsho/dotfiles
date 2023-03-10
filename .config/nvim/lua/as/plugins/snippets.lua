@@ -54,13 +54,13 @@ return {
         if ls.choice_active() then ls.change_choice(1) end
       end)
 
-      map({ 's', 'i' }, '<Tab>', function()
+      map({ 's', 'i' }, '<c-j>', function()
         if not ls.expand_or_jumpable() then return '<Tab>' end
         ls.expand_or_jump()
       end, { expr = true })
 
       -- <C-K> is easier to hit but swallows the digraph key
-      map({ 's', 'i' }, '<S-Tab>', function()
+      map({ 's', 'i' }, '<c-b>', function()
         if not ls.jumpable(-1) then return '<S-Tab>' end
         ls.jump(-1)
       end, { expr = true })
