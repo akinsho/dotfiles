@@ -81,11 +81,15 @@ local function general_overrides()
     --  Semantic tokens
     ------------------------------------------------------------------------------//
     { ['@lsp.type.parameter'] = { italic = true, foreground = { from = 'Normal' } } },
+    { ['@lsp.type.variable'] = { clear = true } },
     { ['@lsp.typemod.variable.global'] = { bold = true, italic = true, inherit = '@namespace' } },
+    { ['@lsp.typemod.variable.defaultLibrary'] = { link = '@lsp.typemod.variable.global' } },
+    { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
     { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
+    { ['@variable'] = { clear = true } },
     { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
     { ['@error'] = { foreground = 'fg', background = 'NONE' } },
     { ['@text.diff.add'] = { link = 'DiffAdd' } },
@@ -224,7 +228,6 @@ local function colorscheme_overrides()
   local overrides = {
     ['doom-one'] = {
       { ['@namespace'] = { foreground = P.blue } },
-      { ['@variable'] = { foreground = { from = 'Normal' } } },
       { CursorLineNr = { foreground = { from = 'Keyword' } } },
       { LineNr = { background = 'NONE' } },
       { NeoTreeIndentMarker = { link = 'Comment' } },

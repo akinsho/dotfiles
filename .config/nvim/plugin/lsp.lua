@@ -234,11 +234,23 @@ local function on_attach(client, bufnr)
   setup_mappings(client, bufnr)
 end
 
+---@alias ClientOverrides {on_attach: fun(client: lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: lsp.Client, token: table)}
+
 --- A set of custom overrides for specific lsp clients
 --- This is a way of adding functionality for specific lsps
 --- without putting all this logic in the general on_attach function
+---@type {[string]: ClientOverrides}
 local client_overrides = {
-  sqls = function(client, bufnr) require('sqls').on_attach(client, bufnr) end,
+  sqls = {
+    on_attach = function(client, bufnr) require('sqls').on_attach(client, bufnr) end,
+  },
+  tsserver = {
+    semantic_tokens = function(bufnr, client, token)
+      if token.type == 'variable' and token.modifiers['local'] and not token.modifiers.readonly then
+        lsp.semantic_tokens.highlight_token(token, bufnr, client.id, '@danger')
+      end
+    end,
+  },
   -- NOTE: To disable semantic token
   -- lua_ls = function (client, bufnr)
   --   client.server_capabilities.semanticTokensProvider = nil
@@ -249,12 +261,11 @@ as.augroup('LspSetupCommands', {
   event = 'LspAttach',
   desc = 'setup the language server autocommands',
   command = function(args)
-    local bufnr = args.buf
-    -- if the buffer is invalid we should not try and attach to it
-    if not api.nvim_buf_is_valid(bufnr) or not args.data then return end
     local client = lsp.get_client_by_id(args.data.client_id)
-    on_attach(client, bufnr)
-    if client_overrides[client.name] then client_overrides[client.name](client, bufnr) end
+    on_attach(client, args.buf)
+    local overrides = client_overrides[client.name]
+    if not overrides or not overrides.on_attach then return end
+    overrides.on_attach(client, args.buf)
   end,
 }, {
   event = 'LspDetach',
@@ -268,6 +279,14 @@ as.augroup('LspSetupCommands', {
       end
       state.clients = vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
     end
+  end,
+}, {
+  event = 'LspTokenUpdate',
+  command = function(args)
+    local client = lsp.get_client_by_id(args.data.client_id)
+    local overrides = client_overrides[client.name]
+    if not overrides or not overrides.semantic_tokens then return end
+    overrides.semantic_tokens(args.buf, client, args.data.token)
   end,
 })
 -----------------------------------------------------------------------------//
