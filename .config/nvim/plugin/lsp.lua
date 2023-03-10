@@ -39,8 +39,8 @@ end
 --- Create augroups for each LSP feature and track which capabilities each client
 --- registers in a buffer local table
 ---@param bufnr integer
----@param client table
----@param events table
+---@param client lsp.Client
+---@param events { [string]: { clients: number[], group_id: number? } }
 ---@return fun(feature: {provider: string, name: string}, commands: fun(string): ...)
 local function augroup_factory(bufnr, client, events)
   return function(feature, commands)
@@ -86,7 +86,7 @@ end
 --- as a client might not support functionality that was already in place, the augroup will be deleted and recreated
 --- without the commands for the features that that client does not support.
 --- TODO: find a way to make this less complex...
----@param client table<string, any>
+---@param client lsp.Client
 ---@param bufnr number
 local function setup_autocommands(client, bufnr)
   if not client then
@@ -212,28 +212,6 @@ end
 -- LSP SETUP/TEARDOWN
 -----------------------------------------------------------------------------//
 
----@param client table
----@param bufnr number
-local function setup_plugins(client, bufnr)
-  local navic_ok, navic = pcall(require, 'nvim-navic')
-  if navic_ok and client.server_capabilities.documentSymbolProvider then
-    navic.attach(client, bufnr)
-  end
-  local hints_ok, hints = pcall(require, 'lsp-inlayhints')
-  if hints_ok then hints.on_attach(client, bufnr) end
-end
-
--- Add buffer local mappings, autocommands etc for attaching servers
--- this runs for each client because they have different capabilities so each time one
--- attaches it might enable autocommands or mappings that the previous client did not support
----@param client table the lsp client
----@param bufnr number
-local function on_attach(client, bufnr)
-  setup_plugins(client, bufnr)
-  setup_autocommands(client, bufnr)
-  setup_mappings(client, bufnr)
-end
-
 ---@alias ClientOverrides {on_attach: fun(client: lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: lsp.Client, token: table)}
 
 --- A set of custom overrides for specific lsp clients
@@ -251,11 +229,43 @@ local client_overrides = {
       end
     end,
   },
-  -- NOTE: To disable semantic token
-  -- lua_ls = function (client, bufnr)
-  --   client.server_capabilities.semanticTokensProvider = nil
-  -- end
 }
+
+---@param client lsp.Client
+---@param bufnr number
+local function setup_plugins(client, bufnr)
+  local navic_ok, navic = pcall(require, 'nvim-navic')
+  if navic_ok and client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
+  local hints_ok, hints = pcall(require, 'lsp-inlayhints')
+  if hints_ok then hints.on_attach(client, bufnr) end
+end
+
+---@param client lsp.Client
+---@param bufnr number
+local function setup_semantic_tokens(client, bufnr)
+  local overrides = client_overrides[client.name]
+  if not overrides or not overrides.semantic_tokens then return end
+  as.augroup(fmt('LspSemanticTokens%s', client.name), {
+    event = 'LspTokenUpdate',
+    buffer = bufnr,
+    desc = fmt('Configure the semantic tokens for the %s', client.name),
+    command = function(args) overrides.semantic_tokens(args.buf, client, args.data.token) end,
+  })
+end
+
+-- Add buffer local mappings, autocommands etc for attaching servers
+-- this runs for each client because they have different capabilities so each time one
+-- attaches it might enable autocommands or mappings that the previous client did not support
+---@param client lsp.Client the lsp client
+---@param bufnr number
+local function on_attach(client, bufnr)
+  setup_plugins(client, bufnr)
+  setup_autocommands(client, bufnr)
+  setup_mappings(client, bufnr)
+  setup_semantic_tokens(client, bufnr)
+end
 
 as.augroup('LspSetupCommands', {
   event = 'LspAttach',
@@ -279,14 +289,6 @@ as.augroup('LspSetupCommands', {
       end
       state.clients = vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
     end
-  end,
-}, {
-  event = 'LspTokenUpdate',
-  command = function(args)
-    local client = lsp.get_client_by_id(args.data.client_id)
-    local overrides = client_overrides[client.name]
-    if not overrides or not overrides.semantic_tokens then return end
-    overrides.semantic_tokens(args.buf, client, args.data.token)
   end,
 })
 -----------------------------------------------------------------------------//
