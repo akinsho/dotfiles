@@ -5,7 +5,7 @@ local function sync(path) return fmt('%s/notes/%s', fn.expand('$SYNC_DIR'), path
 return {
   {
     'vhyrro/neorg',
-    event = 'CursorHold',
+    ft = 'norg',
     build = ':Neorg sync-parsers',
     dependencies = { 'vhyrro/neorg-telescope' },
     opts = {
@@ -37,8 +37,7 @@ return {
     },
   },
   {
-    'jgollenz/orgmode', -- nvim-orgmode/orgmode
-    branch = 'feat/config-win-border',
+    'nvim-orgmode/orgmode',
     keys = { '<leader>oa', '<leader>oc' },
     dependencies = {
       {
