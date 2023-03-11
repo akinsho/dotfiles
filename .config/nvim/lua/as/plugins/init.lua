@@ -412,7 +412,8 @@ return {
       callbacks = {
         pre_open = function() require('toggleterm').toggle() end,
         post_open = function(_, winnr)
-          require('toggleterm').toggle()
+          local term = require('toggleterm.terminal').get_last_focused()
+          if not term or not term:is_float() then term:toggle() end
           api.nvim_set_current_win(winnr)
         end,
         block_end = function() require('toggleterm').toggle() end,
