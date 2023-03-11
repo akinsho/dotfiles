@@ -519,12 +519,6 @@ else
   source $HOME/.fzf.zsh
 fi
 
-
-if [[ ! "$(exists nvr)" && "$(exists pip3)" ]]; then
-  echo "Installing neovim-remote"
-  pip3 install neovim-remote
-fi
-
 if exists thefuck; then
   eval $(thefuck --alias)
 fi

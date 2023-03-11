@@ -23,7 +23,7 @@
   interactive = auto
 
 [core]
-  editor = "nvr --remote-wait-silent" # or nvim
+  editor = "nvim"
   excludesfile ="~/.gitignore"
   pager = delta
   autocrlf = input

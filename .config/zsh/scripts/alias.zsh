@@ -37,9 +37,6 @@ alias kitty-icon="$DOTFILES/macos/kitty-icon.zsh"
 #-------------------------------------------------------------------------------
 #  NEOVIM
 #-------------------------------------------------------------------------------
-if [[ -n "$NVIM_LISTEN_ADDRESS" || -n "$NVIM" ]]; then
-  alias nvim=nvr -cc split --remote-wait +'set bufhidden=wipe'
-fi
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'

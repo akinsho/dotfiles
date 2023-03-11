@@ -245,11 +245,4 @@ opt.mousescroll = { 'ver:1', 'hor:6' }
 o.secure = true -- Disable autocmd etc for project local vimrc files.
 -- Allow project local vimrc files example, .nvim.lua or .nvimrc see :h exrc
 o.exrc = as.has('nvim-0.9')
------------------------------------------------------------------------------//
--- Git editor
------------------------------------------------------------------------------//
-if as.executable('nvr') then
-  vim.env.GIT_EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-  vim.env.EDITOR = "nvr -cc split --remote-wait +'set bufhidden=wipe'"
-end
 -- vim:foldmethod=marker

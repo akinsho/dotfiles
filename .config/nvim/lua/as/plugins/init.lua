@@ -405,6 +405,20 @@ return {
     keys = { { '<leader>qq', '<Cmd>Bwipeout<CR>', desc = 'bbye: quit' } },
   },
   { 'nacro90/numb.nvim', event = 'CmdlineEnter', config = true },
+  {
+    'willothy/flatten.nvim',
+    lazy = false,
+    opts = {
+      callbacks = {
+        pre_open = function() require('toggleterm').toggle() end,
+        post_open = function(_, winnr)
+          require('toggleterm').toggle()
+          api.nvim_set_current_win(winnr)
+        end,
+        block_end = function() require('toggleterm').toggle() end,
+      },
+    },
+  },
   -----------------------------------------------------------------------------//
   -- Quickfix
   -----------------------------------------------------------------------------//

@@ -82,13 +82,8 @@ export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
 # preferred editor for local and remote sessions
-if [ -n "$NVIM_LISTEN_ADDRESS" ]; then
-  export VISUAL="nvr -cc split --remote-wait +'set bufhidden=wipe'"
-  export EDITOR="nvr -cc split --remote-wait +'set bufhidden=wipe'"
-else
-  export VISUAL="nvim"
-  export EDITOR="nvim"
-fi
+export VISUAL="nvim"
+export EDITOR="nvim"
 
 export USE_EDITOR=$EDITOR
 
