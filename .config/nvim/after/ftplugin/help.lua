@@ -1,4 +1,4 @@
-local opt, fn, api = vim.opt, vim.fn, vim.api
+local opt, fn, api = vim.opt_local, vim.fn, vim.api
 
 local opts = { buffer = 0, silent = true }
 
