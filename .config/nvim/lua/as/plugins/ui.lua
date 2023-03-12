@@ -1,7 +1,7 @@
 local r, api, fn = vim.regex, vim.api, vim.fn
 local strwidth = api.nvim_strwidth
 local highlight, ui = as.highlight, as.ui
-local icons = ui.icons.lsp
+local icons, border = ui.icons.lsp, ui.current.border
 
 return {
   {
@@ -63,6 +63,13 @@ return {
       input = { enabled = false },
       select = {
         telescope = as.telescope.adaptive_dropdown(),
+        builtin = {
+          border = border,
+          min_height = 10,
+          win_options = { winblend = 10 },
+          mappings = { n = { ['q'] = 'Close' } },
+        },
+        nui = { min_height = 10, win_options = { winblend = 10 } },
         get_config = function(opts)
           if opts.kind == 'codeaction' then
             return { backend = 'telescope', telescope = as.telescope.cursor() }
