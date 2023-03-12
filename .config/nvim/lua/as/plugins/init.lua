@@ -409,6 +409,7 @@ return {
     'willothy/flatten.nvim',
     lazy = false,
     opts = {
+      window = { open = 'current' },
       callbacks = {
         pre_open = function() require('toggleterm').toggle() end,
         post_open = function(_, winnr)
