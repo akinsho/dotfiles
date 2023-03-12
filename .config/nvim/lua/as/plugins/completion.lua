@@ -77,6 +77,10 @@ return {
           ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
           ['<C-space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }),
+          ['<S-TAB>'] = cmp.mapping(function(fallback)
+            if not cmp.visible() then return fallback() end
+            if luasnip.jumpable(-1) then luasnip.jump(-1) end
+          end, { 'i', 's' }),
           ['<TAB>'] = cmp.mapping(function(fallback) -- make TAB behave like Android Studio
             if not cmp.visible() then return fallback() end
             if not cmp.get_selected_entry() then
