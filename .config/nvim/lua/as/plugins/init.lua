@@ -414,16 +414,22 @@ return {
   {
     'willothy/flatten.nvim',
     lazy = false,
-    opts = {
+    priority = 1001,
+    config = {
       window = { open = 'current' },
       callbacks = {
-        pre_open = function() require('toggleterm').toggle() end,
-        post_open = function(_, winnr)
-          local term = require('toggleterm.terminal').get_last_focused()
-          if not term or not term:is_float() then term:toggle() end
-          api.nvim_set_current_win(winnr)
-        end,
         block_end = function() require('toggleterm').toggle() end,
+        pre_open = function() require('toggleterm').toggle() end,
+        post_open = function(bufnr, winnr)
+          local term = require('toggleterm.terminal').get_last_focused()
+          if term and term:is_float() then
+            term:close()
+            cmd.buffer(bufnr)
+          else
+            require('toggleterm').toggle()
+            api.nvim_set_current_win(winnr)
+          end
+        end,
       },
     },
   },
