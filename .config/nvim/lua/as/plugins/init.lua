@@ -1,4 +1,4 @@
-local opt, api, fn, fmt = vim.opt, vim.api, vim.fn, string.format
+local opt, api, fn, cmd, fmt = vim.opt, vim.api, vim.fn, vim.cmd, string.format
 local ui, border, highlight = as.ui, as.ui.current.border, as.highlight
 
 return {
@@ -16,14 +16,14 @@ return {
         event = 'User',
         pattern = 'PersistedTelescopeLoadPre',
         command = function()
-          vim.schedule(function() vim.cmd('%bd') end)
+          vim.schedule(function() cmd('%bd') end)
         end,
       }, {
         event = 'User',
         pattern = 'PersistedSavePre',
         -- Arguments are always persisted in a session and can't be removed using 'sessionoptions'
         -- so remove them when saving a session
-        command = function() vim.cmd('%argdelete') end,
+        command = function() cmd('%argdelete') end,
       })
     end,
     opts = {
@@ -31,7 +31,7 @@ return {
       use_git_branch = true,
       allowed_dirs = { vim.g.dotfiles, vim.g.work_dir, vim.g.projects_dir .. '/personal' },
       ignored_dirs = { fn.stdpath('data') },
-      on_autoload_no_session = function() vim.cmd.Alpha() end,
+      on_autoload_no_session = function() cmd.Alpha() end,
       should_autosave = function() return vim.bo.filetype ~= 'alpha' end,
     },
   },
