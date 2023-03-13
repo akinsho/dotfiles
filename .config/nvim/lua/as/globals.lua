@@ -144,7 +144,7 @@ end
 
 ---Require a module using `pcall` and report any errors
 ---@param module string
----@param opts table?
+---@param opts {silent: boolean, message: string}?
 ---@return boolean, any
 function as.require(module, opts)
   opts = opts or { silent = false }
@@ -190,23 +190,6 @@ end
 
 local LATEST_NIGHTLY_MINOR = 9
 function as.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
-
----Reload lua modules
----@param path string
----@param recursive boolean
-function as.invalidate(path, recursive)
-  if recursive then
-    for key, value in pairs(package.loaded) do
-      if key ~= '_G' and value and fn.match(key, path) ~= -1 then
-        package.loaded[key] = nil
-        require(key)
-      end
-    end
-  else
-    package.loaded[path] = nil
-    require(path)
-  end
-end
 
 ----------------------------------------------------------------------------------------------------
 -- API Wrappers
