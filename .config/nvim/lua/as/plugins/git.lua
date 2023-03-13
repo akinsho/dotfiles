@@ -147,7 +147,7 @@ return {
       -- Experimental ------------------------------------------------------------------------------
       -- _signs_staged_enable = true,
       ----------------------------------------------------------------------------------------------
-      current_line_blame = not cwd():match('personal') and not cwd():match('dotfiles'),
+      current_line_blame = not cwd():match('dotfiles'),
       current_line_blame_formatter = ' <author>, <author_time> · <summary>',
       preview_config = { border = border },
       on_attach = function(bufnr)
