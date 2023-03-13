@@ -18,6 +18,12 @@ return {
         command = function()
           vim.schedule(function() vim.cmd('%bd') end)
         end,
+      }, {
+        event = 'User',
+        pattern = 'PersistedSavePre',
+        -- Arguments are always persisted in a session and can't be removed using 'sessionoptions'
+        -- so remove them when saving a session
+        command = function() vim.cmd('%argdelete') end,
       })
     end,
     opts = {
