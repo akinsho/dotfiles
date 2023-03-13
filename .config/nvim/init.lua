@@ -25,14 +25,6 @@ vim.api.nvim_create_augroup('vimrc', {})
 ----------------------------------------------------------------------------------------------------
 g.mapleader = ',' -- Remap leader key
 g.maplocalleader = ' ' -- Local leader is <Space>
-
-local ok, reload = pcall(require, 'plenary.reload')
-RELOAD = ok and reload.reload_module or function(...) return ... end
-function R(name)
-  RELOAD(name)
-  return require(name)
-end
-
 ----------------------------------------------------------------------------------------------------
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
@@ -56,10 +48,10 @@ _G.P = vim.print
 -- Settings
 ----------------------------------------------------------------------------------------------------
 -- Order matters here as globals needs to be instantiated first etc.
-R('as.globals')
-R('as.highlights')
-R('as.ui')
-R('as.settings')
+require('as.globals')
+require('as.highlights')
+require('as.ui')
+require('as.settings')
 -----------------------------------------------------------------------------//
 -- Plugins
 -----------------------------------------------------------------------------//
