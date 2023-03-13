@@ -39,6 +39,7 @@ return {
         discovery = { enabled = true },
         diagnostic = { enabled = true },
         floating = { border = as.ui.current.border },
+        quickfix = { enabled = false, open = true },
         adapters = {
           require('neotest-plenary'),
           require('neotest-dart')({ command = 'flutter' }),
