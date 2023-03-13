@@ -110,25 +110,17 @@ return {
     { '<localleader>p', b('registers'), desc = 'registers' },
   },
   dependencies = {
-    {
-      'natecraddock/telescope-zf-native.nvim',
-      config = function() require('telescope').load_extension('zf-native') end,
-    },
+    { 'molecule-man/telescope-menufacture' },
+    { 'natecraddock/telescope-zf-native.nvim' },
+    { 'nvim-telescope/telescope-live-grep-args.nvim' },
     {
       'nvim-telescope/telescope-smart-history.nvim',
       dependencies = { { 'kkharji/sqlite.lua' } },
-      config = function() require('telescope').load_extension('smart_history') end,
     },
     {
       'nvim-telescope/telescope-frecency.nvim',
       dependencies = { { 'kkharji/sqlite.lua' } },
-      config = function() require('telescope').load_extension('frecency') end,
     },
-    {
-      'nvim-telescope/telescope-live-grep-args.nvim',
-      config = function() require('telescope').load_extension('live_grep_args') end,
-    },
-    'molecule-man/telescope-menufacture',
   },
   config = function()
     local actions = require('telescope.actions')
@@ -260,6 +252,10 @@ return {
     -- Extensions (sometimes need to be explicitly loaded after telescope is setup)
     require('telescope').load_extension('noice')
     require('telescope').load_extension('persisted')
+    require('telescope').load_extension('frecency')
     require('telescope').load_extension('menufacture')
+    require('telescope').load_extension('zf-native')
+    require('telescope').load_extension('smart_history')
+    require('telescope').load_extension('live_grep_args')
   end,
 }
