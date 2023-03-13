@@ -50,8 +50,8 @@ local namespace = {
 -- This table is a globally accessible store to facilitating accessing
 -- helper functions and variables throughout my config
 _G.as = as or namespace
-
 _G.map = vim.keymap.set
+_G.P = vim.print
 ----------------------------------------------------------------------------------------------------
 -- Settings
 ----------------------------------------------------------------------------------------------------

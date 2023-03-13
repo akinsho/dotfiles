@@ -224,8 +224,6 @@ function as.version(major, minor, _)
   return major >= v.major and minor >= v.minor
 end
 
-P = vim.pretty_print
-
 --- Validate the keys passed to as.augroup are valid
 ---@param name string
 ---@param cmd Autocommand
