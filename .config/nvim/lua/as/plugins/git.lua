@@ -79,10 +79,9 @@ return {
         enhanced_diff_hl = true,
         hooks = {
           diff_buf_read = function()
-            vim.opt_local.wrap = false
-            vim.opt_local.list = false
-            vim.opt_local.colorcolumn = ''
-            vim.opt_local.relativenumber = false
+            local opt = vim.opt_local
+            opt.wrap, opt.list, opt.relativenumber = false, false, false
+            opt.colorcolumn = ''
           end,
         },
         keymaps = {
@@ -168,12 +167,9 @@ return {
         map('n', '<localleader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
         map('n', '<localleader>gre', gs.reset_buffer, { desc = 'reset entire buffer' })
         map('n', '<localleader>gbl', gs.blame_line, { desc = 'blame current line' })
-        map(
-          'n',
-          '<leader>lm',
-          function() gs.setqflist('all') end,
-          { desc = 'list modified in quickfix' }
-        )
+        map('n', '<leader>lm', function() gs.setqflist('all') end, {
+          desc = 'list modified in quickfix',
+        })
         bmap({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
         bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
