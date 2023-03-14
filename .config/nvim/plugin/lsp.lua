@@ -2,7 +2,7 @@ if not as then return end
 
 local lsp, fs, fn, api, fmt = vim.lsp, vim.fs, vim.fn, vim.api, string.format
 local diagnostic = vim.diagnostic
-local L = vim.lsp.log_levels
+local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 
 local icons = as.ui.icons.lsp
 local border = as.ui.current.border
@@ -334,32 +334,35 @@ end
 -----------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//
+---@param opts {highlight: string, icon: string, linehl?: boolean}
 local function sign(opts)
   fn.sign_define(opts.highlight, {
     text = opts.icon,
     texthl = opts.highlight,
-    numhl = opts.highlight .. 'Nr',
-    culhl = opts.highlight .. 'CursorNr',
-    linehl = opts.highlight .. 'Line',
+    numhl = opts.linehl ~= false and opts.highlight .. 'Nr' or nil,
+    culhl = opts.linehl ~= false and opts.highlight .. 'CursorNr' or nil,
+    linehl = opts.linehl ~= false and opts.highlight .. 'Line' or nil,
   })
 end
 
 sign({ highlight = 'DiagnosticSignError', icon = icons.error })
 sign({ highlight = 'DiagnosticSignWarn', icon = icons.warn })
-sign({ highlight = 'DiagnosticSignInfo', icon = icons.info })
-sign({ highlight = 'DiagnosticSignHint', icon = icons.hint })
+sign({ highlight = 'DiagnosticSignInfo', linehl = false, icon = icons.info })
+sign({ highlight = 'DiagnosticSignHint', linehl = false, icon = icons.hint })
 -----------------------------------------------------------------------------//
 -- Handler Overrides
 -----------------------------------------------------------------------------//
---[[
-This section overrides the default diagnostic handlers for signs and virtual text so that only
-the most severe diagnostic is shown per line
---]]
+-- This section overrides the default diagnostic handlers for signs and virtual text so that only
+-- the most severe diagnostic is shown per line
 
+--- The custom namespace is so that ALL diagnostics across all namespaces can be aggregated
+--- including diagnostics from plugins
 local ns = api.nvim_create_namespace('severe-diagnostics')
 
 --- Restricts nvim's diagnostic signs to only the single most severe one per line
 --- see `:help vim.diagnostic`
+---@param callback fun(namespace: integer, bufnr: integer, diagnostics: table, opts: table)
+---@return fun(namespace: integer, bufnr: integer, diagnostics: table, opts: table)
 local function max_diagnostic(callback)
   return function(_, bufnr, _, opts)
     -- Get all diagnostics from the whole buffer rather than just the
@@ -371,8 +374,7 @@ local function max_diagnostic(callback)
       local m = max_severity_per_line[d.lnum]
       if not m or d.severity < m.severity then max_severity_per_line[d.lnum] = d end
     end
-    -- Pass the filtered diagnostics (with our custom namespace) to
-    -- the original handler
+    -- Pass the filtered diagnostics (with our custom namespace) to the original handler
     callback(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
   end
 end
@@ -382,36 +384,26 @@ diagnostic.handlers.signs = vim.tbl_extend('force', signs_handler, {
   show = max_diagnostic(signs_handler.show),
   hide = function(_, bufnr) signs_handler.hide(ns, bufnr) end,
 })
-
-local virt_text_handler = diagnostic.handlers.virtual_text
-diagnostic.handlers.virtual_text = vim.tbl_extend('force', virt_text_handler, {
-  show = max_diagnostic(virt_text_handler.show),
-  hide = function(_, bufnr) virt_text_handler.hide(ns, bufnr) end,
-})
-
 -----------------------------------------------------------------------------//
 -- Diagnostic Configuration
 -----------------------------------------------------------------------------//
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
---- Save options for virtual text for future use
----@diagnostic disable-next-line: unused-local
-local virtual_text_opts = {
-  spacing = 1,
-  prefix = '',
-  format = function(d)
-    local level = diagnostic.severity[d.severity]
-    return fmt('%s %s', icons[level:lower()], d.message)
-  end,
-}
-
 diagnostic.config({
   signs = true,
   underline = true,
   update_in_insert = false,
-  severity_sort = true,
-  virtual_text = false,
+  severity_sort = false,
+  virtual_text = {
+    severity = S.ERROR,
+    spacing = 1,
+    prefix = '',
+    format = function(d)
+      local level = diagnostic.severity[d.severity]
+      return fmt('%s %s', icons[level:lower()], d.message)
+    end,
+  },
   float = {
     max_width = max_width,
     max_height = max_height,

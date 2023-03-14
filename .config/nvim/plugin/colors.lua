@@ -147,22 +147,12 @@ local function general_overrides()
     { DiagnosticSignErrorLine = { inherit = 'DiagnosticVirtualTextError', fg = 'NONE' } },
     { DiagnosticSignWarnLine = { inherit = 'DiagnosticVirtualTextWarn', fg = 'NONE' } },
     -- Sign column signs
+    { DiagnosticSignInfo = { fg = { from = 'DiagnosticInfo' } } },
+    { DiagnosticSignHint = { fg = { from = 'DiagnosticHint' } } },
     {
       DiagnosticSignWarn = {
         bg = { from = 'DiagnosticVirtualTextWarn' },
         fg = { from = 'DiagnosticWarn' },
-      },
-    },
-    {
-      DiagnosticSignInfo = {
-        bg = { from = 'DiagnosticVirtualTextInfo' },
-        fg = { from = 'DiagnosticInfo' },
-      },
-    },
-    {
-      DiagnosticSignHint = {
-        bg = { from = 'DiagnosticVirtualTextHint' },
-        fg = { from = 'DiagnosticHint' },
       },
     },
     {
