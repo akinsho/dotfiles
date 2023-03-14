@@ -69,15 +69,15 @@ return {
   ),
   snippet(
     {
-      trig = 'use',
-      name = 'packer use',
+      trig = 'plg',
+      name = 'plugin spec',
       dscr = {
-        'packer use plugin block',
+        'plugin spec block',
         'e.g.',
-        "use {'author/plugin'}",
+        "{'author/plugin'}",
       },
     },
-    fmt([[use {{"{}"{}}}]], {
+    fmt([[{{"{}"{}}}]], {
       d(1, function()
         -- Get the author and URL in the clipboard and auto populate the author and project
         local default = snippet('', { i(1, 'author'), t('/'), i(2, 'plugin') })
