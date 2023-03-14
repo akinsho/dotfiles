@@ -145,6 +145,19 @@ return {
     },
   },
   {
+    'zbirenbaum/neodim',
+    event = 'LspAttach',
+    opts = function()
+      highlight.plugin('neodim', { { TSVariable = { fg = { from = 'Normal' } } } })
+      -- don't use opts here as the value of highlight.get needs to be evaluated later
+      require('neodim').setup({
+        alpha = 0.45,
+        blend_color = highlight.get('Normal', 'bg'),
+        update_in_insert = { enable = true, delay = 200 },
+      })
+    end,
+  },
+  {
     'simrat39/rust-tools.nvim',
     dependencies = { 'nvim-lspconfig' },
   },

@@ -364,17 +364,12 @@ local ns = api.nvim_create_namespace('severe-diagnostics')
 ---@param callback fun(namespace: integer, bufnr: integer, diagnostics: table, opts: table)
 ---@return fun(namespace: integer, bufnr: integer, diagnostics: table, opts: table)
 local function max_diagnostic(callback)
-  return function(_, bufnr, _, opts)
-    -- Get all diagnostics from the whole buffer rather than just the
-    -- diagnostics passed to the handler
-    local diagnostics = vim.diagnostic.get(bufnr)
-    -- Find the "worst" diagnostic per line
-    local max_severity_per_line = {}
-    for _, d in pairs(diagnostics) do
-      local m = max_severity_per_line[d.lnum]
-      if not m or d.severity < m.severity then max_severity_per_line[d.lnum] = d end
-    end
-    -- Pass the filtered diagnostics (with our custom namespace) to the original handler
+  return function(_, bufnr, diagnostics, opts)
+    local max_severity_per_line = as.fold(function(diag_map, d)
+      local m = diag_map[d.lnum]
+      if not m or d.severity < m.severity then diag_map[d.lnum] = d end
+      return diag_map
+    end, diagnostics, {})
     callback(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
   end
 end
