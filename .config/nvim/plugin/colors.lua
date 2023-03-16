@@ -8,7 +8,7 @@ local function general_overrides()
     { Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 25 } } },
     { VertSplit = { fg = { from = 'Comment' } } },
     { WinSeparator = { fg = { from = 'Comment' } } },
-    { mkdLineBreak = { link = 'NONE' } },
+    { mkdLineBreak = { clear = true } },
     { Directory = { inherit = 'Keyword', bold = true } },
     { URL = { inherit = 'Keyword', underline = true } },
     { ErrorMsg = { background = 'NONE' } },

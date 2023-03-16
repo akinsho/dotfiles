@@ -403,7 +403,7 @@ diagnostic.config({
     max_width = max_width,
     max_height = max_height,
     border = border,
-    focusable = false,
+    focusable = true,
     source = 'always',
     prefix = function(diag, i, _)
       local level = diagnostic.severity[diag.severity]
