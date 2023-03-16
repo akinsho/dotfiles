@@ -54,7 +54,7 @@ return {
     end,
     dependencies = {
       { 'sidlatau/neotest-dart' },
-      { 'nerdo/neotest-rust' }, --[[ rouge8 ]]
+      { 'rouge8/neotest-rust' },
       { 'haydenmeade/neotest-jest' },
       { 'neotest/neotest-go', dev = true },
       { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
