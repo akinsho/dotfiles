@@ -180,32 +180,32 @@ end
 ---@param _ table lsp client
 ---@param bufnr number
 local function setup_mappings(_, bufnr)
-  local function with_desc(desc) return { buffer = bufnr, desc = desc } end
+  local function with_desc(desc) return { buffer = bufnr, desc = fmt('lsp: %s', desc) } end
 
   map(
     'n',
     ']c',
     function() vim.diagnostic.goto_prev({ float = true }) end,
-    with_desc('lsp: go to prev diagnostic')
+    with_desc('go to prev diagnostic')
   )
   map(
     'n',
     '[c',
     function() vim.diagnostic.goto_next({ float = true }) end,
-    with_desc('lsp: go to next diagnostic')
+    with_desc('go to next diagnostic')
   )
 
-  map({ 'n', 'x' }, '<leader>ca', lsp.buf.code_action, with_desc('lsp: code action'))
-  map('n', '<leader>rf', format, with_desc('lsp: format buffer'))
-  map('n', 'gd', lsp.buf.definition, with_desc('lsp: definition'))
-  map('n', 'gr', lsp.buf.references, with_desc('lsp: references'))
-  map('n', 'K', lsp.buf.hover, with_desc('lsp: hover'))
-  map('n', 'gI', lsp.buf.incoming_calls, with_desc('lsp: incoming calls'))
-  map('n', 'gi', lsp.buf.implementation, with_desc('lsp: implementation'))
-  map('n', '<leader>gd', lsp.buf.type_definition, with_desc('lsp: go to type definition'))
-  map('n', '<leader>cl', lsp.codelens.run, with_desc('lsp: run code lens'))
-  map('n', '<leader>ri', lsp.buf.rename, with_desc('lsp: rename'))
-  map('n', '<leader>rN', rename_file, with_desc('lsp: rename with input'))
+  map({ 'n', 'x' }, '<leader>ca', lsp.buf.code_action, with_desc('code action'))
+  map('n', '<leader>rf', format, with_desc('format buffer'))
+  map('n', 'gd', lsp.buf.definition, with_desc('definition'))
+  map('n', 'gr', lsp.buf.references, with_desc('references'))
+  map('n', 'K', lsp.buf.hover, with_desc('hover'))
+  map('n', 'gI', lsp.buf.incoming_calls, with_desc('incoming calls'))
+  map('n', 'gi', lsp.buf.implementation, with_desc('implementation'))
+  map('n', '<leader>gd', lsp.buf.type_definition, with_desc('go to type definition'))
+  map('n', '<leader>cl', lsp.codelens.run, with_desc('run code lens'))
+  map('n', '<leader>ri', lsp.buf.rename, with_desc('rename'))
+  map('n', '<leader>rN', rename_file, with_desc('rename with input'))
 end
 
 -----------------------------------------------------------------------------//
