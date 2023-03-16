@@ -167,17 +167,12 @@ local function sum_lengths(list)
 end
 
 local function is_lowest(item, lowest)
-  -- if there hasn't been a lowest selected so far
-  -- then the item is the lowest
+  -- if there hasn't been a lowest selected so far, then the item is the lowest
   if not lowest or not lowest.length then return true end
-  -- if the item doesn't have a priority or a length
-  -- it is likely a special character so should never
-  -- be the lowest
+  -- if the item doesn't have a priority or a length, it is likely a special character so should never be the lowest
   if not item.priority or not item.length then return false end
-  -- if the item has the same priority as the lowest then if the item
-  -- has a greater length it should become the lowest
+  -- if the item has the same priority as the lowest, then if the item has a greater length it should become the lowest
   if item.priority == lowest.priority then return item.length > lowest.length end
-
   return item.priority > lowest.priority
 end
 
@@ -195,8 +190,7 @@ local function prioritize(statusline, space, length)
   local index_to_remove
   for idx, c in ipairs(statusline) do
     if is_lowest(c, lowest) then
-      lowest = c
-      index_to_remove = idx
+      lowest, index_to_remove = c, idx
     end
   end
   table.remove(statusline, index_to_remove)
@@ -207,12 +201,9 @@ end
 --- @param available_space number?
 --- @return string
 function M.display(statusline, available_space)
-  local str = ''
   local items = available_space and prioritize(statusline, available_space) or statusline
-  for _, item in ipairs(items) do
-    if type(item.component) == 'string' and #item.component > 0 then str = str .. item.component end
-  end
-  return str
+  local components = vim.tbl_map(function(item) return item.component end, items)
+  return table.concat(components, '')
 end
 
 ---Aggregate pieces of the statusline
@@ -221,7 +212,12 @@ end
 function M.append(tbl)
   return function(...)
     for i = 1, select('#', ...) do
-      tbl[#tbl + 1] = select(i, ...)
+      local item = select(i, ...)
+      if not item.component or not type(item.component) == 'string' then
+        vim.notify('Invalid component: ' .. vim.inspect(item), vim.log.levels.ERROR)
+      else
+        tbl[#tbl + 1] = item
+      end
     end
   end
 end
