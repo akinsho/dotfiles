@@ -64,8 +64,8 @@ return {
     }
   end,
   keys = {
-    { 'n', '<leader>A', desc = 'projectionist: edit alternate' },
-    { 'n', '<leader>av', desc = 'projectionist: vsplit alternate' },
-    { 'n', '<leader>at', desc = 'projectionist: vsplit test' },
+    { '<leader>A', desc = 'projectionist: edit alternate' },
+    { '<leader>av', desc = 'projectionist: vsplit alternate' },
+    { '<leader>at', desc = 'projectionist: vsplit test' },
   },
 }
