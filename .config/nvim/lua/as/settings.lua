@@ -36,9 +36,9 @@ opt.fillchars = {
   diff = '╱', -- alternatives = ⣿ ░ ─
   msgsep = ' ', -- alternatives: ‾ ─
   fold = ' ',
-  foldopen = '▾',
+  foldopen = '▽', -- '▼'
+  foldclose = '▷', -- '▶'
   foldsep = ' ',
-  foldclose = '▸',
 }
 -----------------------------------------------------------------------------//
 -- Diff {{{1

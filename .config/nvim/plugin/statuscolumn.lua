@@ -1,13 +1,14 @@
 if not as or not as.has('nvim-0.9') then return end
 
-local fn, v, api = vim.fn, vim.v, vim.api
+local fn, v, api, opt, optl = vim.fn, vim.v, vim.api, vim.opt, vim.opt_local
 local ui, separators = as.ui, as.ui.icons.separators
 
 local space = ' '
+local fcs = opt.fillchars:get()
 local shade = separators.light_shade_block
 local separator = separators.left_thin_block -- '│'
-local fold_opened = '▽' -- '▼'
-local fold_closed = '▷' -- '▶'
+local fold_opened = fcs.foldopen
+local fold_closed = fcs.foldclose -- '▶'
 local sep_hl = '%#StatusColSep#'
 
 ui.statuscolumn = {}
@@ -93,9 +94,7 @@ vim.o.statuscolumn = '%{%v:lua.as.ui.statuscolumn.render()%}'
 as.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType' },
   command = function(args)
-    local buf = vim.bo[args.buf]
-    if ui.decorations.get(buf.ft, 'statuscolumn', 'ft') == false then
-      vim.opt_local.statuscolumn = ''
-    end
+    local has_statuscol = ui.decorations.get(vim.bo[args.buf].ft, 'statuscolumn', 'ft')
+    if has_statuscol == false then optl.statuscolumn = '' end
   end,
 })
