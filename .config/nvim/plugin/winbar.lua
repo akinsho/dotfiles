@@ -48,12 +48,15 @@ end
 ---@return string
 function as.ui.winbar.get()
   local winbar = {}
-  local add = str.winline(winbar)
+  local add = str.append(winbar)
 
   add(str.spacer(1))
 
   local bufname = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  if empty(bufname) then return add(component('[No name]', 'Winbar', { priority = 0 })) end
+  if empty(bufname) then
+    add(component('[No name]', 'Winbar', { priority = 0 }))
+    return winbar
+  end
 
   local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
 

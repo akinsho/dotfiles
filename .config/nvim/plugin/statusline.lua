@@ -27,7 +27,6 @@ local str = require('as.strings')
 local icons, lsp, highlight, decorations = as.ui.icons, as.ui.lsp, as.highlight, as.ui.decorations
 local api, fn, fs, fmt = vim.api, vim.fn, vim.fs, string.format
 local P = as.ui.palette
-local C = str.constants
 
 local sep = package.config:sub(1, 1)
 
@@ -588,9 +587,6 @@ end
 --- @param icon string | nil
 local function is_readonly(ctx, icon) return ctx.readonly and ' ' .. (icon or '') or '' end
 
-local separator = function() return { component = C.ALIGN, length = 0, priority = 0 } end
-local end_marker = function() return { component = C.END, length = 0, priority = 0 } end
-
 ----------------------------------------------------------------------------------------------------
 --  RENDER
 ----------------------------------------------------------------------------------------------------
@@ -638,7 +634,7 @@ function as.ui.statusline.render()
     }),
     str.spacer(1),
   }
-  local add = str.winline(statusline)
+  local add = str.append(statusline)
   ----------------------------------------------------------------------------//
   -- Filename
   ----------------------------------------------------------------------------//
@@ -745,7 +741,7 @@ function as.ui.statusline.render()
 
     component_if('Saving…', vim.g.is_saving, hls.comment, { before = ' ', priority = 1 }),
 
-    separator(),
+    str.separator(),
     -----------------------------------------------------------------------------//
     -- Middle section
     -----------------------------------------------------------------------------//
@@ -760,7 +756,7 @@ function as.ui.statusline.render()
     }),
 
     -- Start of the right side layout
-    separator(),
+    str.separator(),
     -----------------------------------------------------------------------------//
     -- Right section
     -----------------------------------------------------------------------------//
@@ -848,7 +844,7 @@ function as.ui.statusline.render()
       prefix_color = hls.statusline,
       priority = 6,
     }),
-    end_marker()
+    str.end_marker()
   )
   -- removes 5 columns to add some padding
   return str.display(statusline, available_space - 5)

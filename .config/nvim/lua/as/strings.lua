@@ -3,6 +3,8 @@ local strwidth = api.nvim_strwidth
 local fmt = string.format
 local empty = as.empty
 
+---@alias StringComponent {component: string, length: integer, priority: integer}
+
 local M = {}
 
 local constants = {
@@ -23,6 +25,11 @@ end
 ----------------------------------------------------------------------------------------------------
 -- COMPONENTS
 ----------------------------------------------------------------------------------------------------
+
+---@type fun(): StringComponent
+M.separator = function() return { component = constants.ALIGN, length = 0, priority = 0 } end
+---@type fun(): StringComponent
+M.end_marker = function() return { component = constants.END, length = 0, priority = 0 } end
 
 ---@param func_name string
 ---@param id string
@@ -47,6 +54,7 @@ end
 --- or to represent an empty component
 --- @param size integer?
 --- @param opts table<string, any>?
+--- @return StringComponent
 function M.spacer(size, opts)
   opts = opts or {}
   local filler = opts.filler or ' '
@@ -73,11 +81,13 @@ end
 --- @param item string | number
 --- @param hl string
 --- @param opts ComponentOpts
+--- @return StringComponent
 function M.component(item, hl, opts)
   -- do not allow empty values to be shown note 0 is considered empty
   -- since if there is nothing of something I don't need to see it
   if empty(item) then return M.spacer() end
-  assert(opts and opts.priority, fmt("each item's priority is required: %s is missing one", item))
+  if not opts then opts = {} end
+  if not opts.priority then opts.priority = 10 end
   opts.padding = opts.padding or { suffix = true, prefix = true }
   local padding = ' '
   local before, after = opts.before or '', opts.after or padding
@@ -194,7 +204,8 @@ local function prioritize(statusline, space, length)
 end
 
 --- @param statusline table
---- @param available_space number
+--- @param available_space number?
+--- @return string
 function M.display(statusline, available_space)
   local str = ''
   local items = available_space and prioritize(statusline, available_space) or statusline
@@ -206,8 +217,8 @@ end
 
 ---Aggregate pieces of the statusline
 ---@param tbl table
----@return function
-function M.winline(tbl)
+---@return fun(...:ComponentOpts)
+function M.append(tbl)
   return function(...)
     for i = 1, select('#', ...) do
       tbl[#tbl + 1] = select(i, ...)
