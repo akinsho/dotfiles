@@ -1,3 +1,4 @@
+if not as then return end
 local fn = vim.fn
 -- adapted from https://github.com/ethanholz/nvim-lastplace/blob/main/lua/nvim-lastplace/init.lua
 local ignore_buftype = { 'quickfix', 'nofile', 'help', 'terminal' }
@@ -10,7 +11,7 @@ as.augroup('LastPlace', {
 
     if vim.tbl_contains(ignore_filetype, vim.bo.filetype) then
       -- reset cursor to first line
-      vim.cmd([[normal! gg]])
+      vim.cmd('normal! gg')
       return
     end
 
@@ -26,10 +27,10 @@ as.augroup('LastPlace', {
       local win_first_line = fn.line('w0')
       -- Check if the last line of the buffer is the same as the win
       if win_last_line == buff_last_line then
-        vim.cmd([[normal! g`"]]) -- Set line to last line edited
+        vim.cmd('normal! g`"') -- Set line to last line edited
       -- Try to center
       elseif buff_last_line - last_line > ((win_last_line - win_first_line) / 2) - 1 then
-        vim.cmd([[normal! g`"zz]])
+        vim.cmd('normal! g`"zz')
       else
         vim.cmd([[normal! G'"<c-e>]])
       end
