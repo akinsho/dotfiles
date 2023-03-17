@@ -323,26 +323,18 @@ return {
   {
     'rainbowhxch/beacon.nvim',
     event = 'VeryLazy',
-    config = function()
-      local beacon = require('beacon')
-      beacon.setup({
-        minimal_jump = 20,
-        ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
-        ignore_filetypes = {
-          'qf',
-          'neo-tree',
-          'NeogitCommitMessage',
-          'NeogitPopup',
-          'NeogitStatus',
-          'trouble',
-        },
-      })
+    init = function()
       as.augroup('BeaconCmds', {
         event = 'BufReadPre',
         pattern = '*.norg',
-        command = function() beacon.beacon_off() end,
+        command = function() require('beacon').beacon_off() end,
       })
     end,
+    opts = {
+      minimal_jump = 20,
+      ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
+      ignore_filetypes = { 'qf', 'neo-tree', 'NeogitCommitMessage', 'NeogitPopup', 'NeogitStatus' },
+    },
   },
   {
     'mfussenegger/nvim-treehopper',
