@@ -488,16 +488,6 @@ local auto_resize = function()
 end
 command('AutoResize', auto_resize(), { nargs = '?' })
 -----------------------------------------------------------------------------//
-
-command( -- TODO: find a way to replace the native command with this implementation
-  'TreeInspect',
-  function()
-    vim.treesitter.inspect_tree({
-      command = fmt('botright %dvnew', math.min(math.floor(vim.o.columns * 0.25), 80)),
-    })
-  end
-)
------------------------------------------------------------------------------//
 -- References
 -----------------------------------------------------------------------------//
 -- 1.) https://www.reddit.com/r/vim/comments/i2x8xc/i_want_gf_to_create_files_if_they_dont_exist/
