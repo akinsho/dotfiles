@@ -54,13 +54,6 @@ local function nr(win)
   return padding .. lnum
 end
 
----@return string
----@return string|nil
-local function sep()
-  local separator_hl = (v.virtnum >= 0 and as.empty(v.relnum)) and sep_hl or nil
-  return separator, separator_hl
-end
-
 ---@param signs {name:string, text:string, texthl:string}[][]
 ---@return StringComponent[] sgns non-git signs
 ---@return StringComponent[] g_sgns list of git signs
@@ -72,9 +65,7 @@ local function signs_by_type(signs)
       if sn and sn[1].name:find('GitSign') then
         table.insert(g_sgn, str.component(sn[1].text, sn[1].texthl, opts))
       else
-        for _, s in ipairs(sn) do
-          table.insert(sgns, str.component(s.text, s.texthl, opts))
-        end
+        as.foreach(function(s) table.insert(sgns, str.component(s.text, s.texthl, opts)) end, sn)
       end
     else
       if #sgns < SIGN_COL_WIDTH then table.insert(sgns, str.spacer(1)) end
@@ -90,6 +81,8 @@ function ui.statuscolumn.render()
   local curbuf = api.nvim_win_get_buf(curwin)
   local signs = get_signs(curbuf)
   local sns, gitsign = signs_by_type(signs)
+  local is_absolute_lnum = v.virtnum >= 0 and as.empty(v.relnum)
+
   local statuscol = {}
   local add = str.append(statuscol)
   add(
@@ -102,7 +95,10 @@ function ui.statuscolumn.render()
   )
   add(unpack(sns))
   add(unpack(gitsign))
-  add(str.component(sep()), str.component(fdm()))
+  add(
+    str.component(separator, is_absolute_lnum and sep_hl or '', { after = '' }),
+    str.component(fdm())
+  )
   return str.display(statuscol)
 end
 

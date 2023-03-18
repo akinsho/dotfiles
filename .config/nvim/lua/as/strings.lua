@@ -197,7 +197,7 @@ local function prioritize(statusline, space, length)
   return prioritize(statusline, space, length - lowest.length)
 end
 
---- @param statusline table
+--- @param statusline StringComponent[]
 --- @param available_space number?
 --- @return string
 function M.display(statusline, available_space)
@@ -207,7 +207,7 @@ function M.display(statusline, available_space)
 end
 
 ---Aggregate pieces of the statusline
----@param tbl table
+---@param tbl StringComponent[]
 ---@return fun(...:ComponentOpts)
 function M.append(tbl)
   return function(...)
