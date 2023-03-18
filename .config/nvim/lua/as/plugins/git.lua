@@ -145,7 +145,7 @@ return {
         untracked = { text = icons.light_shade_block },
       },
       -- Experimental ------------------------------------------------------------------------------
-      -- _signs_staged_enable = true,
+      _signs_staged_enable = false,
       ----------------------------------------------------------------------------------------------
       current_line_blame = not cwd():match('dotfiles'),
       current_line_blame_formatter = ' <author>, <author_time> · <summary>',
