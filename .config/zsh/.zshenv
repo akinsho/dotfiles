@@ -82,7 +82,7 @@ export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 
 # preferred editor for local and remote sessions
-export VISUAL="nvim"
+export VISUAL="nvim --cmd 'let g:flatten_wait=1'"
 export EDITOR="nvim"
 
 export USE_EDITOR=$EDITOR
