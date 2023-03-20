@@ -58,20 +58,17 @@ end
 ---@return StringComponent[] sgns non-git signs
 ---@return StringComponent[] g_sgns list of git signs
 local function signs_by_type(signs)
-  local sgns, g_sgn, opts, i = {}, {}, { after = '' }, 1
-  while #sgns < SIGN_COL_WIDTH or #g_sgn < GIT_COL_WIDTH do
-    if i <= #signs then
-      local sn = signs[i]
-      if sn and sn[1].name:find('GitSign') then
-        table.insert(g_sgn, str.component(sn[1].text, sn[1].texthl, opts))
-      else
-        as.foreach(function(s) table.insert(sgns, str.component(s.text, s.texthl, opts)) end, sn)
-      end
+  local sgns, g_sgn, opts = {}, {}, { after = '' }
+  for _, sn in ipairs(signs) do
+    if sn[1].name:find('GitSign') then
+      table.insert(g_sgn, str.component(sn[1].text, sn[1].texthl, opts))
     else
-      if #sgns < SIGN_COL_WIDTH then table.insert(sgns, str.spacer(1)) end
-      if #g_sgn < GIT_COL_WIDTH then table.insert(g_sgn, str.spacer(1)) end
+      as.foreach(function(s) table.insert(sgns, str.component(s.text, s.texthl, opts)) end, sn)
     end
-    i = i + 1
+  end
+  while #sgns < SIGN_COL_WIDTH or #g_sgn < GIT_COL_WIDTH do
+    if #sgns < SIGN_COL_WIDTH then table.insert(sgns, str.spacer(1)) end
+    if #g_sgn < GIT_COL_WIDTH then table.insert(g_sgn, str.spacer(1)) end
   end
   return sgns, g_sgn
 end
