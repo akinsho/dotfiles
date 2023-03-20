@@ -1,4 +1,4 @@
-local opt, api, fn, cmd, fmt = vim.opt, vim.api, vim.fn, vim.cmd, string.format
+local opt, api, fn, cmd = vim.opt, vim.api, vim.fn, vim.cmd
 local ui, border, highlight = as.ui, as.ui.current.border, as.highlight
 
 return {
@@ -195,26 +195,13 @@ return {
   {
     'SmiteshP/nvim-navic',
     dependencies = { 'neovim/nvim-lspconfig' },
-    config = function()
-      vim.g.navic_silence = true
-      local misc = ui.icons.misc
-
-      highlight.plugin('navic', {
-        { NavicText = { bold = true } },
-        { NavicSeparator = { link = 'Directory' } },
-      })
-      local icons = as.map(function(icon, key)
-        highlight.set(fmt('NavicIcons%s', key), { link = ui.lsp.highlights[key] })
-        return icon .. ' '
-      end, ui.current.lsp_icons)
-
-      require('nvim-navic').setup({
-        icons = icons,
-        highlight = true,
-        depth_limit_indicator = misc.ellipsis,
-        separator = (' %s '):format(misc.arrow_right),
-      })
-    end,
+    init = function() vim.g.navic_silence = true end,
+    opts = {
+      highlight = false,
+      icons = ui.current.lsp_icons,
+      depth_limit_indicator = ui.icons.misc.ellipsis,
+      separator = (' %s '):format(ui.icons.misc.arrow_right),
+    },
   },
   {
     'folke/todo-comments.nvim',

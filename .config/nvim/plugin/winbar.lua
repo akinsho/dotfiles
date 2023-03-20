@@ -7,9 +7,9 @@ local decorations = as.ui.decorations
 
 local fn, api = vim.fn, vim.api
 local component = str.component
-local component_raw = str.component_raw
 local empty = as.empty
 local icons = as.ui.icons.misc
+local lsp_hl = as.ui.lsp.highlights
 
 local dir_separator = '/'
 local separator = icons.arrow_right
@@ -39,10 +39,19 @@ local function breadcrumbs()
   local ok, navic = pcall(require, 'nvim-navic')
   local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
   if not ok or not navic.is_available() then return empty_state end
-  local navic_ok, location = pcall(navic.get_location)
-  if not navic_ok or empty(location) then return empty_state end
-  local win = api.nvim_get_current_win()
-  return { component_raw(location, { priority = 1, win_id = win, type = 'winbar' }) }
+  local navic_ok, data = pcall(navic.get_data)
+  if not navic_ok or empty(data) then return empty_state end
+  return as.map(function(crumb, index)
+    local priority = #data - index - 1
+    return component(crumb.name, 'WinbarCrumb', {
+      priority = priority,
+      max_size = 35,
+      prefix = crumb.icon:gsub('%s', ''),
+      prefix_color = lsp_hl[crumb.type] or 'NonText',
+      suffix = #data > index and separator or '',
+      suffix_color = 'Directory',
+    })
+  end, data)
 end
 
 ---@return string
