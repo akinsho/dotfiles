@@ -388,7 +388,7 @@ diagnostic.config({
   underline = true,
   update_in_insert = false,
   severity_sort = false,
-  virtual_text = {
+  virtual_text = false and {
     severity = S.ERROR,
     spacing = 1,
     prefix = '',
