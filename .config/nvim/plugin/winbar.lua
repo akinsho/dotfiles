@@ -24,7 +24,13 @@ as.ui.winbar.state = {}
 ---@param _ "l"|"r"|"m" the button clicked
 ---@param _ string modifiers
 function as.ui.winbar.click(id, _, _, _)
-  if id then vim.cmd.edit(as.ui.winbar.state[id]) end
+  if not id then return end
+  local item = as.ui.winbar.state[id]
+  if type(item) == 'string' then vim.cmd.edit(as.ui.winbar.state[id]) end
+  if type(item) == 'table' and item.start then
+    local win = fn.getmousepos().winid
+    api.nvim_win_set_cursor(win, { item.start.line, item.start.character })
+  end
 end
 
 as.highlight.plugin('winbar', {
@@ -42,11 +48,14 @@ local function breadcrumbs()
   local navic_ok, data = pcall(navic.get_data)
   if not navic_ok or empty(data) then return empty_state end
   return as.map(function(crumb, index)
-    local priority = #data - index - 1
+    local priority = #as.ui.winbar.state + #data - index
+    as.ui.winbar.state[priority] = crumb.scope
     return component(crumb.name, 'WinbarCrumb', {
       priority = priority,
+      id = priority,
+      click = 'v:lua.as.ui.winbar.click',
       max_size = 35,
-      prefix = crumb.icon:gsub('%s', ''),
+      prefix = crumb.icon,
       prefix_color = lsp_hl[crumb.type] or 'NonText',
       suffix = #data > index and separator or '',
       suffix_color = 'Directory',
