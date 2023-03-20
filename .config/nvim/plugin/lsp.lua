@@ -307,22 +307,23 @@ do
     if not is_buffer_valid(api.nvim_get_current_buf()) then return end
 
     diagnostic.setqflist({ open = false, title = TITLE })
-    as.toggle_qf_list()
+    as.list.toggle.qf()
 
-    if not as.is_vim_list_open() and id then
+    if not as.list.is_open() and id then
       api.nvim_del_autocmd(id)
       id = nil
     end
 
-    id = id
-      or api.nvim_create_autocmd('DiagnosticChanged', {
+    if not id then
+      id = api.nvim_create_autocmd('DiagnosticChanged', {
         callback = function()
           -- skip QF lists that we did not populate
-          if not as.is_vim_list_open() or fn.getqflist({ title = 0 }).title ~= TITLE then return end
+          if not as.list.is_open() or fn.getqflist({ title = 0 }).title ~= TITLE then return end
           diagnostic.setqflist({ open = false, title = TITLE })
-          if #fn.getqflist() == 0 then as.toggle_qf_list() end
+          if #fn.getqflist() == 0 then as.list.toggle.qf() end
         end,
       })
+    end
   end
   command('LspDiagnostics', smart_quickfix_diagnostics)
   map('n', '<leader>ll', '<Cmd>LspDiagnostics<CR>', { desc = 'toggle quickfix diagnostics' })
