@@ -60,23 +60,28 @@ local function signs_by_type(signs)
   return sgns, g_sgn
 end
 
+--- TODO: currently auto-resizing the statuscolumn does not update each line but only the line with
+--- the most signs. The simplest solution would be to use the "%s" signcolumn component but this
+--- currently includes the git signs which I'm trying to specifically position at then end of the statuscolumn.
+--- if gitsigns ever supports query signs per line refactor this to use that API and just use "%s"
+--- alternatively calculate the max width of the statuscolumn and use that to adjust all lines.
 function ui.statuscolumn.render()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
   local signs = get_signs(curbuf)
   local sns, gitsign = signs_by_type(signs)
+
   local is_absolute_lnum = v.virtnum >= 0 and as.empty(v.relnum)
+  local separator_hl = is_absolute_lnum and sep_hl or nil
 
   local statuscol = {}
   local add = str.append(statuscol)
 
-  add(str.spacer(1), str.separator(), str.component(nr(curwin)))
+  add(str.separator(), str.spacer(1), str.component(nr(curwin)))
   add(unpack(sns))
   add(unpack(gitsign))
-  add(
-    str.component(separator, is_absolute_lnum and sep_hl or '', { after = '' }),
-    str.component(fdm())
-  )
+  add(str.component(separator, separator_hl, { after = '' }), str.component(fdm()))
+
   return str.display(statuscol)
 end
 
