@@ -1,4 +1,4 @@
-local opt, api, fn, cmd = vim.opt, vim.api, vim.fn, vim.cmd
+local opt, api, fn, cmd, fmt = vim.opt, vim.api, vim.fn, vim.cmd, string.format
 local ui, border, highlight = as.ui, as.ui.current.border, as.highlight
 
 return {
@@ -126,7 +126,7 @@ return {
     keys = {
       {
         '<leader>rn',
-        function() return ':IncRename ' .. fn.expand('<cword>') end,
+        function() return fmt(':IncRename %s', fn.expand('<cword>')) end,
         expr = true,
         silent = false,
         desc = 'lsp: incremental rename',
