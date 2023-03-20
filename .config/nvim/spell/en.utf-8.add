@@ -280,3 +280,4 @@ autocmd
 arg
 neorg
 startup
+lockfile
