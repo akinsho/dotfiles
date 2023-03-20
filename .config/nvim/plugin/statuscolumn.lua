@@ -24,19 +24,6 @@ local function get_signs(buf)
   end, fn.sign_getplaced(buf, { group = '*', lnum = v.lnum })[1].signs)
 end
 
-function ui.statuscolumn.toggle_breakpoint(_, _, _, mods)
-  local ok, dap = pcall(require, 'dap')
-  if not ok then return end
-  if mods:find('c') then
-    vim.ui.input(
-      { prompt = 'Breakpoint condition: ' },
-      function(input) dap.set_breakpoint(input) end
-    )
-  else
-    dap.toggle_breakpoint()
-  end
-end
-
 local function fdm()
   if fn.foldlevel(v.lnum) <= fn.foldlevel(v.lnum - 1) then return space end
   return fn.foldclosed(v.lnum) == -1 and fold_closed or fold_opened
@@ -82,14 +69,8 @@ function ui.statuscolumn.render()
 
   local statuscol = {}
   local add = str.append(statuscol)
-  add(
-    str.separator(),
-    str.spacer(1),
-    str.component(nr(curwin), '', {
-      id = curwin,
-      click = 'v:lua.as.ui.statuscolumn.toggle_breakpoint',
-    })
-  )
+
+  add(str.spacer(1), str.separator(), str.component(nr(curwin)))
   add(unpack(sns))
   add(unpack(gitsign))
   add(
