@@ -169,6 +169,52 @@ local function rename_file()
   lsp.util.rename(old_name, new_name)
 end
 
+----------------------------------------------------------------------------------------------------
+--  Related Locations
+----------------------------------------------------------------------------------------------------
+-- This relates to https://github.com/neovim/neovim/issues/19649#issuecomment-1327287313
+-- neovim does not currently correctly report the related locations for diagnostics.
+-- TODO: once a PR for this is merged delete this workaround
+
+local function get_lines(location)
+  local uri = location.targetUri or location.uri
+  if not uri then return end
+  local bufnr = vim.uri_to_bufnr(uri)
+  if not api.nvim_buf_is_loaded(bufnr) then fn.bufload(bufnr) end
+  local range = location.targetRange or location.range
+
+  local lines = api.nvim_buf_get_lines(bufnr, range.start.line, range['end'].line + 1, false)
+  return table.concat(lines, '\n')
+end
+
+local function show_related_locations(diag)
+  local message = diag.message
+  local client = lsp.get_active_clients({ name = message.source })[1]
+  if not client then return diag.message end
+  ---@type {messages: string[], locations: {filename: string}[]}?
+  local related_info = vim.tbl_get(diag, 'user_data', 'lsp', 'relatedInformation')
+  if not related_info then return diag.message end
+
+  local related = { messages = {}, locations = {} }
+  for _, info in ipairs(related_info) do
+    table.insert(related.messages, info.message)
+    table.insert(related.locations, info.location)
+  end
+
+  for i, loc in ipairs(lsp.util.locations_to_items(related.locations, client.offset_encoding)) do
+    message = fmt(
+      '%s\n%s (%s:%d):\n\t%s',
+      message,
+      related.messages[i],
+      fn.fnamemodify(loc.filename, ':.'),
+      loc.lnum,
+      get_lines(related.locations[i])
+    )
+  end
+
+  return message
+end
+
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
@@ -398,6 +444,7 @@ diagnostic.config({
     end,
   },
   float = {
+    format = show_related_locations,
     max_width = max_width,
     max_height = max_height,
     border = border,
