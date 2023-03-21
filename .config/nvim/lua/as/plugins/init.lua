@@ -189,7 +189,10 @@ return {
     cmd = { 'CccHighlighterToggle' },
     opts = {
       win_opts = { border = border },
-      highlighter = { auto_enable = true, excludes = { 'dart', 'lazy', 'orgagenda', 'org' } },
+      highlighter = {
+        auto_enable = true,
+        excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus' },
+      },
     },
   },
   {
