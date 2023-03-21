@@ -1,18 +1,11 @@
-local api = vim.api
-local strwidth = api.nvim_strwidth
-local fmt = string.format
-local empty = as.empty
+local api, L = vim.api, vim.log.levels
+local strwidth, fmt, empty = api.nvim_strwidth, string.format, as.empty
 
 ---@alias StringComponent {component: string, length: integer, priority: integer}
 
 local M = {}
 
-local constants = {
-  HL_END = '%*',
-  ALIGN = '%=',
-  END = '%<',
-  CLICK_END = '%X',
-}
+local constants = { HL_END = '%*', ALIGN = '%=', END = '%<', CLICK_END = '%X' }
 
 M.constants = constants
 
@@ -40,7 +33,7 @@ local function get_click_start(func_name, id)
       function()
         vim.notify_once(
           fmt('An ID is needed to enable click handler %s to work', func_name),
-          vim.log.levels.ERROR,
+          L.ERROR,
           { title = 'Statusline' }
         )
       end
@@ -106,7 +99,9 @@ function M.component(item, hl, opts)
   if type(item) ~= 'string' then item = tostring(item) end
 
   if opts.max_size and item and #item >= opts.max_size then
-    item = item:sub(1, opts.max_size - 1) .. '…'
+    -- replace contents of quotes with ellipsis
+    local match, count = item:gsub('([\'"]).*%1', '%1…%1')
+    item = count > 0 and match or item:sub(1, opts.max_size - 1) .. '…'
   end
 
   return {
@@ -186,8 +181,7 @@ end
 local function prioritize(statusline, space, length)
   length = length or sum_lengths(statusline)
   if length <= space then return statusline end
-  local lowest
-  local index_to_remove
+  local lowest, index_to_remove
   for idx, c in ipairs(statusline) do
     if is_lowest(c, lowest) then
       lowest, index_to_remove = c, idx
