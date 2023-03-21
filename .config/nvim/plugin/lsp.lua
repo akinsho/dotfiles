@@ -56,14 +56,10 @@ local function formatting_filter(client)
   return not vim.tbl_contains(exceptions, client.name)
 end
 
----@param opts table<string, any>
+---@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
 local function format(opts)
   opts = opts or {}
-  vim.lsp.buf.format({
-    bufnr = opts.bufnr,
-    async = opts.async,
-    filter = formatting_filter,
-  })
+  lsp.buf.format({ bufnr = opts.bufnr, async = opts.async, filter = formatting_filter })
 end
 
 --- Autocommands are created per buffer per feature, i.e. if buffer 8 attaches an LSP server
