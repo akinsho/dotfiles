@@ -80,7 +80,7 @@ return {
   },
   {
     'rcarriga/nvim-notify',
-    init = function()
+    config = function()
       highlight.plugin('notify', {
         { NotifyERRORBorder = { bg = { from = 'NormalFloat' } } },
         { NotifyWARNBorder = { bg = { from = 'NormalFloat' } } },
