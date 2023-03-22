@@ -60,8 +60,12 @@ return {
         rainbow = {
           enable = true, -- TODO: contribute dart support to ts-rainbow
           disable = false,
-          query = 'rainbow-parens',
-          strategy = { require('ts-rainbow.strategy.global') },
+          query = {
+            'rainbow-parens',
+            tsx = function() return nil end,
+            javascript = function() return nil end,
+          },
+          strategy = { require('ts-rainbow.strategy.local') },
         },
         autopairs = { enable = true },
         context_commentstring = { enable = true },
