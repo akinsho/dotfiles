@@ -415,9 +415,9 @@ nnoremap('gx', open_link)
 
 nnoremap('gf', '<Cmd>e <cfile><CR>')
 
-nnoremap('<leader>ls', as.list.toggle.qf, { desc = 'toggle quickfix list' })
-nnoremap('<leader>li', as.list.toggle.loc, { desc = 'toggle location list' })
-
+-----------------------------------------------------------------------------//
+nnoremap('<leader>ls', as.list.qf.toggle, { desc = 'toggle quickfix list' })
+nnoremap('<leader>ll', as.list.loc.toggle, { desc = 'toggle location list' })
 -----------------------------------------------------------------------------//
 -- Completion
 -----------------------------------------------------------------------------//

@@ -323,6 +323,13 @@ as.augroup('LspSetupCommands', {
       state.clients = vim.tbl_filter(function(id) return id ~= client_id end, state.clients)
     end
   end,
+}, {
+  event = 'DiagnosticChanged',
+  desc = 'Update the diagnostic locations',
+  command = function(args)
+    diagnostic.setloclist({ open = false })
+    if #args.data.diagnostics == 0 then vim.cmd('silent! lclose') end
+  end,
 })
 -----------------------------------------------------------------------------//
 -- Commands
@@ -330,9 +337,6 @@ as.augroup('LspSetupCommands', {
 local command = as.command
 
 command('LspFormat', function() format({ bufnr = 0, async = false }) end)
-command('LspDiagnostics', function() diagnostic.setqflist({ open = true }) end)
-
-map('n', '<leader>ll', '<Cmd>LspDiagnostics<CR>', { desc = 'toggle quickfix diagnostics' })
 
 -----------------------------------------------------------------------------//
 -- Signs

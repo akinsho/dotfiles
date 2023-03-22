@@ -146,16 +146,6 @@ as.augroup('WindowBehaviours', {
   pattern = { '*' },
   command = 'nnoremap <silent><buffer><nowait> q <C-W>c',
 }, {
-  event = { 'QuickFixCmdPost' }, -- Automatically jump into the quickfix window on open
-  pattern = { '[^l]*' },
-  nested = true,
-  command = 'cwindow',
-}, {
-  event = { 'QuickFixCmdPost' },
-  pattern = { 'l*' },
-  nested = true,
-  command = 'lwindow',
-}, {
   event = { 'BufWinEnter' },
   command = function(args)
     if vim.wo.diff then vim.diagnostic.disable(args.buf) end

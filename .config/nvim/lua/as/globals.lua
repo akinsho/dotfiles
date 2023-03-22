@@ -1,6 +1,4 @@
-local fn = vim.fn
-local api = vim.api
-local fmt = string.format
+local fn, api, cmd, fmt = vim.fn, vim.api, vim.cmd, string.format
 local l = vim.log.levels
 
 ----------------------------------------------------------------------------------------------------
@@ -87,42 +85,39 @@ end
 ---------------------------------------------------------------------------------
 -- Quickfix and Location List
 ---------------------------------------------------------------------------------
---- Utility function to toggle the location or the quickfix list
----@param list_type '"quickfix"' | '"location"'
----@return string?
-local function toggle_list(list_type)
-  local is_location_target = list_type == 'location'
-  local cmd = is_location_target and { 'lclose', 'lopen' } or { 'cclose', 'copen' }
-  local is_open = as.list.is_open()
-  if is_open then return vim.cmd[cmd[1]]() end
-  local list = is_location_target and fn.getloclist(0) or fn.getqflist()
-  if vim.tbl_isempty(list) then
-    local msg_prefix = (is_location_target and 'Location' or 'QuickFix')
-    return vim.notify(msg_prefix .. ' List is Empty.', vim.log.levels.WARN)
-  end
 
-  local winnr = fn.winnr()
-  vim.cmd[cmd[2]]()
-  if fn.winnr() ~= winnr then vim.cmd.wincmd('p') end
+as.list = { qf = {}, loc = {} }
+
+---@param list_type "loclist" | "quickfix"
+---@return boolean
+local function is_list_open(list_type)
+  return as.find(function(win) return not as.empty(win[list_type]) end, fn.getwininfo()) ~= nil
 end
 
-as.list = {
-  toggle = {
-    qf = function() toggle_list('quickfix') end,
-    loc = function() toggle_list('location') end,
-  },
-}
+local silence = { mods = { silent = true, emsg_silent = true } }
 
----Check whether or not the location or quickfix list is open
----@return boolean
-function as.list.is_open()
-  for _, win in ipairs(api.nvim_list_wins()) do
-    local buf = api.nvim_win_get_buf(win)
-    local location_list = fn.getloclist(0, { filewinid = 0 })
-    local is_loc_list = location_list.filewinid > 0
-    if vim.bo[buf].filetype == 'qf' or is_loc_list then return true end
+---@param callback fun(...)
+local function preserve_window(callback, ...)
+  local win = api.nvim_get_current_win()
+  callback(...)
+  if win ~= api.nvim_get_current_win() then cmd.wincmd('p') end
+end
+
+function as.list.qf.toggle()
+  if is_list_open('quickfix') then
+    cmd.cclose(silence)
+  elseif #fn.getqflist() > 0 then
+    preserve_window(cmd.copen, silence)
   end
-  return false
+end
+
+function as.list.loc.toggle()
+  if is_list_open('loclist') then
+    cmd.lclose(silence)
+  elseif #fn.getloclist(0) > 0 then
+    preserve_window(cmd.lopen, silence)
+  end
+end
 end
 ---------------------------------------------------------------------------------
 
@@ -214,13 +209,13 @@ end
 
 --- Validate the keys passed to as.augroup are valid
 ---@param name string
----@param cmd Autocommand
-local function validate_autocmd(name, cmd)
+---@param _cmd Autocommand
+local function validate_autocmd(name, _cmd)
   local keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
   local incorrect = as.fold(function(accum, _, key)
     if not vim.tbl_contains(keys, key) then table.insert(accum, key) end
     return accum
-  end, cmd, {})
+  end, _cmd, {})
   if #incorrect == 0 then return end
   vim.schedule(
     function()
