@@ -400,18 +400,17 @@ end
 -----------------------------------------------------------------------------//
 -- GX - replicate netrw functionality
 -----------------------------------------------------------------------------//
-local function open_link()
+nnoremap('gx', function()
   local file = fn.expand('<cfile>')
   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
 
   if file:match('http[s]?://') then return open(file) end
 
   -- consider anything that looks like string/string a github link
-  local plugin_url_regex = '[%a%d%-%.%_]*%/[%a%d%-%.%_]*'
-  local link = string.match(file, plugin_url_regex)
+  local link = file:match('[%a%d%-%.%_]*%/[%a%d%-%.%_]*')
   if link then return open(fmt('https://www.github.com/%s', link)) end
-end
-nnoremap('gx', open_link)
+end)
+-----------------------------------------------------------------------------//
 
 nnoremap('gf', '<Cmd>e <cfile><CR>')
 
