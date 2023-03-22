@@ -1,39 +1,24 @@
 ---@diagnostic disable: duplicate-doc-param
 
 if not as or not as.ui.winbar.enable then return end
+local navic_loaded, navic = pcall(require, 'nvim-navic')
 
 local str = require('as.strings')
-local decorations = as.ui.decorations
 
 local fn, api = vim.fn, vim.api
-local component = str.component
-local empty = as.empty
-local icons = as.ui.icons.misc
+local icons, decorations, highlight = as.ui.icons.misc, as.ui.decorations, as.highlight
 local lsp_hl = as.ui.lsp.highlights
+local component, empty = str.component, as.empty
 
 local dir_separator = '/'
 local separator = icons.arrow_right
 local ellipsis = icons.ellipsis
 
 --- A mapping of each winbar items ID to its path
---- @type table<string, string>
-as.ui.winbar.state = {}
+---@type (string|{start: {line: integer, character: integer}})[]
+local state = {}
 
----@param id number
----@param _ number number of clicks
----@param _ "l"|"r"|"m" the button clicked
----@param _ string modifiers
-function as.ui.winbar.click(id, _, _, _)
-  if not id then return end
-  local item = as.ui.winbar.state[id]
-  if type(item) == 'string' then vim.cmd.edit(as.ui.winbar.state[id]) end
-  if type(item) == 'table' and item.start then
-    local win = fn.getmousepos().winid
-    api.nvim_win_set_cursor(win, { item.start.line, item.start.character })
-  end
-end
-
-as.highlight.plugin('winbar', {
+highlight.plugin('winbar', {
   { Winbar = { bold = false } },
   { WinbarNC = { bold = false } },
   { WinbarCrumb = { bold = true } },
@@ -41,15 +26,28 @@ as.highlight.plugin('winbar', {
   { WinbarDirectory = { inherit = 'Directory' } },
 })
 
+---@param id number
+---@param _ number number of clicks
+---@param _ "l"|"r"|"m" the button clicked
+---@param _ string modifiers
+function as.ui.winbar.click(id, _, _, _)
+  if not id then return end
+  local item = state[id]
+  if type(item) == 'string' then vim.cmd.edit(item) end
+  if type(item) == 'table' and item.start then
+    local win = fn.getmousepos().winid
+    api.nvim_win_set_cursor(win, { item.start.line, item.start.character })
+  end
+end
+
 local function breadcrumbs()
-  local ok, navic = pcall(require, 'nvim-navic')
   local empty_state = { component(ellipsis, 'NonText', { priority = 0 }) }
-  if not ok or not navic.is_available() then return empty_state end
-  local navic_ok, data = pcall(navic.get_data)
-  if not navic_ok or empty(data) then return empty_state end
+  if not navic.is_available() then return empty_state end
+  local ok, data = pcall(navic.get_data)
+  if not ok or empty(data) then return empty_state end
   return as.map(function(crumb, index)
-    local priority = #as.ui.winbar.state + #data - index
-    as.ui.winbar.state[priority] = crumb.scope
+    local priority = #state + #data - index
+    state[priority] = crumb.scope
     return component(crumb.name, 'WinbarCrumb', {
       priority = priority,
       id = priority,
@@ -64,7 +62,8 @@ local function breadcrumbs()
 end
 
 ---@return string
-function as.ui.winbar.get()
+function as.ui.winbar.render()
+  state = {}
   local winbar = {}
   local add = str.append(winbar)
 
@@ -84,7 +83,7 @@ function as.ui.winbar.get()
     local sep = is_last and separator or dir_separator
     local hl = is_last and 'Winbar' or 'NonText'
     local suffix_hl = is_last and 'WinbarDirectory' or 'NonText'
-    as.ui.winbar.state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
+    state[priority] = table.concat(vim.list_slice(parts, 1, index), '/')
     add(component(part, hl, {
       id = priority,
       priority = priority,
@@ -93,7 +92,7 @@ function as.ui.winbar.get()
       suffix_color = suffix_hl,
     }))
   end, parts)
-  add(unpack(breadcrumbs()))
+  if navic_loaded then add(unpack(breadcrumbs())) end
   return str.display(winbar, api.nvim_win_get_width(api.nvim_get_current_win()))
 end
 
@@ -112,7 +111,7 @@ local function set_winbar()
         and ft ~= ''
         and not is_diff
       then
-        win.winbar = '%{%v:lua.as.ui.winbar.get()%}'
+        win.winbar = '%{%v:lua.as.ui.winbar.render()%}'
       elseif is_diff then
         win.winbar = nil
       end
