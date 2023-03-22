@@ -113,14 +113,8 @@ return {
     { 'molecule-man/telescope-menufacture' },
     { 'natecraddock/telescope-zf-native.nvim' },
     { 'nvim-telescope/telescope-live-grep-args.nvim' },
-    {
-      'nvim-telescope/telescope-smart-history.nvim',
-      dependencies = { { 'kkharji/sqlite.lua' } },
-    },
-    {
-      'nvim-telescope/telescope-frecency.nvim',
-      dependencies = { { 'kkharji/sqlite.lua' } },
-    },
+    { 'nvim-telescope/telescope-smart-history.nvim', dependencies = { { 'kkharji/sqlite.lua' } } },
+    { 'nvim-telescope/telescope-frecency.nvim', dependencies = { { 'kkharji/sqlite.lua' } } },
   },
   config = function()
     local actions = require('telescope.actions')
@@ -133,8 +127,7 @@ return {
       pattern = 'TelescopePreviewerLoaded',
       command = function(args)
         --- TODO: Contribute upstream change to telescope to pass preview buffer data in autocommand
-        local bufname = vim.tbl_get(args, 'data', 'bufname')
-        local ft = bufname and require('plenary.filetype').detect(bufname) or nil
+        local ft = vim.tbl_get(args, 'data', 'filetype')
         vim.opt_local.number = not ft or ui.decorations.get(ft, 'number', 'ft') ~= false
       end,
     })
