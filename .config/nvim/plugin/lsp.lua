@@ -393,11 +393,12 @@ diagnostic.config({
     max_width = max_width,
     max_height = max_height,
     border = border,
+    header = { ' Problems', 'UnderlinedTitle' },
     focusable = true,
-    source = 'always',
-    prefix = function(diag, i, _)
+    source = 'if_many',
+    prefix = function(diag)
       local level = diagnostic.severity[diag.severity]
-      local prefix = fmt('%d. %s ', i, icons[level:lower()])
+      local prefix = fmt('%s ', icons[level:lower()])
       return prefix, 'Diagnostic' .. level:gsub('^%l', string.upper)
     end,
   },
