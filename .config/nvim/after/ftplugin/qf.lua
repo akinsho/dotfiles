@@ -13,8 +13,8 @@ opt.winfixheight = true
 ----------------------------------------------------------------------------------
 -- Helper functions
 ----------------------------------------------------------------------------------
-map('n', 'dd', as.qf.delete, { desc = 'delete current quickfix entry', buffer = 0 })
-map('v', 'd', as.qf.delete, { desc = 'delete selected quickfix entry', buffer = 0 })
+map('n', 'dd', as.list.qf.delete, { desc = 'delete current quickfix entry', buffer = 0 })
+map('v', 'd', as.list.qf.delete, { desc = 'delete selected quickfix entry', buffer = 0 })
 ----------------------------------------------------------------------------------
 -- Mappings
 ----------------------------------------------------------------------------------

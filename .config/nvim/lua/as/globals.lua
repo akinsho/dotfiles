@@ -118,6 +118,27 @@ function as.list.loc.toggle()
     preserve_window(cmd.lopen, silence)
   end
 end
+
+-- @see: https://vi.stackexchange.com/a/21255
+-- using range-aware function
+function as.list.qf.delete(bufnr)
+  bufnr = bufnr or api.nvim_get_current_buf()
+  local list = fn.getqflist()
+  local line = api.nvim_win_get_cursor(0)[1]
+  -- FIXME: get visual selection so this functionality can work in visual mode
+  if api.nvim_get_mode().mode == 'v' then
+    local first_line = api.nvim_buf_get_mark(0, '<')[1]
+    local last_line = api.nvim_buf_get_mark(0, '>')[1]
+    list = as.fold(function(accum, item, i)
+      if i < first_line or i > last_line then table.insert(accum, item) end
+      return accum
+    end, list)
+  else
+    table.remove(list, line)
+  end
+  -- replace items in the current list, do not make a new copy of it; this also preserves the list title
+  fn.setqflist({}, 'r', { items = list })
+  fn.setpos('.', { bufnr, line, 1, 0 }) -- restore current line
 end
 ---------------------------------------------------------------------------------
 
