@@ -109,7 +109,7 @@ return {
         end,
         render = function(...)
           local notification = select(2, ...)
-          local style = as.empty(notification.title[1]) and 'minimal' or 'default'
+          local style = as.falsy(notification.title[1]) and 'minimal' or 'default'
           require('notify.render')[style](...)
         end,
       })
@@ -135,7 +135,7 @@ return {
         -- since if there is a custom buftype it's probably a special buffer we always want to pay
         -- attention to whilst its open.
         -- BUG: neo-tree cannot be ignore as either nofile or by filetype as this causes tinting bugs
-        if win.diff or not as.empty(fn.win_gettype(win_id)) then return true end
+        if win.diff or not as.falsy(fn.win_gettype(win_id)) then return true end
         local ignore_bt = as.p_table({ terminal = true, prompt = true, nofile = false })
         local ignore_ft = as.p_table({ ['Telescope.*'] = true, ['Neogit.*'] = true, ['qf'] = true })
         local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
@@ -209,7 +209,7 @@ return {
           local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
 
           local data, err = as.highlight.get('Normal')
-          if as.empty(data) or err then return defaults.highlights end
+          if as.falsy(data) or err then return defaults.highlights end
 
           local normal_bg, normal_fg = data.background, data.foreground
           local visible = as.highlight.alter_color(normal_fg, -40)

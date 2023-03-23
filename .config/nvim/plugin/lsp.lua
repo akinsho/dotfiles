@@ -177,7 +177,7 @@ local function show_related_locations(diag)
       fn.fnamemodify(vim.uri_to_fname(info.location.uri), ':p:.'),
       info.location.range.start.line + 1,
       info.location.range.start.character + 1,
-      not as.empty(info.message) and (': %s'):format(info.message) or ''
+      not as.falsy(info.message) and (': %s'):format(info.message) or ''
     )
   end
   return diag

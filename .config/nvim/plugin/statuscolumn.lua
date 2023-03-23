@@ -1,4 +1,4 @@
-if not as or not as.has('nvim-0.9') then return end
+if not as or not as.has('nvim-0.9') or not as.ui.statuscolumn.enable then return end
 
 local fn, v, api, opt, optl = vim.fn, vim.v, vim.api, vim.opt, vim.opt_local
 local ui, separators = as.ui, as.ui.icons.separators
@@ -9,8 +9,6 @@ local fcs = opt.fillchars:get()
 local fold_opened, fold_closed = fcs.foldopen, fcs.foldclose -- '▶'
 local shade, separator = separators.light_shade_block, separators.left_thin_block -- '│'
 local sep_hl = 'StatusColSep'
-
-ui.statuscolumn = {}
 
 ---@param buf number
 ---@return {name:string, text:string, texthl:string}[][]
@@ -34,7 +32,7 @@ end
 local function nr(win)
   if v.virtnum < 0 then return shade end -- virtual line
   if v.virtnum > 0 then return space end -- wrapped line
-  local num = vim.wo[win].relativenumber and not as.empty(v.relnum) and v.relnum or v.lnum
+  local num = vim.wo[win].relativenumber and not as.falsy(v.relnum) and v.relnum or v.lnum
   local lnum = fn.substitute(num, '\\d\\zs\\ze\\%(\\d\\d\\d\\)\\+$', ',', 'g')
   local num_width = (vim.wo[win].numberwidth - 1) - api.nvim_strwidth(lnum)
   local padding = string.rep(space, num_width)
@@ -45,12 +43,14 @@ end
 ---@return StringComponent[] sgns non-git signs
 ---@return StringComponent[] g_sgns list of git signs
 local function signs_by_type(signs)
-  local sgns, g_sgn, opts = {}, {}, { after = '' }
+  local sgns, g_sgn = {}, {}
   for _, sn in ipairs(signs) do
     if sn[1].name:find('GitSign') then
-      table.insert(g_sgn, str.component(sn[1].text, sn[1].texthl, opts))
+      table.insert(g_sgn, { { { sn[1].text, sn[1].texthl } }, after = '' })
     else
-      as.foreach(function(s) table.insert(sgns, str.component(s.text, s.texthl, opts)) end, sn)
+      for _, s in ipairs(sn) do
+        table.insert(sgns, { { { s.text, s.texthl } }, after = '' })
+      end
     end
   end
   while #sgns < SIGN_COL_WIDTH or #g_sgn < GIT_COL_WIDTH do
@@ -71,18 +71,18 @@ function ui.statuscolumn.render()
   local signs = get_signs(curbuf)
   local sns, gitsign = signs_by_type(signs)
 
-  local is_absolute_lnum = v.virtnum >= 0 and as.empty(v.relnum)
+  local is_absolute_lnum = v.virtnum >= 0 and as.falsy(v.relnum)
   local separator_hl = is_absolute_lnum and sep_hl or nil
 
   local statuscol = {}
   local add = str.append(statuscol)
 
-  add(str.separator(), str.spacer(1), str.component(nr(curwin)))
+  add(str.spacer(1), { { { nr(curwin) } } })
   add(unpack(sns))
   add(unpack(gitsign))
-  add(str.component(separator, separator_hl, { after = '' }), str.component(fdm()))
+  add({ { { separator, separator_hl } }, after = '' }, { { { fdm() } } })
 
-  return str.display(statuscol)
+  return str.display({ {}, statuscol })
 end
 
 vim.o.statuscolumn = '%{%v:lua.as.ui.statuscolumn.render()%}'

@@ -137,8 +137,8 @@ nnoremap('<localleader>;', modify_line_end_delimiter(';'), { desc = "add ';' to 
 nnoremap('<leader>E', '<Cmd>Inspect<CR>', { desc = 'Inspect the cursor position' })
 -----------------------------------------------------------------------------//
 
-if as.empty(fn.mapcheck('<ScrollWheelDown>')) then nmap('<ScrollWheelDown>', '<c-d>') end
-if as.empty(fn.mapcheck('<ScrollWheelUp>')) then nmap('<ScrollWheelUp>', '<c-u>') end
+if as.falsy(fn.mapcheck('<ScrollWheelDown>')) then nmap('<ScrollWheelDown>', '<c-d>') end
+if as.falsy(fn.mapcheck('<ScrollWheelUp>')) then nmap('<ScrollWheelUp>', '<c-u>') end
 ------------------------------------------------------------------------------
 -- Buffers
 ------------------------------------------------------------------------------

@@ -4,7 +4,7 @@ local highlight = as.highlight
 local function leap_keys()
   require('leap').leap({
     target_windows = vim.tbl_filter(
-      function(win) return as.empty(fn.win_gettype(win)) end,
+      function(win) return as.falsy(fn.win_gettype(win)) end,
       api.nvim_tabpage_list_wins(0)
     ),
   })

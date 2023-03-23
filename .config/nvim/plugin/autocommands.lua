@@ -187,9 +187,9 @@ local save_excluded = {
   'NeogitCommitMessage',
 }
 local function can_save()
-  return as.empty(fn.win_gettype())
-    and as.empty(vim.bo.buftype)
-    and not as.empty(vim.bo.filetype)
+  return as.falsy(fn.win_gettype())
+    and as.falsy(vim.bo.buftype)
+    and not as.falsy(vim.bo.filetype)
     and vim.bo.modifiable
     and not vim.tbl_contains(save_excluded, vim.bo.filetype)
 end
@@ -239,7 +239,7 @@ as.augroup('Utilities', {
   pattern = { '*' },
   nested = true,
   command = function()
-    if as.empty(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
+    if as.falsy(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
       vim.cmd([[
         unlet! b:ftdetect
         filetype detect

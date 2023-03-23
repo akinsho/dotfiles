@@ -29,7 +29,7 @@ local api, fn, fs, fmt = vim.api, vim.fn, vim.fs, string.format
 local P = as.ui.palette
 
 local sep = package.config:sub(1, 1)
-
+local space = ' '
 ----------------------------------------------------------------------------------------------------
 --  Colors
 ----------------------------------------------------------------------------------------------------
@@ -241,7 +241,7 @@ end
 ---Only append the path separator if the path is not empty
 ---@param path string
 ---@return string
-local function path_sep(path) return not as.empty(path) and path .. sep or path end
+local function path_sep(path) return not as.falsy(path) and path .. sep or path end
 
 --- Replace the directory path with an identifier if it matches a commonly visited
 --- directory of mine such as my projects directory or my work directory
@@ -270,14 +270,14 @@ local function dir_env(directory)
 end
 
 --- @param ctx StatuslineContext
---- @return {env: string, dir: string, parent: string, fname: string}
+--- @return {env: string?, dir: string?, parent: string?, fname: string}
 local function filename(ctx)
   local buf, ft = ctx.bufnum, ctx.filetype
   local special_buf = special_buffers(ctx)
   if special_buf then return { fname = special_buf } end
 
   local path = api.nvim_buf_get_name(buf)
-  if as.empty(path) then return { fname = 'No Name' } end
+  if as.falsy(path) then return { fname = 'No Name' } end
   --- add ":." to the expansion i.e. to make the directory path relative to the current vim directory
   local parts = vim.split(fn.fnamemodify(path, ':~'), sep)
   local fname = table.remove(parts)
@@ -287,21 +287,20 @@ local function filename(ctx)
 
   local parent = table.remove(parts)
   fname = fn.isdirectory(fname) == 1 and fname .. sep or fname
-  if as.empty(parent) then return { fname = fname } end
+  if as.falsy(parent) then return { fname = fname } end
 
   local dir = path_sep(table.concat(parts, sep))
   local new_dir, env = dir_env(dir)
-  local segment = not as.empty(env) and env .. new_dir or dir
+  local segment = not as.falsy(env) and env .. new_dir or dir
   if api.nvim_strwidth(segment) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
 
   return { env = env, dir = new_dir, parent = path_sep(parent), fname = fname }
 end
 
----@alias FilenamePart {item: string, hl: string, opts: ComponentOpts}
 ---Create the various segments of the current filename
 ---@param ctx StatuslineContext
 ---@param minimal boolean
----@return {file: FilenamePart, parent: FilenamePart, dir: FilenamePart, env: FilenamePart}
+---@return {file: ComponentOpts, parent: ComponentOpts, dir: ComponentOpts, env: ComponentOpts}
 local function stl_file(ctx, minimal)
   -- highlight the filename components separately
   local filename_hl = ctx.winhl and stl_winhl.filename.hl(ctx.win)
@@ -318,27 +317,26 @@ local function stl_file(ctx, minimal)
   local ft_icon, icon_highlight = filetype(ctx)
   local ft_hl = icon_highlight and get_ft_icon_hl_name(icon_highlight) or hls.comment
 
-  local file_opts = { before = '', after = ' ', priority = 0 }
-  local parent_opts = { before = '', after = '', priority = 2 }
-  local dir_opts = { before = '', after = '', priority = 3 }
-  local env_opts = { before = '', after = '', priority = 4 }
+  local file_opts = { {}, before = '', after = ' ', priority = 0 }
+  local parent_opts = { {}, before = '', after = '', priority = 2 }
+  local dir_opts = { {}, before = '', after = '', priority = 3 }
+  local env_opts = { {}, before = '', after = '', priority = 4 }
 
   local p = filename(ctx)
 
   -- Depending on which filename segments are empty we select a section to add the file icon to
-  local env_empty, dir_empty, parent_empty = as.empty(p.env), as.empty(p.dir), as.empty(p.parent)
+  local env_empty, dir_empty, parent_empty = as.falsy(p.env), as.falsy(p.dir), as.falsy(p.parent)
   local to_update = (env_empty and dir_empty and parent_empty) and file_opts
     or (env_empty and dir_empty) and parent_opts
     or env_empty and dir_opts
     or env_opts
 
-  to_update.prefix = { { ft_icon, not minimal and ft_hl or nil } }
-  return {
-    env = { item = p.env, hl = env_hl, opts = env_opts },
-    file = { item = p.fname, hl = filename_hl, opts = file_opts },
-    dir = { item = p.dir, hl = directory_hl, opts = dir_opts },
-    parent = { item = p.parent, hl = parent_hl, opts = parent_opts },
-  }
+  table.insert(to_update[1], { ft_icon .. ' ', not minimal and ft_hl or nil })
+  table.insert(env_opts[1], { p.env or '', env_hl })
+  table.insert(dir_opts[1], { p.dir or '', directory_hl })
+  table.insert(file_opts[1], { p.fname or '', filename_hl })
+  table.insert(parent_opts[1], { p.parent or '', parent_hl })
+  return { env = env_opts, file = file_opts, dir = dir_opts, parent = parent_opts }
 end
 
 local function diagnostic_info(context)
@@ -473,7 +471,7 @@ local function stl_lsp_clients(ctx)
   if not state.lsp_clients_visible then
     return { { name = fmt('%d attached', #clients), priority = 7 } }
   end
-  if as.empty(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
+  if as.falsy(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
   table.sort(clients, function(a, b)
     if a.name == 'null-ls' then
       return false
@@ -597,9 +595,6 @@ function as.ui.statusline.render()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
 
-  local component = str.component
-  local component_if = str.component_if
-
   local available_space = vim.o.columns
 
   ---@type StatuslineContext
@@ -620,41 +615,39 @@ function as.ui.statusline.render()
   ----------------------------------------------------------------------------//
   -- Modifiers
   ----------------------------------------------------------------------------//
+
   local plain = is_plain(ctx)
   local file_modified = is_modified(ctx, icons.misc.circle)
   local focused = vim.g.vim_in_focus or true
   ----------------------------------------------------------------------------//
   -- Setup
   ----------------------------------------------------------------------------//
-  local statusline = {
-    component_if(icons.misc.block, not plain, hls.indicator, {
-      before = '',
-      after = '',
-      priority = 0,
-    }),
-    str.spacer(1),
-  }
-  local add = str.append(statusline)
+  local left, middle, right = {}, {}, {}
+  local add_left = str.append(left)
+  local add_middle = str.append(middle)
+  local add_right = str.append(right)
+
+  add_left({
+    { { icons.misc.block, hls.indicator } },
+    cond = not plain,
+    before = '',
+    after = '',
+    priority = 0,
+  }, str.spacer(1))
   ----------------------------------------------------------------------------//
   -- Filename
   ----------------------------------------------------------------------------//
-  local segments = stl_file(ctx, plain)
-  local env, dir, parent, file = segments.env, segments.dir, segments.parent, segments.file
-  local env_component = component(env.item, env.hl, env.opts)
-  local dir_component = component(dir.item, dir.hl, dir.opts)
-  local parent_component = component(parent.item, parent.hl, parent.opts)
-  local file_component = component(file.item, file.hl, file.opts)
-
+  local path = stl_file(ctx, plain)
   local readonly_hl = ctx.winhl and stl_winhl.readonly.hl(ctx.win) or stl_winhl.readonly.fallback
-  local readonly_component = component(is_readonly(ctx), readonly_hl, { priority = 1 })
+  local readonly_component = { { { is_readonly(ctx), readonly_hl } }, priority = 1 }
   ----------------------------------------------------------------------------//
   -- Mode
   ----------------------------------------------------------------------------//
   -- show a minimal statusline with only the mode and file component
   ----------------------------------------------------------------------------//
   if plain or not focused then
-    add(readonly_component, env_component, dir_component, parent_component, file_component)
-    return str.display(statusline, available_space)
+    add_left(readonly_component, path.env, path.dir, path.parent, path.file)
+    return str.display({ left }, available_space)
   end
   -----------------------------------------------------------------------------//
   -- Variables
@@ -675,12 +668,12 @@ function as.ui.statusline.render()
   local hydra_active, hydra = stl_hydra()
   -----------------------------------------------------------------------------//
   local ok, noice = pcall(require, 'noice')
-  local noice_mode = ok and noice.api.status.mode.get() or nil
-  local has_noice_mode = ok and noice.api.status.mode.has() or nil
+  local noice_mode = ok and noice.api.status.mode.get() or ''
+  local has_noice_mode = ok and noice.api.status.mode.has() or false
   -----------------------------------------------------------------------------//
   local lazy_ok, lazy = pcall(require, 'lazy.status')
   local pending_updates = lazy_ok and lazy.updates() or nil
-  local has_pending_updates = lazy_ok and lazy.has_updates() or nil
+  local has_pending_updates = lazy_ok and lazy.has_updates() or false
   -----------------------------------------------------------------------------//
   local grapple_ok, grapple = grapple_stl()
   -----------------------------------------------------------------------------//
@@ -688,153 +681,179 @@ function as.ui.statusline.render()
   -----------------------------------------------------------------------------//
   local flutter = vim.g.flutter_tools_decorations or {}
   local diagnostics = diagnostic_info(ctx)
-  local lsp_clients = as.map(function(client, index)
-    return component(client.name, hls.client, {
+  local lsp_clients = as.map(function(client)
+    return {
+      {
+        { client.name, hls.client },
+        { space },
+        { '', hls.metadata_prefix },
+      },
       id = LSP_COMPONENT_ID, -- the unique id of the component
-      prefix = index == 1 and { { ' LSP(s):', hls.metadata } } or nil,
-      suffix = { { '', hls.metadata_prefix } }, -- │
       click = 'v:lua.as.ui.statusline.lsp_client_click',
       priority = client.priority,
-    })
+    }
   end, stl_lsp_clients(ctx))
+  table.insert(lsp_clients[1][1], 1, { ' LSP(s): ', hls.metadata })
   -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
-  add(
-    component_if(file_modified, ctx.modified, hls.modified, { priority = 1 }),
-
+  add_left(
+    { { { file_modified, hls.modified } }, cond = ctx.modified, priority = 1 },
     readonly_component,
-
-    component(mode, mode_hl, { priority = 0 }),
-
-    component_if(search_count(), vim.v.hlsearch > 0, hls.count, { priority = 1 }),
-
-    env_component,
-    dir_component,
-    parent_component,
-    file_component,
-
-    component_if(diagnostics.error.count, diagnostics.error, hls.error, {
-      prefix = { { diagnostics.error.icon, hls.error } },
+    { { { mode, mode_hl } }, priority = 0 },
+    { { { search_count(), hls.count } }, cond = vim.v.hlsearch > 0, priority = 1 },
+    path.env,
+    path.dir,
+    path.parent,
+    path.file,
+    {
+      {
+        { diagnostics.warn.icon, hls.warn },
+        { space },
+        { diagnostics.warn.count, hls.warn },
+      },
+      cond = diagnostics.warn.count,
+      priority = 3,
+    },
+    {
+      {
+        { diagnostics.error.icon, hls.error },
+        { space },
+        { diagnostics.error.count, hls.error },
+      },
+      cond = diagnostics.error.count,
       priority = 1,
-    }),
-
-    component_if(diagnostics.warn.count, diagnostics.warn, hls.warn, {
-      prefix = { { diagnostics.warn.icon, hls.warn } },
-      priority = 3,
-    }),
-
-    component_if(diagnostics.info.count, diagnostics.info, hls.info, {
-      prefix = { { diagnostics.info.icon, hls.info } },
+    },
+    {
+      {
+        { diagnostics.info.icon, hls.info },
+        { space },
+        { diagnostics.info.count, hls.info },
+      },
+      cond = diagnostics.info.count,
       priority = 4,
-    }),
-
-    component_if(grapple.name, grapple_ok, hls.comment, {
-      prefix = { { grapple.icon, hls.directory } },
+    },
+    {
+      {
+        { grapple.icon, hls.directory },
+        { space },
+        { grapple.name, hls.comment },
+      },
+      cond = grapple_ok,
       priority = 4,
-    }),
-
-    component_if('Saving…', vim.g.is_saving, hls.comment, { before = ' ', priority = 1 }),
-
-    str.separator(),
-    -----------------------------------------------------------------------------//
-    -- Middle section
-    -----------------------------------------------------------------------------//
-    -- Neovim allows unlimited alignment sections so we can put things in the
-    -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
-    -----------------------------------------------------------------------------//
-    component_if(noice_mode, has_noice_mode, hls.title, { before = ' ', priority = 1 }),
-    component_if(hydra.name:upper(), hydra_active, hydra.color, {
-      prefix = { { string.rep(' ', 5) .. '🐙' } },
-      suffix = { { string.rep(' ', 5) } },
-      priority = 5,
-    }),
-
-    -- Start of the right side layout
-    str.separator(),
-    -----------------------------------------------------------------------------//
-    -- Right section
-    -----------------------------------------------------------------------------//
-    component_if(pending_updates, has_pending_updates, hls.title, {
-      prefix = { { 'updates:', hls.comment } },
-      after = ' ',
-      priority = 3,
-    }),
-    component(flutter.app_version, hls.metadata, { priority = 4 }),
-    component(flutter.device and flutter.device.name or '', hls.metadata, { priority = 4 })
+    }
   )
+
   -----------------------------------------------------------------------------//
-  -- LSP Clients
+  -- Middle section
   -----------------------------------------------------------------------------//
-  add(unpack(lsp_clients))
+  -- Neovim allows unlimited alignment sections so we can put things in the
+  -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
   -----------------------------------------------------------------------------//
-  add(
-    component(debugger(), hls.metadata, { { prefix = { icons.misc.bug } }, priority = 4 }),
+  add_middle({
+    { { noice_mode, hls.title } },
+    cond = has_noice_mode,
+    before = ' ',
+    priority = 1,
+  }, {
+    { { '🐙 ' .. hydra.name:upper(), hydra.color } },
+    cond = hydra_active,
+    priority = 5,
+  })
+  -----------------------------------------------------------------------------//
+  -- Right section
+  -----------------------------------------------------------------------------//
+  add_right(
+    {
+      { { 'updates:', hls.comment }, { space }, { pending_updates, hls.title } },
+      priority = 3,
+      cond = has_pending_updates,
+    },
+    { { { flutter.app_version, hls.metadata } }, priority = 4 },
+    { { { flutter.device and flutter.device.name or '', hls.metadata } }, priority = 4 },
+    -----------------------------------------------------------------------------//
+    -- LSP Clients
+    -----------------------------------------------------------------------------//
+    unpack(lsp_clients)
+  )
+  add_right(
+    {
+      { { icons.misc.bug }, { space }, { debugger(), hls.metadata } },
+      priority = 4,
+      cond = debugger(),
+    },
 
     -- Git Status
-    component(status.head, hls.blue, {
-      prefix = { { icons.git.branch, hls.git } },
+    {
+      { { icons.git.branch, hls.git }, { space }, { status.head, hls.blue } },
       priority = 1,
-    }),
-
-    component(status.changed, hls.title, {
-      prefix = { { icons.git.mod, hls.warn } },
+      cond = status.head,
+    },
+    {
+      { { icons.git.mod, hls.warn }, { space }, { status.changed, hls.title } },
       priority = 3,
-    }),
-
-    component(status.removed, hls.title, {
-      prefix = { { icons.git.remove, hls.error } },
+      cond = status.changed,
+    },
+    {
+      { { icons.git.remove, hls.error }, { space }, { status.removed, hls.title } },
       priority = 3,
-    }),
-
-    component(status.added, hls.title, {
-      prefix = { { icons.git.add, hls.green } },
+      cond = status.removed,
+    },
+    {
+      { { icons.git.add, hls.green }, { space }, { status.added, hls.title } },
       priority = 3,
-    }),
-
-    component(ahead, hls.title, {
-      prefix = { { icons.misc.up, hls.green } },
+      cond = status.added,
+    },
+    {
+      { { icons.misc.up, hls.green }, { space }, { ahead, hls.title } },
+      cond = ahead,
       before = '',
       priority = 5,
-    }),
-
-    component(behind, hls.title, {
-      prefix = { { icons.misc.down, hls.number } },
+    },
+    {
+      { { icons.misc.down, hls.number }, { space }, { behind, hls.title } },
       after = ' ',
+      cond = behind,
       priority = 5,
-    }),
-
+    },
     -- Current line number/total line number
-    component('/', hls.comment, {
-      prefix = { { icons.misc.line .. ' ', hls.metadata_prefix }, { tostring(lnum), hls.title } },
-      suffix = { { tostring(line_count), hls.comment } },
+    {
+      {
+        { icons.misc.line, hls.metadata_prefix },
+        { space },
+        { lnum, hls.title },
+        { '/', hls.comment },
+        { line_count, hls.comment },
+      },
       priority = 7,
-    }),
-
-    -- column
-    component(col, hls.title, {
-      prefix = { { 'Col:', hls.metadata_prefix } },
+    },
+    {
+      { { 'Col:', hls.metadata_prefix }, { space }, { col, hls.title } },
       priority = 7,
-    }),
+    },
     -- (Unexpected) Indentation
-    component_if(ctx.shiftwidth, ctx.shiftwidth > 2 or not ctx.expandtab, hls.title, {
-      prefix = { { ctx.expandtab and icons.misc.indent or icons.misc.tab } },
+    {
+      {
+        { ctx.expandtab and icons.misc.indent or icons.misc.tab },
+        { space },
+        { ctx.shiftwidth, hls.title },
+      },
+      cond = ctx.shiftwidth > 2 or not ctx.expandtab,
       priority = 6,
-    }),
-    str.end_marker()
+    }
   )
   -- removes 5 columns to add some padding
-  return str.display(statusline, available_space - 5)
+  return str.display({ left, middle, right }, available_space - 5)
 end
 
 local function adopt_window_highlights()
   local curr_winhl = vim.opt_local.winhighlight:get()
-  if as.empty(curr_winhl) or not curr_winhl.StatusLine then return end
+  if as.falsy(curr_winhl) or not curr_winhl.StatusLine then return end
 
   for _, part in pairs(stl_winhl) do
     local name = part.hl(api.nvim_get_current_win())
     local hl = highlight.get(name)
-    if not as.empty(hl) then return end
+    if not as.falsy(hl) then return end
     highlight.set(
       name,
       { inherit = part.fallback, background = { from = curr_winhl.StatusLine, attr = 'bg' } }
@@ -848,7 +867,7 @@ local set_stl_ft_icon_hls, reset_stl_ft_icon_hls = (function()
   ---@param buf number
   ---@param ft string
   return function(buf, ft)
-    if as.empty(ft) then return end
+    if as.falsy(ft) then return end
     local _, hl = get_buffer_icon(buf)
     if not hl then return end
     local fg, bg = highlight.get(hl, 'fg'), highlight.get(hls.statusline, 'bg')
@@ -890,15 +909,6 @@ as.augroup('CustomStatusline', {
   command = function(args)
     local clients = vim.lsp.get_active_clients({ bufnr = args.buf })
     if #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
-  end,
-}, {
-  event = 'BufWritePre',
-  pattern = { '*' },
-  command = function()
-    if not vim.g.is_saving and vim.bo.modified then
-      vim.g.is_saving = true
-      vim.defer_fn(function() vim.g.is_saving = false end, 1000)
-    end
   end,
 }, {
   event = 'User',

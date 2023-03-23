@@ -32,6 +32,7 @@ g.maplocalleader = ' ' -- Local leader is <Space>
 local namespace = {
   ui = {
     winbar = { enable = true },
+    statuscolumn = { enable = true },
     foldtext = { enable = false },
   },
   -- some vim mappings require a mixture of commandline commands and function calls
