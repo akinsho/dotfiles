@@ -58,7 +58,7 @@ return {
           },
         },
         rainbow = {
-          enable = true, -- TODO: contribute dart support to ts-rainbow
+          enable = false, -- TODO: contribute dart support to ts-rainbow
           disable = false,
           query = {
             'rainbow-parens',
