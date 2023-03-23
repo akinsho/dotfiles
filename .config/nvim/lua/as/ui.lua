@@ -266,7 +266,7 @@ local presets = {
     number = false,
     winbar = true,
     colorcolumn = false,
-    statusline = true,
+    statusline = 'minimal',
     statuscolumn = false,
   }),
   tool_panel = Preset:new({
