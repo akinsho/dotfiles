@@ -44,7 +44,9 @@ return {
           require('neotest-plenary'),
           require('neotest-dart')({ command = 'flutter' }),
           require('neotest-go')({ experimental = { test_table = true } }),
-          require('neotest-rust'),
+          require('neotest-rust')({
+            args = { '--verbose' },
+          }),
           require('neotest-jest')({
             jestCommand = 'npm test --',
             jestConfigFile = 'jest.config.js',
