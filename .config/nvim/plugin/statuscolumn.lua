@@ -30,13 +30,14 @@ end
 ---@param win number
 ---@return string
 local function nr(win)
-  if v.virtnum < 0 then return shade end -- virtual line
-  if v.virtnum > 0 then return space end -- wrapped line
+  local col_width = vim.wo[win].numberwidth - 1
+  local padding = string.rep(space, col_width - 1)
+  if v.virtnum < 0 then return padding .. shade end -- virtual line
+  if v.virtnum > 0 then return padding .. space end -- wrapped line
   local num = vim.wo[win].relativenumber and not as.falsy(v.relnum) and v.relnum or v.lnum
   local lnum = fn.substitute(num, '\\d\\zs\\ze\\%(\\d\\d\\d\\)\\+$', ',', 'g')
-  local num_width = (vim.wo[win].numberwidth - 1) - api.nvim_strwidth(lnum)
-  local padding = string.rep(space, num_width)
-  return padding .. lnum
+  local num_width = col_width - api.nvim_strwidth(lnum)
+  return string.rep(space, num_width) .. lnum
 end
 
 ---@param signs {name:string, text:string, texthl:string}[][]
