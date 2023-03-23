@@ -332,7 +332,7 @@ local function stl_file(ctx, minimal)
     or env_empty and dir_opts
     or env_opts
 
-  to_update.prefix, to_update.prefix_color = ft_icon, not minimal and ft_hl or nil
+  to_update.prefix = { { ft_icon, not minimal and ft_hl or nil } }
   return {
     env = { item = p.env, hl = env_hl, opts = env_opts },
     file = { item = p.fname, hl = filename_hl, opts = file_opts },
@@ -690,10 +690,8 @@ function as.ui.statusline.render()
   local lsp_clients = as.map(function(client, index)
     return component(client.name, hls.client, {
       id = LSP_COMPONENT_ID, -- the unique id of the component
-      prefix = index == 1 and ' LSP(s):' or nil,
-      prefix_color = index == 1 and hls.metadata or nil,
-      suffix = '', -- │
-      suffix_color = hls.metadata_prefix,
+      prefix = index == 1 and { { ' LSP(s):', hls.metadata } } or nil,
+      suffix = { { '', hls.metadata_prefix } }, -- │
       click = 'v:lua.as.ui.statusline.lsp_client_click',
       priority = client.priority,
     })
@@ -716,26 +714,22 @@ function as.ui.statusline.render()
     file_component,
 
     component_if(diagnostics.error.count, diagnostics.error, hls.error, {
-      prefix = diagnostics.error.icon,
-      prefix_color = hls.error,
+      prefix = { { diagnostics.error.icon, hls.error } },
       priority = 1,
     }),
 
     component_if(diagnostics.warn.count, diagnostics.warn, hls.warn, {
-      prefix = diagnostics.warn.icon,
-      prefix_color = hls.warn,
+      prefix = { { diagnostics.warn.icon, hls.warn } },
       priority = 3,
     }),
 
     component_if(diagnostics.info.count, diagnostics.info, hls.info, {
-      prefix = diagnostics.info.icon,
-      prefix_color = hls.info,
+      prefix = { { diagnostics.info.icon, hls.info } },
       priority = 4,
     }),
 
     component_if(grapple.name, grapple_ok, hls.comment, {
-      prefix = grapple.icon,
-      prefix_color = hls.directory,
+      prefix = { { grapple.icon, hls.directory } },
       priority = 4,
     }),
 
@@ -750,8 +744,8 @@ function as.ui.statusline.render()
     -----------------------------------------------------------------------------//
     component_if(noice_mode, has_noice_mode, hls.title, { before = ' ', priority = 1 }),
     component_if(hydra.name:upper(), hydra_active, hydra.color, {
-      prefix = string.rep(' ', 5) .. '🐙',
-      suffix = string.rep(' ', 5),
+      prefix = { { string.rep(' ', 5) .. '🐙' } },
+      suffix = { { string.rep(' ', 5) } },
       priority = 5,
     }),
 
@@ -761,8 +755,7 @@ function as.ui.statusline.render()
     -- Right section
     -----------------------------------------------------------------------------//
     component_if(pending_updates, has_pending_updates, hls.title, {
-      prefix = 'updates:',
-      prefix_color = hls.comment,
+      prefix = { { 'updates:', hls.comment } },
       after = ' ',
       priority = 3,
     }),
@@ -775,73 +768,56 @@ function as.ui.statusline.render()
   add(unpack(lsp_clients))
   -----------------------------------------------------------------------------//
   add(
-    component(debugger(), hls.metadata, { prefix = icons.misc.bug, priority = 4 }),
+    component(debugger(), hls.metadata, { { prefix = { icons.misc.bug } }, priority = 4 }),
 
     -- Git Status
     component(status.head, hls.blue, {
-      prefix = icons.git.branch,
-      prefix_color = hls.git,
+      prefix = { { icons.git.branch, hls.git } },
       priority = 1,
     }),
 
     component(status.changed, hls.title, {
-      prefix = icons.git.mod,
-      prefix_color = hls.warn,
+      prefix = { { icons.git.mod, hls.warn } },
       priority = 3,
     }),
 
     component(status.removed, hls.title, {
-      prefix = icons.git.remove,
-      prefix_color = hls.error,
+      prefix = { { icons.git.remove, hls.error } },
       priority = 3,
     }),
 
     component(status.added, hls.title, {
-      prefix = icons.git.add,
-      prefix_color = hls.green,
+      prefix = { { icons.git.add, hls.green } },
       priority = 3,
     }),
 
     component(ahead, hls.title, {
-      prefix = icons.misc.up,
-      prefix_color = hls.green,
+      prefix = { { icons.misc.up, hls.green } },
       before = '',
       priority = 5,
     }),
 
     component(behind, hls.title, {
-      prefix = icons.misc.down,
-      prefix_color = hls.number,
+      prefix = { { icons.misc.down, hls.number } },
       after = ' ',
       priority = 5,
     }),
 
     -- Current line number/total line number
-    component(lnum, hls.title, {
-      after = '',
-      prefix = icons.misc.line,
-      prefix_color = hls.metadata_prefix,
-      priority = 7,
-    }),
-
-    component(line_count, hls.comment, {
-      before = '',
-      prefix = '/',
-      padding = { prefix = false, suffix = true },
-      prefix_color = hls.comment,
+    component('/', hls.comment, {
+      prefix = { { icons.misc.line .. ' ', hls.metadata_prefix }, { tostring(lnum), hls.title } },
+      suffix = { { tostring(line_count), hls.comment } },
       priority = 7,
     }),
 
     -- column
     component(col, hls.title, {
-      prefix = 'Col:',
-      prefix_color = hls.metadata_prefix,
+      prefix = { { 'Col:', hls.metadata_prefix } },
       priority = 7,
     }),
     -- (Unexpected) Indentation
     component_if(ctx.shiftwidth, ctx.shiftwidth > 2 or not ctx.expandtab, hls.title, {
-      prefix = ctx.expandtab and icons.misc.indent or icons.misc.tab,
-      prefix_color = hls.statusline,
+      prefix = { { ctx.expandtab and icons.misc.indent or icons.misc.tab } },
       priority = 6,
     }),
     str.end_marker()

@@ -53,10 +53,10 @@ local function breadcrumbs()
       id = priority,
       click = 'v:lua.as.ui.winbar.click',
       max_size = 35,
-      prefix = crumb.icon,
-      prefix_color = lsp_hl[crumb.type] or 'NonText',
-      suffix = #data > index and separator or '',
-      suffix_color = 'Directory',
+      prefix = {
+        { index ~= 1 and separator or '', 'Directory' },
+        { crumb.icon, lsp_hl[crumb.type] or 'NonText' },
+      },
     })
   end, data)
 end
@@ -88,8 +88,7 @@ function as.ui.winbar.render()
       id = priority,
       priority = priority,
       click = 'v:lua.as.ui.winbar.click',
-      suffix = sep,
-      suffix_color = suffix_hl,
+      suffix = { { sep, suffix_hl } },
     }))
   end, parts)
   if navic_loaded then add(unpack(breadcrumbs())) end

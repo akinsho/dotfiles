@@ -6,6 +6,7 @@ local strwidth, fmt, empty = api.nvim_strwidth, string.format, as.empty
 local M = {}
 
 local constants = { HL_END = '%*', ALIGN = '%=', END = '%<', CLICK_END = '%X' }
+local padding = ' '
 
 M.constants = constants
 
@@ -59,13 +60,33 @@ function M.spacer(size, opts)
   return { component = '', length = 0, priority = priority }
 end
 
+---@alias Subsection (string|number)[][]
+
+---@param subsection Subsection
+---@param bg_hl string
+---@param opts {pad_end: boolean}
+---@return string, string
+local function get_subsection(subsection, bg_hl, opts)
+  if not subsection or not vim.tbl_islist(subsection) then return '', '' end
+  local section, items = {}, {}
+  local index = opts.pad_end and #subsection + 1 or 1
+  table.insert(subsection, index, { padding, bg_hl })
+  for _, item in ipairs(subsection) do
+    local text, hl = unpack(item)
+    if not empty(text) then
+      if empty(hl) then hl = bg_hl end
+      table.insert(items, text)
+      table.insert(section, wrap(hl) .. text)
+    end
+  end
+  return table.concat(section), table.concat(items)
+end
+
 --- @class ComponentOpts
 --- @field priority number
 --- @field click string
---- @field suffix string
---- @field suffix_color string
---- @field prefix string?
---- @field prefix_color string?
+--- @field suffix Subsection?
+--- @field prefix Subsection?
 --- @field before string
 --- @field after string
 --- @field id number
@@ -81,16 +102,9 @@ function M.component(item, hl, opts)
   if empty(item) then return M.spacer() end
   if not opts then opts = {} end
   if not opts.priority then opts.priority = 10 end
-  opts.padding = opts.padding or { suffix = true, prefix = true }
-  local padding = ' '
   local before, after = opts.before or '', opts.after or padding
-  local prefix = opts.prefix and opts.prefix .. (opts.padding.prefix and padding or '') or ''
-  local suffix = opts.suffix and (opts.padding.suffix and padding or '') .. opts.suffix or ''
-  local prefix_color, suffix_color = opts.prefix_color or hl, opts.suffix_color or hl
-  local prefix_hl = not empty(prefix_color) and wrap(prefix_color) or ''
-  local suffix_hl = not empty(suffix_color) and wrap(suffix_color) or ''
-  local prefix_item = not empty(prefix) and prefix_hl .. prefix or ''
-  local suffix_item = not empty(suffix) and suffix_hl .. suffix or ''
+  local prefix_item, prefix = get_subsection(opts.prefix, hl, { pad_end = true })
+  local suffix_item, suffix = get_subsection(opts.suffix, hl, { pad_end = false })
 
   local click_start = opts.click and get_click_start(opts.click, tostring(opts.id)) or ''
   local click_end = opts.click and constants.CLICK_END or ''
