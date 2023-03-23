@@ -1,6 +1,6 @@
-local args = { buffer = 0, silent = true }
-
 if not as then return end
+
+local args = { buffer = 0, silent = true }
 map('o', 'ih', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>]], args)
 map('o', 'ah', [[:<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>]], args)
 map('o', 'aa', [[:<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>]], args)

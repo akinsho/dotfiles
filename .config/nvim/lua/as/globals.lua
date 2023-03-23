@@ -172,7 +172,9 @@ function as.require(module, opts)
   local ok, result = pcall(require, module)
   if not ok and not opts.silent then
     if opts.message then result = opts.message .. '\n' .. result end
-    vim.notify(result, l.ERROR, { title = fmt('Error requiring: %s', module) })
+    vim.schedule(
+      function() vim.notify(result, l.ERROR, { title = fmt('Error requiring: %s', module) }) end
+    )
   end
   return ok, result
 end
@@ -200,11 +202,16 @@ end
 --- and warns me if the plugin is not installed
 --- TODO: find out if it's possible to annotate the plugin as a module
 ---@param configs table<string, fun(module: table)>
-function as.ftplugin_conf(configs)
+---@param opts {silent: boolean}?
+function as.ftplugin_conf(configs, opts)
   if type(configs) ~= 'table' then return end
+  opts = opts or { silent = true }
   for name, callback in pairs(configs) do
     local info = debug.getinfo(1, 'S')
-    local ok, plugin = as.require(name, { message = fmt('In file: %s', info.source) })
+    local ok, plugin = as.require(name, {
+      message = fmt('In file: %s', info.source),
+      silent = opts.silent,
+    })
     if ok then callback(plugin) end
   end
 end
