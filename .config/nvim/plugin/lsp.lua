@@ -162,7 +162,9 @@ end
 ----------------------------------------------------------------------------------------------------
 --  Related Locations
 ----------------------------------------------------------------------------------------------------
--- This relates to https://github.com/neovim/neovim/issues/19649#issuecomment-1327287313
+-- This relates to:
+-- 1. https://github.com/neovim/neovim/issues/19649#issuecomment-1327287313
+-- 2. https://github.com/neovim/neovim/issues/22744#issuecomment-1479366923
 -- neovim does not currently correctly report the related locations for diagnostics.
 -- TODO: once a PR for this is merged delete this workaround
 
