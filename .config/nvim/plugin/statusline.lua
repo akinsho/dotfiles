@@ -25,7 +25,7 @@ local state = { lsp_clients_visible = true }
 local str = require('as.strings')
 
 local icons, lsp, highlight, decorations = as.ui.icons, as.ui.lsp, as.highlight, as.ui.decorations
-local api, fn, fs, fmt = vim.api, vim.fn, vim.fs, string.format
+local api, fn, fs, fmt, strwidth = vim.api, vim.fn, vim.fs, string.format, vim.api.nvim_strwidth
 local P = as.ui.palette
 
 local sep = package.config:sub(1, 1)
@@ -743,43 +743,26 @@ function as.ui.statusline.render()
     path.parent,
     path.file,
     {
-      {
-        { diagnostics.warn.icon, hls.warn },
-        { space },
-        { diagnostics.warn.count, hls.warn },
-      },
+      { { diagnostics.warn.icon, hls.warn }, { space }, { diagnostics.warn.count, hls.warn } },
       cond = diagnostics.warn.count,
       priority = 3,
     },
     {
-      {
-        { diagnostics.error.icon, hls.error },
-        { space },
-        { diagnostics.error.count, hls.error },
-      },
+      { { diagnostics.error.icon, hls.error }, { space }, { diagnostics.error.count, hls.error } },
       cond = diagnostics.error.count,
       priority = 1,
     },
     {
-      {
-        { diagnostics.info.icon, hls.info },
-        { space },
-        { diagnostics.info.count, hls.info },
-      },
+      { { diagnostics.info.icon, hls.info }, { space }, { diagnostics.info.count, hls.info } },
       cond = diagnostics.info.count,
       priority = 4,
     },
     {
-      {
-        { grapple.icon, hls.directory },
-        { space },
-        { grapple.name, hls.comment },
-      },
+      { { grapple.icon, hls.directory }, { space }, { grapple.name, hls.comment } },
       cond = grapple_ok,
       priority = 4,
     }
   )
-
   -----------------------------------------------------------------------------//
   -- Middle section
   -----------------------------------------------------------------------------//
@@ -858,14 +841,14 @@ function as.ui.statusline.render()
       {
         { icons.misc.line, hls.metadata_prefix },
         { space },
-        { lnum, hls.title },
+        { fmt('%+' .. strwidth(tostring(line_count)) .. 's', lnum), hls.title },
         { '/', hls.comment },
         { line_count, hls.comment },
       },
       priority = 7,
     },
     {
-      { { 'Col:', hls.metadata_prefix }, { space }, { col, hls.title } },
+      { { 'Col:', hls.metadata_prefix }, { space }, { fmt('%+2s', col), hls.title } },
       priority = 7,
     },
     -- (Unexpected) Indentation
