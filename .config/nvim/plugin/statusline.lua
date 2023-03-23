@@ -662,6 +662,7 @@ function as.ui.statusline.render()
 
   local mode, mode_hl = stl_mode()
   local lnum, col = unpack(api.nvim_win_get_cursor(curwin))
+  col = col + 1 -- this should be 1-indexed, but isn't by default
   local line_count = api.nvim_buf_line_count(ctx.bufnum)
 
   -- Git state
