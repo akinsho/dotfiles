@@ -85,6 +85,9 @@ local function general_overrides()
     { ['@lsp.type.variable'] = { clear = true } },
     { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
     { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
+    { ['@lsp.typemod.operator.injected'] = { link = '@operator' } },
+    { ['@lsp.typemod.string.injected'] = { link = '@string' } },
+    { ['@lsp.typemod.variable.injected'] = { link = '@variable' } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
