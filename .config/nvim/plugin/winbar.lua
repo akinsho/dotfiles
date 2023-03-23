@@ -8,14 +8,10 @@ local str = require('as.strings')
 local fn, api, falsy = vim.fn, vim.api, as.falsy
 local icons, decorations, highlight = as.ui.icons.misc, as.ui.decorations, as.highlight
 local lsp_hl = as.ui.lsp.highlights
-
-local space = ' '
-local dir_separator = '/'
-local separator = icons.arrow_right
-local ellipsis = icons.ellipsis
+local space, dir_separator, separator, ellipsis = ' ', '/', icons.arrow_right, icons.ellipsis
 
 --- A mapping of each winbar items ID to its path
----@type (string|{start: {line: integer, character: integer}})[]
+---@type table<integer, (string|{start: {line: integer, character: integer}})>
 local state = {}
 
 local hls = {
@@ -32,10 +28,7 @@ highlight.plugin('winbar', {
 })
 
 ---@param id number
----@param _ number number of clicks
----@param _ "l"|"r"|"m" the button clicked
----@param _ string modifiers
-function as.ui.winbar.click(id, _, _, _)
+function as.ui.winbar.click(id)
   if not id then return end
   local item = state[id]
   if type(item) == 'string' then vim.cmd.edit(item) end

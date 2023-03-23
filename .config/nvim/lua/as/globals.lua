@@ -21,7 +21,7 @@ function as.fold(callback, list, accum)
   return accum
 end
 
----@generic T : table
+---@generic T
 ---@param callback fun(item: T, key: string | number, list: T[]): T
 ---@param list T[]
 ---@return T[]

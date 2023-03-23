@@ -212,6 +212,42 @@ local function get_buffer_icon(buf, opts)
   return devicons.get_icon(name, ext, opts)
 end
 
+local function adopt_window_highlights()
+  local curr_winhl = vim.opt_local.winhighlight:get()
+  if as.falsy(curr_winhl) or not curr_winhl.StatusLine then return end
+
+  for _, part in pairs(stl_winhl) do
+    local name = part.hl(api.nvim_get_current_win())
+    local hl = highlight.get(name)
+    if not as.falsy(hl) then return end
+    highlight.set(name, {
+      inherit = part.fallback,
+      background = { from = curr_winhl.StatusLine, attr = 'bg' },
+    })
+  end
+end
+
+local set_stl_ft_icon_hls, reset_stl_ft_icon_hls = (function()
+  ---@type table<string, {name: string, hl: string}>
+  local hl_cache = {}
+  ---@param buf number
+  ---@param ft string
+  return function(buf, ft)
+    if as.falsy(ft) then return end
+    local _, hl = get_buffer_icon(buf)
+    if not hl then return end
+    local fg, bg = highlight.get(hl, 'fg'), highlight.get(hls.statusline, 'bg')
+    if not bg and not fg then return end
+    local name = get_ft_icon_hl_name(hl)
+    hl_cache[ft] = { name = name, hl = fg }
+    highlight.set(name, { fg = fg, bg = bg })
+  end, function()
+    for _, data in pairs(hl_cache) do
+      highlight.set(data.name, { fg = data.hl, bg = highlight.get(hls.statusline, 'bg') })
+    end
+  end
+end)()
+
 --- @param ctx StatuslineContext
 --- @return string, string?
 local function filetype(ctx)
@@ -782,8 +818,9 @@ function as.ui.statusline.render()
       priority = 4,
       cond = debugger(),
     },
-
-    -- Git Status
+    -----------------------------------------------------------------------------//
+    --  Git status
+    -----------------------------------------------------------------------------//
     {
       { { icons.git.branch, hls.git }, { space }, { status.head, hls.blue } },
       priority = 1,
@@ -846,42 +883,6 @@ function as.ui.statusline.render()
   return str.display({ left, middle, right }, available_space - 5)
 end
 
-local function adopt_window_highlights()
-  local curr_winhl = vim.opt_local.winhighlight:get()
-  if as.falsy(curr_winhl) or not curr_winhl.StatusLine then return end
-
-  for _, part in pairs(stl_winhl) do
-    local name = part.hl(api.nvim_get_current_win())
-    local hl = highlight.get(name)
-    if not as.falsy(hl) then return end
-    highlight.set(
-      name,
-      { inherit = part.fallback, background = { from = curr_winhl.StatusLine, attr = 'bg' } }
-    )
-  end
-end
-
-local set_stl_ft_icon_hls, reset_stl_ft_icon_hls = (function()
-  ---@type table<string, {name: string, hl: string}>
-  local hl_cache = {}
-  ---@param buf number
-  ---@param ft string
-  return function(buf, ft)
-    if as.falsy(ft) then return end
-    local _, hl = get_buffer_icon(buf)
-    if not hl then return end
-    local fg, bg = highlight.get(hl, 'fg'), highlight.get(hls.statusline, 'bg')
-    if not bg and not fg then return end
-    local name = get_ft_icon_hl_name(hl)
-    hl_cache[ft] = { name = name, hl = fg }
-    highlight.set(name, { fg = fg, bg = bg })
-  end, function()
-    for _, data in pairs(hl_cache) do
-      highlight.set(data.name, { fg = data.hl, bg = highlight.get(hls.statusline, 'bg') })
-    end
-  end
-end)()
-
 as.augroup('CustomStatusline', {
   event = 'FocusGained',
   command = function() vim.g.vim_in_focus = true end,
@@ -890,10 +891,10 @@ as.augroup('CustomStatusline', {
   command = function() vim.g.vim_in_focus = false end,
 }, {
   event = 'ColorScheme',
-  command = colors,
-}, {
-  event = 'ColorScheme',
-  command = reset_stl_ft_icon_hls,
+  command = function()
+    colors()
+    reset_stl_ft_icon_hls()
+  end,
 }, {
   event = 'FileType',
   command = function(args) set_stl_ft_icon_hls(args.buf, args.match) end,
