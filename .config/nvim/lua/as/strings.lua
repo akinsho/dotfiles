@@ -12,7 +12,6 @@ local strwidth, fmt, falsy = api.nvim_strwidth, string.format, as.falsy
 
 local M = {}
 
-local HL_END = '%*'
 local CLICK_END = '%X'
 local padding = ' '
 
@@ -67,13 +66,12 @@ end
 ---@return string
 local function chunks_to_string(chunks)
   if not chunks or not vim.tbl_islist(chunks) then return '' end
-  local strings = as.fold(function(acc, item, index)
+  local strings = as.fold(function(acc, item)
     local text, hl = unpack(item)
     if not falsy(text) then
       if type(text) == 'number' then item = tostring(item) end
       if item.max_size then text = truncate_str(text, item.max_size) end
-      table.insert(acc, not falsy(hl) and ('%%#%s#%s'):format(hl, text) or text)
-      if #chunks == index then table.insert(acc, HL_END) end
+      table.insert(acc, not falsy(hl) and ('%%#%s#%s%%*'):format(hl, text) or text)
     end
     return acc
   end, chunks)
@@ -169,6 +167,10 @@ end
 --- @return string
 function M.display(sections, available_space)
   local components = as.fold(function(acc, section, count)
+    if #section == 0 then
+      table.insert(acc, separator())
+      return acc
+    end
     as.foreach(function(args, index)
       if not args then return end
       local ok, str = pcall(component, args)
