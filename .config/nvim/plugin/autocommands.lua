@@ -1,9 +1,6 @@
 if not as then return end
 
-local fn = vim.fn
-local api = vim.api
-local fmt = string.format
-local optl = vim.opt_local
+local fn, api, cmd, fmt, optl = vim.fn, vim.api, vim.cmd, string.format, vim.opt_local
 
 ----------------------------------------------------------------------------------------------------
 -- HLSEARCH
@@ -46,7 +43,7 @@ as.augroup('VimrcIncSearchHighlight', {
   event = { 'OptionSet' },
   pattern = { 'hlsearch' },
   command = function()
-    vim.schedule(function() vim.cmd.redrawstatus() end)
+    vim.schedule(function() cmd.redrawstatus() end)
   end,
 }, {
   event = 'RecordingEnter',
@@ -103,7 +100,7 @@ as.augroup('SmartClose', {
   event = { 'QuitPre' },
   nested = true,
   command = function()
-    if vim.bo.filetype ~= 'qf' then vim.cmd.lclose({ mods = { silent = true } }) end
+    if vim.bo.filetype ~= 'qf' then cmd.lclose({ mods = { silent = true } }) end
   end,
 })
 
@@ -111,9 +108,7 @@ as.augroup('ExternalCommands', {
   -- Open images in an image viewer (probably Preview)
   event = { 'BufEnter' },
   pattern = { '*.png', '*.jpg', '*.gif' },
-  command = function()
-    vim.cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand('%')))
-  end,
+  command = function() cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand('%'))) end,
 })
 
 as.augroup('CheckOutsideTime', {
@@ -203,8 +198,8 @@ as.augroup('Utilities', {
   pattern = { 'file:///*' },
   nested = true,
   command = function(args)
-    vim.cmd.bdelete({ bang = true })
-    vim.cmd.edit(vim.uri_to_fname(args.file))
+    cmd.bdelete({ bang = true })
+    cmd.edit(vim.uri_to_fname(args.file))
   end,
 }, {
   event = { 'FileType' },
@@ -248,7 +243,7 @@ as.augroup('Utilities', {
   event = { 'BufLeave' },
   pattern = { '*' },
   command = function()
-    if can_save() then vim.cmd.update({ mods = { silent = true } }) end
+    if can_save() then cmd.update({ mods = { silent = true } }) end
   end,
 }, {
   event = { 'BufWritePost' },
@@ -256,7 +251,7 @@ as.augroup('Utilities', {
   nested = true,
   command = function()
     if as.falsy(vim.bo.filetype) or fn.exists('b:ftdetect') == 1 then
-      vim.cmd([[
+      cmd([[
         unlet! b:ftdetect
         filetype detect
         echom 'Filetype set to ' . &ft
@@ -269,7 +264,7 @@ as.augroup('TerminalAutocommands', {
   event = { 'TermClose' },
   command = function()
     --- automatically close a terminal if the job was successful
-    if not vim.v.event.status == 0 then vim.cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
+    if not vim.v.event.status == 0 then cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
   end,
 })
 
