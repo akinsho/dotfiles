@@ -82,11 +82,12 @@ local function general_overrides()
     --  Semantic tokens
     ------------------------------------------------------------------------------//
     { ['@lsp.type.parameter'] = { italic = true, foreground = { from = 'Normal' } } },
-    { ['@lsp.type.variable'] = { clear = true } },
+    { ['@lsp.type.variable'] = { link = '@variable' } },
     { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
     { ['@lsp.typemod.variable.defaultLibrary'] = { italic = true } },
     { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
     { ['@lsp.typemod.operator.injected'] = { link = '@operator' } },
+    { ['@lsp.typemod.keyword'] = { link = '@keyword' } },
     { ['@lsp.typemod.string.injected'] = { link = '@string' } },
     { ['@lsp.typemod.variable.injected'] = { link = '@variable' } },
     -----------------------------------------------------------------------------//
@@ -240,6 +241,7 @@ local function colorscheme_overrides()
       { LineNr = { background = 'NONE' } },
       { TabLineSel = { background = { from = 'SpecialKey', attr = 'fg' } } },
       { VisibleTab = { background = { from = 'Normal', alter = 40 }, bold = true } },
+      { ['@variable'] = { fg = { from = 'Normal' } } },
       { ['@constant.comment'] = { inherit = 'Constant', bold = true } },
       { ['@constructor.lua'] = { inherit = 'Type', italic = false, bold = false } },
       { ['@lsp.type.parameter'] = { foreground = { from = 'Normal' } } },
