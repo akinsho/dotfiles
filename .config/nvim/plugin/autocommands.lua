@@ -83,10 +83,12 @@ as.augroup('SmartClose', {
 }, {
   -- Close certain filetypes by pressing q.
   event = { 'FileType' },
-  command = function()
+  command = function(args)
     local is_unmapped = fn.hasmapto('q', 'n') == 0
-    local is_eligible = is_unmapped or vim.wo.previewwindow or smart_close_filetypes[vim.bo.ft]
-    if is_eligible then map('n', 'q', smart_close, { buffer = 0, nowait = true }) end
+    local is_eligible = is_unmapped
+      or vim.wo.previewwindow
+      or smart_close_filetypes[vim.bo[args.buf].ft]
+    if is_eligible then map('n', 'q', smart_close, { buffer = args.buf, nowait = true }) end
   end,
 }, {
   -- Close quick fix window if the file containing it was closed
