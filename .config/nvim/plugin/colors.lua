@@ -12,6 +12,7 @@ local function general_overrides()
     { Directory = { inherit = 'Keyword', bold = true } },
     { URL = { inherit = 'Keyword', underline = true } },
     { ErrorMsg = { background = 'NONE' } },
+    { Cursor = { fg = 'NONE' } },
     { UnderlinedTitle = { bold = true, underline = true } },
     -----------------------------------------------------------------------------//
     -- Commandline
