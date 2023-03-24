@@ -229,7 +229,7 @@ local function adopt_window_highlights()
   end
 end
 
-local set_stl_ft_icon_hls, reset_stl_ft_icon_hls = (function()
+local set_filetype_icon_highlights, reset_filetype_icon_highlights = (function()
   ---@type table<string, {name: string, hl: string}>
   local hl_cache = {}
   ---@param buf number
@@ -881,11 +881,11 @@ as.augroup('CustomStatusline', {
   event = 'ColorScheme',
   command = function()
     colors()
-    reset_stl_ft_icon_hls()
+    reset_filetype_icon_highlights()
   end,
 }, {
   event = 'FileType',
-  command = function(args) set_stl_ft_icon_hls(args.buf, args.match) end,
+  command = function(args) set_filetype_icon_highlights(args.buf, args.match) end,
 }, {
   event = 'WinEnter',
   command = adopt_window_highlights,
