@@ -1,7 +1,7 @@
 if not as or not as.has('nvim-0.9') or not as.ui.statuscolumn.enable then return end
 
 local fn, v, api, opt, optl = vim.fn, vim.v, vim.api, vim.opt, vim.opt_local
-local ui, separators = as.ui, as.ui.icons.separators
+local ui, separators, falsy = as.ui, as.ui.icons.separators, as.falsy
 local str = require('as.strings')
 
 local SIGN_COL_WIDTH, GIT_COL_WIDTH, space = 2, 1, ' '
@@ -28,13 +28,15 @@ local function fdm()
 end
 
 ---@param win number
+---@param line_count number
 ---@return string
-local function nr(win)
-  local col_width = vim.wo[win].numberwidth - 1
+local function nr(win, line_count)
+  local col_width = api.nvim_strwidth(tostring(line_count))
   local padding = string.rep(space, col_width - 1)
   if v.virtnum < 0 then return padding .. shade end -- virtual line
   if v.virtnum > 0 then return padding .. space end -- wrapped line
-  local num = vim.wo[win].relativenumber and not as.falsy(v.relnum) and v.relnum or v.lnum
+  local num = vim.wo[win].relativenumber and not falsy(v.relnum) and v.relnum or v.lnum
+  if line_count >= 1000 then col_width = col_width + 1 end
   local lnum = fn.substitute(num, '\\d\\zs\\ze\\%(\\d\\d\\d\\)\\+$', ',', 'g')
   local num_width = col_width - api.nvim_strwidth(lnum)
   return string.rep(space, num_width) .. lnum
@@ -72,13 +74,14 @@ function ui.statuscolumn.render()
   local signs = get_signs(curbuf)
   local sns, gitsign = signs_by_type(signs)
 
-  local is_absolute_lnum = v.virtnum >= 0 and as.falsy(v.relnum)
+  local line_count = api.nvim_buf_line_count(curbuf)
+  local is_absolute_lnum = v.virtnum >= 0 and falsy(v.relnum)
   local separator_hl = is_absolute_lnum and sep_hl or nil
 
   local statuscol = {}
   local add = str.append(statuscol)
 
-  add(str.spacer(1), { { { nr(curwin) } } })
+  add(str.spacer(1), { { { nr(curwin, line_count) } } })
   add(unpack(sns))
   add(unpack(gitsign))
   add({ { { separator, separator_hl } }, after = '' }, { { { fdm() } } })
