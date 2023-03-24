@@ -1,6 +1,7 @@
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
+---@type lspconfig.options
 local servers = {
   eslint = {},
   tsserver = {},
@@ -18,7 +19,6 @@ local servers = {
   bashls = {},
   vimls = {},
   terraformls = {},
-  rust_analyzer = false,
   marksman = {},
   pyright = {},
   bufls = {},
@@ -75,32 +75,30 @@ local servers = {
       end,
     }
   end,
-  --- @see https://gist.github.com/folke/fe5d28423ea5380929c3f7ce674c41d8
-  lua_ls = function()
-    return {
-      settings = {
-        Lua = {
-          hint = { enable = true, arrayIndex = 'Disable', setType = true },
-          format = { enable = false },
-          diagnostics = {
-            globals = {
-              'vim',
-              'P',
-              'describe',
-              'it',
-              'before_each',
-              'after_each',
-              'packer_plugins',
-              'pending',
-            },
+  lua_ls = {
+    settings = {
+      Lua = {
+        codeLens = { enable = true },
+        hint = { enable = true, arrayIndex = 'Disable', setType = true },
+        format = { enable = false },
+        diagnostics = {
+          globals = {
+            'vim',
+            'P',
+            'describe',
+            'it',
+            'before_each',
+            'after_each',
+            'packer_plugins',
+            'pending',
           },
-          completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
-          workspace = { checkThirdParty = false },
-          telemetry = { enable = false },
         },
+        completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
+        workspace = { checkThirdParty = false },
+        telemetry = { enable = false },
       },
-    }
-  end,
+    },
+  },
 }
 
 ---Get the configuration for a specific language server
