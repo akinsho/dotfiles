@@ -160,6 +160,7 @@ local identifiers = {
     ['NeogitStatus'] = '', -- '',
     ['norg'] = 'ﴬ',
     ['help'] = '',
+    ['neotest.*'] = 'פּ',
     ['undotree'] = 'פּ',
     ['NvimTree'] = 'פּ',
     ['neo-tree'] = 'פּ',
@@ -185,6 +186,7 @@ local identifiers = {
     ['NvimTree'] = 'Nvim Tree',
     ['dap-repl'] = 'Debugger REPL',
     ['Diffview.*'] = 'Diff view',
+    ['neotest.*'] = 'Testing',
 
     ['neo-tree'] = function(fname, _)
       local parts = vim.split(fname, ' ')
