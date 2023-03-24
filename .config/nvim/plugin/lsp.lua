@@ -109,7 +109,7 @@ local function setup_autocommands(client, bufnr)
 
   augroup(FEATURES.CODELENS, function()
     return {
-      event = { 'BufEnter', 'CursorHold', 'InsertLeave' },
+      event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
       desc = 'LSP: Code Lens',
       buffer = bufnr,
       command = function() pcall(lsp.codelens.refresh) end,
