@@ -191,7 +191,7 @@ return {
       win_opts = { border = border },
       highlighter = {
         auto_enable = true,
-        excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus' },
+        excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
       },
     },
   },
@@ -229,7 +229,7 @@ return {
     keys = {
       { '<leader>jb', '<cmd>Portal jumplist backward<cr>', desc = 'jump: backwards' },
       { '<leader>jf', '<cmd>Portal jumplist forward<cr>', desc = 'jump: forwards' },
-      { '<leader>jg', '<cmd>Portal grapple<cr>', desc = 'jump: grapple' },
+      { '<leader>jg', '<cmd>Portal grapple backward<cr>', desc = 'jump: grapple' },
     },
     opts = {
       filter = function(v)
