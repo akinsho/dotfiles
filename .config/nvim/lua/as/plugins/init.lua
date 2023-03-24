@@ -231,12 +231,20 @@ return {
       { '<leader>jf', '<cmd>Portal jumplist forward<cr>', desc = 'jump: forwards' },
       { '<leader>jg', '<cmd>Portal grapple backward<cr>', desc = 'jump: grapple' },
     },
-    opts = {
-      filter = function(v)
-        if v.buffer == api.nvim_get_current_buf() then return false end
-        return vim.startswith(api.nvim_buf_get_name(v.buffer), fn.getcwd())
-      end,
-    },
+    config = function()
+      local function different_portals()
+        local found = {}
+        return function(content)
+          local buf = content.buffer
+          if buf == api.nvim_get_current_buf() then return false end
+          if not vim.startswith(api.nvim_buf_get_name(buf), fn.getcwd()) then return false end
+          if vim.tbl_contains(found, buf) then return false end
+          table.insert(found, buf)
+          return true
+        end
+      end
+      require('portal').setup({ filter = different_portals() })
+    end,
   },
   {
     'cbochs/grapple.nvim',
