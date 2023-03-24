@@ -1,8 +1,9 @@
+if not as then return end
+
 local fn = vim.fn
 local api = vim.api
 local fmt = string.format
-
-if not as then return end
+local optl = vim.opt_local
 
 ----------------------------------------------------------------------------------------------------
 -- HLSEARCH
@@ -208,7 +209,20 @@ as.augroup('Utilities', {
   pattern = { 'gitcommit', 'gitrebase' },
   command = 'set bufhidden=delete',
 }, {
-  event = { 'FileType' },
+  event = 'FileType',
+  desc = 'set typescript and friends filetype options',
+  pattern = { 'typescript', 'typescriptreact' },
+  command = function()
+    optl.textwidth = 100
+    if pcall(require, 'typescript') then
+      map('n', 'gd', 'TypescriptGoToSourceDefinition', {
+        desc = 'typescript: go to source definition',
+      })
+    end
+  end,
+}, {
+  event = 'FileType',
+  desc = 'Set spell for certain filetypes',
   pattern = {
     'lua',
     'vim',
@@ -223,7 +237,7 @@ as.augroup('Utilities', {
     'markdown',
   },
   -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
-  command = function() vim.opt_local.spell = true end,
+  command = function() optl.spell = true end,
 }, {
   event = { 'BufWritePre', 'FileWritePre' },
   pattern = { '*' },
