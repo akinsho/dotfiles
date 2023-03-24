@@ -58,14 +58,14 @@ return {
           },
         },
         rainbow = {
-          enable = false, -- TODO: contribute dart support to ts-rainbow
+          enable = true, -- TODO: contribute dart support to ts-rainbow
           disable = false,
           query = {
             'rainbow-parens',
             tsx = function() return nil end,
             javascript = function() return nil end,
           },
-          strategy = { require('ts-rainbow.strategy.local') },
+          strategy = { require('ts-rainbow.strategy.global') },
         },
         autopairs = { enable = true },
         context_commentstring = { enable = true },
