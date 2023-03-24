@@ -1,5 +1,3 @@
----@diagnostic disable: duplicate-doc-param
-
 if not as or not as.ui.winbar.enable then return end
 local navic_loaded, navic = pcall(require, 'nvim-navic')
 

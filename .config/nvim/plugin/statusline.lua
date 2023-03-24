@@ -26,7 +26,7 @@ local str = require('as.strings')
 
 local icons, lsp, highlight, decorations = as.ui.icons, as.ui.lsp, as.highlight, as.ui.decorations
 local api, fn, fs, fmt, strwidth = vim.api, vim.fn, vim.fs, string.format, vim.api.nvim_strwidth
-local P = as.ui.palette
+local P, falsy = as.ui.palette, as.falsy
 
 local sep = package.config:sub(1, 1)
 local space = ' '
@@ -214,12 +214,12 @@ end
 
 local function adopt_window_highlights()
   local curr_winhl = vim.opt_local.winhighlight:get()
-  if as.falsy(curr_winhl) or not curr_winhl.StatusLine then return end
+  if falsy(curr_winhl) or not curr_winhl.StatusLine then return end
 
   for _, part in pairs(stl_winhl) do
     local name = part.hl(api.nvim_get_current_win())
     local hl = highlight.get(name)
-    if not as.falsy(hl) then return end
+    if not falsy(hl) then return end
     highlight.set(name, {
       inherit = part.fallback,
       background = { from = curr_winhl.StatusLine, attr = 'bg' },
@@ -233,7 +233,7 @@ local set_stl_ft_icon_hls, reset_stl_ft_icon_hls = (function()
   ---@param buf number
   ---@param ft string
   return function(buf, ft)
-    if as.falsy(ft) then return end
+    if falsy(ft) then return end
     local _, hl = get_buffer_icon(buf)
     if not hl then return end
     local fg, bg = highlight.get(hl, 'fg'), highlight.get(hls.statusline, 'bg')
@@ -262,22 +262,19 @@ end
 --- CREDIT: https://vi.stackexchange.com/a/18090
 --- @param ctx StatuslineContext
 local function special_buffers(ctx)
-  local location_list = fn.getloclist(0, { filewinid = 0 })
-  local is_loc_list = location_list.filewinid > 0
-  local normal_term = ctx.buftype == 'terminal' and ctx.filetype == ''
-
-  if is_loc_list then return 'Location List' end
-  if ctx.buftype == 'quickfix' then return 'Quickfix List' end
-  if normal_term then return 'Terminal(' .. fn.fnamemodify(vim.env.SHELL, ':t') .. ')' end
   if ctx.preview then return 'preview' end
-
+  if ctx.buftype == 'quickfix' then return 'Quickfix List' end
+  if ctx.buftype == 'terminal' and falsy(ctx.filetype) then
+    return ('Terminal(%s)'):format(fn.fnamemodify(vim.env.SHELL, ':t'))
+  end
+  if fn.getloclist(0, { filewinid = 0 }).filewinid > 0 then return 'Location List' end
   return nil
 end
 
 ---Only append the path separator if the path is not empty
 ---@param path string
 ---@return string
-local function path_sep(path) return not as.falsy(path) and path .. sep or path end
+local function with_sep(path) return not falsy(path) and path .. sep or path end
 
 --- Replace the directory path with an identifier if it matches a commonly visited
 --- directory of mine such as my projects directory or my work directory
@@ -297,9 +294,9 @@ local function dir_env(directory)
   local result, env, prev_match = directory, '', ''
   for dir, alias in pairs(paths) do
     -- NOTE: using vim.fn.expand causes the commandline to get stuck completing
-    local match, count = fs.normalize(directory):gsub(vim.pesc(path_sep(dir)), '')
+    local match, count = fs.normalize(directory):gsub(vim.pesc(with_sep(dir)), '')
     if count == 1 and #dir > #prev_match then
-      result, env, prev_match = match, path_sep(alias), dir
+      result, env, prev_match = match, with_sep(alias), dir
     end
   end
   return result, env
@@ -313,7 +310,7 @@ local function filename(ctx)
   if special_buf then return { fname = special_buf } end
 
   local path = api.nvim_buf_get_name(buf)
-  if as.falsy(path) then return { fname = 'No Name' } end
+  if falsy(path) then return { fname = 'No Name' } end
   --- add ":." to the expansion i.e. to make the directory path relative to the current vim directory
   local parts = vim.split(fn.fnamemodify(path, ':~'), sep)
   local fname = table.remove(parts)
@@ -323,14 +320,14 @@ local function filename(ctx)
 
   local parent = table.remove(parts)
   fname = fn.isdirectory(fname) == 1 and fname .. sep or fname
-  if as.falsy(parent) then return { fname = fname } end
+  if falsy(parent) then return { fname = fname } end
 
-  local dir = path_sep(table.concat(parts, sep))
+  local dir = with_sep(table.concat(parts, sep))
   local new_dir, env = dir_env(dir)
-  local segment = not as.falsy(env) and env .. new_dir or dir
+  local segment = not falsy(env) and env .. new_dir or dir
   if api.nvim_strwidth(segment) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
 
-  return { env = env, dir = new_dir, parent = path_sep(parent), fname = fname }
+  return { env = env, dir = new_dir, parent = with_sep(parent), fname = fname }
 end
 
 ---Create the various segments of the current filename
@@ -361,7 +358,7 @@ local function stl_file(ctx, minimal)
   local p = filename(ctx)
 
   -- Depending on which filename segments are empty we select a section to add the file icon to
-  local env_empty, dir_empty, parent_empty = as.falsy(p.env), as.falsy(p.dir), as.falsy(p.parent)
+  local env_empty, dir_empty, parent_empty = falsy(p.env), falsy(p.dir), falsy(p.parent)
   local to_update = (env_empty and dir_empty and parent_empty) and file_opts
     or (env_empty and dir_empty) and parent_opts
     or env_empty and dir_opts
@@ -507,7 +504,7 @@ local function stl_lsp_clients(ctx)
   if not state.lsp_clients_visible then
     return { { name = fmt('%d attached', #clients), priority = 7 } }
   end
-  if as.falsy(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
+  if falsy(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
   table.sort(clients, function(a, b)
     if a.name == 'null-ls' then
       return false
@@ -866,6 +863,12 @@ function as.ui.statusline.render()
   return str.display({ left, middle, right }, available_space - 5)
 end
 
+-- :h qf.vim, disable qf statusline
+vim.g.qf_disable_statusline = 1
+
+-- set the statusline
+vim.o.statusline = '%{%v:lua.as.ui.statusline.render()%}'
+
 as.augroup('CustomStatusline', {
   event = 'FocusGained',
   command = function() vim.g.vim_in_focus = true end,
@@ -899,9 +902,3 @@ as.augroup('CustomStatusline', {
   pattern = { 'NeogitPushComplete', 'NeogitCommitComplete', 'NeogitStatusRefresh' },
   command = update_git_status,
 })
-
--- :h qf.vim, disable qf statusline
-vim.g.qf_disable_statusline = 1
-
--- set the statusline
-vim.o.statusline = '%{%v:lua.as.ui.statusline.render()%}'
