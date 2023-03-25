@@ -68,6 +68,7 @@ return {
     {
       'williamboman/mason.nvim',
       cmd = 'Mason',
+      build = ':MasonUpdate',
       opts = { ui = { border = border, height = 0.8 } },
     },
     {
