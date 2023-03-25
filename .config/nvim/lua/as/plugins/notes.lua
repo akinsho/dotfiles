@@ -83,7 +83,6 @@ return {
         { OrgDone = { fg = 'Green', bold = true } },
         { OrgAgendaScheduled = { fg = 'Teal' } },
       })
-      require('orgmode').setup_ts_grammar()
       require('orgmode').setup(opts)
     end,
   },

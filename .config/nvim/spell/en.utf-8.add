@@ -282,3 +282,7 @@ neorg
 startup
 lockfile
 signcolumn
+hls
+Paren
+hl
+underdotted

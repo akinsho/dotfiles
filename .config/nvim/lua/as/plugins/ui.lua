@@ -1,6 +1,6 @@
 local r, api, fn = vim.regex, vim.api, vim.fn
 local strwidth = api.nvim_strwidth
-local highlight, ui = as.highlight, as.ui
+local highlight, ui, fold, falsy, augroup = as.highlight, as.ui, as.fold, as.falsy, as.augroup
 local icons, border = ui.icons.lsp, ui.current.border
 
 return {
@@ -12,7 +12,7 @@ return {
       highlight.plugin('virt_column', {
         { VirtColumn = { fg = { from = 'Comment', alter = 0.10 } } },
       })
-      as.augroup('VirtCol', {
+      augroup('VirtCol', {
         event = { 'VimEnter', 'BufEnter', 'WinEnter' },
         command = function(args)
           ui.decorations.set_colorcolumn(
@@ -105,11 +105,11 @@ return {
         max_height = function() return math.floor(vim.o.lines * 0.8) end,
         on_open = function(win)
           if not api.nvim_win_is_valid(win) then return end
-          api.nvim_win_set_config(win, { border = as.ui.current.border })
+          api.nvim_win_set_config(win, { border = border })
         end,
         render = function(...)
           local notification = select(2, ...)
-          local style = as.falsy(notification.title[1]) and 'minimal' or 'default'
+          local style = falsy(notification.title[1]) and 'minimal' or 'default'
           require('notify.render')[style](...)
         end,
       })
@@ -121,7 +121,7 @@ return {
   {
     'levouh/tint.nvim',
     event = 'WinNew',
-    branch = 'untint-forcibly-closed-windows',
+    -- branch = 'untint-forcibly-closed-windows',
     opts = {
       tint = -30,
       -- stylua: ignore
@@ -135,7 +135,7 @@ return {
         -- since if there is a custom buftype it's probably a special buffer we always want to pay
         -- attention to whilst its open.
         -- BUG: neo-tree cannot be ignore as either nofile or by filetype as this causes tinting bugs
-        if win.diff or not as.falsy(fn.win_gettype(win_id)) then return true end
+        if win.diff or not falsy(fn.win_gettype(win_id)) then return true end
         local ignore_bt = as.p_table({ terminal = true, prompt = true, nofile = false })
         local ignore_ft = as.p_table({ ['Telescope.*'] = true, ['Neogit.*'] = true, ['qf'] = true })
         local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
@@ -200,27 +200,23 @@ return {
   {
     'akinsho/bufferline.nvim',
     dev = true,
-    event = 'VimEnter',
+    event = 'UIEnter',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       local groups = require('bufferline.groups')
+      local pattern = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
       require('bufferline').setup({
         highlights = function(defaults)
+          local normal = highlight.get('Normal')
+          local visible = highlight.tint(normal.fg, -0.4)
           local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
 
-          local normal, err = as.highlight.get('Normal')
-          if as.falsy(normal) or err then return defaults.highlights end
-
-          local visible = highlight.tint(normal.fg, -0.4)
-          local diagnostic =
-            r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
-
-          local hl = as.fold(function(accum, attrs, name)
+          local hl = fold(function(accum, attrs, name)
             local formatted = name:lower()
             local is_group = formatted:match('group')
             local is_offset = formatted:match('offset')
             local is_separator = formatted:match('separator')
-            if diagnostic and diagnostic:match_str(formatted) then attrs.fg = normal.fg end
+            if pattern and pattern:match_str(formatted) then attrs.fg = normal.fg end
             if not is_group or (is_group and is_separator) then attrs.bg = normal.bg end
             if not is_group and not is_offset and is_separator then attrs.fg = normal.bg end
             accum[name] = attrs

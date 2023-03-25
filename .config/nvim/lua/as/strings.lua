@@ -87,6 +87,7 @@ end
 --- @field id number
 --- @field max_size integer
 --- @field cond boolean | number | table | string,
+
 --- @param opts ComponentOpts
 --- @return StringComponent?
 local function component(opts)

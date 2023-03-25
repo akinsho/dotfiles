@@ -27,10 +27,8 @@ return {
     },
     config = function()
       local cmp = require('cmp')
-
-      local kind_hls = as.ui.lsp.highlights
-      local ellipsis = as.ui.icons.misc.ellipsis
       local luasnip = require('luasnip')
+      local kind_hls, ellipsis = as.ui.lsp.highlights, as.ui.icons.misc.ellipsis
 
       -- stylua: ignore
       --- @type HLArgs[]
@@ -59,15 +57,13 @@ return {
       }
       cmp.setup({
         experimental = { ghost_text = false },
-        matching = {
-          disallow_partial_fuzzy_matching = false,
-        },
+        matching = { disallow_partial_fuzzy_matching = false },
         window = {
           completion = cmp.config.window.bordered(cmp_window),
           documentation = cmp.config.window.bordered(cmp_window),
         },
         snippet = {
-          expand = function(args) require('luasnip').lsp_expand(args.body) end,
+          expand = function(args) luasnip.lsp_expand(args.body) end,
         },
         mapping = cmp.mapping.preset.insert({
           ['<C-]>'] = cmp.mapping(
