@@ -39,7 +39,7 @@ return {
         { CmpItemAbbrMatch = { fg = { from = 'Keyword' } } },
         { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
         { CmpItemAbbrMatchFuzzy = { italic = true, fg = { from = 'Keyword' } } },
-        { CmpItemMenu = { fg = { from = 'Pmenu', attr = 'bg', alter = 30 }, italic = true, bold = false } }, -- Make the source information less prominent
+        { CmpItemMenu = { fg = { from = 'Pmenu', attr = 'bg', alter = 0.3 }, italic = true, bold = false } }, -- Make the source information less prominent
       }
 
       -- stylua: ignore

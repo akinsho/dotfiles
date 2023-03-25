@@ -102,7 +102,7 @@ local function colors()
   local number_fg = highlight.get('Number', 'fg')
   local normal_bg = highlight.get('Normal', 'bg')
 
-  local bg_color = highlight.alter_color(normal_bg, -16)
+  local bg_color = highlight.tint(normal_bg, -0.25)
 
   -- stylua: ignore
   highlight.all({
@@ -118,7 +118,7 @@ local function colors()
     { [hls.client] = { bg = bg_color, fg = normal_fg, bold = true } },
     { [hls.env] = { bg = bg_color, fg = error_color, italic = true, bold = true } },
     { [hls.directory] = { bg = bg_color, fg = 'Gray', italic = true } },
-    { [hls.directory_inactive] = { bg = bg_color, italic = true, fg = { from = 'Normal', alter = 40 } } },
+    { [hls.directory_inactive] = { bg = bg_color, italic = true, fg = { from = 'Normal', alter = 0.4 } } },
     { [hls.parent_directory] = { bg = bg_color, fg = string_fg, bold = true } },
     { [hls.title] = { bg = bg_color, fg = 'LightGray', bold = true } },
     { [hls.comment] = { bg = bg_color, inherit = 'Comment' } },

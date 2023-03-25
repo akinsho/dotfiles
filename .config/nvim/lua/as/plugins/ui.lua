@@ -10,7 +10,7 @@ return {
     opts = { char = '▕' },
     init = function()
       highlight.plugin('virt_column', {
-        { VirtColumn = { fg = { from = 'Comment', alter = 10 } } },
+        { VirtColumn = { fg = { from = 'Comment', alter = 0.10 } } },
       })
       as.augroup('VirtCol', {
         event = { 'VimEnter', 'BufEnter', 'WinEnter' },
@@ -211,7 +211,7 @@ return {
           local normal, err = as.highlight.get('Normal')
           if as.falsy(normal) or err then return defaults.highlights end
 
-          local visible = as.highlight.alter_color(normal.fg, -40)
+          local visible = highlight.tint(normal.fg, -0.4)
           local diagnostic =
             r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
 

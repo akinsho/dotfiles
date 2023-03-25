@@ -97,7 +97,7 @@ return {
             { Dash = { bg = '#0B60A1', bold = true } },
           },
           ['horizon'] = {
-            { Headline = { bold = true, italic = true, bg = { from = 'Normal', alter = 20 } } },
+            { Headline = { bold = true, italic = true, bg = { from = 'Normal', alter = 0.2 } } },
             { Headline1 = { inherit = 'Headline', fg = { from = 'Type' } } },
           },
         },

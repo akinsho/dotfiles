@@ -68,35 +68,31 @@ local function get_hl_as_hex(opts, ns)
   ns, opts = ns or 0, opts or {}
   opts.link = opts.link ~= nil and opts.link or false
   local hl = api.nvim_get_hl(ns, opts)
-  hl.fg = hl.fg and '#' .. bit.tohex(hl.fg, 6)
-  hl.bg = hl.bg and '#' .. bit.tohex(hl.bg, 6)
+  hl.fg = hl.fg and ('#%06x'):format(hl.fg)
+  hl.bg = hl.bg and ('#%06x'):format(hl.bg)
+  -- FIXME: remove this once the nvim_get_hl function is fixed
+  if hl.link and not opts.link then return get_hl_as_hex({ name = hl.link }, ns) end
   return hl
 end
-
----Convert a hex color to RGB
----@param color string
----@return number, number, number
-local function hex_to_rgb(color)
-  local hex = color:gsub('#', '')
-  return tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5), 16)
-end
-
-local function alter(attr, percent) return math.floor(attr * (100 + percent) / 100) end
 
 --- Change the brightness of a color, negative numbers darken and positive ones brighten
 ---see:
 --- 1. https://stackoverflow.com/q/5560248
 --- 2. https://stackoverflow.com/a/37797380
 ---@param color string A hex color
----@param percent integer a negative number darkens and a positive one brightens
+---@param percent float a negative number darkens and a positive one brightens
 ---@return string
-local function alter_color(color, percent)
-  assert(color, 'cannot alter a color without specifying a color')
-  local r, g, b = hex_to_rgb(color)
+local function tint(color, percent)
+  assert(color and percent, 'cannot alter a color without specifying a color and percentage')
+  local r = tonumber(color:sub(2, 3), 16)
+  local g = tonumber(color:sub(4, 5), 16)
+  local b = tonumber(color:sub(6), 16)
   if not r or not g or not b then return 'NONE' end
-  r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
-  r, g, b = math.min(r, 255), math.min(g, 255), math.min(b, 255)
-  return fmt('#%02x%02x%02x', r, g, b)
+  local blend = function(component)
+    component = math.floor(component * (1 + percent))
+    return math.min(math.max(component, 0), 255)
+  end
+  return fmt('#%02x%02x%02x', blend(r), blend(g), blend(b))
 end
 
 ---Get the value a highlight group whilst handling errors, fallbacks as well as returning a gui value
@@ -134,7 +130,7 @@ end
 local function resolve_from_attribute(hl, attr)
   if type(hl) ~= 'table' or not hl.from then return hl end
   local colour, err = get(hl.from, hl.attr or attr)
-  if hl.alter then colour = alter_color(colour, hl.alter) end
+  if hl.alter then colour = tint(colour, hl.alter) end
   return colour, err
 end
 
@@ -244,7 +240,7 @@ as.highlight = {
   get = get,
   set = set,
   all = all,
+  tint = tint,
   plugin = plugin,
   set_winhl = set_winhl,
-  alter_color = alter_color,
 }

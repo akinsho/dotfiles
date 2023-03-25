@@ -5,7 +5,7 @@ local highlight = as.highlight
 
 local function general_overrides()
   highlight.all({
-    { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 25 } } },
+    { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 0.25 } } },
     { VertSplit = { fg = { from = 'Comment' } } },
     { WinSeparator = { fg = { from = 'Comment' } } },
     { mkdLineBreak = { clear = true } },
@@ -17,18 +17,18 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Commandline
     -----------------------------------------------------------------------------//
-    { MsgArea = { bg = { from = 'Normal', alter = -10 } } },
+    { MsgArea = { bg = { from = 'Normal', alter = -0.1 } } },
     { MsgSeparator = { link = 'MsgArea' } },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
-    { NormalFloat = { bg = { from = 'Normal', alter = -15 } } },
-    { FloatBorder = { bg = { from = 'Normal', alter = -15 }, fg = { from = 'Comment' } } },
+    { NormalFloat = { bg = { from = 'Normal', alter = -0.15 } } },
+    { FloatBorder = { bg = { from = 'Normal', alter = -0.15 }, fg = { from = 'Comment' } } },
     { FloatTitle = { inherit = 'FloatBorder', reverse = true, bold = true, bg = 'white' } },
     { Pmenu = { link = 'NormalFloat' } },
     { Pmenu = { link = 'NormalFloat' } },
     -----------------------------------------------------------------------------//
-    { CodeBlock = { bg = { from = 'Normal', alter = 30 } } },
+    { CodeBlock = { bg = { from = 'Normal', alter = 0.3 } } },
     { markdownCode = { link = 'CodeBlock' } },
     { markdownCodeBlock = { link = 'CodeBlock' } },
     { CurSearch = { bg = { from = 'String', attr = 'fg' }, fg = 'white', bold = true } },
@@ -127,11 +127,11 @@ local function general_overrides()
     { DiagnosticUnderlineWarn = { undercurl = true, sp = L.warn, fg = 'none' } },
     { DiagnosticUnderlineInfo = { undercurl = true, sp = L.info, fg = 'none' } },
     -- Virtual Text
-    { DiagnosticVirtualTextInfo = { bg = { from = 'DiagnosticInfo', attr = 'fg', alter = -70 } } },
-    { DiagnosticVirtualTextHint = { bg = { from = 'DiagnosticHint', attr = 'fg', alter = -70 } } },
-    { DiagnosticVirtualTextWarn = { bg = { from = 'DiagnosticWarn', attr = 'fg', alter = -80 } } },
+    { DiagnosticVirtualTextInfo = { bg = { from = 'DiagnosticInfo', attr = 'fg', alter = -0.7 } } },
+    { DiagnosticVirtualTextHint = { bg = { from = 'DiagnosticHint', attr = 'fg', alter = -0.7 } } },
+    { DiagnosticVirtualTextWarn = { bg = { from = 'DiagnosticWarn', attr = 'fg', alter = -0.8 } } },
     {
-      DiagnosticVirtualTextError = { bg = { from = 'DiagnosticError', attr = 'fg', alter = -80 } },
+      DiagnosticVirtualTextError = { bg = { from = 'DiagnosticError', attr = 'fg', alter = -0.8 } },
     },
     -- Sign column line
     { DiagnosticSignInfoLine = { inherit = 'DiagnosticVirtualTextInfo', fg = 'NONE' } },
@@ -173,13 +173,13 @@ end
 
 local function set_sidebar_highlight()
   highlight.all({
-    { PanelDarkBackground = { bg = { from = 'Normal', alter = -42 } } },
+    { PanelDarkBackground = { bg = { from = 'Normal', alter = -0.42 } } },
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
-    { PanelBackground = { bg = { from = 'Normal', alter = -8 } } },
+    { PanelBackground = { bg = { from = 'Normal', alter = -0.8 } } },
     { PanelHeading = { inherit = 'PanelBackground', bold = true } },
     { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
     { PanelStNC = { link = 'PanelWinSeparator' } },
-    { PanelSt = { bg = { from = 'Visual', alter = -20 } } },
+    { PanelSt = { bg = { from = 'Visual', alter = -0.2 } } },
   })
 end
 
@@ -226,15 +226,15 @@ local function colorscheme_overrides()
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { bg = 'NONE' } },
       { TabLineSel = { bg = { from = 'SpecialKey', attr = 'fg' } } },
-      { VisibleTab = { bg = { from = 'Normal', alter = 40 }, bold = true } },
+      { VisibleTab = { bg = { from = 'Normal', alter = 0.4 }, bold = true } },
       { ['@variable'] = { fg = { from = 'Normal' } } },
       { ['@constant.comment'] = { inherit = 'Constant', bold = true } },
       { ['@constructor.lua'] = { inherit = 'Type', italic = false, bold = false } },
       { ['@lsp.type.parameter'] = { fg = { from = 'Normal' } } },
       { PanelBackground = { link = 'Normal' } },
       { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
-      { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -30 } } },
-      { PanelDarkBackground = { bg = { from = 'Normal', alter = -25 } } },
+      { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -0.3 } } },
+      { PanelDarkBackground = { bg = { from = 'Normal', alter = -0.25 } } },
       { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
     },
   }
