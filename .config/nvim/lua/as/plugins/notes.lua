@@ -94,22 +94,11 @@ return {
       highlight.plugin('Headlines', {
         theme = {
           ['*'] = {
-            { Dash = { background = '#0b60a1', bold = true } },
+            { Dash = { bg = '#0B60A1', bold = true } },
           },
           ['horizon'] = {
-            {
-              Headline = {
-                bold = true,
-                italic = true,
-                background = { from = 'Normal', alter = 20 },
-              },
-            },
-            {
-              Headline1 = {
-                inherit = 'Headline',
-                fg = { from = 'Type' },
-              },
-            },
+            { Headline = { bold = true, italic = true, bg = { from = 'Normal', alter = 20 } } },
+            { Headline1 = { inherit = 'Headline', fg = { from = 'Type' } } },
           },
         },
       })

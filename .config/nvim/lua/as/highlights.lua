@@ -1,42 +1,47 @@
 local api, notify, fmt = vim.api, vim.notify, string.format
 
-as.highlight = { win_hl = {} }
+as.highlight = {}
 
 ---@alias ErrorMsg {msg: string}
 
----@class HighlightAttributes
----@field from string
----@field attr 'foreground' | 'fg' | 'background' | 'bg'
----@field alter integer
+---@alias HLAttrs {from: string, attr: "fg" | "bg", alter: integer}
 
----@class HighlightKeys
+---@class HLData
+---@field fg string
+---@field bg string
+---@field bold boolean
+---@field italic boolean
+---@field undercurl boolean
+---@field underline boolean
+---@field underdot boolean
+
+---@class HLArgs
 ---@field blend integer
----@field foreground string | HighlightAttributes
----@field background string | HighlightAttributes
----@field fg string | HighlightAttributes
----@field bg string | HighlightAttributes
----@field sp string | HighlightAttributes
+---@field fg string | HLAttrs
+---@field bg string | HLAttrs
+---@field sp string | HLAttrs
 ---@field bold boolean
 ---@field italic boolean
 ---@field undercurl boolean
 ---@field underline boolean
 ---@field underdot boolean
 ---@field clear boolean
+---@field inherit string
 
----@class NvimHighlightData
----@field foreground string
----@field background string
----@field bold boolean
----@field italic boolean
----@field undercurl boolean
----@field underline boolean
----@field underdot boolean
-
+local attrs = {
+  fg = true,
+  bg = true,
+  sp = true,
+  blend = true,
+  bold = true,
+  italic = true,
+  undercurl = true,
+  underline = true,
+  underdot = true,
+}
 ---Convert a hex color to RGB
 ---@param color string
----@return number
----@return number
----@return number
+---@return number, number, number
 local function hex_to_rgb(color)
   local hex = color:gsub('#', '')
   return tonumber(hex:sub(1, 2), 16), tonumber(hex:sub(3, 4), 16), tonumber(hex:sub(5), 16)
@@ -44,12 +49,14 @@ end
 
 local function alter(attr, percent) return math.floor(attr * (100 + percent) / 100) end
 
----@source https://stackoverflow.com/q/5560248
----see: https://stackoverflow.com/a/37797380
+---see:
+--- 1. https://stackoverflow.com/q/5560248
+--- 2. https://stackoverflow.com/a/37797380
 ---@param color string A hex color
 ---@param percent integer a negative number darkens and a positive one brightens
 ---@return string
 function as.highlight.alter_color(color, percent)
+  assert(color, 'cannot alter a color without specifying a color')
   local r, g, b = hex_to_rgb(color)
   if not r or not g or not b then return 'NONE' end
   r, g, b = alter(r, percent), alter(g, percent), alter(b, percent)
@@ -57,13 +64,15 @@ function as.highlight.alter_color(color, percent)
   return fmt('#%02x%02x%02x', r, g, b)
 end
 
----@param group_name string A highlight group name
-local function get_highlight(group_name)
-  local ok, hl = pcall(api.nvim_get_hl_by_name, group_name, true)
-  if not ok then return {} end
-  hl.foreground = hl.foreground and '#' .. bit.tohex(hl.foreground, 6)
-  hl.background = hl.background and '#' .. bit.tohex(hl.background, 6)
-  hl[true] = nil -- BUG: API returns a true key which errors during the merge
+---@param opts {name: string?, link: boolean?}?
+---@param ns integer?
+---@return HLData
+local function get_highlight(opts, ns)
+  ns, opts = ns or 0, opts or {}
+  opts.link = opts.link or false
+  local hl = api.nvim_get_hl(ns, opts)
+  hl.fg = hl.fg and '#' .. bit.tohex(hl.fg, 6)
+  hl.bg = hl.bg and '#' .. bit.tohex(hl.bg, 6)
   return hl
 end
 
@@ -74,15 +83,25 @@ end
 ---@param attribute string?
 ---@param fallback string?
 ---@return string, ErrorMsg?
----@overload fun(group: string): NvimHighlightData, ErrorMsg?
+---@overload fun(group: string): HLData, ErrorMsg?
 function as.highlight.get(group, attribute, fallback)
   assert(group, 'cannot get a highlight without specifying a group name')
-  local data = get_highlight(group)
+  local data = get_highlight({ name = group })
   if not attribute then return data end
-  local attr = ({ fg = 'foreground', bg = 'background' })[attribute] or attribute
-  local color = data[attr] or fallback
-  if color then return color end
-  return 'NONE', { msg = fmt('failed to get highlight %s for attribute %s', group, attribute) }
+
+  assert(attrs[attribute], ('the attribute passed in is invalid: %s'):format(attribute))
+  local color = data[attribute] or fallback
+  if not color then
+    return 'NONE',
+      {
+        msg = ('failed to get highlight %s for attribute %s \n%s'):format(
+          group,
+          attribute,
+          debug.traceback()
+        ),
+      }
+  end
+  return color
 end
 
 --- Sets a neovim highlight with some syntactic sugar. It takes a highlight table and converts
@@ -91,14 +110,14 @@ end
 --- as a shorthand to derive the right color.
 --- For example:
 --- ```lua
----   M.set({ MatchParen = {foreground = {from = 'ErrorMsg'}}})
+---   M.set({ MatchParen = {fg = {from = 'ErrorMsg'}}})
 --- ```
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
 --- NOTE: this function must NOT mutate the options table as these are re-used when the colorscheme
 --- is updated
 ---@param name string
----@param opts HighlightKeys
----@overload fun(namespace: integer, name: string, opts: HighlightKeys): ErrorMsg[]?
+---@param opts HLArgs
+---@overload fun(namespace: integer, name: string, opts: HLArgs): ErrorMsg[]?
 ---@return ErrorMsg[]?
 function as.highlight.set(namespace, name, opts)
   if type(namespace) == 'string' and type(name) == 'table' then
@@ -116,7 +135,7 @@ function as.highlight.set(namespace, name, opts)
 
   local errs, hl = {}, {}
   if not clear then
-    hl = get_highlight(opts.inherit or name)
+    hl = get_highlight({ name = opts.inherit or name })
     for attr, value in pairs(opts) do
       if type(value) == 'table' and value.from then
         local new_attr, err = as.highlight.get(value.from, value.attr or attr)
@@ -140,7 +159,7 @@ end
 --- Set window local highlights
 ---@param name string
 ---@param win_id number
----@param hls HighlightKeys[]
+---@param hls HLArgs[]
 function as.highlight.set_winhl(name, win_id, hls)
   local namespace = api.nvim_create_namespace(name)
   as.highlight.all(hls, namespace)
@@ -148,16 +167,18 @@ function as.highlight.set_winhl(name, win_id, hls)
 end
 
 ---Apply a list of highlights
----@param hls table<string, HighlightKeys>
+---@param hls {[string]: HLArgs}[]
 ---@param namespace integer?
 function as.highlight.all(hls, namespace)
   local errors = as.fold(function(errors, hl)
-    local curr_errors = as.highlight.set(namespace or 0, next(hl))
-    if curr_errors then vim.list_extend(errors, curr_errors) end
+    local errs = as.highlight.set(namespace or 0, next(hl))
+    if errs then vim.list_extend(errors, errs) end
     return errors
   end, hls)
   if #errors > 0 then
-    notify(as.fold(function(acc, err) return acc .. '\n' .. err.msg end, errors, ''), 'error')
+    vim.defer_fn(function()
+      notify(as.fold(function(acc, err) return acc .. '\n' .. err.msg end, errors, ''), 'error')
+    end, 1000)
   end
 end
 

@@ -33,18 +33,18 @@ return {
       local luasnip = require('luasnip')
 
       -- stylua: ignore
+      --- @type HLArgs[]
       local menu_hls = {
-        { CmpItemAbbr = { foreground = 'fg', background = 'NONE', italic = false, bold = false } },
-        { CmpItemAbbrMatch = { foreground = { from = 'Keyword' } } },
+        { CmpItemAbbr = { fg = 'fg', bg = 'NONE', italic = false, bold = false } },
+        { CmpItemAbbrMatch = { fg = { from = 'Keyword' } } },
         { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
-        { CmpItemAbbrMatchFuzzy = { italic = true, foreground = { from = 'Keyword' } } },
-        -- Make the source information less prominent
-        { CmpItemMenu = { fg = { from = 'Pmenu', attr = 'bg', alter = 30 }, italic = true, bold = false } },
+        { CmpItemAbbrMatchFuzzy = { italic = true, fg = { from = 'Keyword' } } },
+        { CmpItemMenu = { fg = { from = 'Pmenu', attr = 'bg', alter = 30 }, italic = true, bold = false } }, -- Make the source information less prominent
       }
 
       -- stylua: ignore
       highlight.plugin('Cmp', as.fold(function(accum, value, key)
-        table.insert(accum, { [fmt('CmpItemKind%s', key)] = { foreground = { from = value } } })
+        table.insert(accum, { [fmt('CmpItemKind%s', key)] = { fg = { from = value } } })
         return accum
       end, kind_hls, menu_hls))
 

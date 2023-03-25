@@ -208,11 +208,10 @@ return {
         highlights = function(defaults)
           local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
 
-          local data, err = as.highlight.get('Normal')
-          if as.falsy(data) or err then return defaults.highlights end
+          local normal, err = as.highlight.get('Normal')
+          if as.falsy(normal) or err then return defaults.highlights end
 
-          local normal_bg, normal_fg = data.background, data.foreground
-          local visible = as.highlight.alter_color(normal_fg, -40)
+          local visible = as.highlight.alter_color(normal.fg, -40)
           local diagnostic =
             r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
 
@@ -221,9 +220,9 @@ return {
             local is_group = formatted:match('group')
             local is_offset = formatted:match('offset')
             local is_separator = formatted:match('separator')
-            if diagnostic and diagnostic:match_str(formatted) then attrs.fg = normal_fg end
-            if not is_group or (is_group and is_separator) then attrs.bg = normal_bg end
-            if not is_group and not is_offset and is_separator then attrs.fg = normal_bg end
+            if diagnostic and diagnostic:match_str(formatted) then attrs.fg = normal.fg end
+            if not is_group or (is_group and is_separator) then attrs.bg = normal.bg end
+            if not is_group and not is_offset and is_separator then attrs.fg = normal.bg end
             accum[name] = attrs
             return accum
           end, defaults.highlights)

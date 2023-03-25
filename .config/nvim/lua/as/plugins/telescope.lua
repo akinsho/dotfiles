@@ -135,7 +135,7 @@ return {
     highlight.plugin('telescope', {
       theme = {
         ['*'] = {
-          { TelescopeBorder = { foreground = P.grey } },
+          { TelescopeBorder = { fg = P.grey } },
           { TelescopePromptPrefix = { link = 'Statement' } },
           { TelescopeTitle = { inherit = 'Normal', bold = true } },
           { TelescopePromptTitle = { fg = { from = 'Normal' }, bold = true } },

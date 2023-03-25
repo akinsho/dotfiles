@@ -33,8 +33,8 @@ return {
       require('dap') -- NOTE: Must be loaded before the signs can be tweaked
 
       highlight.plugin('dap', {
-        { DapBreakpoint = { foreground = as.ui.palette.light_red } },
-        { DapStopped = { foreground = as.ui.palette.green } },
+        { DapBreakpoint = { fg = as.ui.palette.light_red } },
+        { DapStopped = { fg = as.ui.palette.green } },
       })
 
       fn.sign_define({

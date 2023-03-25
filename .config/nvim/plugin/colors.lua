@@ -5,19 +5,19 @@ local highlight = as.highlight
 
 local function general_overrides()
   highlight.all({
-    { Dim = { foreground = { from = 'Normal', attr = 'bg', alter = 25 } } },
+    { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 25 } } },
     { VertSplit = { fg = { from = 'Comment' } } },
     { WinSeparator = { fg = { from = 'Comment' } } },
     { mkdLineBreak = { clear = true } },
     { Directory = { inherit = 'Keyword', bold = true } },
     { URL = { inherit = 'Keyword', underline = true } },
-    { ErrorMsg = { background = 'NONE' } },
+    { ErrorMsg = { bg = 'NONE' } },
     { Cursor = { fg = 'NONE' } },
     { UnderlinedTitle = { bold = true, underline = true } },
     -----------------------------------------------------------------------------//
     -- Commandline
     -----------------------------------------------------------------------------//
-    { MsgArea = { background = { from = 'Normal', alter = -10 } } },
+    { MsgArea = { bg = { from = 'Normal', alter = -10 } } },
     { MsgSeparator = { link = 'MsgArea' } },
     -----------------------------------------------------------------------------//
     -- Floats
@@ -28,32 +28,25 @@ local function general_overrides()
     { Pmenu = { link = 'NormalFloat' } },
     { Pmenu = { link = 'NormalFloat' } },
     -----------------------------------------------------------------------------//
-    { CodeBlock = { background = { from = 'Normal', alter = 30 } } },
+    { CodeBlock = { bg = { from = 'Normal', alter = 30 } } },
     { markdownCode = { link = 'CodeBlock' } },
     { markdownCodeBlock = { link = 'CodeBlock' } },
-    {
-      CurSearch = {
-        background = { from = 'String', attr = 'fg' },
-        foreground = 'white',
-        bold = true,
-      },
-    },
+    { CurSearch = { bg = { from = 'String', attr = 'fg' }, fg = 'white', bold = true } },
     { CursorLineNr = { inherit = 'CursorLine', bold = true } },
     { CursorLineSign = { link = 'CursorLine' } },
-    { FoldColumn = { background = 'bg' } },
-    { TermCursor = { ctermfg = 'green', foreground = 'royalblue' } },
-    -- Add undercurl to existing spellbad highlight
-    { SpellBad = { undercurl = true, background = 'NONE', foreground = 'NONE', sp = 'green' } },
+    { FoldColumn = { bg = 'bg' } },
+    { TermCursor = { ctermfg = 'green', fg = 'royalblue' } },
+    { SpellBad = { undercurl = true, bg = 'NONE', fg = 'NONE', sp = 'green' } },
     { SpellRare = { undercurl = true } },
-    { PmenuSbar = { background = P.grey } },
-    { PmenuThumb = { background = { from = 'Comment', attr = 'fg' } } },
+    { PmenuSbar = { bg = P.grey } },
+    { PmenuThumb = { bg = { from = 'Comment', attr = 'fg' } } },
     -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
-    { DiffAdd = { background = '#26332c', foreground = 'NONE', underline = false } },
-    { DiffDelete = { background = '#572E33', foreground = '#5c6370', underline = false } },
-    { DiffChange = { background = '#273842', foreground = 'NONE', underline = false } },
-    { DiffText = { background = '#314753', foreground = 'NONE' } },
+    { DiffAdd = { bg = '#26332c', fg = 'NONE', underline = false } },
+    { DiffDelete = { bg = '#572E33', fg = '#5c6370', underline = false } },
+    { DiffChange = { bg = '#273842', fg = 'NONE', underline = false } },
+    { DiffText = { bg = '#314753', fg = 'NONE' } },
     { diffAdded = { link = 'DiffAdd' } },
     { diffChanged = { link = 'DiffChange' } },
     { diffRemoved = { link = 'DiffDelete' } },
@@ -72,17 +65,17 @@ local function general_overrides()
     { Comment = { italic = true } },
     { Type = { italic = true, bold = true } },
     { Include = { italic = true, bold = false } },
-    { QuickFixLine = { inherit = 'PmenuSbar', foreground = 'NONE', italic = true } },
-    -- Neither the sign column or end of buffer highlights require an explicit background
-    -- they should both just use the background that is in the window they are in.
+    { QuickFixLine = { inherit = 'PmenuSbar', fg = 'NONE', italic = true } },
+    -- Neither the sign column or end of buffer highlights require an explicit bg
+    -- they should both just use the bg that is in the window they are in.
     -- if either are specified this can lead to issues when a winhighlight is set
-    { SignColumn = { background = 'NONE' } },
-    { EndOfBuffer = { background = 'NONE' } },
+    { SignColumn = { bg = 'NONE' } },
+    { EndOfBuffer = { bg = 'NONE' } },
     { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'CursorLine' } } },
     ------------------------------------------------------------------------------//
     --  Semantic tokens
     ------------------------------------------------------------------------------//
-    { ['@lsp.type.parameter'] = { italic = true, foreground = { from = 'Normal' } } },
+    { ['@lsp.type.parameter'] = { italic = true, fg = { from = 'Normal' } } },
     { ['@lsp.type.variable'] = { link = '@variable' } },
     { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
     { ['@lsp.typemod.variable.defaultLibrary'] = { italic = true } },
@@ -94,10 +87,10 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
-    { ['@keyword.return'] = { italic = true, foreground = { from = 'Keyword' } } },
+    { ['@keyword.return'] = { italic = true, fg = { from = 'Keyword' } } },
     { ['@variable'] = { clear = true } },
-    { ['@parameter'] = { italic = true, bold = true, foreground = 'NONE' } },
-    { ['@error'] = { foreground = 'fg', background = 'NONE' } },
+    { ['@parameter'] = { italic = true, bold = true, fg = 'NONE' } },
+    { ['@error'] = { fg = 'fg', bg = 'NONE' } },
     { ['@text.diff.add'] = { link = 'DiffAdd' } },
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     { ['@text.title.markdown'] = { underdouble = true } },
@@ -107,18 +100,10 @@ local function general_overrides()
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
     { LspCodeLensSeparator = { bold = false, italic = false } },
     {
-      LspReferenceText = {
-        underdotted = true,
-        background = 'NONE',
-        special = { from = 'Comment', attr = 'fg' },
-      },
+      LspReferenceText = { underdotted = true, bg = 'NONE', sp = { from = 'Comment', attr = 'fg' } },
     },
     {
-      LspReferenceRead = {
-        underdotted = true,
-        background = 'NONE',
-        special = { from = 'Comment', attr = 'fg' },
-      },
+      LspReferenceRead = { underdotted = true, bg = 'NONE', sp = { from = 'Comment', attr = 'fg' } },
     },
     -- This represents when a reference is assigned which is more interesting than regular
     -- occurrences so should be highlighted more distinctly
@@ -126,21 +111,21 @@ local function general_overrides()
       LspReferenceWrite = {
         bold = true,
         italic = true,
-        background = 'NONE',
+        bg = 'NONE',
         underline = true,
-        special = { from = 'Comment', attr = 'fg' },
+        sp = { from = 'Comment', attr = 'fg' },
       },
     },
     -- Base colours
-    { DiagnosticHint = { foreground = L.hint } },
-    { DiagnosticError = { foreground = L.error } },
-    { DiagnosticWarning = { foreground = L.warn } },
-    { DiagnosticInfo = { foreground = L.info } },
+    { DiagnosticHint = { fg = L.hint } },
+    { DiagnosticError = { fg = L.error } },
+    { DiagnosticWarning = { fg = L.warn } },
+    { DiagnosticInfo = { fg = L.info } },
     -- Underline
-    { DiagnosticUnderlineError = { undercurl = true, sp = L.error, foreground = 'none' } },
-    { DiagnosticUnderlineHint = { undercurl = true, sp = L.hint, foreground = 'none' } },
-    { DiagnosticUnderlineWarn = { undercurl = true, sp = L.warn, foreground = 'none' } },
-    { DiagnosticUnderlineInfo = { undercurl = true, sp = L.info, foreground = 'none' } },
+    { DiagnosticUnderlineError = { undercurl = true, sp = L.error, fg = 'none' } },
+    { DiagnosticUnderlineHint = { undercurl = true, sp = L.hint, fg = 'none' } },
+    { DiagnosticUnderlineWarn = { undercurl = true, sp = L.warn, fg = 'none' } },
+    { DiagnosticUnderlineInfo = { undercurl = true, sp = L.info, fg = 'none' } },
     -- Virtual Text
     { DiagnosticVirtualTextInfo = { bg = { from = 'DiagnosticInfo', attr = 'fg', alter = -70 } } },
     { DiagnosticVirtualTextHint = { bg = { from = 'DiagnosticHint', attr = 'fg', alter = -70 } } },
@@ -190,11 +175,11 @@ local function set_sidebar_highlight()
   highlight.all({
     { PanelDarkBackground = { bg = { from = 'Normal', alter = -42 } } },
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
-    { PanelBackground = { background = { from = 'Normal', alter = -8 } } },
+    { PanelBackground = { bg = { from = 'Normal', alter = -8 } } },
     { PanelHeading = { inherit = 'PanelBackground', bold = true } },
     { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
     { PanelStNC = { link = 'PanelWinSeparator' } },
-    { PanelSt = { background = { from = 'Visual', alter = -20 } } },
+    { PanelSt = { bg = { from = 'Visual', alter = -20 } } },
   })
 end
 
@@ -223,11 +208,11 @@ end
 local function colorscheme_overrides()
   local overrides = {
     ['doom-one'] = {
-      { ['@namespace'] = { foreground = P.blue } },
-      { CursorLineNr = { foreground = { from = 'Keyword' } } },
-      { LineNr = { background = 'NONE' } },
+      { ['@namespace'] = { fg = P.blue } },
+      { CursorLineNr = { fg = { from = 'Keyword' } } },
+      { LineNr = { bg = 'NONE' } },
       { NeoTreeIndentMarker = { link = 'Comment' } },
-      { NeoTreeRootName = { bold = true, italic = true, foreground = 'LightMagenta' } },
+      { NeoTreeRootName = { bold = true, italic = true, fg = 'LightMagenta' } },
     },
     ['horizon'] = {
       -----------------------------------------------------------------------------------------------
@@ -239,23 +224,22 @@ local function colorscheme_overrides()
       { WinSeparator = { fg = '#353647' } },
       { Constant = { bold = true } },
       { NonText = { fg = { from = 'Comment' } } },
-      { LineNr = { background = 'NONE' } },
-      { TabLineSel = { background = { from = 'SpecialKey', attr = 'fg' } } },
-      { VisibleTab = { background = { from = 'Normal', alter = 40 }, bold = true } },
+      { LineNr = { bg = 'NONE' } },
+      { TabLineSel = { bg = { from = 'SpecialKey', attr = 'fg' } } },
+      { VisibleTab = { bg = { from = 'Normal', alter = 40 }, bold = true } },
       { ['@variable'] = { fg = { from = 'Normal' } } },
       { ['@constant.comment'] = { inherit = 'Constant', bold = true } },
       { ['@constructor.lua'] = { inherit = 'Type', italic = false, bold = false } },
-      { ['@lsp.type.parameter'] = { foreground = { from = 'Normal' } } },
+      { ['@lsp.type.parameter'] = { fg = { from = 'Normal' } } },
       { PanelBackground = { link = 'Normal' } },
       { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
       { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -30 } } },
-      { PanelDarkBackground = { background = { from = 'Normal', alter = -25 } } },
+      { PanelDarkBackground = { bg = { from = 'Normal', alter = -25 } } },
       { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
     },
   }
   local hls = overrides[vim.g.colors_name]
   if not hls then return end
-
   highlight.all(hls)
 end
 
