@@ -806,22 +806,22 @@ function as.ui.statusline.render()
     {
       { { icons.git.branch, hls.git }, { space }, { status.head, hls.blue } },
       priority = 1,
-      cond = status.head,
+      cond = status.head ~= nil,
     },
     {
       { { icons.git.mod, hls.warn }, { space }, { status.changed, hls.title } },
       priority = 3,
-      cond = status.changed,
+      cond = status.changed ~= nil,
     },
     {
       { { icons.git.remove, hls.error }, { space }, { status.removed, hls.title } },
       priority = 3,
-      cond = status.removed,
+      cond = status.removed ~= nil,
     },
     {
       { { icons.git.add, hls.green }, { space }, { status.added, hls.title } },
       priority = 3,
-      cond = status.added,
+      cond = status.added ~= nil,
     },
     {
       { { icons.misc.up, hls.green }, { space }, { ahead, hls.title } },
