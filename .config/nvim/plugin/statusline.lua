@@ -161,14 +161,15 @@ local identifiers = {
     ['NeogitStatus'] = '', -- '',
     ['norg'] = 'ﴬ',
     ['help'] = '',
-    ['neotest.*'] = 'פּ',
+    ['octo'] = '',
+    ['minimap'] = '',
     ['undotree'] = 'פּ',
     ['NvimTree'] = 'פּ',
     ['neo-tree'] = 'פּ',
-    ['toggleterm'] = ' ',
-    ['minimap'] = '',
-    ['octo'] = '',
+    ['neotest.*'] = 'פּ',
+    ['dapui_.*'] = '',
     ['dap-repl'] = '',
+    ['toggleterm'] = ' ',
   }),
   names = as.p_table({
     ['orgagenda'] = 'Org',
@@ -190,6 +191,8 @@ local identifiers = {
     ['neotest.*'] = 'Testing',
 
     ['log'] = function(fname, _) return fmt('Log(%s)', fs.basename(fname)) end,
+
+    ['dapui_.*'] = function(fname) return fname end,
 
     ['neo-tree'] = function(fname, _)
       local parts = vim.split(fname, ' ')
