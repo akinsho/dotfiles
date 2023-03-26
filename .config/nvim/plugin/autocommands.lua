@@ -1,6 +1,6 @@
 if not as then return end
 
-local fn, api, cmd, fmt, optl = vim.fn, vim.api, vim.cmd, string.format, vim.opt_local
+local fn, api, v, cmd, fmt, optl = vim.fn, vim.api, vim.v, vim.cmd, string.format, vim.opt_local
 
 ----------------------------------------------------------------------------------------------------
 -- HLSEARCH
@@ -19,7 +19,7 @@ local fn, api, cmd, fmt, optl = vim.fn, vim.api, vim.cmd, string.format, vim.opt
 map({ 'n', 'v', 'o', 'i', 'c' }, '<Plug>(StopHL)', 'execute("nohlsearch")[-1]', { expr = true })
 
 local function stop_hl()
-  if vim.v.hlsearch == 0 or api.nvim_get_mode().mode ~= 'n' then return end
+  if v.hlsearch == 0 or api.nvim_get_mode().mode ~= 'n' then return end
   api.nvim_feedkeys(as.replace_termcodes('<Plug>(StopHL)'), 'm', false)
 end
 
@@ -264,16 +264,18 @@ as.augroup('TerminalAutocommands', {
   event = { 'TermClose' },
   command = function()
     --- automatically close a terminal if the job was successful
-    if not vim.v.event.status == 0 then cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
+    if not v.event.status == 0 then cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
   end,
 })
 
 -- tmux and kitty are no longer able to access the current working directory of neovim
 -- since the TUI became a separate process
 -- see: https://github.com/neovim/neovim/issues/21771#issuecomment-1461710157
-as.augroup('NvimCwd', {
-  event = { 'DirChanged' },
-  command = function()
-    vim.fn.chansend(vim.v.stderr, fmt('\033]7;file://%s\033\\', vim.v.event.cwd))
-  end,
-})
+if vim.env.TMUX or vim.env.KITTY_PID then
+  as.augroup('NvimCwd', {
+    event = { 'DirChanged' },
+    command = function()
+      vim.schedule(function() fn.chansend(v.stderr, fmt('\033]7;file://%s\033\\', v.event.cwd)) end)
+    end,
+  })
+end
