@@ -294,6 +294,7 @@ local buftypes = {
 local filetypes = as.p_table({
   ['startuptime'] = presets.tool_panel,
   ['checkhealth'] = presets.tool_panel,
+  ['log'] = presets.tool_panel,
   ['help'] = presets.tool_panel,
   ['dapui'] = presets.tool_panel,
   ['minimap'] = presets.tool_panel,

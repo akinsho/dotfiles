@@ -149,6 +149,7 @@ local identifiers = {
     quickfix = '',
   },
   filetypes = as.p_table({
+    ['log'] = '',
     ['org'] = '',
     ['orgagenda'] = '',
     ['himalaya-msg-list'] = '',
@@ -187,6 +188,8 @@ local identifiers = {
     ['dap-repl'] = 'Debugger REPL',
     ['Diffview.*'] = 'Diff view',
     ['neotest.*'] = 'Testing',
+
+    ['log'] = function(fname, _) return fmt('Log(%s)', fs.basename(fname)) end,
 
     ['neo-tree'] = function(fname, _)
       local parts = vim.split(fname, ' ')
