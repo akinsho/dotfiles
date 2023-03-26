@@ -42,12 +42,12 @@ local function set_root(args)
     local root_file = fs.find(root_names, {
       path = path,
       upward = true,
-    })[1] or get_lsp_root(args.buf, ignored)
+    })[1]
 
-    if not root_file then return end
-    root = fs.dirname(root_file)
-    root_cache[path] = root
+    root = fs.dirname(root_file) or get_lsp_root(args.buf, ignored)
   end
+  if not root then return end
+  root_cache[path] = root
   if root == fn.getcwd() then return end
 
   fn.chdir(root)
