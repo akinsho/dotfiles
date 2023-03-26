@@ -264,18 +264,6 @@ as.augroup('TerminalAutocommands', {
   event = { 'TermClose' },
   command = function()
     --- automatically close a terminal if the job was successful
-    if not v.event.status == 0 then cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
+    if v.event.status == 0 then cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
   end,
 })
-
--- tmux and kitty are no longer able to access the current working directory of neovim
--- since the TUI became a separate process
--- see: https://github.com/neovim/neovim/issues/21771#issuecomment-1461710157
-if vim.env.TMUX or vim.env.KITTY_PID then
-  as.augroup('NvimCwd', {
-    event = { 'DirChanged' },
-    command = function()
-      vim.schedule(function() fn.chansend(v.stderr, fmt('\033]7;file://%s\033\\', v.event.cwd)) end)
-    end,
-  })
-end
