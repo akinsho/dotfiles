@@ -80,11 +80,11 @@ local function general_overrides()
     { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
     { ['@lsp.typemod.variable.defaultLibrary'] = { italic = true } },
     { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
-    { ['@lsp.typemod.operator.injected'] = { link = '@operator' } },
-    { ['@lsp.typemod.keyword'] = { link = '@keyword' } },
     { ['@lsp.typemod.parameter.label'] = { inherit = '@field', bold = false } },
-    { ['@lsp.typemod.string.injected'] = { link = '@string' } },
-    { ['@lsp.typemod.variable.injected'] = { link = '@variable' } },
+    { ['@lsp.typemod.operator'] = { link = '@operator' } },
+    { ['@lsp.typemod.keyword'] = { link = '@keyword' } },
+    { ['@lsp.typemod.string'] = { link = '@string' } },
+    { ['@lsp.typemod.variable'] = { link = '@variable' } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
