@@ -204,7 +204,6 @@ return {
       highlight = false,
       icons = ui.current.lsp_icons,
       depth_limit_indicator = ui.icons.misc.ellipsis,
-      separator = (' %s '):format(ui.icons.misc.arrow_right),
     },
   },
   {
@@ -251,11 +250,7 @@ return {
         desc = 'jump: forwards',
       })
       require('portal').setup({
-        filter = function(c)
-          if c.buffer == api.nvim_get_current_buf() then return false end
-          if not vim.startswith(api.nvim_buf_get_name(c.buffer), fn.getcwd()) then return false end
-          return true
-        end,
+        filter = function(c) return vim.startswith(api.nvim_buf_get_name(c.buffer), fn.getcwd()) end,
       })
     end,
   },
@@ -345,7 +340,15 @@ return {
     opts = {
       minimal_jump = 20,
       ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
-      ignore_filetypes = { 'qf', 'neo-tree', 'NeogitCommitMessage', 'NeogitPopup', 'NeogitStatus' },
+      ignore_filetypes = {
+        'qf',
+        'dap_watches',
+        'dap_scopes',
+        'neo-tree',
+        'NeogitCommitMessage',
+        'NeogitPopup',
+        'NeogitStatus',
+      },
     },
   },
   {
