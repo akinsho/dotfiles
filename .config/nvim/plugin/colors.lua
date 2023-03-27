@@ -82,12 +82,14 @@ local function general_overrides()
     { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
     { ['@lsp.typemod.operator.injected'] = { link = '@operator' } },
     { ['@lsp.typemod.keyword'] = { link = '@keyword' } },
+    { ['@lsp.typemod.parameter.label'] = { inherit = '@field', bold = false } },
     { ['@lsp.typemod.string.injected'] = { link = '@string' } },
     { ['@lsp.typemod.variable.injected'] = { link = '@variable' } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
     { ['@keyword.return'] = { italic = true, fg = { from = 'Keyword' } } },
+    { ['@type.qualifier'] = { inherit = '@keyword', italic = true } },
     { ['@variable'] = { clear = true } },
     { ['@parameter'] = { italic = true, bold = true, fg = 'NONE' } },
     { ['@error'] = { fg = 'fg', bg = 'NONE' } },
