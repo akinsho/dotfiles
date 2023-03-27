@@ -699,7 +699,7 @@ function as.ui.statusline.render()
   col = col + 1 -- this should be 1-indexed, but isn't by default
   local line_count = api.nvim_buf_line_count(ctx.bufnum)
 
-  -- Git state
+  --- @type {head: string?, added: integer?, changed: integer?, removed: integer?}
   local status = vim.b[curbuf].gitsigns_status_dict or {}
   local updates = vim.g.git_statusline_updates or {}
   local ahead = updates.ahead and tonumber(updates.ahead) or 0
@@ -812,22 +812,22 @@ function as.ui.statusline.render()
     {
       { { icons.git.branch, hls.git }, { space }, { status.head, hls.blue } },
       priority = 1,
-      cond = status.head ~= nil,
+      cond = not falsy(status.head),
     },
     {
       { { icons.git.mod, hls.warn }, { space }, { status.changed, hls.title } },
       priority = 3,
-      cond = status.changed ~= nil,
+      cond = not falsy(status.changed),
     },
     {
       { { icons.git.remove, hls.error }, { space }, { status.removed, hls.title } },
       priority = 3,
-      cond = status.removed ~= nil,
+      cond = not falsy(status.removed),
     },
     {
       { { icons.git.add, hls.green }, { space }, { status.added, hls.title } },
       priority = 3,
-      cond = status.added ~= nil,
+      cond = not falsy(status.added),
     },
     {
       { { icons.misc.up, hls.green }, { space }, { ahead, hls.title } },
