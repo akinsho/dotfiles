@@ -286,3 +286,5 @@ hls
 Paren
 hl
 underdotted
+shiftwidth
+foldmethod
