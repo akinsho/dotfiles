@@ -238,7 +238,7 @@ as.ui.lsp = {
 ---@field statuscolumn boolean
 ---@field colorcolumn boolean | string
 
----@alias UiSettings {buftypes: table<string, Decorations>, filetypes: table<string, Decorations>}
+---@alias DecorationType 'statuscolumn'|'winbar'|'statusline'|'number'|'colorcolumn'
 
 ---@class Decorations
 local Preset = {}
@@ -330,21 +330,18 @@ local filetypes = as.p_table({
   ['NeogitCommitMessage'] = commit_buffer,
 })
 
----@type UiSettings
-as.ui.decorations = {
-  filetypes = filetypes,
-  buftypes = buftypes,
-}
+as.ui.decorations = {}
 
 ---Get the as.ui setting for a particular filetype
----@param key string
----@param setting 'statuscolumn'|'winbar'|'statusline'|'number'|'colorcolumn'
----@param t 'ft'|'bt'
----@return (boolean | string)?
-function as.ui.decorations.get(key, setting, t)
-  if not key or not setting then return nil end
-  if t == 'ft' then return filetypes[key] and filetypes[key][setting] end
-  if t == 'bt' then return buftypes[key] and buftypes[key][setting] end
+---@param opts {ft: string?, bt: string?, setting: DecorationType}
+---@return {ft: (boolean | string)?, bt: (boolean | string)?}
+function as.ui.decorations.get(opts)
+  local ft, bt, setting = opts.ft, opts.bt, opts.setting
+  if (not ft and not bt) or not setting then return nil end
+  return {
+    ft = ft and filetypes[ft] and filetypes[ft][setting],
+    bt = bt and buftypes[bt] and buftypes[bt][setting],
+  }
 end
 
 ---A helper to set the value of the colorcolumn option, to my preferences, this can be used
@@ -354,10 +351,9 @@ end
 ---@param fn fun(virtcolumn: string)
 function as.ui.decorations.set_colorcolumn(bufnr, fn)
   local buf = vim.bo[bufnr]
-  local ft_ccol = as.ui.decorations.get(buf.ft, 'colorcolumn', 'ft')
-  local bt_ccol = as.ui.decorations.get(buf.bt, 'colorcolumn', 'bt')
-  if buf.ft == '' or buf.bt ~= '' or ft_ccol == false or bt_ccol == false then return end
-  local ccol = ft_ccol or bt_ccol or ''
+  local decor = as.ui.decorations.get({ ft = buf.ft, bt = buf.bt, setting = 'colorcolumn' })
+  if buf.ft == '' or buf.bt ~= '' or decor.ft == false or decor.bt == false then return end
+  local ccol = decor.ft or decor.bt or ''
   local virtcolumn = not as.falsy(ccol) and ccol or '+1'
   if vim.is_callable(fn) then fn(virtcolumn) end
 end

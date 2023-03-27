@@ -128,7 +128,7 @@ return {
       command = function(args)
         --- TODO: Contribute upstream change to telescope to pass preview buffer data in autocommand
         local ft = vim.tbl_get(args, 'data', 'filetype')
-        vim.opt_local.number = not ft or ui.decorations.get(ft, 'number', 'ft') ~= false
+        vim.opt_local.number = ui.decorations.get({ ft = ft, setting = 'number' }).ft ~= false
       end,
     })
 

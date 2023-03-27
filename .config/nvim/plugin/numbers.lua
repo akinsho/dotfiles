@@ -26,9 +26,8 @@ local function is_blocked()
   if not api.nvim_buf_is_valid(0) and not api.nvim_buf_is_loaded(0) then return true end
   if win_type == 'command' or vim.wo.diff or vim.wo.previewwindow then return true end
 
-  local ft_settings = ui.decorations.get(vim.bo.ft, 'number', 'ft')
-  local bt_settings = ui.decorations.get(vim.bo.bt, 'number', 'bt')
-  return ft_settings == false or bt_settings == false
+  local decs = ui.decorations.get({ ft = vim.bo.ft, bt = vim.bo.bt, setting = 'number' })
+  return decs.ft == false or decs.bt == false
 end
 
 local function enable_relative_number()

@@ -98,11 +98,10 @@ local function set_winbar()
   as.foreach(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
     local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
-    local ft_setting = decorations.get(ft, 'winbar', 'ft')
-    local bt_setting = decorations.get(bt, 'winbar', 'bt')
-    if ft_setting == 'ignore' or bt_setting == 'ignore' then return end
+    local decor = decorations.get({ ft = ft, bt = bt, setting = 'winbar' })
+    if decor.ft == 'ignore' or decor.bt == 'ignore' then return end
     local is_float = falsy(fn.win_gettype(api.nvim_win_get_number(w)))
-    if not ft_setting and is_float and bt == '' and ft ~= '' and not is_diff then
+    if not decor.ft and is_float and bt == '' and ft ~= '' and not is_diff then
       win.winbar = '%{%v:lua.as.ui.winbar.render()%}'
     elseif is_diff then
       win.winbar = nil

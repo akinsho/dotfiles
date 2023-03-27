@@ -611,8 +611,8 @@ end
 
 --- @param ctx StatuslineContext
 local function is_plain(ctx)
-  local is_plain_ft = decorations.get(ctx.filetype, 'statusline', 'ft') == 'minimal'
-  local is_plain_bt = decorations.get(ctx.buftype, 'statusline', 'bt') == 'minimal'
+  local decor = decorations.get({ ft = ctx.filetype, bt = ctx.buftype, setting = 'statusline' })
+  local is_plain_ft, is_plain_bt = decor.ft == 'minimal', decor.bt == 'minimal'
   return is_plain_ft or is_plain_bt or ctx.preview
 end
 
