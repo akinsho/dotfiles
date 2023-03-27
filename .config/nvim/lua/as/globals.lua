@@ -210,6 +210,19 @@ function as.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 ---@field opt vim.opt
 ---@field plugins {[string]: fun(module: table)}
 
+---@param args {[1]: string, [2]: string, [3]: string, [string]: boolean | integer}[]
+---@param buf integer
+local function apply_ft_mappings(args, buf)
+  as.foreach(function(m)
+    assert(m[1] and m[2] and m[3], 'map args must be a table with at least 3 items')
+    local opts = as.fold(function(acc, item, key)
+      if type(key) == 'string' then acc[key] = item end
+      return acc
+    end, m, { buffer = buf })
+    map(m[1], m[2], m[3], opts)
+  end, args)
+end
+
 --- This function is an alternative API to using ftplugin files. It allows defining
 --- filetype settings in a single place, then creating FileType autocommands from this definition
 ---
@@ -238,6 +251,8 @@ function as.filetype_settings(map)
       desc = ('ft settings for %s'):format(name),
       command = function(args)
         as.foreach(function(value, scope)
+          if scope == 'mappings' then return apply_ft_mappings(value, args.buf) end
+          if scope == 'plugins' then return as.ftplugin_conf(value, { silent = true }) end
           if type(value) ~= 'table' and vim.is_callable(value) then return value(args) end
           as.foreach(function(setting, option) vim[scope][option] = setting end, value)
         end, settings)

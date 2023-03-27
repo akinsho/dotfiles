@@ -33,32 +33,6 @@ local function hl_search()
   if col < p_start or col > p_end then stop_hl() end
 end
 
-as.filetype_settings({
-  [{ 'gitcommit', 'gitrebase' }] = {
-    bo = {
-      bufhidden = 'delete',
-    },
-  },
-  [{ 'typescript', 'typescriptreact' }] = {
-    bo = {
-      textwidth = 100,
-    },
-    function(args)
-      map('n', 'gd', 'TypescriptGoToSourceDefinition', {
-        desc = 'typescript: go to source definition',
-        buffer = args.buf,
-      })
-    end,
-  },
-  -- stylua: ignore
-  [{ 'lua', 'vim', 'dart', 'python', 'javascript', 'typescript', 'rust', 'org', 'NeogitCommitMessage', 'go', 'markdown' }] = {
-    -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
-    opt_local = {
-      spell = true,
-    },
-  },
-})
-
 as.augroup('VimrcIncSearchHighlight', {
   event = { 'CursorMoved' },
   command = function() hl_search() end,
