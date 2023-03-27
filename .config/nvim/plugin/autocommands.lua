@@ -1,6 +1,6 @@
 if not as then return end
 
-local fn, api, v, cmd, fmt, optl = vim.fn, vim.api, vim.v, vim.cmd, string.format, vim.opt_local
+local fn, api, v, cmd, fmt = vim.fn, vim.api, vim.v, vim.cmd, string.format
 
 ----------------------------------------------------------------------------------------------------
 -- HLSEARCH
@@ -32,6 +32,32 @@ local function hl_search()
   -- if the cursor is in a search result, leave highlighting on
   if col < p_start or col > p_end then stop_hl() end
 end
+
+as.filetype_settings({
+  [{ 'gitcommit', 'gitrebase' }] = {
+    bo = {
+      bufhidden = 'delete',
+    },
+  },
+  [{ 'typescript', 'typescriptreact' }] = {
+    bo = {
+      textwidth = 100,
+    },
+    function(args)
+      map('n', 'gd', 'TypescriptGoToSourceDefinition', {
+        desc = 'typescript: go to source definition',
+        buffer = args.buf,
+      })
+    end,
+  },
+  -- stylua: ignore
+  [{ 'lua', 'vim', 'dart', 'python', 'javascript', 'typescript', 'rust', 'org', 'NeogitCommitMessage', 'go', 'markdown' }] = {
+    -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
+    opt_local = {
+      spell = true,
+    },
+  },
+})
 
 as.augroup('VimrcIncSearchHighlight', {
   event = { 'CursorMoved' },
@@ -197,40 +223,6 @@ as.augroup('Utilities', {
     cmd.bdelete({ bang = true })
     cmd.edit(vim.uri_to_fname(args.file))
   end,
-}, {
-  event = { 'FileType' },
-  pattern = { 'gitcommit', 'gitrebase' },
-  command = 'set bufhidden=delete',
-}, {
-  event = 'FileType',
-  desc = 'set typescript and friends filetype options',
-  pattern = { 'typescript', 'typescriptreact' },
-  command = function()
-    optl.textwidth = 100
-    if pcall(require, 'typescript') then
-      map('n', 'gd', 'TypescriptGoToSourceDefinition', {
-        desc = 'typescript: go to source definition',
-      })
-    end
-  end,
-}, {
-  event = 'FileType',
-  desc = 'Set spell for certain filetypes',
-  pattern = {
-    'lua',
-    'vim',
-    'dart',
-    'python',
-    'javascript',
-    'typescript',
-    'rust',
-    'org',
-    'NeogitCommitMessage',
-    'go',
-    'markdown',
-  },
-  -- NOTE: setting spell only works using opt_local otherwise it leaks into subsequent windows
-  command = function() optl.spell = true end,
 }, {
   event = { 'BufWritePre', 'FileWritePre' },
   pattern = { '*' },
