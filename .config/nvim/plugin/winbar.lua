@@ -100,19 +100,12 @@ local function set_winbar()
     local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
     local ft_setting = decorations.get(ft, 'winbar', 'ft')
     local bt_setting = decorations.get(bt, 'winbar', 'bt')
-    local ignored = ft_setting == 'ignore' or bt_setting == 'ignore'
-    if not ignored then
-      if
-        not ft_setting
-        and fn.win_gettype(api.nvim_win_get_number(w)) == ''
-        and bt == ''
-        and ft ~= ''
-        and not is_diff
-      then
-        win.winbar = '%{%v:lua.as.ui.winbar.render()%}'
-      elseif is_diff then
-        win.winbar = nil
-      end
+    if ft_setting == 'ignore' or bt_setting == 'ignore' then return end
+    local is_float = falsy(fn.win_gettype(api.nvim_win_get_number(w)))
+    if not ft_setting and is_float and bt == '' and ft ~= '' and not is_diff then
+      win.winbar = '%{%v:lua.as.ui.winbar.render()%}'
+    elseif is_diff then
+      win.winbar = nil
     end
   end, api.nvim_tabpage_list_wins(0))
 end

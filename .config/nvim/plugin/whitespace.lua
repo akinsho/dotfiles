@@ -8,7 +8,7 @@ if not as then return end
 
 local fn = vim.fn
 
-local function is_floating_win() return vim.fn.win_gettype() == 'popup' end
+local function is_floating_win() return fn.win_gettype() == 'popup' end
 
 local function is_invalid_buf()
   return vim.bo.filetype == '' or vim.bo.buftype ~= '' or not vim.bo.modifiable

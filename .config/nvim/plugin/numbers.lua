@@ -5,12 +5,12 @@ local ui = as.ui
 -- 1. vim-relativity
 -- 2. numbers.vim - https://github.com/myusuf3/numbers.vim/blob/master/plugin/numbers.vim
 
-local api = vim.api
+local api, fn = vim.api, vim.fn
 local M = {}
 
 local number_buftype_ignored = { 'quickfix' }
 
-local function is_floating_win() return vim.fn.win_gettype() == 'popup' end
+local function is_floating_win() return fn.win_gettype() == 'popup' end
 
 local is_enabled = true
 
@@ -22,8 +22,7 @@ end
 
 -- block list certain plugins and buffer types
 local function is_blocked()
-  local win_type = vim.fn.win_gettype()
-
+  local win_type = fn.win_gettype()
   if not api.nvim_buf_is_valid(0) and not api.nvim_buf_is_loaded(0) then return true end
   if win_type == 'command' or vim.wo.diff or vim.wo.previewwindow then return true end
 
