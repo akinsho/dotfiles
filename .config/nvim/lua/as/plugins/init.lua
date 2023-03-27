@@ -430,17 +430,13 @@ return {
     lazy = false,
     priority = 1001,
     config = {
-      window = { open = 'current' },
+      window = { open = 'alternate' },
       callbacks = {
         block_end = function() require('toggleterm').toggle() end,
-        pre_open = function() require('toggleterm').toggle() end,
-        post_open = function(bufnr, winnr)
-          local term = require('toggleterm.terminal').get_last_focused()
-          if term and term:is_float() then
-            term:close()
-            cmd.buffer(bufnr)
-          else
+        post_open = function(_, winnr, _, is_blocking)
+          if is_blocking then
             require('toggleterm').toggle()
+          else
             api.nvim_set_current_win(winnr)
           end
         end,
