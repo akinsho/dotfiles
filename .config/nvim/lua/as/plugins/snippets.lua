@@ -44,10 +44,7 @@ return {
         },
       })
 
-      as.command(
-        'LuaSnipEdit',
-        function() require('luasnip.loaders.from_lua').edit_snippet_files() end
-      )
+      as.command('LuaSnipEdit', function() require('luasnip.loaders.from_lua').edit_snippet_files() end)
 
       -- <c-l> is selecting within a list of options.
       map({ 's', 'i' }, '<c-l>', function()

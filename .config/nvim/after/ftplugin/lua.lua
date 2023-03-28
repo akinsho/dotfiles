@@ -3,7 +3,7 @@ if not as then return end
 local fn, opt = vim.fn, vim.opt_local
 local fmt = string.format
 
-opt.textwidth = 100
+opt.textwidth = 120
 opt.formatoptions:remove('o')
 
 local function find(word, ...)

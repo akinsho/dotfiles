@@ -397,9 +397,7 @@ return {
           :use_regex(true)
           :set_end_pair_length(1),
         -- Typing n when the| -> then|end
-        Rule('then', 'end', 'lua'):end_wise(
-          function(opts) return string.match(opts.line, '^%s*if') ~= nil end
-        ),
+        Rule('then', 'end', 'lua'):end_wise(function(opts) return string.match(opts.line, '^%s*if') ~= nil end),
       })
     end,
   },
@@ -465,9 +463,7 @@ return {
   {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
-    config = function()
-      highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } })
-    end,
+    config = function() highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } }) end,
   },
   -- }}}
   --------------------------------------------------------------------------------
@@ -615,9 +611,7 @@ return {
   {
     'echasnovski/mini.ai',
     event = 'VeryLazy',
-    config = function()
-      require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } })
-    end,
+    config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
   },
   {
     'glts/vim-textobj-comment',

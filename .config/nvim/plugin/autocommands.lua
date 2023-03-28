@@ -82,18 +82,14 @@ as.augroup('SmartClose', {
   event = { 'FileType' },
   command = function(args)
     local is_unmapped = fn.hasmapto('q', 'n') == 0
-    local is_eligible = is_unmapped
-      or vim.wo.previewwindow
-      or smart_close_filetypes[vim.bo[args.buf].ft]
+    local is_eligible = is_unmapped or vim.wo.previewwindow or smart_close_filetypes[vim.bo[args.buf].ft]
     if is_eligible then map('n', 'q', smart_close, { buffer = args.buf, nowait = true }) end
   end,
 }, {
   -- Close quick fix window if the file containing it was closed
   event = { 'BufEnter' },
   command = function()
-    if fn.winnr('$') == 1 and vim.bo.buftype == 'quickfix' then
-      api.nvim_buf_delete(0, { force = true })
-    end
+    if fn.winnr('$') == 1 and vim.bo.buftype == 'quickfix' then api.nvim_buf_delete(0, { force = true }) end
   end,
 }, {
   -- automatically close corresponding loclist when quitting a window

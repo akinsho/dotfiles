@@ -91,8 +91,7 @@ return {
       local tail = fs.basename(item.name)
       local proj, branch = unpack(vim.split(tail, '@@'))
       local shortcut, file_indent = f('[%d]', index), rep(' ', 8)
-      local name =
-        f('%s %s %s', icon, proj, branch and f('(%s %s)', icons.git.branch, branch) or '')
+      local name = f('%s %s %s', icon, proj, branch and f('(%s %s)', icons.git.branch, branch) or '')
       local trailing_indent = rep(' ', SESSION_WIDTH - strwidth(name))
       return {
         type = 'button',

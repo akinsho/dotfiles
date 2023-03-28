@@ -71,9 +71,7 @@ return {
         },
         nui = { min_height = 10, win_options = { winblend = 10 } },
         get_config = function(opts)
-          if opts.kind == 'codeaction' then
-            return { backend = 'telescope', telescope = as.telescope.cursor() }
-          end
+          if opts.kind == 'codeaction' then return { backend = 'telescope', telescope = as.telescope.cursor() } end
         end,
       },
     },
@@ -196,9 +194,7 @@ return {
           local end_text = ctx.get_fold_virt_text(end_lnum)
           -- reformat the end text to trim excess whitespace from
           -- indentation usually the first item is indentation
-          if end_text[1] and end_text[1][1] then
-            end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '')
-          end
+          if end_text[1] and end_text[1][1] then end_text[1][1] = end_text[1][1]:gsub('[%s\t]+', '') end
 
           vim.list_extend(result, { { ' ⋯ ', 'UfoFoldedEllipsis' }, unpack(end_text) })
           table.insert(result, { padding, '' })
@@ -307,9 +303,7 @@ return {
               },
               {
                 name = 'Kubernetes',
-                matcher = function(buf)
-                  return buf.name:match('kubernetes') and buf.name:match('%.yaml')
-                end,
+                matcher = function(buf) return buf.name:match('kubernetes') and buf.name:match('%.yaml') end,
               },
               {
                 name = 'SQL',
@@ -328,9 +322,7 @@ return {
                 name = 'docs',
                 icon = '',
                 matcher = function(buf)
-                  if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then
-                    return true
-                  end
+                  if vim.bo[buf.id].filetype == 'man' or buf.path:match('man://') then return true end
                   for _, ext in ipairs({ 'md', 'txt', 'org', 'norg', 'wiki' }) do
                     if ext == fn.fnamemodify(buf.path, ':e') then return true end
                   end

@@ -66,9 +66,7 @@ return {
           expand = function(args) luasnip.lsp_expand(args.body) end,
         },
         mapping = cmp.mapping.preset.insert({
-          ['<C-]>'] = cmp.mapping(
-            function(_) api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
-          ),
+          ['<C-]>'] = cmp.mapping(function(_) api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end),
           ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i' }),
           ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
           ['<C-space>'] = cmp.mapping.complete(),
@@ -142,10 +140,7 @@ return {
         cmp.setup.cmdline({ '/', '?' }, {
           mapping = cmp.mapping.preset.cmdline(),
           sources = {
-            sources = cmp.config.sources(
-              { { name = 'nvim_lsp_document_symbol' } },
-              { { name = 'buffer' } }
-            ),
+            sources = cmp.config.sources({ { name = 'nvim_lsp_document_symbol' } }, { { name = 'buffer' } }),
           },
         })
 

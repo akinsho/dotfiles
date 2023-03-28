@@ -47,13 +47,9 @@ local function project_files()
   if not pcall(git_files) then find_files() end
 end
 
-local function orgfiles()
-  find_files({ prompt_title = 'Org', cwd = fn.expand('$SYNC_DIR/notes/org/') })
-end
+local function orgfiles() find_files({ prompt_title = 'Org', cwd = fn.expand('$SYNC_DIR/notes/org/') }) end
 
-local function norgfiles()
-  find_files({ prompt_title = 'Norg', cwd = fn.expand('$SYNC_DIR/notes/neorg/') })
-end
+local function norgfiles() find_files({ prompt_title = 'Norg', cwd = fn.expand('$SYNC_DIR/notes/neorg/') }) end
 
 local function frecency() extensions('frecency').frecency(dropdown({ previewer = false })) end
 local function luasnips() extensions('luasnip').luasnip(dropdown()) end

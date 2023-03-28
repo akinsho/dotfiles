@@ -4,15 +4,9 @@ opt.list = false
 opt.spelllang = 'en_gb'
 
 -- Schedule this call as highlights are not set correctly if there is not a delay
-vim.schedule(
-  function()
-    highlight.set_winhl('gitcommit', 0, { { VirtColumn = { fg = { from = 'Variable' } } } })
-  end
-)
+vim.schedule(function() highlight.set_winhl('gitcommit', 0, { { VirtColumn = { fg = { from = 'Variable' } } } }) end)
 
-if vim.treesitter.language.register then
-  vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
-end
+if vim.treesitter.language.register then vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage') end
 
 if not as then return end
 as.ftplugin_conf({

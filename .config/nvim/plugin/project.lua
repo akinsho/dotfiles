@@ -22,9 +22,7 @@ local function get_lsp_root(buf, ignore)
   for _, client in pairs(clients) do
     local filetypes = client.config.filetypes
     if filetypes and vim.tbl_contains(filetypes, vim.bo[buf].ft) then
-      if not vim.tbl_contains(ignore, client.name) then
-        return client.config.root_dir, client.name
-      end
+      if not vim.tbl_contains(ignore, client.name) then return client.config.root_dir, client.name end
     end
   end
 end

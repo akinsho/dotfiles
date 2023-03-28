@@ -5,9 +5,7 @@ local icons = as.ui.icons.separators
 
 local function linker() return require('gitlinker') end
 local function neogit() return require('neogit') end
-local function browser_open()
-  return { action_callback = require('gitlinker.actions').open_in_browser }
-end
+local function browser_open() return { action_callback = require('gitlinker.actions').open_in_browser } end
 
 return {
   {

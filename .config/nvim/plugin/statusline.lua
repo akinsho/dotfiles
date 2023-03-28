@@ -350,8 +350,7 @@ local function stl_file(ctx, minimal)
   local directory_hl = ctx.winhl and stl_winhl.directory.hl(ctx.win)
     or (minimal and hls.directory_inactive or hls.directory)
 
-  local parent_hl = ctx.winhl and stl_winhl.parent.hl(ctx.win)
-    or (minimal and directory_hl or hls.parent_directory)
+  local parent_hl = ctx.winhl and stl_winhl.parent.hl(ctx.win) or (minimal and directory_hl or hls.parent_directory)
 
   local env_hl = ctx.winhl and stl_winhl.env.hl(ctx.win) or (minimal and directory_hl or hls.env)
 
@@ -500,18 +499,14 @@ end
 local LSP_COMPONENT_ID = 2000
 local MAX_LSP_SERVER_COUNT = 3
 
-function as.ui.statusline.lsp_client_click()
-  state.lsp_clients_visible = not state.lsp_clients_visible
-end
+function as.ui.statusline.lsp_client_click() state.lsp_clients_visible = not state.lsp_clients_visible end
 
 ---Return a sorted list of lsp client names and their priorities
 ---@param ctx StatuslineContext
 ---@return table[]
 local function stl_lsp_clients(ctx)
   local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
-  if not state.lsp_clients_visible then
-    return { { name = fmt('%d attached', #clients), priority = 7 } }
-  end
+  if not state.lsp_clients_visible then return { { name = fmt('%d attached', #clients), priority = 7 } } end
   if falsy(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
   table.sort(clients, function(a, b)
     if a.name == 'null-ls' then
@@ -547,9 +542,7 @@ local function run_task_on_interval(interval, task)
     pending_job = task()
   end
   local fail = timer:start(0, interval, vim.schedule_wrap(callback))
-  if fail ~= 0 then
-    vim.schedule(function() vim.notify('Failed to start git update job: ' .. fail) end)
-  end
+  if fail ~= 0 then vim.schedule(function() vim.notify('Failed to start git update job: ' .. fail) end) end
 end
 
 --- Check if in a git repository
@@ -618,9 +611,7 @@ end
 
 --- @param ctx StatuslineContext
 --- @param icon string | nil
-local function is_modified(ctx, icon)
-  return ctx.filetype == 'help' and '' or ctx.modified and (icon or '✎') or ''
-end
+local function is_modified(ctx, icon) return ctx.filetype == 'help' and '' or ctx.modified and (icon or '✎') or '' end
 
 --- @param ctx StatuslineContext
 --- @param icon string | nil

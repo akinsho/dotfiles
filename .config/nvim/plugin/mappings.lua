@@ -303,11 +303,7 @@ vnoremap('$', 'g_')
 -- NOTE: this is a recursive mapping so anything bound (by a plugin) to <esc> still works
 imap('jk', [[col('.') == 1 ? '<esc>' : '<esc>l']], { expr = true })
 -- Toggle top/center/bottom
-nmap(
-  'zz',
-  [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']],
-  { expr = true }
-)
+nmap('zz', [[(winline() == (winheight (0) + 1)/ 2) ?  'zt' : (winline() == 1)? 'zb' : 'zz']], { expr = true })
 
 -----------------------------------------------------------------------------//
 -- Open Common files
@@ -344,20 +340,14 @@ nnoremap('cN', '*``cgN')
 -- 2. Hit cq to start recording the macro.
 -- 3. Once you are done with the macro, go back to normal mode.
 -- 4. Hit Enter to repeat the macro over search matches.
-function as.mappings.setup_map()
-  nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]])
-end
+function as.mappings.setup_map() nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]]) end
 
 vim.g.mc = as.replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
 xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap('cq', [[:\<C-u>call v:lua.as.mappings.setup_map()<CR>*``qz]])
 nnoremap('cQ', [[:\<C-u>call v:lua.as.mappings.setup_map()<CR>#``qz]])
-xnoremap(
-  'cq',
-  [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . g:mc . "``qz"]],
-  { expr = true }
-)
+xnoremap('cq', [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . g:mc . "``qz"]], { expr = true })
 xnoremap(
   'cQ',
   [[":\<C-u>call v:lua.as.mappings.setup_map()<CR>gv" . substitute(g:mc, '/', '?', 'g') . "``qz"]],
@@ -426,10 +416,7 @@ inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
-command(
-  'ToggleBackground',
-  function() vim.o.background = vim.o.background == 'dark' and 'light' or 'dark' end
-)
+command('ToggleBackground', function() vim.o.background = vim.o.background == 'dark' and 'light' or 'dark' end)
 ------------------------------------------------------------------------------
 command('Todo', [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]])
 command('ReloadModule', function(tbl) require('plenary.reload').reload_module(tbl.args) end, {

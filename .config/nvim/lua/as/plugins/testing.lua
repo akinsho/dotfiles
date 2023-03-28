@@ -26,11 +26,7 @@ return {
       vim.diagnostic.config({
         virtual_text = {
           format = function(diagnostic)
-            return diagnostic.message
-              :gsub('\n', ' ')
-              :gsub('\t', ' ')
-              :gsub('%s+', ' ')
-              :gsub('^%s+', '')
+            return diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
           end,
         },
       }, namespace)

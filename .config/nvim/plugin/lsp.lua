@@ -200,18 +200,8 @@ end
 local function setup_mappings(_, bufnr)
   local function with_desc(desc) return { buffer = bufnr, desc = fmt('lsp: %s', desc) } end
 
-  map(
-    'n',
-    ']c',
-    function() vim.diagnostic.goto_prev({ float = true }) end,
-    with_desc('go to prev diagnostic')
-  )
-  map(
-    'n',
-    '[c',
-    function() vim.diagnostic.goto_next({ float = true }) end,
-    with_desc('go to next diagnostic')
-  )
+  map('n', ']c', function() vim.diagnostic.goto_prev({ float = true }) end, with_desc('go to prev diagnostic'))
+  map('n', '[c', function() vim.diagnostic.goto_next({ float = true }) end, with_desc('go to next diagnostic'))
 
   map({ 'n', 'x' }, '<leader>ca', lsp.buf.code_action, with_desc('code action'))
   map('n', '<leader>rf', format, with_desc('format buffer'))
@@ -253,9 +243,7 @@ local client_overrides = {
 ---@param bufnr number
 local function setup_plugins(client, bufnr)
   local navic_ok, navic = pcall(require, 'nvim-navic')
-  if navic_ok and client.server_capabilities.documentSymbolProvider then
-    navic.attach(client, bufnr)
-  end
+  if navic_ok and client.server_capabilities.documentSymbolProvider then navic.attach(client, bufnr) end
   local hints_ok, hints = pcall(require, 'lsp-inlayhints')
   if hints_ok then hints.on_attach(client, bufnr) end
 end

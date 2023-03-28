@@ -113,11 +113,7 @@ local function get(group, attribute, fallback)
   if not color then
     return 'NONE',
       {
-        msg = ('failed to get highlight %s for attribute %s \n%s'):format(
-          group,
-          attribute,
-          debug.traceback()
-        ),
+        msg = ('failed to get highlight %s for attribute %s \n%s'):format(group, attribute, debug.traceback()),
       }
   end
   return color
