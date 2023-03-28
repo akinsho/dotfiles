@@ -1,6 +1,4 @@
-local api, notify, fmt, fold, augroup = vim.api, vim.notify, string.format, as.fold, as.augroup
-
----@alias ErrorMsg {msg: string}
+local api, notify, fmt, augroup = vim.api, vim.notify, string.format, as.augroup
 
 ---@alias HLAttrs {from: string, attr: "fg" | "bg", alter: integer}
 
@@ -101,8 +99,8 @@ end
 ---@param group string
 ---@param attribute string?
 ---@param fallback string?
----@return string, ErrorMsg?
----@overload fun(group: string): HLData, ErrorMsg?
+---@return string
+---@overload fun(group: string): HLData
 local function get(group, attribute, fallback)
   assert(group, 'cannot get a highlight without specifying a group name')
   local data = get_hl_as_hex({ name = group })
@@ -111,10 +109,11 @@ local function get(group, attribute, fallback)
   assert(attrs[attribute], ('the attribute passed in is invalid: %s'):format(attribute))
   local color = data[attribute] or fallback
   if not color then
-    return 'NONE',
-      {
-        msg = ('failed to get highlight %s for attribute %s \n%s'):format(group, attribute, debug.traceback()),
-      }
+    vim.schedule(function()
+      local msg = fmt('failed to get highlight %s for attribute %s\n%s', group, attribute, debug.traceback())
+      notify(msg, 'error', { title = fmt('highlight - get(%s)', group) })
+    end)
+    return 'NONE'
   end
   return color
 end
@@ -122,29 +121,27 @@ end
 ---@param hl string | HLAttrs
 ---@param attr string
 ---@return HLData
----@return ErrorMsg?
 local function resolve_from_attribute(hl, attr)
   if type(hl) ~= 'table' or not hl.from then return hl end
-  local colour, err = get(hl.from, hl.attr or attr)
+  local colour = get(hl.from, hl.attr or attr)
   if hl.alter then colour = tint(colour, hl.alter) end
-  return colour, err
+  return colour
 end
 
 --- Sets a neovim highlight with some syntactic sugar. It takes a highlight table and converts
 --- any highlights specified as `GroupName = {fg = { from = 'group'}}` into the underlying colour
 --- by querying the highlight property of the from group so it can be used when specifying highlights
---- as a shorthand to derive the right color.
+--- as a shorthand to derive the right colour.
 --- For example:
 --- ```lua
 ---   M.set({ MatchParen = {fg = {from = 'ErrorMsg'}}})
 --- ```
 --- This will take the foreground colour from ErrorMsg and set it to the foreground of MatchParen.
---- NOTE: this function must NOT mutate the options table as these are re-used when the colorscheme
---- is updated
+--- NOTE: this function must NOT mutate the options table as these are re-used when the colorscheme is updated
+---
 ---@param name string
 ---@param opts HLArgs
----@overload fun(ns: integer, name: string, opts: HLArgs): ErrorMsg[]?
----@return ErrorMsg[]?
+---@overload fun(ns: integer, name: string, opts: HLArgs)
 local function set(ns, name, opts)
   if type(ns) == 'string' and type(name) == 'table' then
     opts, name, ns = name, ns, 0
@@ -152,36 +149,21 @@ local function set(ns, name, opts)
 
   vim.validate({ opts = { opts, 'table' }, name = { name, 'string' }, ns = { ns, 'number' } })
 
-  local hl, errs = get_hl_as_hex({ name = opts.inherit or name }), {}
+  local hl = get_hl_as_hex({ name = opts.inherit or name })
   for attribute, hl_data in pairs(opts) do
-    local new_data, err = resolve_from_attribute(hl_data, attribute)
-    if err then table.insert(errs, err) end
+    local new_data = resolve_from_attribute(hl_data, attribute)
     if attrs[attribute] then hl[attribute] = new_data end
   end
 
-  local ok, err = pcall(api.nvim_set_hl, ns, name, hl)
-  if not ok then
-    table.insert(errs, {
-      msg = ('failed to set highlight %s with value %s, %s'):format(name, vim.inspect(hl), err),
-    })
-  end
-  if #errs > 0 then return errs end
+  local msg = ('failed to set highlight "%s" with value %s'):format(name, vim.inspect(hl))
+  as.pcall(msg, api.nvim_set_hl, ns, name, hl)
 end
 
 ---Apply a list of highlights
 ---@param hls {[string]: HLArgs}[]
 ---@param namespace integer?
 local function all(hls, namespace)
-  local errors = fold(function(errors, hl)
-    local errs = set(namespace or 0, next(hl))
-    if errs then vim.list_extend(errors, errs) end
-    return errors
-  end, hls)
-  if #errors > 0 then
-    vim.defer_fn(function()
-      notify(fold(function(acc, err) return acc .. '\n' .. err.msg end, errors, ''), 'error')
-    end, 1000)
-  end
+  as.foreach(function(hl) set(namespace or 0, next(hl)) end, hls)
 end
 
 --- Set window local highlights

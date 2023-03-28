@@ -150,16 +150,6 @@ local function prioritize(statusline, space, length)
   return prioritize(statusline, space, length - lowest.length)
 end
 
----@param item any
----@param c any
----@return nil
-local function warn_invalid_component(item, c)
-  vim.schedule(function()
-    local msg = ('Error creating component: %s from %s'):format(vim.inspect(c), vim.inspect(item))
-    vim.notify_once(msg, 'error')
-  end)
-end
-
 --- @param sections ComponentOpts[][]
 --- @param available_space number?
 --- @return string
@@ -171,8 +161,8 @@ function M.display(sections, available_space)
     end
     as.foreach(function(args, index)
       if not args then return end
-      local ok, str = pcall(component, args)
-      if not ok then return warn_invalid_component(args, str) end
+      local ok, str = as.pcall(('Error creating component: %s'):format(vim.inspect(args)), component, args)
+      if not ok then return end
       table.insert(acc, str)
       if #section == index and count ~= #sections then table.insert(acc, separator()) end
     end, section)

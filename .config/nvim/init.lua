@@ -106,4 +106,4 @@ cmd.packadd('cfilter')
 -----------------------------------------------------------------------------//
 -- Colour Scheme {{{1
 -----------------------------------------------------------------------------//
-as.wrap_err('theme failed to load because', cmd.colorscheme, 'horizon')
+as.pcall('theme failed to load because', cmd.colorscheme, 'horizon')

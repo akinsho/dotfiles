@@ -13,7 +13,7 @@ local function find(word, ...)
   end
 end
 
-local function open_help(tag) as.wrap_err(vim.cmd.help, tag) end
+local function open_help(tag) as.pcall(vim.cmd.help, tag) end
 
 --- Stolen from nlua.nvim this function attempts to open
 --- vim help docs if an api or vim.fn function otherwise it
