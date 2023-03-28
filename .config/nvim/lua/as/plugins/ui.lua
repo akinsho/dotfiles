@@ -119,6 +119,7 @@ return {
   {
     'levouh/tint.nvim',
     event = 'WinNew',
+    enabled = false,
     -- branch = 'untint-forcibly-closed-windows',
     opts = {
       tint = -30,

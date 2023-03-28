@@ -1,5 +1,5 @@
 if not as then return end
-local settings, cmd, fn = as.filetype_settings, vim.cmd, vim.fn
+local settings, highlight, cmd, fn = as.filetype_settings, as.highlight, vim.cmd, vim.fn
 
 settings({
   checkhealth = {
@@ -11,10 +11,6 @@ settings({
       winfixheight = true,
       signcolumn = 'yes:2',
     },
-    function()
-      as.adjust_split_height(10, 15)
-      require('dap.ext.autocompl').attach()
-    end,
   },
   dart = {
     bo = {
@@ -136,14 +132,13 @@ settings({
     plugins = {
       cmp = function(cmp)
         cmp.setup.filetype('norg', {
-          sources = cmp.config.sources({
-            { name = 'neorg' },
-            { name = 'dictionary' },
-            { name = 'spell' },
-            { name = 'emoji' },
-          }, {
-            { name = 'buffer' },
-          }),
+          sources = {
+            { name = 'neorg', group_index = 1 },
+            { name = 'dictionary', group_index = 1 },
+            { name = 'spell', group_index = 1 },
+            { name = 'emoji', group_index = 1 },
+            { name = 'buffer', group_index = 2 },
+          },
         })
       end,
       ['nvim-surround'] = function(surround)
@@ -161,14 +156,13 @@ settings({
       ufo = function(ufo) ufo.detach() end,
       cmp = function(cmp)
         cmp.setup.filetype('org', {
-          sources = cmp.config.sources({
-            { name = 'orgmode' },
-            { name = 'dictionary' },
-            { name = 'spell' },
-            { name = 'emoji' },
-          }, {
-            { name = 'buffer' },
-          }),
+          sources = {
+            { name = 'orgmode', group_index = 1 },
+            { name = 'dictionary', group_index = 1 },
+            { name = 'spell', group_index = 1 },
+            { name = 'emoji', group_index = 1 },
+            { name = 'buffer', group_index = 2 },
+          },
         })
       end,
       ['nvim-surround'] = function(surround)
