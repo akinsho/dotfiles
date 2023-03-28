@@ -70,6 +70,9 @@ if not loop.fs_stat(lazypath) then
   })
 end
 opt.runtimepath:prepend(lazypath)
+
+-- If opening from inside neovim terminal then do not load other plugins
+if env.NVIM then return require('lazy').setup({ { 'willothy/flatten.nvim', config = true } }) end
 -----------------------------------------------------------------------------
 require('lazy').setup('as.plugins', {
   ui = { border = as.ui.current.border },
@@ -96,11 +99,11 @@ require('lazy').setup('as.plugins', {
 
 map('n', '<leader>pm', '<Cmd>Lazy<CR>', { desc = 'manage' })
 -----------------------------------------------------------------------------//
--- Builtin Packages
+-- Built-in Packages
 -----------------------------------------------------------------------------//
 -- cfilter plugin allows filtering down an existing quickfix list
 cmd.packadd('cfilter')
 -----------------------------------------------------------------------------//
--- Color Scheme {{{1
+-- Colour Scheme {{{1
 -----------------------------------------------------------------------------//
 as.wrap_err('theme failed to load because', cmd.colorscheme, 'horizon')
