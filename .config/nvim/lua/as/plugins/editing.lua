@@ -64,9 +64,11 @@ return {
           augend.misc.alias.markdown_header,
         },
         yaml = {
+          augend.integer.alias.decimal,
           augend.semver.alias.semver,
         },
         toml = {
+          augend.integer.alias.decimal,
           augend.semver.alias.semver,
         },
       })

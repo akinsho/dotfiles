@@ -141,8 +141,7 @@ return {
           ['flutterTools.*'] = true,
           ['qf'] = true,
         })
-        local has_bt, has_ft = ignore_bt[buf.buftype], ignore_ft[buf.filetype]
-        return has_bt or has_ft
+        return ignore_bt[buf.buftype] or ignore_ft[buf.filetype]
       end,
     },
   },
