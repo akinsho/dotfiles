@@ -280,22 +280,9 @@ function as.ftplugin_conf(configs, opts)
 end
 
 ----------------------------------------------------------------------------------------------------
-
-----------------------------------------------------------------------------------------------------
 -- API Wrappers
 ----------------------------------------------------------------------------------------------------
 -- Thin wrappers over API functions to make their usage easier/terser
-
----Check that the current nvim version is greater than or equal to the given version
----@param major number
----@param minor number
----@param _ number patch
----@return unknown
-function as.version(major, minor, _)
-  assert(major and minor, 'major and minor must be provided')
-  local v = vim.version() or {}
-  return major >= v.major and minor >= v.minor
-end
 
 --- Validate the keys passed to as.augroup are valid
 ---@param name string
@@ -309,9 +296,7 @@ local function validate_autocmd(name, _cmd)
   if #incorrect == 0 then return end
   vim.schedule(
     function()
-      vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', {
-        title = fmt('Autocmd: %s', name),
-      })
+      vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', { title = fmt('Autocmd: %s', name) })
     end
   )
 end
@@ -374,11 +359,6 @@ function as.command(name, rhs, opts)
   opts = opts or {}
   api.nvim_create_user_command(name, rhs, opts)
 end
-
----Check if a cmd is executable
----@param e string
----@return boolean
-function as.executable(e) return fn.executable(e) > 0 end
 
 ---A terser proxy for `nvim_replace_termcodes`
 ---@param str string
