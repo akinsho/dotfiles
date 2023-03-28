@@ -269,7 +269,7 @@ return {
   --------------------------------------------------------------------------------
   {
     'mg979/vim-visual-multi',
-    keys = { { '<C-E>', mode = { 'n', 'x' } }, '\\j', '\\k' },
+    lazy = false,
     init = function()
       vim.g.VM_highlight_matches = 'underline'
       vim.g.VM_theme = 'codedark'
