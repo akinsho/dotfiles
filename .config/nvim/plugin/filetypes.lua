@@ -39,7 +39,6 @@ settings({
     opt_local = {
       list = false,
       spell = true,
-      spelllang = 'en_gb',
     },
   },
   go = {
@@ -58,6 +57,9 @@ settings({
     },
   },
   markdown = {
+    opt_local = {
+      spell = true,
+    },
     plugins = {
       cmp = function(cmp)
         cmp.setup.filetype('markdown', {
@@ -87,7 +89,6 @@ settings({
   NeogitCommitMessage = {
     opt_local = {
       spell = true,
-      spelllang = 'en_gb',
       list = false,
     },
     plugins = {
@@ -151,7 +152,10 @@ settings({
     },
   },
   org = {
-    opt_local = { signcolumn = 'yes' },
+    opt_local = {
+      spell = true,
+      signcolumn = 'yes',
+    },
     plugins = {
       ufo = function(ufo) ufo.detach() end,
       cmp = function(cmp)
@@ -209,12 +213,7 @@ settings({
     bo = { textwidth = 100 },
     opt_local = { spell = true },
     mappings = {
-      {
-        'n',
-        'gd',
-        '<Cmd>TypescriptGoToSourceDefinition<CR>',
-        desc = 'typescript: go to source definition',
-      },
+      { 'n', 'gd', '<Cmd>TypescriptGoToSourceDefinition<CR>', desc = 'typescript: go to source definition' },
     },
   },
   vim = {
@@ -230,7 +229,7 @@ settings({
       },
     },
   },
-  [{ 'lua', 'python', 'rust', 'org', 'markdown' }] = {
+  [{ 'lua', 'python', 'rust' }] = {
     opt_local = { spell = true },
   },
 })
