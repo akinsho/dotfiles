@@ -4,7 +4,32 @@
 ---@type lspconfig.options
 local servers = {
   eslint = {},
-  tsserver = {},
+  tsserver = {
+    settings = {
+      typescript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'all',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = false,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+      javascript = {
+        inlayHints = {
+          includeInlayParameterNameHints = 'all',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = false,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+    },
+  },
   ccls = {},
   graphql = {
     on_attach = function(client)
@@ -79,19 +104,10 @@ local servers = {
     settings = {
       Lua = {
         codeLens = { enable = true },
-        hint = { enable = true, arrayIndex = 'Disable', setType = true },
+        hint = { enable = true, arrayIndex = 'Disable', setType = true, paramName = 'Disable' },
         format = { enable = false },
         diagnostics = {
-          globals = {
-            'vim',
-            'P',
-            'describe',
-            'it',
-            'before_each',
-            'after_each',
-            'packer_plugins',
-            'pending',
-          },
+          globals = { 'vim', 'P', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins', 'pending' },
         },
         completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
         workspace = { checkThirdParty = false },
