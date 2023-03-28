@@ -9,7 +9,7 @@ local fn, api, v, cmd, fmt = vim.fn, vim.api, vim.v, vim.cmd, string.format
 -- When I'm not using them, I need to set the following:
 -- The mappings below are essentially faked user input this is because in order to automatically turn off
 -- the search highlight just changing the value of 'hlsearch' inside a function does not work
--- read `:h nohlsearch`. So to have this work I check that the current mouse position is not a search
+-- read `:h nohlsearch`. So to have this workaround I check that the current mouse position is not a search
 -- result, if it is we leave highlighting on, otherwise I turn it off on cursor moved by faking my input
 -- using the expr mappings below.
 --

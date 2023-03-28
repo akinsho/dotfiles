@@ -265,21 +265,22 @@ end
 ----------------------------------------------------------------------------------------------------
 -- Thin wrappers over API functions to make their usage easier/terser
 
+local autocmd_keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
 --- Validate the keys passed to as.augroup are valid
 ---@param name string
----@param _cmd Autocommand
-local function validate_autocmd(name, _cmd)
-  local keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group', 'once', 'nested' }
+---@param command Autocommand
+local function validate_autocmd(name, command)
   local incorrect = as.fold(function(accum, _, key)
-    if not vim.tbl_contains(keys, key) then table.insert(accum, key) end
+    if not vim.tbl_contains(autocmd_keys, key) then table.insert(accum, key) end
     return accum
-  end, _cmd, {})
-  if #incorrect == 0 then return end
-  vim.schedule(
-    function()
-      vim.notify('Incorrect keys: ' .. table.concat(incorrect, ', '), 'error', { title = fmt('Autocmd: %s', name) })
-    end
-  )
+  end, command, {})
+
+  if #incorrect > 0 then
+    vim.schedule(function()
+      local msg = 'Incorrect keys: ' .. table.concat(incorrect, ', ')
+      vim.notify(msg, 'error', { title = fmt('Autocmd: %s', name) })
+    end)
+  end
 end
 
 ---@class AutocmdArgs
