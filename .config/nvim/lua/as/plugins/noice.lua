@@ -10,14 +10,7 @@ return {
   opts = {
     cmdline = {
       format = {
-        cmdline = { title = '' },
-        lua = { title = '' },
-        search_down = { title = '' },
-        search_up = { title = '' },
-        filter = { title = '' },
-        help = { title = '' },
-        input = { title = '' },
-        IncRename = { title = '' },
+        IncRename = { title = 'Rename' },
         substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
       },
     },
