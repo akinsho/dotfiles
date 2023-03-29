@@ -7,7 +7,7 @@
 ----------------------------------------------------------------------------------------------------
 if vim.g.vscode then return end -- if someone has forced me to use vscode don't load my config
 
-local g, fn, api, opt, loop, env, cmd = vim.g, vim.fn, vim.api, vim.opt, vim.loop, vim.env, vim.cmd
+local g, fn, opt, loop, env, cmd = vim.g, vim.fn, vim.opt, vim.loop, vim.env, vim.cmd
 local data = fn.stdpath('data')
 
 if vim.loader then vim.loader.enable() end
@@ -19,9 +19,6 @@ g.dotfiles = env.DOTFILES or fn.expand('~/.dotfiles')
 g.vim_dir = g.dotfiles .. '/.config/nvim'
 g.projects_dir = env.PROJECTS_DIR or fn.expand('~/projects')
 g.work_dir = g.projects_dir .. '/work'
-----------------------------------------------------------------------------------------------------
--- Ensure all autocommands are cleared
-api.nvim_create_augroup('vimrc', {})
 ----------------------------------------------------------------------------------------------------
 -- Leader bindings
 ----------------------------------------------------------------------------------------------------
