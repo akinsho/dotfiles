@@ -75,16 +75,16 @@ local function general_overrides()
     ------------------------------------------------------------------------------//
     --  Semantic tokens
     ------------------------------------------------------------------------------//
+    { ['@lsp.type.variable'] = { clear = true } },
     { ['@lsp.type.parameter'] = { italic = true, fg = { from = 'Normal' } } },
-    { ['@lsp.type.variable'] = { link = '@variable' } },
     { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
     { ['@lsp.typemod.variable.defaultLibrary'] = { italic = true } },
     { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
-    { ['@lsp.typemod.parameter.label'] = { inherit = '@field', bold = false } },
-    { ['@lsp.typemod.operator'] = { link = '@operator' } },
-    { ['@lsp.typemod.keyword'] = { link = '@keyword' } },
-    { ['@lsp.typemod.string'] = { link = '@string' } },
-    { ['@lsp.typemod.variable'] = { link = '@variable' } },
+    { ['@lsp.typemod.number.injected'] = { link = '@number' } },
+    { ['@lsp.typemod.operator.injected'] = { link = '@operator' } },
+    { ['@lsp.typemod.keyword.injected'] = { link = '@keyword' } },
+    { ['@lsp.typemod.string.injected'] = { link = '@string' } },
+    { ['@lsp.typemod.variable.injected'] = { link = '@variable' } },
     -----------------------------------------------------------------------------//
     -- Treesitter
     -----------------------------------------------------------------------------//
