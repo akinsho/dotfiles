@@ -210,45 +210,6 @@ local function apply_ft_mappings(args, buf)
   end, args)
 end
 
---- This function is an alternative API to using ftplugin files. It allows defining
---- filetype settings in a single place, then creating FileType autocommands from this definition
----
---- e.g.
---- ```lua
---- as.filetype_settings({
----   lua = {
----    opt = {foldmethod = 'expr' },
----    bo = { shiftwidth = 2 }
----   },
----  [{'c', 'cpp'}] = {
----    bo = { shiftwidth = 2 }
----  }
---- })
---- ```
---- One future idea is to generate the ftplugin files from this function, so the settings are still
---- centralized but the curation of these files is automated. Although I'm not sure this actually
---- has value over autocommands, unless ftplugin files specifically have that value
----@param map {[string|string]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs)}}
-function as.filetype_settings(map)
-  local commands = as.map(function(settings, ft)
-    local name = type(ft) == 'string' and ft or table.concat(ft, ',')
-    return {
-      pattern = ft,
-      event = 'FileType',
-      desc = ('ft settings for %s'):format(name),
-      command = function(args)
-        as.foreach(function(value, scope)
-          if scope == 'mappings' then return apply_ft_mappings(value, args.buf) end
-          if scope == 'plugins' then return as.ftplugin_conf(value) end
-          if type(value) ~= 'table' and vim.is_callable(value) then return value(args) end
-          as.foreach(function(setting, option) vim[scope][option] = setting end, value)
-        end, settings)
-      end,
-    }
-  end, map)
-  as.augroup('filetype-settings', unpack(commands))
-end
-
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
 --- and warns me if the plugin is not installed
 ---@param configs table<string, fun(module: table)>
@@ -258,6 +219,47 @@ function as.ftplugin_conf(configs)
     local ok, plugin = as.pcall(require, name)
     if ok then callback(plugin) end
   end
+end
+
+--- This function is an alternative API to using ftplugin files. It allows defining
+--- filetype settings in a single place, then creating FileType autocommands from this definition
+---
+--- e.g.
+--- ```lua
+---   as.filetype_settings({
+---     lua = {
+---      opt = {foldmethod = 'expr' },
+---      bo = { shiftwidth = 2 }
+---     },
+---    [{'c', 'cpp'}] = {
+---      bo = { shiftwidth = 2 }
+---    }
+---   })
+--- ```
+--- One future idea is to generate the ftplugin files from this function, so the settings are still
+--- centralized but the curation of these files is automated. Although I'm not sure this actually
+--- has value over autocommands, unless ftplugin files specifically have that value
+---
+---@param map {[string|string[]]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs)}}
+function as.filetype_settings(map)
+  local commands = as.map(function(settings, ft)
+    local name = type(ft) == 'string' and ft or table.concat(ft, ',')
+    return {
+      pattern = ft,
+      event = 'FileType',
+      desc = ('ft settings for %s'):format(name),
+      command = function(args)
+        as.foreach(function(value, scope)
+          if scope == 'opt' then scope = 'opt_local' end
+          if scope == 'mappings' then return apply_ft_mappings(value, args.buf) end
+          if scope == 'plugins' then return as.ftplugin_conf(value) end
+          if type(value) ~= 'table' and vim.is_callable(value) then return value(args) end
+          as.foreach(function(setting, option) vim[scope][option] = setting end, value)
+        end, settings)
+      end,
+    }
+  end, map)
+  as.augroup('filetype-settings', unpack(commands))
 end
 
 ----------------------------------------------------------------------------------------------------

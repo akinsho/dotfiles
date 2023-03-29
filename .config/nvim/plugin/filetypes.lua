@@ -1,12 +1,13 @@
 if not as then return end
-local settings, highlight, cmd, fn = as.filetype_settings, as.highlight, vim.cmd, vim.fn
+local settings, highlight = as.filetype_settings, as.highlight
+local cmd, fn, api, env = vim.cmd, vim.fn, vim.api, vim.env
 
 settings({
   checkhealth = {
-    opt_local = { spell = false },
+    opt = { spell = false },
   },
   ['dap-repl'] = {
-    opt_local = {
+    opt = {
       buflisted = false,
       winfixheight = true,
       signcolumn = 'yes:2',
@@ -17,7 +18,7 @@ settings({
       syntax = '',
       textwidth = 100,
     },
-    opt_local = { spell = true },
+    opt = { spell = true },
     mappings = {
       { 'n', '<leader>cc', '<Cmd>Telescope flutter commands<CR>', desc = 'flutter: commands' },
       { 'n', '<leader>dd', '<Cmd>FlutterDevices<CR>', desc = 'flutter: devices' },
@@ -36,7 +37,7 @@ settings({
   },
   [{ 'gitcommit', 'gitrebase' }] = {
     bo = { bufhidden = 'delete' },
-    opt_local = {
+    opt = {
       list = false,
       spell = true,
     },
@@ -48,7 +49,7 @@ settings({
       tabstop = 4,
       shiftwidth = 4,
     },
-    opt_local = { spell = true },
+    opt = { spell = true },
     mappings = {
       { 'n', '<leader>gb', '<Cmd>GoBuild<CR>', desc = 'build' },
       { 'n', '<leader>gfs', '<Cmd>GoFillStruct<CR>', desc = 'fill struct' },
@@ -56,8 +57,41 @@ settings({
       { 'n', '<leader>gie', '<Cmd>GoIfErr<CR>', desc = 'if err' },
     },
   },
+  help = {
+    opt = {
+      list = false,
+      wrap = false,
+      spell = true,
+      textwidth = 78,
+    },
+    plugins = {
+      ['virt-column'] = function(col)
+        if not vim.bo.readonly then col.setup_buffer({ virtcolumn = '+1' }) end
+      end,
+    },
+    function(args)
+      local opts = { buffer = args.buf }
+      -- if this a vim help file create mappings to make navigation easier otherwise enable preferred editing settings
+      if vim.startswith(fn.expand('%'), env.VIMRUNTIME) or vim.bo.readonly then
+        vim.opt_local.spell = false
+        api.nvim_create_autocmd('BufWinEnter', { buffer = 0, command = 'wincmd L | vertical resize 80' })
+
+        -- https://vim.fandom.com/wiki/Learn_to_use_help
+        map('n', '<CR>', '<C-]>', opts)
+        map('n', '<BS>', '<C-T>', opts)
+        -- search forwards and backwards for 'options'
+        map('n', 'o', [[/'\l\{2,\}'<CR>]], opts)
+        map('n', 'O', [[?'\l\{2,\}'<CR>]], opts)
+        -- search forwards and backwards for |subject|
+        map('n', 's', [[/\|\zs\S+\ze\|<CR>]], opts)
+        map('n', 'S', [[?\|\zs\S+\ze\|<CR>]], opts)
+      else
+        map('n', '<leader>ml', 'maGovim:tw=78:ts=8:noet:ft=help:norl:<esc>`a', opts)
+      end
+    end,
+  },
   markdown = {
-    opt_local = {
+    opt = {
       spell = true,
     },
     plugins = {
@@ -87,7 +121,7 @@ settings({
     function() vim.b.formatting_disabled = not vim.startswith(fn.expand('%'), vim.env.PROJECTS_DIR .. '/personal') end,
   },
   NeogitCommitMessage = {
-    opt_local = {
+    opt = {
       spell = true,
       list = false,
     },
@@ -152,7 +186,7 @@ settings({
     },
   },
   org = {
-    opt_local = {
+    opt = {
       spell = true,
       signcolumn = 'yes',
     },
@@ -181,10 +215,10 @@ settings({
     },
   },
   javascript = {
-    opt_local = { spell = true },
+    opt = { spell = true },
   },
   qf = {
-    opt_local = {
+    opt = {
       wrap = false,
       number = false,
       signcolumn = 'yes',
@@ -211,13 +245,13 @@ settings({
   },
   [{ 'typescript', 'typescriptreact' }] = {
     bo = { textwidth = 100 },
-    opt_local = { spell = true },
+    opt = { spell = true },
     mappings = {
       { 'n', 'gd', '<Cmd>TypescriptGoToSourceDefinition<CR>', desc = 'typescript: go to source definition' },
     },
   },
   vim = {
-    opt_local = { spell = true },
+    opt = { spell = true },
     mappings = {
       {
         'n',
@@ -229,7 +263,5 @@ settings({
       },
     },
   },
-  [{ 'lua', 'python', 'rust' }] = {
-    opt_local = { spell = true },
-  },
+  [{ 'lua', 'python', 'rust' }] = { opt = { spell = true } },
 })
