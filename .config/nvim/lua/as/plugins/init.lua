@@ -391,11 +391,7 @@ return {
         },
       })
       -- credit: https://github.com/JoosepAlviste
-      -- Typing = when () -> () => {|}
       autopairs.add_rules({
-        Rule('%(.*%)%s*%=$', '> {}', { 'typescript', 'typescriptreact', 'javascript', 'vue' })
-          :use_regex(true)
-          :set_end_pair_length(1),
         -- Typing n when the| -> then|end
         Rule('then', 'end', 'lua'):end_wise(function(opts) return string.match(opts.line, '^%s*if') ~= nil end),
       })
