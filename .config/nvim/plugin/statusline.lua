@@ -333,7 +333,7 @@ local function filename(ctx)
   local dir = with_sep(table.concat(parts, sep))
   local new_dir, env = dir_env(dir)
   local segment = not falsy(env) and env .. new_dir or dir
-  if api.nvim_strwidth(segment) > math.floor(vim.o.columns / 3) then dir = fn.pathshorten(dir) end
+  if strwidth(segment) > math.floor(vim.o.columns / 3) then new_dir = fn.pathshorten(new_dir) end
 
   return { env = env, dir = new_dir, parent = with_sep(parent), fname = fname }
 end
