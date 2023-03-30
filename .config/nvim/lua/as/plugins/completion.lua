@@ -3,22 +3,16 @@ local api, fn = vim.api, vim.fn
 local border = as.ui.current.border
 
 return {
+  { 'f3fora/cmp-spell', ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' } },
+  { 'rcarriga/cmp-dap' },
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
       { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-cmdline', enabled = not as.nightly() },
-      { 'dmitmel/cmp-cmdline-history', enabled = not as.nightly() },
-      { 'hrsh7th/cmp-nvim-lsp-document-symbol', enabled = not as.nightly() },
-      {
-        'f3fora/cmp-spell',
-        ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' },
-      },
       { 'hrsh7th/cmp-path' },
       { 'hrsh7th/cmp-buffer' },
       { 'hrsh7th/cmp-emoji' },
-      { 'rcarriga/cmp-dap' },
       { 'saadparwaiz1/cmp_luasnip' },
       { 'lukas-reineke/cmp-rg' },
       { 'petertriho/cmp-git', opts = { filetypes = { 'gitcommit', 'NeogitCommitMessage' } } },
@@ -105,8 +99,6 @@ return {
               dictionary = '[D]',
               buffer = '[B]',
               spell = '[SP]',
-              cmdline = '[Cmd]',
-              cmdline_history = '[Hist]',
               orgmode = '[Org]',
               norg = '[Norg]',
               rg = '[Rg]',
@@ -126,32 +118,10 @@ return {
             option = { additional_arguments = '--max-depth 8' },
           },
         }, {
-          {
-            name = 'buffer',
-            options = {
-              get_bufnrs = function() return vim.api.nvim_list_bufs() end,
-            },
-          },
+          { name = 'buffer', options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end } },
           { name = 'spell' },
         }),
       })
-
-      if not as.nightly() then
-        cmp.setup.cmdline({ '/', '?' }, {
-          mapping = cmp.mapping.preset.cmdline(),
-          sources = {
-            sources = cmp.config.sources({ { name = 'nvim_lsp_document_symbol' } }, { { name = 'buffer' } }),
-          },
-        })
-
-        cmp.setup.cmdline(':', {
-          sources = cmp.config.sources({
-            { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
-            { name = 'path' },
-            { name = 'cmdline_history', priority = 10, max_item_count = 5 },
-          }),
-        })
-      end
 
       cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, { sources = { { name = 'dap' } } })
     end,
