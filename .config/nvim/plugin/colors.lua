@@ -80,6 +80,7 @@ local function general_overrides()
     { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
     { ['@lsp.typemod.variable.defaultLibrary'] = { italic = true } },
     { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
+    { ['@lsp.type.type.lua'] = { clear = true } },
     { ['@lsp.typemod.number.injected'] = { link = '@number' } },
     { ['@lsp.typemod.operator.injected'] = { link = '@operator' } },
     { ['@lsp.typemod.keyword.injected'] = { link = '@keyword' } },
