@@ -194,7 +194,10 @@ opt.sessionoptions = {
   'buffers',
   'curdir',
   'winpos',
+  'winsize',
+  'help',
   'tabpages',
+  'terminal',
 }
 opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
 o.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode
