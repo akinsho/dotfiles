@@ -37,8 +37,7 @@ return {
     },
   },
   {
-    'danilshvalov/orgmode', -- nvim-orgmode/orgmode
-    branch = 'fix-treesitter',
+    'nvim-orgmode/orgmode',
     keys = { '<leader>oa', '<leader>oc' },
     dependencies = {
       {
@@ -90,7 +89,6 @@ return {
   {
     'lukas-reineke/headlines.nvim',
     ft = { 'org', 'norg', 'markdown', 'yaml' },
-    enabled = false,
     config = function()
       highlight.plugin('Headlines', {
         theme = {
