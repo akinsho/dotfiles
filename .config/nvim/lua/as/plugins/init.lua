@@ -430,11 +430,20 @@ return {
       window = { open = 'alternate' },
       callbacks = {
         block_end = function() require('toggleterm').toggle() end,
-        post_open = function(_, winnr, _, is_blocking)
+        post_open = function(bufnr, winnr, ft, is_blocking)
           if is_blocking then
             require('toggleterm').toggle()
           else
             api.nvim_set_current_win(winnr)
+          end
+          if ft == 'gitcommit' then
+            api.nvim_create_autocmd('BufWritePost', {
+              buffer = bufnr,
+              once = true,
+              callback = function()
+                vim.defer_fn(function() cmd.Bwipeout() end, 50)
+              end,
+            })
           end
         end,
       },
