@@ -10,7 +10,7 @@ return {
   opts = {
     cmdline = {
       format = {
-        IncRename = { title = 'Rename' },
+        IncRename = { title = ' Rename ' },
         substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
       },
     },
