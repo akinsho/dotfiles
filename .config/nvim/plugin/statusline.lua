@@ -284,6 +284,7 @@ end
 ---@return string
 local function with_sep(path) return not falsy(path) and path .. sep or path end
 
+local SYNC_DIR = fn.resolve(vim.env.SYNC_DIR)
 --- Replace the directory path with an identifier if it matches a commonly visited
 --- directory of mine such as my projects directory or my work directory
 --- since almost all my project directories are nested underneath one of these paths
@@ -298,6 +299,7 @@ local function dir_env(directory)
     [vim.g.dotfiles] = '$DOTFILES',
     [vim.g.work_dir] = '$WORK',
     [vim.g.projects_dir] = '$PROJECTS',
+    [SYNC_DIR] = '$SYNC',
   }
   local result, env, prev_match = directory, '', ''
   for dir, alias in pairs(paths) do
