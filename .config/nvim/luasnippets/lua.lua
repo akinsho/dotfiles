@@ -12,7 +12,7 @@ return {
     {
       trig = 'cfg',
       name = 'config key',
-      dscr = 'Packer config key',
+      dscr = 'package manager config key',
     },
     fmt(
       [[
@@ -57,8 +57,7 @@ return {
     },
     fmt(
       [[
-    ---@module "{3}"
-    local {1} = lazy.require("{2}")
+    local {1} = lazy.require("{2}") ---@module "{3}"
     ]],
       {
         f(import_suffix, { 1 }),
