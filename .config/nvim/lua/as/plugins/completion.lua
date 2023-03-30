@@ -1,6 +1,6 @@
-local highlight, t, fmt = as.highlight, as.replace_termcodes, string.format
+local highlight, ui, fold, t, fmt = as.highlight, as.ui, as.fold, as.replace_termcodes, string.format
 local api, fn = vim.api, vim.fn
-local border = as.ui.current.border
+local border = ui.current.border
 
 return {
   { 'f3fora/cmp-spell', ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' } },
@@ -22,22 +22,24 @@ return {
       local cmp = require('cmp')
       local luasnip = require('luasnip')
       local lspkind = require('lspkind')
-      local kind_hls, ellipsis = as.ui.lsp.highlights, as.ui.icons.misc.ellipsis
+      local lsp_kinds, ellipsis = ui.lsp.highlights, ui.icons.misc.ellipsis
 
-      --- @type HLArgs[]
-      local menu_hls = {
-        { CmpItemAbbr = { fg = 'fg', bg = 'NONE', italic = false, bold = false } },
-        { CmpItemAbbrMatch = { fg = { from = 'Keyword' } } },
-        { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
-        { CmpItemAbbrMatchFuzzy = { italic = true, fg = { from = 'Keyword' } } },
-        { CmpItemMenu = { fg = { from = 'Pmenu', attr = 'bg', alter = 0.3 }, italic = true, bold = false } },
-      }
+      local hl_defs = fold(
+        function(accum, value, key)
+          table.insert(accum, { [fmt('CmpItemKind%s', key)] = { fg = { from = value } } })
+          return accum
+        end,
+        lsp_kinds,
+        {
+          { CmpItemAbbr = { fg = 'fg', bg = 'NONE', italic = false, bold = false } },
+          { CmpItemAbbrMatch = { fg = { from = 'Keyword' } } },
+          { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
+          { CmpItemAbbrMatchFuzzy = { italic = true, fg = { from = 'Keyword' } } },
+          { CmpItemMenu = { fg = { from = 'Pmenu', attr = 'bg', alter = 0.3 }, italic = true, bold = false } },
+        }
+      )
 
-      -- stylua: ignore
-      highlight.plugin('Cmp', as.fold(function(accum, value, key)
-        table.insert(accum, { [fmt('CmpItemKind%s', key)] = { fg = { from = value } } })
-        return accum
-      end, kind_hls, menu_hls))
+      highlight.plugin('Cmp', hl_defs)
 
       local cmp_window = {
         border = border,
@@ -48,38 +50,35 @@ return {
           'Search:None',
         }, ','),
       }
+
+      local function shift_tab(fallback)
+        if not cmp.visible() then return fallback() end
+        if luasnip.jumpable(-1) then luasnip.jump(-1) end
+      end
+
+      local function tab(fallback) -- make TAB behave like Android Studio
+        if not cmp.visible() then return fallback() end
+        if not cmp.get_selected_entry() then return cmp.select_next_item({ behavior = cmp.SelectBehavior.Select }) end
+        if luasnip.expand_or_jumpable() then return luasnip.expand_or_jump() end
+        cmp.confirm()
+      end
+
+      local function copilot() api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
+
       cmp.setup({
-        experimental = { ghost_text = false },
-        matching = { disallow_partial_fuzzy_matching = false },
         window = {
           completion = cmp.config.window.bordered(cmp_window),
           documentation = cmp.config.window.bordered(cmp_window),
         },
-        snippet = {
-          expand = function(args) luasnip.lsp_expand(args.body) end,
-        },
+        snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
         mapping = cmp.mapping.preset.insert({
-          ['<C-]>'] = cmp.mapping(function(_) api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end),
+          ['<C-]>'] = cmp.mapping(copilot),
           ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i' }),
           ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
           ['<C-space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }),
-          ['<S-TAB>'] = cmp.mapping(function(fallback)
-            if not cmp.visible() then return fallback() end
-            if luasnip.jumpable(-1) then luasnip.jump(-1) end
-          end, { 'i', 's' }),
-          ['<TAB>'] = cmp.mapping(function(fallback) -- make TAB behave like Android Studio
-            if not cmp.visible() then return fallback() end
-            if not cmp.get_selected_entry() then
-              cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-            else
-              if luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-              else
-                cmp.confirm()
-              end
-            end
-          end, { 'i', 's' }),
+          ['<S-TAB>'] = cmp.mapping(shift_tab, { 'i', 's' }),
+          ['<TAB>'] = cmp.mapping(tab, { 'i', 's' }),
         }),
         formatting = {
           deprecated = true,
@@ -104,20 +103,24 @@ return {
             },
           }),
         },
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'path' },
+        sources = {
+          { name = 'nvim_lsp', group_index = 1 },
+          { name = 'luasnip', group_index = 1 },
+          { name = 'path', group_index = 1 },
           {
             name = 'rg',
             keyword_length = 4,
             max_item_count = 10,
             option = { additional_arguments = '--max-depth 8' },
+            group_index = 1,
           },
-        }, {
-          { name = 'buffer', options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end } },
-          { name = 'spell' },
-        }),
+          {
+            name = 'buffer',
+            options = { get_bufnrs = function() return vim.api.nvim_list_bufs() end },
+            group_index = 2,
+          },
+          { name = 'spell', group_index = 2 },
+        },
       })
 
       cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, { sources = { { name = 'dap' } } })
