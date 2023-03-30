@@ -78,7 +78,7 @@ return {
         },
         default_component_configs = {
           icon = {
-            folder_empty = '',
+            folder_empty = icons.documents.open_folder,
           },
           diagnostics = {
             highlights = {

@@ -40,7 +40,7 @@ as.ui.icons = {
   lsp = {
     error = '', -- '✗'
     warn = '',
-    info = '', -- 
+    info = '', --  
     hint = '', --  ⚑
   },
   git = {
@@ -59,13 +59,6 @@ as.ui.icons = {
     files = '',
     folder = '',
     open_folder = '',
-  },
-  type = {
-    array = '',
-    number = '',
-    object = '',
-    null = '[]',
-    float = '',
   },
   misc = {
     -- 
@@ -109,8 +102,6 @@ as.ui.icons = {
     block = '▌',
   },
 }
---- LSP Kinds come via the LSP spec
---- see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
 as.ui.lsp = {
   colors = {
     error = as.ui.palette.pale_red,
@@ -118,6 +109,8 @@ as.ui.lsp = {
     hint = as.ui.palette.bright_blue,
     info = as.ui.palette.teal,
   },
+  --- This is a mapping of LSP Kinds to highlight groups. LSP Kinds come via the LSP spec
+  --- see: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#symbolKind
   highlights = {
     Text = 'String',
     Method = 'TSMethod',
@@ -151,80 +144,6 @@ as.ui.lsp = {
     Key = 'TSField',
     Null = 'ErrorMsg',
     EnumMember = 'TSField',
-  },
-  kinds = {
-    codicons = {
-      Text = '',
-      Method = '',
-      Function = '',
-      Constructor = '',
-      Field = '',
-      Variable = '',
-      Class = '',
-      Interface = '',
-      Module = '',
-      Property = '',
-      Unit = '',
-      Value = '',
-      Enum = '',
-      Keyword = '',
-      Snippet = '',
-      Color = '',
-      File = '',
-      Reference = '',
-      Folder = '',
-      EnumMember = '',
-      Constant = '',
-      Struct = '',
-      Event = '',
-      Operator = '',
-      TypeParameter = '',
-      Namespace = '',
-      Package = '',
-      String = '',
-      Number = '',
-      Boolean = '',
-      Array = '',
-      Object = '',
-      Key = '',
-      Null = '',
-    },
-    nerdfonts = {
-      Text = '',
-      Method = '',
-      Function = '',
-      Constructor = '',
-      Field = '', -- '',
-      Variable = '', -- '',
-      Class = '', -- '',
-      Interface = '',
-      Module = '',
-      Property = 'ﰠ',
-      Unit = '塞',
-      Value = '',
-      Enum = '',
-      Keyword = '', -- '',
-      Snippet = '', -- '', '',
-      Color = '',
-      File = '',
-      Reference = '', -- '',
-      Folder = '',
-      EnumMember = '',
-      Constant = '', -- '',
-      Struct = '', -- 'פּ',
-      Event = '',
-      Operator = '',
-      TypeParameter = '',
-      Namespace = '?',
-      Package = '?',
-      String = '?',
-      Number = '?',
-      Boolean = '?',
-      Array = '?',
-      Object = '?',
-      Key = '?',
-      Null = '?',
-    },
   },
 }
 
@@ -359,4 +278,4 @@ function as.ui.decorations.set_colorcolumn(bufnr, fn)
 end
 
 ----------------------------------------------------------------------------------------------------
-as.ui.current = { border = as.ui.border.line, lsp_icons = as.ui.lsp.kinds.codicons }
+as.ui.current = { border = as.ui.border.line }

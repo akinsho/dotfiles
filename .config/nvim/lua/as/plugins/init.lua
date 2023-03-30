@@ -65,6 +65,11 @@ return {
   -- LSP,Completion & Debugger {{{1
   -----------------------------------------------------------------------------//
   {
+    'onsails/lspkind.nvim',
+    opts = { preset = 'codicons', mode = 'symbol_text' },
+    config = function(_, opts) require('lspkind').init(opts) end,
+  },
+  {
     {
       'williamboman/mason.nvim',
       cmd = 'Mason',
@@ -200,11 +205,13 @@ return {
     'SmiteshP/nvim-navic',
     dependencies = { 'neovim/nvim-lspconfig' },
     init = function() vim.g.navic_silence = true end,
-    opts = {
-      highlight = false,
-      icons = ui.current.lsp_icons,
-      depth_limit_indicator = ui.icons.misc.ellipsis,
-    },
+    opts = function()
+      require('nvim-navic').setup({
+        highlight = false,
+        icons = require('lspkind').symbol_map,
+        depth_limit_indicator = ui.icons.misc.ellipsis,
+      })
+    end,
   },
   {
     'folke/todo-comments.nvim',

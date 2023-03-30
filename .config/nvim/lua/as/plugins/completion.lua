@@ -16,22 +16,21 @@ return {
       { 'saadparwaiz1/cmp_luasnip' },
       { 'lukas-reineke/cmp-rg' },
       { 'petertriho/cmp-git', opts = { filetypes = { 'gitcommit', 'NeogitCommitMessage' } } },
-      -- Use <Tab> to escape from pairs such as ""|''|() etc.
       { 'abecodes/tabout.nvim', opts = { ignore_beginning = false, completion = false } },
     },
     config = function()
       local cmp = require('cmp')
       local luasnip = require('luasnip')
+      local lspkind = require('lspkind')
       local kind_hls, ellipsis = as.ui.lsp.highlights, as.ui.icons.misc.ellipsis
 
-      -- stylua: ignore
       --- @type HLArgs[]
       local menu_hls = {
         { CmpItemAbbr = { fg = 'fg', bg = 'NONE', italic = false, bold = false } },
         { CmpItemAbbrMatch = { fg = { from = 'Keyword' } } },
         { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
         { CmpItemAbbrMatchFuzzy = { italic = true, fg = { from = 'Keyword' } } },
-        { CmpItemMenu = { fg = { from = 'Pmenu', attr = 'bg', alter = 0.3 }, italic = true, bold = false } }, -- Make the source information less prominent
+        { CmpItemMenu = { fg = { from = 'Pmenu', attr = 'bg', alter = 0.3 }, italic = true, bold = false } },
       }
 
       -- stylua: ignore
@@ -85,11 +84,10 @@ return {
         formatting = {
           deprecated = true,
           fields = { 'abbr', 'kind', 'menu' },
-          format = function(entry, vim_item)
-            local MAX = math.floor(vim.o.columns * 0.5)
-            if #vim_item.abbr >= MAX then vim_item.abbr = vim_item.abbr:sub(1, MAX) .. ellipsis end
-            vim_item.kind = fmt('%s %s', as.ui.current.lsp_icons[vim_item.kind], vim_item.kind)
-            vim_item.menu = ({
+          format = lspkind.cmp_format({
+            maxwidth = math.floor(vim.o.columns * 0.5),
+            ellipsis_char = ellipsis,
+            menu = {
               nvim_lsp = '[LSP]',
               nvim_lua = '[Lua]',
               emoji = '[E]',
@@ -103,9 +101,8 @@ return {
               norg = '[Norg]',
               rg = '[Rg]',
               git = '[Git]',
-            })[entry.source.name]
-            return vim_item
-          end,
+            },
+          }),
         },
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
