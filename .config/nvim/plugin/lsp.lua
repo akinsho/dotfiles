@@ -195,25 +195,32 @@ end
 -----------------------------------------------------------------------------//
 
 ---Setup mapping when an lsp attaches to a buffer
----@param _ table lsp client
+---@param client lsp.Client
 ---@param bufnr number
-local function setup_mappings(_, bufnr)
-  local function with_desc(desc) return { buffer = bufnr, desc = fmt('lsp: %s', desc) } end
+local function setup_mappings(client, bufnr)
+  local mappings = {
+    { 'n', ']c', function() diagnostic.goto_prev({ float = true }) end, desc = 'go to prev diagnostic' },
+    { 'n', '[c', function() diagnostic.goto_next({ float = true }) end, desc = 'go to next diagnostic' },
+    { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = 'codeAction' },
+    { 'n', '<leader>rf', format, desc = 'format buffer', capability = 'documentFormatting' },
+    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = 'definition' },
+    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = 'references' },
+    { 'n', 'K', lsp.buf.hover, desc = 'hover', capability = 'hover' },
+    { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = 'references' },
+    { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = 'references' },
+    { 'n', '<leader>gd', lsp.buf.type_definition, desc = 'go to type definition', capability = 'definition' },
+    { 'n', '<leader>cl', lsp.codelens.run, desc = 'run code lens', capability = 'codeLens' },
+    { 'n', '<leader>ri', lsp.buf.rename, desc = 'rename', capability = 'rename' },
+    { 'n', '<leader>rN', rename_file, desc = 'rename with input', capability = 'rename' },
+  }
 
-  map('n', ']c', function() vim.diagnostic.goto_prev({ float = true }) end, with_desc('go to prev diagnostic'))
-  map('n', '[c', function() vim.diagnostic.goto_next({ float = true }) end, with_desc('go to next diagnostic'))
-
-  map({ 'n', 'x' }, '<leader>ca', lsp.buf.code_action, with_desc('code action'))
-  map('n', '<leader>rf', format, with_desc('format buffer'))
-  map('n', 'gd', lsp.buf.definition, with_desc('definition'))
-  map('n', 'gr', lsp.buf.references, with_desc('references'))
-  map('n', 'K', lsp.buf.hover, with_desc('hover'))
-  map('n', 'gI', lsp.buf.incoming_calls, with_desc('incoming calls'))
-  map('n', 'gi', lsp.buf.implementation, with_desc('implementation'))
-  map('n', '<leader>gd', lsp.buf.type_definition, with_desc('go to type definition'))
-  map('n', '<leader>cl', lsp.codelens.run, with_desc('run code lens'))
-  map('n', '<leader>ri', lsp.buf.rename, with_desc('rename'))
-  map('n', '<leader>rN', rename_file, with_desc('rename with input'))
+  as.foreach(function(m)
+    -- NOTE: unclear if this is actually a good idea since muscle memory will mean I'm going to hit these keys anyway
+    -- now all that will happen is they might just do random stuff rather than error noticeably
+    if not m.capability or client.server_capabilities[fmt('%sProvider', m.capability)] then
+      map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
+    end
+  end, mappings)
 end
 
 -----------------------------------------------------------------------------//
