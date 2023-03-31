@@ -68,8 +68,6 @@ local function get_hl_as_hex(opts, ns)
   local hl = api.nvim_get_hl(ns, opts)
   hl.fg = hl.fg and ('#%06x'):format(hl.fg)
   hl.bg = hl.bg and ('#%06x'):format(hl.bg)
-  -- FIXME: remove this once the nvim_get_hl function is fixed
-  if hl.link and not opts.link then return get_hl_as_hex({ name = hl.link }, ns) end
   return hl
 end
 
