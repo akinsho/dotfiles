@@ -282,9 +282,9 @@ end
 ---Only append the path separator if the path is not empty
 ---@param path string
 ---@return string
-local function with_sep(path) return not falsy(path) and path .. sep or path end
-
+local function with_sep(path) return (not falsy(path) and path:sub(-1) ~= sep) and path .. sep or path end
 local SYNC_DIR = fn.resolve(vim.env.SYNC_DIR)
+
 --- Replace the directory path with an identifier if it matches a commonly visited
 --- directory of mine such as my projects directory or my work directory
 --- since almost all my project directories are nested underneath one of these paths
@@ -299,14 +299,14 @@ local function dir_env(directory)
     [vim.g.dotfiles] = '$DOTFILES',
     [vim.g.work_dir] = '$WORK',
     [vim.g.projects_dir] = '$PROJECTS',
+    [vim.env.VIMRUNTIME] = '$VIMRUNTIME',
     [SYNC_DIR] = '$SYNC',
   }
   local result, env, prev_match = directory, '', ''
   for dir, alias in pairs(paths) do
-    -- NOTE: using vim.fn.expand causes the commandline to get stuck completing
     local match, count = fs.normalize(directory):gsub(vim.pesc(with_sep(dir)), '')
     if count == 1 and #dir > #prev_match then
-      result, env, prev_match = match, with_sep(alias), dir
+      result, env, prev_match = match, alias, dir
     end
   end
   return result, env
@@ -337,7 +337,7 @@ local function filename(ctx)
   local segment = not falsy(env) and env .. new_dir or dir
   if strwidth(segment) > math.floor(vim.o.columns / 3) then new_dir = fn.pathshorten(new_dir) end
 
-  return { env = env, dir = new_dir, parent = with_sep(parent), fname = fname }
+  return { env = with_sep(env), dir = with_sep(new_dir), parent = with_sep(parent), fname = fname }
 end
 
 ---Create the various segments of the current filename
