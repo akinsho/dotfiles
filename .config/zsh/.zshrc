@@ -366,6 +366,9 @@ export PROMPT='$(__prompt_eval)'
 export RPROMPT='%F{yellow}%{$__DOTS[ITALIC_ON]%}${cmd_exec_time}%{$__DOTS[ITALIC_OFF]%}%f %F{240}%*%f'
 # Correction prompt
 export SPROMPT="correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
+# Add a continuous line following every prompt
+# see: https://superuser.com/a/846133
+export PS1=$'%F{black}${(r:$COLUMNS::\u2500:)}'$PS1
 #-------------------------------------------------------------------------------
 #           Execution time
 #-------------------------------------------------------------------------------
