@@ -756,9 +756,14 @@ function as.ui.statusline.render()
       priority = 4,
     },
     {
+      { { icons.misc.shaded_lock, hls.metadata } },
+      cond = vim.b[ctx.bufnum].formatting_disabled == true or vim.g.formatting_disabled == true,
+      priority = 5,
+    },
+    {
       { { grapple.icon, hls.directory }, { space }, { grapple.name, hls.comment } },
       cond = grapple_ok,
-      priority = 4,
+      priority = 5,
     }
   )
   -----------------------------------------------------------------------------//

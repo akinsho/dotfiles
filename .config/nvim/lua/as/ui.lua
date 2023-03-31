@@ -73,6 +73,7 @@ as.ui.icons = {
     question = '',
     clock = '',
     lock = '',
+    shaded_lock = '',
     circle = '',
     project = '',
     dashboard = '',
