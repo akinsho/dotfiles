@@ -40,6 +40,7 @@ settings({
     opt = {
       list = false,
       spell = true,
+      spelllang = 'en_gb',
     },
   },
   go = {
@@ -123,6 +124,7 @@ settings({
   NeogitCommitMessage = {
     opt = {
       spell = true,
+      spelllang = 'en_gb',
       list = false,
     },
     plugins = {
