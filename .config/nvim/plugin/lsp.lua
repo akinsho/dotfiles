@@ -193,14 +193,22 @@ end
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
+local function prev_diagnostic(lvl)
+  return function() diagnostic.goto_prev({ float = true, severity = { min = lvl } }) end
+end
+local function next_diagnostic(lvl)
+  return function() diagnostic.goto_next({ float = true, severity = { min = lvl } }) end
+end
 
 ---Setup mapping when an lsp attaches to a buffer
 ---@param client lsp.Client
 ---@param bufnr number
 local function setup_mappings(client, bufnr)
   local mappings = {
-    { 'n', ']c', function() diagnostic.goto_prev({ float = true }) end, desc = 'go to prev diagnostic' },
-    { 'n', '[c', function() diagnostic.goto_next({ float = true }) end, desc = 'go to next diagnostic' },
+    { 'n', ']C', prev_diagnostic(), desc = 'go to prev diagnostic (all)' },
+    { 'n', '[C', next_diagnostic(), desc = 'go to next diagnostic (all)' },
+    { 'n', ']c', prev_diagnostic(diagnostic.severity.WARN), desc = 'go to prev diagnostic' },
+    { 'n', '[c', next_diagnostic(diagnostic.severity.WARN), desc = 'go to next diagnostic' },
     { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = 'codeAction' },
     { 'n', '<leader>rf', format, desc = 'format buffer', capability = 'documentFormatting' },
     { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = 'definition' },
@@ -321,21 +329,21 @@ command('LspFormat', function() format({ bufnr = 0, async = false }) end)
 -----------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//
----@param opts {highlight: string, icon: string, linehl?: boolean}
+---@param opts {highlight: string, icon: string}
 local function sign(opts)
   fn.sign_define(opts.highlight, {
     text = opts.icon,
     texthl = opts.highlight,
-    numhl = opts.linehl ~= false and opts.highlight .. 'Nr' or nil,
-    culhl = opts.linehl ~= false and opts.highlight .. 'CursorNr' or nil,
-    linehl = opts.linehl ~= false and opts.highlight .. 'Line' or nil,
+    numhl = opts.highlight .. 'Nr' or nil,
+    culhl = opts.highlight .. 'CursorNr' or nil,
+    linehl = opts.highlight .. 'Line' or nil,
   })
 end
 
 sign({ highlight = 'DiagnosticSignError', icon = icons.error })
 sign({ highlight = 'DiagnosticSignWarn', icon = icons.warn })
-sign({ highlight = 'DiagnosticSignInfo', linehl = false, icon = icons.info })
-sign({ highlight = 'DiagnosticSignHint', linehl = false, icon = icons.hint })
+sign({ highlight = 'DiagnosticSignInfo', icon = icons.info })
+sign({ highlight = 'DiagnosticSignHint', icon = icons.hint })
 -----------------------------------------------------------------------------//
 -- Handler Overrides
 -----------------------------------------------------------------------------//
@@ -373,12 +381,14 @@ local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
 diagnostic.config({
-  signs = true,
   underline = true,
   update_in_insert = false,
   severity_sort = false,
-  virtual_text = false and {
-    severity = S.ERROR,
+  signs = {
+    severity = { min = S.WARN },
+  },
+  virtual_text = {
+    severity = { min = S.WARN },
     spacing = 1,
     prefix = '',
     format = function(d)
