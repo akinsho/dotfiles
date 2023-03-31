@@ -211,7 +211,6 @@ Sowemimo
 toggleterm
 lspconfig
 winhighlight
-RGBA
 colorscheme
 cfilter
 globbing
@@ -288,3 +287,10 @@ hl
 underdotted
 shiftwidth
 foldmethod
+rgb
+RGBA
+rgba
+params
+stackoverflow
+pos
+guibg
