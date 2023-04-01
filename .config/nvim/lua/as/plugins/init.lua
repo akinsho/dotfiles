@@ -31,7 +31,7 @@ return {
       use_git_branch = true,
       allowed_dirs = { vim.g.dotfiles, vim.g.work_dir, vim.g.projects_dir .. '/personal' },
       ignored_dirs = { fn.stdpath('data') },
-      on_autoload_no_session = function() cmd.Alpha() end,
+      on_autoload_no_session = function() cmd.SessionLoadLast() end,
       should_autosave = function() return vim.bo.filetype ~= 'alpha' end,
     },
   },
