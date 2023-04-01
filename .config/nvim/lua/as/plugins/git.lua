@@ -35,8 +35,7 @@ return {
     },
     config = function(_, opts)
       require('neogit').setup(opts)
-      -- NOTE: highlights must be set AFTER neogit's setup
-      highlight.plugin('neogit', {
+      highlight.plugin('neogit', { -- NOTE: highlights must be set AFTER neogit's setup
         { NeogitDiffAdd = { link = 'DiffAdd' } },
         { NeogitDiffDelete = { link = 'DiffDelete' } },
         { NeogitDiffAddHighlight = { link = 'DiffAdd' } },
@@ -153,7 +152,7 @@ return {
         local function bmap(mode, l, r, opts)
           opts = opts or {}
           opts.buffer = bufnr
-          vim.keymap.set(mode, l, r, opts)
+          map(mode, l, r, opts)
         end
 
         map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage' })
@@ -164,9 +163,7 @@ return {
         map('n', '<localleader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
         map('n', '<localleader>gre', gs.reset_buffer, { desc = 'reset entire buffer' })
         map('n', '<localleader>gbl', gs.blame_line, { desc = 'blame current line' })
-        map('n', '<leader>lm', function() gs.setqflist('all') end, {
-          desc = 'list modified in quickfix',
-        })
+        map('n', '<leader>lm', function() gs.setqflist('all') end, { desc = 'list modified in quickfix' })
         bmap({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
         bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
