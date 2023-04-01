@@ -64,6 +64,7 @@ local smart_close_filetypes = as.p_table({
   ['Neogit.*'] = true,
   ['neotest.*'] = true,
   ['fugitive.*'] = true,
+  ['copilot.*'] = true,
   ['tsplayground'] = true,
   ['startuptime'] = true,
 })

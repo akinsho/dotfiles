@@ -216,6 +216,7 @@ local filetypes = as.p_table({
   ['checkhealth'] = presets.tool_panel,
   ['log'] = presets.tool_panel,
   ['help'] = presets.tool_panel,
+  ['^copilot.*'] = presets.tool_panel,
   ['dapui'] = presets.tool_panel,
   ['minimap'] = presets.tool_panel,
   ['Trouble'] = presets.tool_panel,
