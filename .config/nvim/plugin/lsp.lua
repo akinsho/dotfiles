@@ -205,10 +205,8 @@ end
 ---@param bufnr number
 local function setup_mappings(client, bufnr)
   local mappings = {
-    { 'n', ']C', prev_diagnostic(), desc = 'go to prev diagnostic (all)' },
-    { 'n', '[C', next_diagnostic(), desc = 'go to next diagnostic (all)' },
-    { 'n', ']c', prev_diagnostic(diagnostic.severity.WARN), desc = 'go to prev diagnostic' },
-    { 'n', '[c', next_diagnostic(diagnostic.severity.WARN), desc = 'go to next diagnostic' },
+    { 'n', ']c', prev_diagnostic(), desc = 'go to prev diagnostic' },
+    { 'n', '[c', next_diagnostic(), desc = 'go to next diagnostic' },
     { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = 'codeAction' },
     { 'n', '<leader>rf', format, desc = 'format buffer', capability = 'documentFormatting' },
     { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = 'definition' },
