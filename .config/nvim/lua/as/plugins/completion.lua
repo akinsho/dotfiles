@@ -134,14 +134,14 @@ return {
     config = function()
       local function accept_word()
         fn['copilot#Accept']('')
-        local bar = fn['copilot#TextQueuedForInsertion']()
-        return fn.split(bar, [[[ .]\zs]])[1]
+        local output = fn['copilot#TextQueuedForInsertion']()
+        return fn.split(output, [[[ .]\zs]])[1]
       end
 
       local function accept_line()
         fn['copilot#Accept']('')
-        local bar = fn['copilot#TextQueuedForInsertion']()
-        return fn.split(bar, [[[\n]\zs]])[1]
+        local output = fn['copilot#TextQueuedForInsertion']()
+        return fn.split(output, [[[\n]\zs]])[1]
       end
       map('i', '<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", {
         expr = true,
