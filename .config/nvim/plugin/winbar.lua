@@ -95,10 +95,15 @@ function as.ui.winbar.render(current_win)
   return str.display({ winbar }, api.nvim_win_get_width(win))
 end
 
+--- The reason for this wrapper function that decides whether to set the winbar
+--- is that the winbar cannot be cleared by returning a null or empty value
+--- so the extra line taken by the winbar will be set even in windows where this is not desirable
+--- see: https://github.com/neovim/neovim/issues/18660
 local function set_winbar()
   local current_win = api.nvim_get_current_win()
   as.foreach(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
+
     if vim.t[0].diff_view_initialized then return end
 
     local bt, ft, is_diff = buf.buftype, buf.filetype, win.diff
@@ -116,12 +121,7 @@ local function set_winbar()
 end
 
 as.augroup('AttachWinbar', {
-  event = { 'BufWinEnter', 'TabNew', 'TabEnter', 'BufEnter', 'WinClosed' },
-  desc = 'Toggle winbar',
-  command = set_winbar,
-}, {
-  event = 'User',
-  pattern = { 'DiffviewDiffBufRead', 'DiffviewDiffBufWinEnter' },
+  event = { 'TabEnter', 'BufEnter', 'WinClosed' },
   desc = 'Toggle winbar',
   command = set_winbar,
 })
