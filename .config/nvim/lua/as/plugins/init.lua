@@ -188,12 +188,12 @@ return {
   {
     'SmiteshP/nvim-navic',
     dependencies = { 'neovim/nvim-lspconfig' },
-    init = function() vim.g.navic_silence = true end,
     opts = function()
       require('nvim-navic').setup({
         highlight = false,
         icons = require('lspkind').symbol_map,
         depth_limit_indicator = ui.icons.misc.ellipsis,
+        lsp = { auto_attach = true },
       })
     end,
   },
