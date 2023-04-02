@@ -201,6 +201,7 @@ as.augroup('Utilities', {
     local paths = vim.split(vim.o.runtimepath, ',')
     local match = as.find(function(dir)
       local path = api.nvim_buf_get_name(args.buf)
+      if vim.startswith(path, env.PERSONAL_PROJECTS_DIR) then return false end
       if vim.startswith(path, env.VIMRUNTIME) then return true end
       return vim.startswith(path, dir)
     end, paths)

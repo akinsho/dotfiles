@@ -24,7 +24,7 @@ o.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
-if o.splitkeep then o.splitkeep = 'screen' end
+if as.nightly() then o.splitkeep = 'screen' end
 o.splitbelow = true
 o.splitright = true
 o.eadirection = 'hor'
