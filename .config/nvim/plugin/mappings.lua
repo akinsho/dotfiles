@@ -1,9 +1,6 @@
 if not as or not as.mappings.enable then return end
 
-local fn = vim.fn
-local api = vim.api
-local command = as.command
-local fmt = string.format
+local fn, api, uv, command, fmt = vim.fn, vim.api, vim.loop, as.command, string.format
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -473,6 +470,21 @@ local auto_resize = function()
   end
 end
 command('AutoResize', auto_resize(), { nargs = '?' })
+
+command('Exrc', function()
+  local cwd = fn.getcwd()
+  local p1, p2 = ('%s/.nvim.lua'):format(cwd), ('%s/.nvimrc'):format(cwd)
+  local path = uv.fs_stat(p1) and p1 or uv.fs_stat(p2) and p2
+  if not path then
+    local _, err = io.open(p1, 'w')
+    assert(err == nil, err)
+    path = p1
+  end
+  if not path then return end
+  local ok, err = pcall(vim.cmd.edit, path)
+  if not ok then vim.notify(err, 'error', { title = 'Exrc Opener' }) end
+end)
+
 -----------------------------------------------------------------------------//
 -- References
 -----------------------------------------------------------------------------//
