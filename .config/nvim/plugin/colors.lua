@@ -101,23 +101,10 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
     { LspCodeLensSeparator = { bold = false, italic = false } },
-    {
-      LspReferenceText = { underdotted = true, bg = 'NONE', sp = { from = 'Comment', attr = 'fg' } },
-    },
-    {
-      LspReferenceRead = { underdotted = true, bg = 'NONE', sp = { from = 'Comment', attr = 'fg' } },
-    },
-    -- This represents when a reference is assigned which is more interesting than regular
-    -- occurrences so should be highlighted more distinctly
-    {
-      LspReferenceWrite = {
-        bold = true,
-        italic = true,
-        bg = 'NONE',
-        underline = true,
-        sp = { from = 'Comment', attr = 'fg' },
-      },
-    },
+    { LspReferenceText = { bg = 'NONE', underline = true, sp = { from = 'Comment', attr = 'fg' } } },
+    { LspReferenceRead = { link = 'LspReferenceText' } },
+    { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, italic = true, underline = true } },
+    { LspSignatureActiveParameter = { link = 'Visual' } },
     -- Base colours
     { DiagnosticHint = { fg = L.hint } },
     { DiagnosticError = { fg = L.error } },
