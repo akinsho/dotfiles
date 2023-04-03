@@ -36,13 +36,9 @@ return {
     },
   },
   {
-    'knubie/vim-kitty-navigator',
-    event = 'VeryLazy',
-    build = 'cp ./*.py ~/.config/kitty/',
-    cond = function() return not vim.env.TMUX end,
-  },
-  {
     'mrjones2014/smart-splits.nvim',
+    config = true,
+    build = './install-kitty.sh',
     -- stylua: ignore
     keys = {
       { '<A-h>', function() require('smart-splits').resize_left() end },
@@ -58,7 +54,6 @@ return {
       { '<leader><leader>k', function() require('smart-splits').swap_buf_up() end, { desc = 'swap up' } },
       { '<leader><leader>l', function() require('smart-splits').swap_buf_right() end, { desc = 'swap right' } },
     },
-    config = true,
   },
   -- }}}
   -----------------------------------------------------------------------------//
