@@ -23,6 +23,7 @@ return {
       local luasnip = require('luasnip')
       local lspkind = require('lspkind')
       local lsp_kinds, ellipsis = ui.lsp.highlights, ui.icons.misc.ellipsis
+      local MIN_MENU_WIDTH, MAX_MENU_WIDTH = 20, math.min(50, math.floor(vim.o.columns * 0.5))
 
       local hl_defs = fold(
         function(accum, value, key)
@@ -76,8 +77,16 @@ return {
           deprecated = true,
           fields = { 'abbr', 'kind', 'menu' },
           format = lspkind.cmp_format({
-            maxwidth = math.floor(vim.o.columns * 0.5),
+            maxwidth = MAX_MENU_WIDTH,
             ellipsis_char = ellipsis,
+            before = function(_, vim_item)
+              local label = vim_item.abbr
+              if string.len(label) < MIN_MENU_WIDTH then
+                local padding = string.rep(' ', MIN_MENU_WIDTH - string.len(label))
+                vim_item.abbr = label .. padding
+              end
+              return vim_item
+            end,
             menu = {
               nvim_lsp = '[LSP]',
               nvim_lua = '[Lua]',
