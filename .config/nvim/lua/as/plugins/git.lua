@@ -141,6 +141,7 @@ return {
         untracked = { text = icons.light_shade_block },
       },
       -- Experimental ------------------------------------------------------------------------------
+      _extmark_signs = true,
       _signs_staged_enable = false,
       ----------------------------------------------------------------------------------------------
       current_line_blame = not cwd():match('dotfiles'),

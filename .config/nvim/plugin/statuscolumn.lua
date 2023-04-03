@@ -10,18 +10,6 @@ local fold_opened, fold_closed = fcs.foldopen, fcs.foldclose -- '▶'
 local shade, separator = separators.light_shade_block, separators.left_thin_block -- '│'
 local sep_hl = 'StatusColSep'
 
----@param buf number
----@return {name:string, text:string, texthl:string}[][]
-local function get_signs(buf)
-  return vim.tbl_map(function(sign)
-    local signs = fn.sign_getdefined(sign.name)
-    for _, s in ipairs(signs) do
-      if s.text then s.text = s.text:gsub('%s', '') end
-    end
-    return signs
-  end, fn.sign_getplaced(buf, { group = '*', lnum = v.lnum })[1].signs)
-end
-
 local function fdm()
   if fn.foldlevel(v.lnum) <= fn.foldlevel(v.lnum - 1) then return space end
   return fn.foldclosed(v.lnum) == -1 and fold_closed or fold_opened
@@ -42,25 +30,37 @@ local function nr(win, line_count)
   return string.rep(space, num_width) .. lnum
 end
 
----@param signs {name:string, text:string, texthl:string}[][]
+---@param curbuf integer
 ---@return StringComponent[] sgns non-git signs
----@return StringComponent[] g_sgns list of git signs
-local function signs_by_type(signs)
-  local sgns, g_sgn = {}, {}
+local function signplaced_signs(curbuf)
+  local sgns = {}
+  local signs = fn.sign_getplaced(curbuf, { group = '*', lnum = v.lnum })[1].signs
   for _, sn in ipairs(signs) do
-    if sn[1].name:find('GitSign') then
-      table.insert(g_sgn, { { { sn[1].text, sn[1].texthl } }, after = '' })
-    else
-      for _, s in ipairs(sn) do
-        table.insert(sgns, { { { s.text, s.texthl } }, after = '' })
-      end
+    for _, s in ipairs(sn) do
+      table.insert(sgns, { { { s.text:gsub('%s', ''), s.texthl } }, after = '' })
     end
   end
-  while #sgns < SIGN_COL_WIDTH or #g_sgn < GIT_COL_WIDTH do
-    if #sgns < SIGN_COL_WIDTH then table.insert(sgns, str.spacer(1)) end
-    if #g_sgn < GIT_COL_WIDTH then table.insert(g_sgn, str.spacer(1)) end
+  while #sgns < SIGN_COL_WIDTH do
+    table.insert(sgns, str.spacer(1))
   end
-  return sgns, g_sgn
+  return sgns
+end
+
+---@param curbuf integer
+---@return StringComponent[]
+--- TODO: this currently does not separate signs by type, it just assumes that only git signs are extmark signs
+local function extmark_signs(curbuf)
+  local lnum = v.lnum - 1
+  ---@type {[1]: number, [2]: number, [3]: number, [4]: {sign_text: string, sign_hl_group: string}}
+  local g_signs = api.nvim_buf_get_extmarks(curbuf, -1, { lnum, 0 }, { lnum, -1 }, { details = true, type = 'sign' })
+  local sns = as.map(
+    function(item) return { { { item[4].sign_text:gsub('%s', ''), item[4].sign_hl_group } }, after = '' } end,
+    g_signs
+  )
+  while #sns < GIT_COL_WIDTH do
+    table.insert(sns, str.spacer(1))
+  end
+  return sns
 end
 
 --- TODO: currently auto-resizing the statuscolumn does not update each line but only the line with
@@ -71,8 +71,7 @@ end
 function ui.statuscolumn.render()
   local curwin = api.nvim_get_current_win()
   local curbuf = api.nvim_win_get_buf(curwin)
-  local signs = get_signs(curbuf)
-  local sns, gitsign = signs_by_type(signs)
+  local gitsign, sns = extmark_signs(curbuf), signplaced_signs(curbuf)
 
   local line_count = api.nvim_buf_line_count(curbuf)
   local is_absolute_lnum = v.virtnum >= 0 and falsy(v.relnum)
