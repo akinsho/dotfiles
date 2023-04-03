@@ -119,7 +119,7 @@ opt.wildignore = {
   'tags.lock',
 }
 opt.wildoptions = { 'pum', 'fuzzy' }
-o.pumblend = 3 -- Make popup window translucent
+o.pumblend = 0 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//

@@ -31,25 +31,15 @@ return {
         end,
         lsp_kinds,
         {
-          { CmpItemAbbr = { fg = 'fg', bg = 'NONE', italic = false, bold = false } },
+          { CmpItemAbbr = { fg = 'fg' } },
           { CmpItemAbbrMatch = { fg = { from = 'Keyword' } } },
           { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
-          { CmpItemAbbrMatchFuzzy = { italic = true, fg = { from = 'Keyword' } } },
-          { CmpItemMenu = { fg = { from = 'Pmenu', attr = 'bg', alter = 0.3 }, italic = true, bold = false } },
+          { CmpItemAbbrMatchFuzzy = { inherit = 'CmpItemAbbrMatch', italic = true } },
+          { CmpItemMenu = { link = 'Comment' } },
         }
       )
 
       highlight.plugin('Cmp', hl_defs)
-
-      local cmp_window = {
-        border = border,
-        winhighlight = table.concat({
-          'Normal:NormalFloat',
-          'FloatBorder:FloatBorder',
-          'CursorLine:Visual',
-          'Search:None',
-        }, ','),
-      }
 
       local function shift_tab(fallback)
         if not cmp.visible() then return fallback() end
@@ -67,8 +57,10 @@ return {
 
       cmp.setup({
         window = {
-          completion = cmp.config.window.bordered(cmp_window),
-          documentation = cmp.config.window.bordered(cmp_window),
+          documentation = cmp.config.window.bordered({
+            border = border,
+            winhighlight = 'FloatBorder:FloatBorder',
+          }),
         },
         snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
         mapping = cmp.mapping.preset.insert({
