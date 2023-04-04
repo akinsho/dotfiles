@@ -96,11 +96,13 @@ return {
         '<localleader>gu',
         function() linker().get_buf_range_url('n') end,
         desc = 'gitlinker: copy line to clipboard',
+        mode = 'n',
       },
       {
         '<localleader>gu',
         function() linker().get_buf_range_url('v') end,
         desc = 'gitlinker: copy range to clipboard',
+        mode = 'v',
       },
       {
         '<localleader>go',
@@ -116,6 +118,7 @@ return {
         '<localleader>go',
         function() linker().get_buf_range_url('v', browser_open()) end,
         desc = 'gitlinker: open current selection in browser',
+        mode = 'v',
       },
     },
     opts = {
