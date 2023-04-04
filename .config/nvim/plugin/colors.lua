@@ -25,7 +25,7 @@ local function general_overrides()
     { FloatBorder = { bg = { from = 'Normal', alter = -0.15 }, fg = { from = 'Comment' } } },
     { FloatTitle = { inherit = 'FloatBorder', reverse = true, bold = true, bg = 'white' } },
     { Pmenu = { link = 'NormalFloat' } },
-    { Pmenu = { link = 'NormalFloat' } },
+    { PmenuSbar = { link = 'NormalFloat' } },
     -----------------------------------------------------------------------------//
     { CodeBlock = { bg = { from = 'Normal', alter = 0.3 } } },
     { markdownCode = { link = 'CodeBlock' } },
@@ -212,6 +212,8 @@ local function colorscheme_overrides()
       { NormalNC = { inherit = 'Normal' } },
       { WinSeparator = { fg = '#353647' } },
       { Constant = { bold = true } },
+      { PmenuSbar = { link = 'NormalFloat' } },
+      { PmenuThumb = { bg = 'gray' } },
       { NonText = { fg = { from = 'Comment' } } },
       { LineNr = { bg = 'NONE' } },
       { TabLineSel = { bg = { from = 'SpecialKey', attr = 'fg' } } },
