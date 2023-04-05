@@ -65,6 +65,7 @@ if not loop.fs_stat(lazypath) then
     'https://github.com/folke/lazy.nvim.git',
     lazypath,
   })
+  vim.notify('Installed lazy.nvim')
 end
 opt.runtimepath:prepend(lazypath)
 
