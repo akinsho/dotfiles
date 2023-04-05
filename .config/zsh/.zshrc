@@ -513,15 +513,6 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 last_working_dir
 
-# TODO: also need to check for the existence of ~/.fzf/
-# 1. change this to being a brew install
-if [ ! -f $HOME/.fzf.zsh ]; then
-  git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-  $HOME/.fzf/install
-else
-  source $HOME/.fzf.zsh
-fi
-
 if exists thefuck; then
   eval $(thefuck --alias)
 fi
