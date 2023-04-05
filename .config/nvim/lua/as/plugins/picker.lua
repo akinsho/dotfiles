@@ -1,38 +1,49 @@
-local fn, env, highlight, ui = vim.fn, vim.env, as.highlight, as.ui
+local fn, env, highlight, ui, reqcall = vim.fn, vim.env, as.highlight, as.ui, as.reqcall
 local icons, lsp_hls = ui.icons, ui.lsp.highlights
 local P = ui.palette
 
+local fzf_lua = reqcall('fzf-lua')
 ------------------------------------------------------------------------------------------------------------------------
 -- FZF-LUA HELPERS
 ------------------------------------------------------------------------------------------------------------------------
-local function command(c) return ('<Cmd>FzfLua %s<CR>'):format(c) end
-
-local file_picker = function(cwd) require('fzf-lua').files({ cwd = cwd }) end
+local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
 
 local function git_files_cwd_aware(opts)
   opts = opts or {}
-  local fzf_lua = require('fzf-lua')
+  local fzf = require('fzf-lua')
   -- git_root() will warn us if we're not inside a git repo
   -- so we don't have to add another warning here, if
   -- you want to avoid the error message change it to:
   -- local git_root = fzf_lua.path.git_root(opts, true)
-  local git_root = fzf_lua.path.git_root(opts)
-  if not git_root then return fzf_lua.files(opts) end
-  local relative = fzf_lua.path.relative(vim.loop.cwd(), git_root)
+  local git_root = fzf.path.git_root(opts)
+  if not git_root then return fzf.files(opts) end
+  local relative = fzf.path.relative(vim.loop.cwd(), git_root)
   opts.fzf_opts = { ['--query'] = git_root ~= relative and relative or nil }
-  return fzf_lua.git_files(opts)
+  return fzf.git_files(opts)
 end
 
-local function dropdown(opts)
-  return vim.tbl_extend('keep', opts or {}, {
+local function dropdown(...)
+  return vim.tbl_deep_extend('force', {
     fzf_opts = { ['--layout'] = 'reverse' },
     winopts = {
       height = 0.33,
       width = 0.45,
       preview = { hidden = 'hidden', layout = 'vertical', vertical = 'up:77%' },
     },
+  }, ...)
+end
+
+local function cursor_dropdown(opts)
+  return dropdown(opts, {
+    winopts = {
+      row = 1,
+      relative = 'cursor',
+      height = 0.33,
+      width = 0.25,
+    },
   })
 end
+as.fzf = { dropdown = cursor_dropdown }
 ------------------------------------------------------------------------------------------------------------------------
 
 return {
@@ -44,21 +55,21 @@ return {
       { '<c-p>', git_files_cwd_aware, desc = 'find files' },
       { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
       { '<leader>ff', file_picker, desc = 'find files' },
-      { '<leader>fb', command('grep_curbuf'), desc = 'current buffer fuzzy find' },
-      { '<leader>fr', command('resume'), desc = 'resume picker' },
-      { '<leader>fvh', command('highlights'), desc = 'highlights' },
-      { '<leader>fvk', command('keymaps'), desc = 'autocommands' },
-      { '<leader>fle', command('diagnostics_workspace'), desc = 'workspace diagnostics' },
-      { '<leader>fld', command('lsp_document_symbols'), desc = 'document symbols' },
-      { '<leader>fls', command('lsp_live_workspace_symbols'), desc = 'workspace symbols' },
-      { '<leader>f?', command('help_tags'), desc = 'help' },
-      { '<leader>fh', command('oldfiles'), desc = 'Most (f)recently used files' },
-      { '<leader>fgb', command('git_branches'), desc = 'branches' },
-      { '<leader>fgc', command('git_commits'), desc = 'commits' },
-      { '<leader>fgB', command('git_bcommits'), desc = 'buffer commits' },
-      { '<leader>fo', command('buffers'), desc = 'buffers' },
-      { '<leader>fs', command('live_grep'), desc = 'live grep' },
-      { '<leader>fva', command('autocmds'), desc = 'autocommands' },
+      { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
+      { '<leader>fr', fzf_lua.resume, desc = 'resume picker' },
+      { '<leader>fvh', fzf_lua.highlights, desc = 'highlights' },
+      { '<leader>fvk', fzf_lua.keymaps, desc = 'keymaps' },
+      { '<leader>fle', fzf_lua.diagnostics_workspace, desc = 'workspace diagnostics' },
+      { '<leader>fld', fzf_lua.lsp_document_symbols, desc = 'document symbols' },
+      { '<leader>fls', fzf_lua.lsp_live_workspace_symbols, desc = 'workspace symbols' },
+      { '<leader>f?', fzf_lua.help_tags, desc = 'help' },
+      { '<leader>fh', fzf_lua.oldfiles, desc = 'Most (f)recently used files' },
+      { '<leader>fgb', fzf_lua.git_branches, desc = 'branches' },
+      { '<leader>fgc', fzf_lua.git_commits, desc = 'commits' },
+      { '<leader>fgB', fzf_lua.git_bcommits, desc = 'buffer commits' },
+      { '<leader>fo', fzf_lua.buffers, desc = 'buffers' },
+      { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
+      { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
       { '<leader>fd', function() file_picker(vim.env.DOTFILES) end, desc = 'dotfiles' },
       { '<leader>fc', function() file_picker(vim.g.vim_dir) end, desc = 'nvim config' },
       { '<leader>fO', function() file_picker(fn.resolve(env.SYNC_DIR .. '/org')) end, desc = 'org files' },
@@ -107,17 +118,21 @@ return {
           },
         },
         helptags = {
-          prompt = 'Help ',
+          prompt = ' Help: ',
         },
         oldfiles = dropdown({
-          prompt = 'History  ',
+          prompt = ' History:',
           cwd_only = true,
         }),
         files = dropdown({
-          prompt = 'Files  ',
+          prompt = ' Files: ',
         }),
         buffers = dropdown({
-          prompt = 'Buffers  ',
+          prompt = '﬘ Buffers: ',
+        }),
+        keymaps = dropdown({
+          prompt = ' Keymaps: ',
+          winopts = { width = 0.7 },
         }),
         lsp = {
           cwd_only = true,
@@ -126,24 +141,30 @@ return {
             symbol_icons = lsp_kind.symbols,
             symbol_hl = function(s) return lsp_hls[s] end,
           },
+          code_actions = cursor_dropdown({
+            prompt = ' Code actions: ',
+          }),
         },
         diagnostics = dropdown({
-          prompt = 'Diagnostics  ',
+          prompt = ' Diagnostics: ',
         }),
         git = {
           files = dropdown({
-            prompt = 'Files (Git)  ',
+            prompt = ' Files (Git): ',
+          }),
+          branches = dropdown({
+            prompt = ' Branches: ',
           }),
           status = {
-            prompt = 'Git status  ',
+            prompt = ' Git status: ',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
           },
           bcommits = {
-            prompt = 'Buffer commits  ',
+            prompt = ' Buffer commits: ',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
           },
           commits = {
-            prompt = 'Git commits  ',
+            prompt = ' GIT commits: ',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
           },
           icons = {
