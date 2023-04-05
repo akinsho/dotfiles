@@ -103,9 +103,10 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 # --no-ignore: Do not respect .gitignore, etc...
 # --hidden: Search hidden files and folders
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
-export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
-
-# To apply to the command to CTRL-T as well
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-# Don't open FZF in a separate split in tmux
-export FZF_TMUX=0
+export FZF_DEFAULT_OPTS="--reverse
+--cycle
+--bind=esc:abort
+--height 60% \
+--border sharp \
+--prompt '∷ ' \
+--pointer ▶ "
