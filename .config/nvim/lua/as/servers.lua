@@ -3,7 +3,18 @@
 -----------------------------------------------------------------------------//
 ---@type lspconfig.options
 local servers = {
+  sqlls = {},
   eslint = {},
+  ccls = {},
+  jsonls = {},
+  bashls = {},
+  vimls = {},
+  terraformls = {},
+  marksman = {},
+  pyright = {},
+  bufls = {},
+  prosemd_lsp = {},
+  docker_compose_language_service = {},
   tsserver = {
     settings = {
       typescript = {
@@ -30,7 +41,6 @@ local servers = {
       },
     },
   },
-  ccls = {},
   graphql = {
     on_attach = function(client)
       -- Disable workspaceSymbolProvider because this prevents
@@ -40,15 +50,6 @@ local servers = {
       client.server_capabilities.workspaceSymbolProvider = false
     end,
   },
-  jsonls = {},
-  bashls = {},
-  vimls = {},
-  terraformls = {},
-  marksman = {},
-  pyright = {},
-  bufls = {},
-  prosemd_lsp = {},
-  docker_compose_language_service = {},
   --- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
   gopls = {
     settings = {
@@ -90,16 +91,6 @@ local servers = {
       },
     },
   },
-  sqls = function()
-    return {
-      root_dir = require('lspconfig').util.root_pattern('.git'),
-      single_file_support = false,
-      on_new_config = function(new_config, new_rootdir)
-        table.insert(new_config.cmd, '-config')
-        table.insert(new_config.cmd, new_rootdir .. '/.config.yaml')
-      end,
-    }
-  end,
   lua_ls = {
     settings = {
       Lua = {

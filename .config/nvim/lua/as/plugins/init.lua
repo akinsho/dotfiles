@@ -521,7 +521,6 @@ return {
     ft = 'go',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-treesitter/nvim-treesitter' },
   },
-  'nanotee/sqls.nvim',
   {
     'iamcco/markdown-preview.nvim',
     build = function() fn['mkdp#util#install']() end,
