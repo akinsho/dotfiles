@@ -234,8 +234,10 @@ as.augroup('Utilities', {
 
 as.augroup('TerminalAutocommands', {
   event = { 'TermClose' },
-  command = function()
+  command = function(args)
     --- automatically close a terminal if the job was successful
-    if v.event.status == 0 then cmd.bdelete({ fn.expand('<abuf>'), bang = true }) end
+    if as.falsy(v.event.status) and as.falsy(vim.bo[args.buf].ft) then
+      cmd.bdelete({ fn.expand('<abuf>'), bang = true })
+    end
   end,
 })
