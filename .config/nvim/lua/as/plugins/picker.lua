@@ -34,14 +34,14 @@ local function dropdown(...)
 end
 
 local function cursor_dropdown(opts)
-  return dropdown(opts, {
+  return dropdown({
     winopts = {
       row = 1,
       relative = 'cursor',
       height = 0.33,
       width = 0.25,
     },
-  })
+  }, opts)
 end
 as.fzf = { dropdown = cursor_dropdown }
 ------------------------------------------------------------------------------------------------------------------------
@@ -70,6 +70,7 @@ return {
       { '<leader>fo', fzf_lua.buffers, desc = 'buffers' },
       { '<leader>fs', fzf_lua.live_grep, desc = 'live grep' },
       { '<leader>fva', fzf_lua.autocmds, desc = 'autocommands' },
+      { '<localleader>p', fzf_lua.registers, desc = 'Registers' },
       { '<leader>fd', function() file_picker(vim.env.DOTFILES) end, desc = 'dotfiles' },
       { '<leader>fc', function() file_picker(vim.g.vim_dir) end, desc = 'nvim config' },
       { '<leader>fO', function() file_picker(fn.resolve(env.SYNC_DIR .. '/org')) end, desc = 'org files' },
@@ -133,6 +134,10 @@ return {
         keymaps = dropdown({
           prompt = ' Keymaps: ',
           winopts = { width = 0.7 },
+        }),
+        registers = cursor_dropdown({
+          prompt = ' Registers: ',
+          winopts = { width = 0.6, height = 0.4, preview = { layout = 'horizontal' } },
         }),
         lsp = {
           cwd_only = true,
