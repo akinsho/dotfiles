@@ -110,7 +110,7 @@ settings({
         surround.buffer_setup({
           surrounds = {
             l = {
-              add = function() return { { '[' }, { '](' .. vim.fn.getreg('*') .. ')' } } end,
+              add = function() return { { '[' }, { ('](%s)'):format(fn.getreg('*')) } } end,
             },
           },
         })
@@ -251,6 +251,7 @@ settings({
   },
   vim = {
     opt = { spell = true },
+    bo = { syntax = 'off' },
     mappings = {
       {
         'n',
@@ -261,6 +262,9 @@ settings({
         end,
       },
     },
+    function() -- TODO: if the syntax isn't delayed it still gets enabled
+      vim.schedule(function() vim.bo.syntax = 'off' end)
+    end,
   },
   [{ 'lua', 'python', 'rust' }] = { opt = { spell = true } },
 })

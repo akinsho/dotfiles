@@ -69,6 +69,10 @@ local smart_close_filetypes = as.p_table({
   ['startuptime'] = true,
 })
 
+local smart_close_buftypes = as.p_table({
+  ['nofile'] = true,
+})
+
 local function smart_close()
   if fn.winnr('$') ~= 1 then api.nvim_win_close(0, true) end
 end
@@ -83,7 +87,11 @@ as.augroup('SmartClose', {
   event = { 'FileType' },
   command = function(args)
     local is_unmapped = fn.hasmapto('q', 'n') == 0
-    local is_eligible = is_unmapped or vim.wo.previewwindow or smart_close_filetypes[vim.bo[args.buf].ft]
+    local buf = vim.bo[args.buf]
+    local is_eligible = is_unmapped
+      or vim.wo.previewwindow
+      or smart_close_filetypes[buf.ft]
+      or smart_close_buftypes[buf.bt]
     if is_eligible then map('n', 'q', smart_close, { buffer = args.buf, nowait = true }) end
   end,
 }, {

@@ -1,6 +1,6 @@
 if not as or not as.mappings.enable then return end
 
-local fn, api, uv, command, fmt = vim.fn, vim.api, vim.loop, as.command, string.format
+local fn, api, uv, cmd, command, fmt = vim.fn, vim.api, vim.loop, vim.cmd, as.command, string.format
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -241,12 +241,14 @@ cnoremap('<C-d>', '<Del>')
 cnoremap('<Esc>b', [[<S-Left>]])
 cnoremap('<Esc>f', [[<S-Right>]])
 
+cmd.cabbrev('options', 'vert options')
+
 -- smooth searching, allow tabbing between search results similar to using <c-g>
 -- or <c-t> the main difference being tab is easier to hit and remapping those keys
 -- to these would swallow up a tab mapping
 local function search(direction_key, default)
-  local cmd = fn.getcmdtype()
-  return (cmd == '/' or cmd == '?') and fmt('<CR>%s<C-r>/', direction_key) or default
+  local c_type = fn.getcmdtype()
+  return (c_type == '/' or c_type == '?') and fmt('<CR>%s<C-r>/', direction_key) or default
 end
 cnoremap('<Tab>', function() return search('/', '<Tab>') end, { expr = true })
 cnoremap('<S-Tab>', function() return search('?', '<S-Tab>') end, { expr = true })
