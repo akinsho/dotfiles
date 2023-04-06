@@ -26,9 +26,10 @@ local function dropdown(...)
   return vim.tbl_deep_extend('force', {
     fzf_opts = { ['--layout'] = 'reverse' },
     winopts = {
-      height = 0.33,
+      height = 0.70,
       width = 0.45,
-      preview = { hidden = 'hidden', layout = 'vertical', vertical = 'up:77%' },
+      row = 0.1,
+      preview = { hidden = 'hidden', layout = 'vertical', vertical = 'up:50%' },
     },
   }, ...)
 end
@@ -105,14 +106,20 @@ return {
           ['gutter'] = { 'bg', 'Normal' },
           ['separator'] = { 'fg', 'Comment' },
         },
-        border = as.ui.border.rectangle,
+        border = ui.border.rectangle,
+        previewers = {
+          builtin = { toggle_behavior = 'extend' },
+        },
         winopts = {
           hl = { border = 'PickerBorder' },
         },
         keymap = {
           builtin = {
-            ['?'] = 'toggle-help',
+            ['<c-/>'] = 'toggle-help',
             ['<c-e>'] = 'toggle-preview',
+            ['<c-=>'] = 'toggle-fullscreen',
+            ['<c-f>'] = 'preview-page-down',
+            ['<c-b>'] = 'preview-page-up',
           },
           fzf = {
             ['esc'] = 'abort',
@@ -122,7 +129,7 @@ return {
           prompt = ' Help: ',
         },
         oldfiles = dropdown({
-          prompt = ' History:',
+          prompt = ' History: ',
           cwd_only = true,
         }),
         files = dropdown({
@@ -137,7 +144,7 @@ return {
         }),
         registers = cursor_dropdown({
           prompt = ' Registers: ',
-          winopts = { width = 0.6, height = 0.4, preview = { layout = 'horizontal' } },
+          winopts = { width = 0.6 },
         }),
         lsp = {
           cwd_only = true,
@@ -155,7 +162,8 @@ return {
         }),
         git = {
           files = dropdown({
-            prompt = ' Files (Git): ',
+            prompt = ' Project Files: ',
+            path_shorten = false, -- this doesn't use any clever strategy unlike telescope so is somewhat useless
           }),
           branches = dropdown({
             prompt = ' Branches: ',
@@ -169,7 +177,7 @@ return {
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
           },
           commits = {
-            prompt = ' GIT commits: ',
+            prompt = ' Git commits: ',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
           },
           icons = {
@@ -187,7 +195,6 @@ return {
   },
   {
     'nvim-telescope/telescope.nvim',
-    enabled = false,
     cmd = 'Telescope',
     config = function()
       local actions = require('telescope.actions')
@@ -238,6 +245,7 @@ return {
         command = function(args)
           --- TODO: Contribute upstream change to telescope to pass preview buffer data in autocommand
           local ft = vim.tbl_get(args, 'data', 'filetype')
+          if not ft then return end
           vim.opt_local.number = ui.decorations.get({ ft = ft, setting = 'number' }).ft ~= false
         end,
       })
