@@ -214,27 +214,11 @@ return {
       })
     end,
     keys = {
-      { '<leader>jb', desc = 'jump: backwards' },
-      { '<leader>jf', desc = 'jump: forwards' },
+      { '<leader>jb', '<Cmd>Portal jumplist backward<CR>', desc = 'jump: backwards' },
+      { '<leader>jf', '<Cmd>Portal jumplist forward<CR>', desc = 'jump: forwards' },
       { '<leader>jg', '<cmd>Portal grapple backward<cr>', desc = 'jump: grapple' },
     },
     config = function()
-      local function different()
-        local found = {}
-        return function(content)
-          local buf = content.buffer
-          if vim.tbl_contains(found, buf) then return false end
-          table.insert(found, buf)
-          return true
-        end
-      end
-      local jumplist = require('portal.builtin').jumplist
-      map('n', '<leader>jf', function() jumplist.tunnel_backward({ filter = different() }) end, {
-        desc = 'jump: backwards',
-      })
-      map('n', '<leader>jb', function() jumplist.tunnel_forward({ filter = different() }) end, {
-        desc = 'jump: forwards',
-      })
       require('portal').setup({
         filter = function(c) return vim.startswith(api.nvim_buf_get_name(c.buffer), fn.getcwd()) end,
       })
@@ -572,6 +556,7 @@ return {
     dependencies = { 'nvim-treesitter' },
     opts = {
       use_default_keymaps = true,
+      highlight_node_at_cursor = true,
       keymaps = {
         [']w'] = 'swap_with_left',
         ['[w'] = 'swap_with_right',
