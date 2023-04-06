@@ -240,10 +240,7 @@ settings({
     end,
   },
   startuptime = {
-    function()
-      -- open startup time to the left
-      cmd.wincmd('H')
-    end,
+    function() cmd.wincmd('H') end, -- open startup time to the left
   },
   [{ 'typescript', 'typescriptreact' }] = {
     bo = { textwidth = 100 },

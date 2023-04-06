@@ -120,9 +120,7 @@ local function general_overrides()
     { DiagnosticVirtualTextInfo = { bg = { from = 'DiagnosticInfo', attr = 'fg', alter = -0.7 } } },
     { DiagnosticVirtualTextHint = { bg = { from = 'DiagnosticHint', attr = 'fg', alter = -0.7 } } },
     { DiagnosticVirtualTextWarn = { bg = { from = 'DiagnosticWarn', attr = 'fg', alter = -0.8 } } },
-    {
-      DiagnosticVirtualTextError = { bg = { from = 'DiagnosticError', attr = 'fg', alter = -0.8 } },
-    },
+    { DiagnosticVirtualTextError = { bg = { from = 'DiagnosticError', attr = 'fg', alter = -0.8 } } },
     -- Sign column line
     { DiagnosticSignInfoLine = { inherit = 'DiagnosticVirtualTextInfo', fg = 'NONE' } },
     { DiagnosticSignHintLine = { inherit = 'DiagnosticVirtualTextHint', fg = 'NONE' } },
@@ -131,18 +129,8 @@ local function general_overrides()
     -- Sign column signs
     { DiagnosticSignInfo = { fg = { from = 'DiagnosticInfo' } } },
     { DiagnosticSignHint = { fg = { from = 'DiagnosticHint' } } },
-    {
-      DiagnosticSignWarn = {
-        bg = { from = 'DiagnosticVirtualTextWarn' },
-        fg = { from = 'DiagnosticWarn' },
-      },
-    },
-    {
-      DiagnosticSignError = {
-        bg = { from = 'DiagnosticVirtualTextError' },
-        fg = { from = 'DiagnosticError' },
-      },
-    },
+    { DiagnosticSignWarn = { bg = { from = 'DiagnosticVirtualTextWarn' }, fg = { from = 'DiagnosticWarn' } } },
+    { DiagnosticSignError = { bg = { from = 'DiagnosticVirtualTextError' }, fg = { from = 'DiagnosticError' } } },
     -- Sign column line number
     { DiagnosticSignWarnNr = { link = 'DiagnosticSignWarn' } },
     { DiagnosticSignInfoNr = { link = 'DiagnosticSignInfo' } },
