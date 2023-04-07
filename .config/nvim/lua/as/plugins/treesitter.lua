@@ -59,7 +59,7 @@ return {
           },
         },
         rainbow = {
-          enable = true, -- TODO: contribute dart support to ts-rainbow
+          enable = true,
           disable = false,
           query = {
             'rainbow-parens',
@@ -80,7 +80,7 @@ return {
     end,
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'akinsho/nvim-ts-rainbow2', dev = true },
+      { 'HiPhish/nvim-ts-rainbow2' },
     },
   },
   { 'JoosepAlviste/nvim-ts-context-commentstring' },
@@ -96,8 +96,7 @@ return {
     dependencies = { 'nvim-treesitter' },
   },
   {
-    'akinsho/nvim-treesitter-context',
-    dev = true,
+    'nvim-treesitter/nvim-treesitter-context',
     event = 'VeryLazy',
     init = function()
       highlight.plugin('treesitter-context', {
@@ -107,7 +106,6 @@ return {
       })
     end,
     opts = {
-      line_numbers = function(lnum, width) return ('  %-' .. (width - 4) .. 'd   '):format(lnum) end,
       multiline_threshold = 4,
       separator = { '─', 'ContextBorder' }, -- alternatives: ▁ ─ ▄
       mode = 'cursor',
