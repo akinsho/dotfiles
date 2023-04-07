@@ -101,7 +101,7 @@ return {
           ['prompt'] = { 'fg', 'Underlined' },
           ['pointer'] = { 'fg', 'Exception' },
           ['marker'] = { 'fg', '@character' },
-          ['spinner'] = { 'fg', 'Label' },
+          ['spinner'] = { 'fg', 'DiagnosticOk' },
           ['header'] = { 'fg', 'Comment' },
           ['gutter'] = { 'bg', 'Normal' },
           ['separator'] = { 'fg', 'Comment' },
@@ -126,26 +126,29 @@ return {
           },
         },
         helptags = {
-          prompt = ' Help: ',
+          prompt = ' ',
         },
         oldfiles = dropdown({
-          prompt = ' History: ',
+          prompt = ' ',
           cwd_only = true,
         }),
         files = dropdown({
-          prompt = ' Files: ',
+          prompt = ' ',
         }),
         buffers = dropdown({
-          prompt = '﬘ Buffers: ',
+          prompt = '﬘ ',
         }),
         keymaps = dropdown({
-          prompt = ' Keymaps: ',
+          prompt = ' ',
           winopts = { width = 0.7 },
         }),
         registers = cursor_dropdown({
-          prompt = ' Registers: ',
+          prompt = ' ',
           winopts = { width = 0.6 },
         }),
+        grep = {
+          prompt = ' ',
+        },
         lsp = {
           cwd_only = true,
           symbols = {
@@ -158,11 +161,11 @@ return {
           }),
         },
         diagnostics = dropdown({
-          prompt = ' Diagnostics: ',
+          prompt = ' ',
         }),
         git = {
           files = dropdown({
-            prompt = ' Project Files: ',
+            prompt = ' ',
             path_shorten = false, -- this doesn't use any clever strategy unlike telescope so is somewhat useless
           }),
           branches = dropdown({
