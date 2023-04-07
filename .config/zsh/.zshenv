@@ -110,3 +110,5 @@ export FZF_DEFAULT_OPTS="--reverse
 --border sharp \
 --prompt '∷ ' \
 --pointer ▶ "
+
+export FZF_TMUX_OPTS='-p80%,60%'
