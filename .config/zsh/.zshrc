@@ -513,6 +513,8 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 last_working_dir
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 if exists thefuck; then
   eval $(thefuck --alias)
 fi
