@@ -85,8 +85,6 @@ return {
           ['--info'] = 'default', -- hidden OR inline:⏐
           ['--reverse'] = false,
           ['--layout'] = 'default',
-          ['--prompt'] = ' ',
-          ['--marker'] = '',
           ['--scrollbar'] = '▓',
           ['--ellipsis'] = icons.misc.ellipsis,
         },

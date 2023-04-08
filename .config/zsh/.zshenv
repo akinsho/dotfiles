@@ -113,6 +113,7 @@ export FZF_DEFAULT_OPTS="--reverse \
 --height 60% \
 --border sharp \
 --prompt '∷ ' \
+--marker ' ' \
 --pointer ▶ "
 
 # CTRL-/ to toggle small preview window to see the full command
