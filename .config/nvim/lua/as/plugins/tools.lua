@@ -10,11 +10,11 @@ return {
     config = function()
       require('mason-null-ls').setup({
         automatic_setup = true,
-        automatic_installation = {},
+        automatic_installation = true,
         ensure_installed = { 'buf', 'goimports', 'golangci_lint', 'stylua', 'prettier' },
+        handlers = {},
       })
       require('null-ls').setup()
-      require('mason-null-ls').setup_handlers()
     end,
   },
 }
