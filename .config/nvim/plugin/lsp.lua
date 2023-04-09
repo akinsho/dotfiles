@@ -321,6 +321,7 @@ command('LspFormat', function() format({ bufnr = 0, async = false }) end)
 -----------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//
+
 ---@param opts {highlight: string, icon: string}
 local function sign(opts)
   fn.sign_define(opts.highlight, {
@@ -375,7 +376,7 @@ local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 diagnostic.config({
   underline = true,
   update_in_insert = false,
-  severity_sort = false,
+  severity_sort = true,
   signs = {
     severity = { min = S.WARN },
   },
