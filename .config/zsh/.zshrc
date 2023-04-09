@@ -515,6 +515,20 @@ last_working_dir
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    git)          git --help -a | grep -E '^\s+' | awk '{print $1}' | fzf "$@" ;;
+    cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
+    *)            fzf "$@" ;;
+  esac
+}
+
 if exists thefuck; then
   eval $(thefuck --alias)
 fi
