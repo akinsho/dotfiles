@@ -203,6 +203,11 @@ as.augroup('Utilities', {
     cmd.edit(vim.uri_to_fname(args.file))
   end,
 }, {
+  -- always add a guard clause when creating plugin files
+  event = 'BufNewFile',
+  pattern = { vim.g.vim_dir .. '/plugin/**.lua' },
+  command = 'norm! iif not as then return end',
+}, {
   --- disable formatting in directories in third party repositories
   event = { 'BufEnter' },
   command = function(args)
