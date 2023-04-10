@@ -1,6 +1,6 @@
 if not as then return end
 local settings, highlight = as.filetype_settings, as.highlight
-local cmd, fn, api, env, keymap, opt_l = vim.cmd, vim.fn, vim.api, vim.env, vim.keymap, vim.opt_local
+local cmd, fn, api, env, opt_l = vim.cmd, vim.fn, vim.api, vim.env, vim.opt_local
 
 settings({
   checkhealth = {
@@ -12,6 +12,7 @@ settings({
       winfixheight = true,
       signcolumn = 'yes:2',
     },
+    function() as.adjust_split_height(12, math.floor(vim.o.lines * 0.3)) end,
   },
   dart = {
     bo = {
@@ -28,19 +29,15 @@ settings({
       { 'n', '<leader>drn', '<Cmd>FlutterRun<CR>', desc = 'flutter: server run' },
       { 'n', '<leader>drs', '<Cmd>FlutterRestart<CR>', desc = 'flutter: server restart' },
       { 'n', '<leader>rn', '<Cmd>FlutterRename<CR>', desc = 'flutter: rename class (& file)' },
-      {
-        'n',
-        '<leader>db',
-        "<Cmd>TermExec cmd='flutter pub run build_runner build --delete-conflicting-outputs'<CR>",
-        desc = 'flutter: run code generation',
-      },
+      -- stylua: ignore
+      { 'n', '<leader>db', "<Cmd>TermExec cmd='flutter pub run build_runner watch'<CR>", desc = 'flutter: run code generation' },
     },
   },
   fzf = {
     function(args)
-      -- Remove the default terminal mappings
-      keymap.del('t', '<esc>', { buffer = args.buf })
-      keymap.del('t', 'jk', { buffer = args.buf })
+      -- remove the default terminal mappings
+      vim.keymap.del('t', '<esc>', { buffer = args.buf })
+      vim.keymap.del('t', 'jk', { buffer = args.buf })
     end,
   },
   [{ 'gitcommit', 'gitrebase' }] = {
@@ -75,7 +72,7 @@ settings({
     },
     plugins = {
       ['virt-column'] = function(col)
-        if not vim.bo.readonly then col.setup_buffer({ virtcolumn = '+1' }) end
+        if vim.bo.modifiable then col.setup_buffer({ virtcolumn = '+1' }) end
       end,
     },
     function(args)
@@ -210,7 +207,7 @@ settings({
         surround.buffer_setup({
           surrounds = {
             l = {
-              add = function() return { { '[[' .. fn.getreg('*') .. '][' }, { ']]' } } end,
+              add = function() return { { ('[[%s]['):format(fn.getreg('*')) }, { ']]' } } end,
             },
           },
         })
