@@ -200,6 +200,9 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     cmd = 'Telescope',
+    dependencies = {
+      { 'benfowler/telescope-luasnip.nvim' },
+    },
     config = function()
       local actions = require('telescope.actions')
       local themes = require('telescope.themes')
@@ -339,6 +342,7 @@ return {
       -- Extensions (sometimes need to be explicitly loaded after telescope is setup)
       require('telescope').load_extension('noice')
       require('telescope').load_extension('persisted')
+      require('telescope').load_extension('luasnip')
     end,
   },
 }
