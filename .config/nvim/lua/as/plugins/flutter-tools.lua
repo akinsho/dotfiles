@@ -20,7 +20,7 @@ local function config()
       },
       settings = {
         showTodos = false,
-        renameFilesWithClasses = 'prompt',
+        renameFilesWithClasses = 'always',
         updateImportsOnRename = true,
         completeFunctionCalls = true,
         lineLength = 100,
