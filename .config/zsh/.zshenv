@@ -108,7 +108,6 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
 export FZF_DEFAULT_OPTS="--reverse \
 --cycle \
---keep-right \
 --bind=esc:abort \
 --height 60% \
 --border sharp \

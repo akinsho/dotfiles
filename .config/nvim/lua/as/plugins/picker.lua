@@ -146,6 +146,9 @@ return {
         }),
         grep = {
           prompt = ' ',
+          fzf_opts = {
+            ['--keep-right'] = '',
+          },
         },
         lsp = {
           cwd_only = true,
