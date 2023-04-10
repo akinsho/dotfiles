@@ -27,6 +27,7 @@ settings({
       { 'n', '<leader>dq', '<Cmd>FlutterQuit<CR>', desc = 'flutter: quit' },
       { 'n', '<leader>drn', '<Cmd>FlutterRun<CR>', desc = 'flutter: server run' },
       { 'n', '<leader>drs', '<Cmd>FlutterRestart<CR>', desc = 'flutter: server restart' },
+      { 'n', '<leader>rn', '<Cmd>FlutterRename<CR>', desc = 'flutter: rename class (& file)' },
       {
         'n',
         '<leader>db',

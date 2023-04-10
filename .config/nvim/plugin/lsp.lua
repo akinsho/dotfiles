@@ -206,23 +206,25 @@ local function setup_mappings(client, bufnr)
   local mappings = {
     { 'n', ']c', prev_diagnostic(), desc = 'go to prev diagnostic' },
     { 'n', '[c', next_diagnostic(), desc = 'go to next diagnostic' },
-    { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = 'codeAction' },
-    { 'n', '<leader>rf', format, desc = 'format buffer', capability = 'documentFormatting' },
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = 'definition' },
-    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = 'references' },
-    { 'n', 'K', lsp.buf.hover, desc = 'hover', capability = 'hover' },
-    { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = 'references' },
-    { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = 'references' },
-    { 'n', '<leader>gd', lsp.buf.type_definition, desc = 'go to type definition', capability = 'definition' },
-    { 'n', '<leader>cl', lsp.codelens.run, desc = 'run code lens', capability = 'codeLens' },
-    { 'n', '<leader>ri', lsp.buf.rename, desc = 'rename', capability = 'rename' },
-    { 'n', '<leader>rN', rename_file, desc = 'rename with input', capability = 'rename' },
+    { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = 'codeActionProvider' },
+    { 'n', '<leader>rf', format, desc = 'format buffer', capability = 'documentFormattingProvider' },
+    -- stylua: ignore
+    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = 'definitionProvider', exclude = { 'typescript', 'typescriptreact' } },
+    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = 'referencesProvider' },
+    { 'n', 'K', lsp.buf.hover, desc = 'hover', capability = 'hoverProvider' },
+    { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = 'referencesProvider' },
+    { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = 'referencesProvider' },
+    { 'n', '<leader>gd', lsp.buf.type_definition, desc = 'go to type definition', capability = 'definitionProvider' },
+    { 'n', '<leader>cl', lsp.codelens.run, desc = 'run code lens', capability = 'codeLensProvider' },
+    { 'n', '<leader>ri', lsp.buf.rename, desc = 'rename', capability = 'renameProvider' },
+    { 'n', '<leader>rN', rename_file, desc = 'rename with input', capability = 'renameProvider' },
   }
 
   as.foreach(function(m)
-    -- NOTE: unclear if this is actually a good idea since muscle memory will mean I'm going to hit these keys anyway
-    -- now all that will happen is they might just do random stuff rather than error noticeably
-    if not m.capability or client.server_capabilities[fmt('%sProvider', m.capability)] then
+    if
+      (not m.exclude or not vim.tbl_contains(m.exclude, vim.bo[bufnr].ft))
+      and (not m.capability or client.server_capabilities[m.capability])
+    then
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
     end
   end, mappings)
