@@ -2,8 +2,8 @@ local function config()
   require('flutter-tools').setup({
     ui = { border = as.ui.current.border },
     debugger = {
-      enabled = true,
-      run_via_dap = true,
+      enabled = false,
+      run_via_dap = false,
       exception_breakpoints = {},
     },
     outline = { auto_open = false },
@@ -11,7 +11,7 @@ local function config()
       statusline = { device = true, app_version = true },
     },
     widget_guides = { enabled = true, debug = false },
-    dev_log = { enabled = false, open_cmd = 'tabedit' },
+    dev_log = { enabled = true, open_cmd = 'tabedit' },
     lsp = {
       color = {
         enabled = true,

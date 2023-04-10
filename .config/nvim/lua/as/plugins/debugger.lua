@@ -1,5 +1,5 @@
 local fn = vim.fn
-local icons, highlight, border = as.ui.icons, as.highlight, as.ui.current.border
+local icons, highlight, border, palette = as.ui.icons, as.highlight, as.ui.current.border, as.ui.palette
 
 as.debug = { layout = { ft = { dart = 2 } } }
 
@@ -37,40 +37,30 @@ return {
         function() require('dapui').toggle(as.debug.layout.ft[vim.bo.ft]) end,
         desc = 'dap ui: toggle',
       },
+      { '<localleader>dt', function() require('dap').repl.toggle() end, desc = 'dap: toggle repl' },
       { '<localleader>de', function() require('dap').step_out() end, desc = 'dap: step out' },
       { '<localleader>di', function() require('dap').step_into() end, desc = 'dap: step into' },
       { '<localleader>do', function() require('dap').step_over() end, desc = 'dap: step over' },
       { '<localleader>dl', function() require('dap').run_last() end, desc = 'dap REPL: run last' },
     },
     config = function()
-      local dap = require('dap') -- NOTE: Must be loaded before the signs can be tweaked
-      local dapui = require('dapui')
+      local dap = require('dap') -- NOTE: must be loaded before the signs can be tweaked
+      local ui_ok, dapui = pcall(require, 'dapui')
 
       highlight.plugin('dap', {
-        { DapBreakpoint = { fg = as.ui.palette.light_red } },
-        { DapStopped = { fg = as.ui.palette.green } },
+        { DapBreakpoint = { fg = palette.light_red } },
+        { DapStopped = { fg = palette.green } },
       })
 
       fn.sign_define({
-        {
-          name = 'DapBreakpoint',
-          texthl = 'DapBreakpoint',
-          text = icons.misc.bug,
-          linehl = '',
-          numhl = '',
-        },
-        {
-          name = 'DapStopped',
-          texthl = 'DapStopped',
-          text = icons.misc.bookmark,
-          linehl = '',
-          numhl = '',
-        },
+        { name = 'DapBreakpoint', texthl = 'DapBreakpoint', text = icons.misc.bug, linehl = '', numhl = '' },
+        { name = 'DapStopped', texthl = 'DapStopped', text = icons.misc.bookmark, linehl = '', numhl = '' },
       })
 
       -- DON'T automatically stop at exceptions
       -- dap.defaults.fallback.exception_breakpoints = {}
 
+      if not ui_ok then return end
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close() end
       dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close() end
       dap.listeners.after.event_initialized['dapui_config'] = function() dapui.open(as.debug.layout.ft[vim.bo.ft]) end
