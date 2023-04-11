@@ -309,7 +309,7 @@ diagnostic.config({
   signs = {
     severity = { min = S.WARN },
   },
-  virtual_text = {
+  virtual_text = false or {
     severity = { min = S.WARN },
     spacing = 1,
     prefix = '',
