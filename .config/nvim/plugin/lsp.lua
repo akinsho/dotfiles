@@ -7,6 +7,7 @@ local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 local icons = as.ui.icons.lsp
 local border = as.ui.current.border
 local augroup = as.augroup
+local command = as.command
 
 if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 
@@ -25,21 +26,6 @@ local provider = {
   DEFINITION = 'definitionProvider',
 }
 
-local function formatting_filter(client)
-  local exceptions = ({
-    proto = { 'null-ls' },
-  })[vim.bo.filetype]
-
-  if not exceptions then return true end
-  return not vim.tbl_contains(exceptions, client.name)
-end
-
----@param opts {bufnr: integer, async: boolean, filter: fun(lsp.Client): boolean}
-local function format(opts)
-  opts = opts or {}
-  lsp.buf.format({ bufnr = opts.bufnr, async = opts.async, filter = formatting_filter })
-end
-
 ---@param client lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
@@ -54,7 +40,7 @@ local function setup_autocommands(client, buf)
             function(c) return c.server_capabilities[provider.FORMATTING] end,
             lsp.get_active_clients({ buffer = buf })
           )
-          if #clients >= 1 then format({ bufnr = args.buf, async = #clients == 1 }) end
+          if #clients >= 1 then lsp.buf.format({ bufnr = args.buf, async = #clients == 1 }) end
         end
       end,
     })
@@ -160,7 +146,7 @@ local function setup_mappings(client, bufnr)
     { 'n', ']c', prev_diagnostic(), desc = 'go to prev diagnostic' },
     { 'n', '[c', next_diagnostic(), desc = 'go to next diagnostic' },
     { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = provider.CODEACTIONS },
-    { 'n', '<leader>rf', format, desc = 'format buffer', capability = provider.FORMATTING },
+    { 'n', '<leader>rf', lsp.buf.format, desc = 'format buffer', capability = provider.FORMATTING },
     -- stylua: ignore
     { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'typescript', 'typescriptreact' } },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
@@ -257,9 +243,8 @@ augroup('LspSetupCommands', {
 -----------------------------------------------------------------------------//
 -- Commands
 -----------------------------------------------------------------------------//
-local command = as.command
 
-command('LspFormat', function() format({ bufnr = 0, async = false }) end)
+command('LspFormat', function() lsp.buf.format({ bufnr = 0, async = false }) end)
 
 -----------------------------------------------------------------------------//
 -- Signs
