@@ -141,7 +141,7 @@ end
 
 ---Setup mapping when an lsp attaches to a buffer
 ---@param client lsp.Client
----@param bufnr number
+---@param bufnr integer
 local function setup_mappings(client, bufnr)
   local mappings = {
     { 'n', ']c', prev_diagnostic(), desc = 'go to prev diagnostic' },
@@ -192,13 +192,6 @@ local client_overrides = {
 
 ---@param client lsp.Client
 ---@param bufnr number
-local function setup_plugins(client, bufnr)
-  local hints_ok, hints = pcall(require, 'lsp-inlayhints')
-  if hints_ok then hints.on_attach(client, bufnr) end
-end
-
----@param client lsp.Client
----@param bufnr number
 local function setup_semantic_tokens(client, bufnr)
   local overrides = client_overrides[client.name]
   if not overrides or not overrides.semantic_tokens then return end
@@ -216,7 +209,6 @@ end
 ---@param client lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
-  setup_plugins(client, bufnr)
   setup_autocommands(client, bufnr)
   setup_mappings(client, bufnr)
   setup_semantic_tokens(client, bufnr)

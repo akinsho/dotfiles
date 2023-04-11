@@ -136,6 +136,17 @@ return {
   },
   {
     'lvimuser/lsp-inlayhints.nvim',
+    init = function()
+      as.augroup('InlayHintsSetup', {
+        event = 'LspAttach',
+        command = function(args)
+          local id = vim.tbl_get(args, 'data', 'client_id') --[[@as lsp.Client]]
+          if not id then return end
+          local client = vim.lsp.get_client_by_id(id)
+          require('lsp-inlayhints').on_attach(client, args.buf)
+        end,
+      })
+    end,
     opts = {
       inlay_hints = {
         highlight = 'Comment',
