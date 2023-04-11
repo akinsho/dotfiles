@@ -51,7 +51,8 @@ local function setup_autocommands(client, buf)
       event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
       desc = 'LSP: Code Lens',
       buffer = buf,
-      command = function() lsp.codelens.refresh() end,
+      -- call via vimscript so that errors are silenced
+      command = 'silent! lua vim.lsp.codelens.refresh()',
     })
   end
 
