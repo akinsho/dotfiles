@@ -33,13 +33,11 @@ end
 ---@param curbuf integer
 ---@return StringComponent[] sgns non-git signs
 local function signplaced_signs(curbuf)
-  local sgns = {}
-  local signs = fn.sign_getplaced(curbuf, { group = '*', lnum = v.lnum })[1].signs
-  for _, sn in ipairs(signs) do
-    for _, s in ipairs(sn) do
-      table.insert(sgns, { { { s.text:gsub('%s', ''), s.texthl } }, after = '' })
-    end
-  end
+  local sgns = vim.tbl_map(function(sign)
+    local s = fn.sign_getdefined(sign.name)[1]
+    return { { { s.text:gsub('%s', ''), s.texthl } }, after = '' }
+  end, fn.sign_getplaced(curbuf, { group = '*', lnum = v.lnum })[1].signs)
+
   while #sgns < SIGN_COL_WIDTH do
     table.insert(sgns, str.spacer(1))
   end
