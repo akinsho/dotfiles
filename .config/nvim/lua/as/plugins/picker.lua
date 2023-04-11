@@ -22,7 +22,8 @@ local function git_files_cwd_aware(opts)
   return fzf.git_files(opts)
 end
 
-local function dropdown(...)
+local function dropdown(opts, ...)
+  opts = opts or {}
   return vim.tbl_deep_extend('force', {
     fzf_opts = { ['--layout'] = 'reverse' },
     winopts = {
@@ -31,7 +32,7 @@ local function dropdown(...)
       row = 0.1,
       preview = { hidden = 'hidden', layout = 'vertical', vertical = 'up:50%' },
     },
-  }, ...)
+  }, opts, ...)
 end
 
 local function cursor_dropdown(opts)
@@ -44,7 +45,7 @@ local function cursor_dropdown(opts)
     },
   }, opts)
 end
-as.fzf = { dropdown = cursor_dropdown }
+as.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
 ------------------------------------------------------------------------------------------------------------------------
 
 return {

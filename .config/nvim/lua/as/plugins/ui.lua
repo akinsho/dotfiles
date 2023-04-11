@@ -70,14 +70,12 @@ return {
           mappings = { n = { ['q'] = 'Close' } },
         },
         nui = { min_height = 10, win_options = { winblend = 10 } },
-        fzf_lua = { winopts = { width = 0.3, height = 0.33 } },
+        fzf_lua = as.fzf.dropdown({ winopts = { height = 0.33, width = 0.25 } }),
         get_config = function(opts)
           if opts.kind == 'codeaction' then
             return {
               backend = 'fzf_lua',
-              fzf_lua = as.fzf.dropdown({
-                prompt = ' Code actions: ',
-              }),
+              fzf_lua = as.fzf.cursor_dropdown({ prompt = ' ' }),
             }
           end
         end,
