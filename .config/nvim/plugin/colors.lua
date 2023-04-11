@@ -24,7 +24,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { NormalFloat = { bg = { from = 'Normal', alter = -0.15 } } },
     { FloatBorder = { bg = { from = 'Normal', alter = -0.15 }, fg = { from = 'Comment' } } },
-    { FloatTitle = { inherit = 'FloatBorder', reverse = true, bold = true, bg = 'white' } },
+    { FloatTitle = { inherit = 'FloatBorder', bold = true, fg = 'white', bg = { from = 'FloatBorder', attr = 'fg' } } },
     { Pmenu = { link = 'NormalFloat' } },
     { PmenuSbar = { link = 'NormalFloat' } },
     -----------------------------------------------------------------------------//
@@ -146,6 +146,8 @@ local function general_overrides()
     { DiagnosticFloatingInfo = { link = 'DiagnosticInfo' } },
     { DiagnosticFloatingHint = { link = 'DiagnosticHint' } },
     { DiagnosticFloatingError = { link = 'DiagnosticError' } },
+    { DiagnosticFloatTitle = { inherit = 'FloatTitle', bold = true } },
+    { DiagnosticFloatTitleIcon = { inherit = 'FloatTitle', fg = { from = '@character' } } },
   })
 end
 

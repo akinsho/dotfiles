@@ -395,8 +395,9 @@ diagnostic.config({
     max_width = max_width,
     max_height = max_height,
     border = border,
-    header = { ' Problems', 'UnderlinedTitle' },
+    title = { { '  ', 'DiagnosticFloatTitleIcon' }, { 'Problems  ', 'DiagnosticFloatTitle' } },
     focusable = true,
+    scope = 'cursor',
     source = 'if_many',
     prefix = function(diag)
       local level = diagnostic.severity[diag.severity]
