@@ -23,10 +23,12 @@ local function git_files_cwd_aware(opts)
 end
 
 local function dropdown(opts, ...)
-  opts = opts or {}
+  opts = opts or { winopts = {} }
   return vim.tbl_deep_extend('force', {
+    prompt = icons.misc.arrow_right .. ' ',
     fzf_opts = { ['--layout'] = 'reverse' },
     winopts = {
+      title_pos = opts.winopts.title and 'center' or nil,
       height = 0.70,
       width = 0.45,
       row = 0.1,
@@ -81,6 +83,10 @@ return {
     config = function()
       local lsp_kind = require('lspkind')
 
+      local function title(str, icon, icon_hl)
+        return { { ' ' }, { (icon or ''), icon_hl }, { ' ' }, { str, 'Bold' }, { ' ' } }
+      end
+
       require('fzf-lua').setup({
         fzf_opts = {
           ['--info'] = 'default', -- hidden OR inline:⏐
@@ -128,22 +134,20 @@ return {
           prompt = ' ',
         },
         oldfiles = dropdown({
-          prompt = ' ',
           cwd_only = true,
+          winopts = { title = title('History', '') },
         }),
         files = dropdown({
-          prompt = ' ',
+          winopts = { title = title('Files', '') },
         }),
         buffers = dropdown({
-          prompt = '﬘ ',
+          winopts = { title = title('Buffers', '﬘') },
         }),
         keymaps = dropdown({
-          prompt = ' ',
-          winopts = { width = 0.7 },
+          winopts = { title = title('Keymaps', ''), width = 0.7 },
         }),
         registers = cursor_dropdown({
-          prompt = ' ',
-          winopts = { width = 0.6 },
+          winopts = { title = title('Registers', ''), width = 0.6 },
         }),
         grep = {
           prompt = ' ',
@@ -159,31 +163,34 @@ return {
             symbol_hl = function(s) return lsp_hls[s] end,
           },
           code_actions = cursor_dropdown({
-            prompt = ' Code actions: ',
+            winopts = { title = title('Code Actions', '', '@type') },
           }),
         },
         diagnostics = dropdown({
-          prompt = ' ',
+          winopts = { title = title('Diagnostics', '', 'DiagnosticError') },
         }),
         git = {
           files = dropdown({
-            prompt = ' ',
             path_shorten = false, -- this doesn't use any clever strategy unlike telescope so is somewhat useless
+            winopts = { title = title('Git Files', '') },
           }),
           branches = dropdown({
-            prompt = ' Branches: ',
+            winopts = { title = title('Branches', ''), height = 0.3, row = 0.4 },
           }),
           status = {
-            prompt = ' Git status: ',
+            prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
+            winopts = { title = title('Git Status', '') },
           },
           bcommits = {
-            prompt = ' Buffer commits: ',
+            prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
+            winopts = { title = title('', 'Buffer Commits') },
           },
           commits = {
-            prompt = ' Git commits: ',
+            prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
+            winopts = { title = title('', 'Commits') },
           },
           icons = {
             ['M'] = { icon = icons.git.mod, color = 'yellow' },
