@@ -23,7 +23,7 @@ return {
       local luasnip = require('luasnip')
       local lspkind = require('lspkind')
       local lsp_kinds, ellipsis = ui.lsp.highlights, ui.icons.misc.ellipsis
-      local MIN_MENU_WIDTH, MAX_MENU_WIDTH = 20, math.min(50, math.floor(vim.o.columns * 0.5))
+      local MIN_MENU_WIDTH, MAX_MENU_WIDTH = 25, math.min(50, math.floor(vim.o.columns * 0.5))
 
       local hl_defs = fold(
         function(accum, value, key)
@@ -33,7 +33,7 @@ return {
         lsp_kinds,
         {
           { CmpItemAbbr = { fg = 'fg' } },
-          { CmpItemAbbrMatch = { fg = { from = 'Keyword' } } },
+          { CmpItemAbbrMatch = { fg = { from = 'Keyword' }, bold = true } },
           { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
           { CmpItemAbbrMatchFuzzy = { inherit = 'CmpItemAbbrMatch', italic = true } },
           { CmpItemMenu = { link = 'Comment' } },
@@ -56,12 +56,14 @@ return {
 
       local function copilot() api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
 
+      local window_opts = {
+        border = border,
+        winhighlight = 'FloatBorder:FloatBorder',
+      }
+
       cmp.setup({
         window = {
-          documentation = cmp.config.window.bordered({
-            border = border,
-            winhighlight = 'FloatBorder:FloatBorder',
-          }),
+          documentation = cmp.config.window.bordered(window_opts),
         },
         snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
         mapping = cmp.mapping.preset.insert({
@@ -75,32 +77,30 @@ return {
         }),
         formatting = {
           deprecated = true,
-          fields = { 'abbr', 'kind', 'menu' },
+          fields = { 'kind', 'abbr', 'menu' },
           format = lspkind.cmp_format({
+            mode = 'symbol',
             maxwidth = MAX_MENU_WIDTH,
             ellipsis_char = ellipsis,
             before = function(_, vim_item)
-              local label = vim_item.abbr
-              if string.len(label) < MIN_MENU_WIDTH then
-                local padding = string.rep(' ', MIN_MENU_WIDTH - string.len(label))
-                vim_item.abbr = label .. padding
-              end
+              local label, length = vim_item.abbr, api.nvim_strwidth(vim_item.abbr)
+              if length < MIN_MENU_WIDTH then vim_item.abbr = label .. string.rep(' ', MIN_MENU_WIDTH - length) end
               return vim_item
             end,
             menu = {
-              nvim_lsp = '[LSP]',
-              nvim_lua = '[Lua]',
-              emoji = '[E]',
-              path = '[Path]',
-              neorg = '[N]',
-              luasnip = '[SN]',
-              dictionary = '[D]',
-              buffer = '[B]',
-              spell = '[SP]',
-              orgmode = '[Org]',
-              norg = '[Norg]',
-              rg = '[Rg]',
-              git = '[Git]',
+              nvim_lsp = 'LSP',
+              nvim_lua = 'LUA',
+              emoji = 'EMOJI',
+              path = 'PATH',
+              neorg = 'NEORG',
+              luasnip = 'SNIP',
+              dictionary = 'DIC',
+              buffer = 'BUF',
+              spell = 'SPELL',
+              orgmode = 'ORG',
+              norg = 'NORG',
+              rg = 'RG',
+              git = 'GIT',
             },
           }),
         },

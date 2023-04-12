@@ -59,11 +59,7 @@ return {
   -----------------------------------------------------------------------------//
   -- LSP,Completion & Debugger {{{1
   -----------------------------------------------------------------------------//
-  {
-    'onsails/lspkind.nvim',
-    opts = { preset = 'codicons', mode = 'symbol_text' },
-    config = function(_, opts) require('lspkind').init(opts) end,
-  },
+  { 'onsails/lspkind.nvim' },
   {
     {
       'williamboman/mason.nvim',
