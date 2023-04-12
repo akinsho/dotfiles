@@ -196,6 +196,7 @@ return {
           },
         },
       })
+      require('fzf-lua').register_ui_select(dropdown({ winopts = { height = 0.33, width = 0.25 } }))
     end,
   },
   {
