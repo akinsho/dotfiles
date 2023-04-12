@@ -97,6 +97,7 @@ local function general_overrides()
     { ['@text.diff.add'] = { link = 'DiffAdd' } },
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     { ['@text.title.markdown'] = { underdouble = true } },
+    { ['@text.literal.markdown'] = { bg = { from = 'Normal', alter = 0.15 } } },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
@@ -202,6 +203,7 @@ local function colorscheme_overrides()
       -----------------------------------------------------------------------------------------------
       { NormalNC = { inherit = 'Normal' } },
       { WinSeparator = { fg = '#353647' } },
+      { Whitespace = { fg = '#252732' } },
       { Constant = { bold = true } },
       { PmenuSbar = { link = 'NormalFloat' } },
       { PmenuThumb = { bg = 'gray' } },

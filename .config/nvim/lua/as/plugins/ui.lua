@@ -25,9 +25,10 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    lazy = false,
+    event = 'UIEnter',
     init = function()
       highlight.plugin('indentline', {
+        { IndentBlanklineChar = { link = 'Whitespace' } },
         { IndentBlanklineContextChar = { fg = { from = 'Directory' } } },
         { IndentBlanklineContextStart = { sp = { from = 'Directory', attr = 'fg' } } },
       })
