@@ -1,5 +1,4 @@
 local fn = vim.fn
-local rep = require('luasnip.extras').rep
 
 local function import_suffix(import_name)
   local parts = vim.split(import_name[1][1], '.', true)

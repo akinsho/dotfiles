@@ -1,7 +1,4 @@
 ---@diagnostic disable: undefined-global
--- FIXME: it doesn't recognise that the "l" global is passed in by the snip_env?
-local extras = require('luasnip.extras')
-local l = extras.lambda
 
 return {
   snippet(
