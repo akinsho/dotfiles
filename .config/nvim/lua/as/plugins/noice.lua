@@ -4,7 +4,6 @@ local border, highlight, L = as.ui.current.border, as.highlight, vim.log.levels
 return {
   'folke/noice.nvim',
   event = 'VeryLazy',
-  enabled = as.nightly(),
   version = '*',
   dependencies = { 'MunifTanjim/nui.nvim' },
   opts = {

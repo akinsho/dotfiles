@@ -25,8 +25,6 @@ local function general_overrides()
     { NormalFloat = { bg = { from = 'Normal', alter = -0.15 } } },
     { FloatBorder = { bg = { from = 'Normal', alter = -0.15 }, fg = { from = 'Comment' } } },
     { FloatTitle = { inherit = 'FloatBorder', bold = true, fg = 'white', bg = { from = 'FloatBorder', attr = 'fg' } } },
-    { Pmenu = { link = 'NormalFloat' } },
-    { PmenuSbar = { link = 'NormalFloat' } },
     -----------------------------------------------------------------------------//
     { CodeBlock = { bg = { from = 'Normal', alter = 0.3 } } },
     { markdownCode = { link = 'CodeBlock' } },
@@ -38,8 +36,6 @@ local function general_overrides()
     { TermCursor = { ctermfg = 'green', fg = 'royalblue' } },
     { SpellBad = { undercurl = true, bg = 'NONE', fg = 'NONE', sp = 'green' } },
     { SpellRare = { undercurl = true } },
-    { PmenuSbar = { bg = P.grey } },
-    { PmenuThumb = { bg = { from = 'Comment', attr = 'fg' } } },
     -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
@@ -196,19 +192,8 @@ local function colorscheme_overrides()
       { NeoTreeRootName = { bold = true, italic = true, fg = 'LightMagenta' } },
     },
     ['horizon'] = {
-      -----------------------------------------------------------------------------------------------
-      --- TODO: upstream these highlights to horizon.nvim
-      -----------------------------------------------------------------------------------------------
-      { Normal = { fg = '#C1C1C1' } },
-      -----------------------------------------------------------------------------------------------
-      { NormalNC = { inherit = 'Normal' } },
-      { WinSeparator = { fg = '#353647' } },
-      { Whitespace = { fg = '#252732' } },
       { Constant = { bold = true } },
-      { PmenuSbar = { link = 'NormalFloat' } },
-      { PmenuThumb = { bg = 'gray' } },
       { NonText = { fg = { from = 'Comment' } } },
-      { LineNr = { bg = 'NONE' } },
       { TabLineSel = { bg = { from = 'SpecialKey', attr = 'fg' } } },
       { VisibleTab = { bg = { from = 'Normal', alter = 0.4 }, bold = true } },
       { ['@variable'] = { fg = { from = 'Normal' } } },
