@@ -13,6 +13,9 @@ return {
         substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
       },
     },
+    popupmenu = {
+      backend = 'cmp',
+    },
     lsp = {
       documentation = {
         opts = {
