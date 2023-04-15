@@ -39,10 +39,10 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Diff
     -----------------------------------------------------------------------------//
-    { DiffAdd = { bg = '#26332c', fg = 'NONE', underline = false } },
-    { DiffDelete = { bg = '#572E33', fg = '#5c6370', underline = false } },
-    { DiffChange = { bg = '#273842', fg = 'NONE', underline = false } },
-    { DiffText = { bg = '#314753', fg = 'NONE' } },
+    -- { DiffAdd = { bg = '#26332c', fg = 'NONE', underline = false } },
+    -- { DiffDelete = { bg = '#572E33', fg = '#5c6370', underline = false } },
+    -- { DiffChange = { bg = '#273842', fg = 'NONE', underline = false } },
+    -- { DiffText = { bg = '#314753', fg = 'NONE' } },
     { diffAdded = { link = 'DiffAdd' } },
     { diffChanged = { link = 'DiffChange' } },
     { diffRemoved = { link = 'DiffDelete' } },
@@ -93,7 +93,6 @@ local function general_overrides()
     { ['@text.diff.add'] = { link = 'DiffAdd' } },
     { ['@text.diff.delete'] = { link = 'DiffDelete' } },
     { ['@text.title.markdown'] = { underdouble = true } },
-    { ['@text.literal.markdown'] = { bg = { from = 'Normal', alter = 0.15 } } },
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
