@@ -1,4 +1,4 @@
-local highlight, ui, fold, t, fmt = as.highlight, as.ui, as.fold, as.replace_termcodes, string.format
+local highlight, ui, t = as.highlight, as.ui, as.replace_termcodes
 local api, fn = vim.api, vim.fn
 local border = ui.current.border
 
@@ -25,25 +25,15 @@ return {
       local cmp = require('cmp')
       local luasnip = require('luasnip')
       local lspkind = require('lspkind')
-      local lsp_kinds, ellipsis = ui.lsp.highlights, ui.icons.misc.ellipsis
+      local ellipsis = ui.icons.misc.ellipsis
       local MIN_MENU_WIDTH, MAX_MENU_WIDTH = 25, math.min(50, math.floor(vim.o.columns * 0.5))
 
-      local hl_defs = fold(
-        function(accum, value, key)
-          table.insert(accum, { [fmt('CmpItemKind%s', key)] = { fg = { from = value } } })
-          return accum
-        end,
-        lsp_kinds,
-        {
-          { CmpItemAbbr = { fg = 'fg' } },
-          { CmpItemAbbrMatch = { fg = { from = 'Keyword' }, bold = true } },
-          { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
-          { CmpItemAbbrMatchFuzzy = { inherit = 'CmpItemAbbrMatch', italic = true } },
-          { CmpItemMenu = { inherit = 'Comment', italic = false } },
-        }
-      )
-
-      highlight.plugin('Cmp', hl_defs)
+      highlight.plugin('Cmp', {
+        { CmpItemAbbrMatch = { bold = true } },
+        { CmpItemAbbrMatchFuzzy = { inherit = 'CmpItemAbbrMatch', bold = false, italic = true } },
+        { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
+        { CmpItemMenu = { inherit = 'Comment', italic = false } },
+      })
 
       local function shift_tab(fallback)
         if not cmp.visible() then return fallback() end
