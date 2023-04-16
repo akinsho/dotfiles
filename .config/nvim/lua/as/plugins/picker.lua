@@ -7,6 +7,7 @@ local fzf_lua = reqcall('fzf-lua')
 -- FZF-LUA HELPERS
 ------------------------------------------------------------------------------------------------------------------------
 local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
+local prompt = icons.misc.arrow_right .. ' '
 
 local function git_files_cwd_aware(opts)
   opts = opts or {}
@@ -25,7 +26,7 @@ end
 local function dropdown(opts, ...)
   opts = opts or { winopts = {} }
   return vim.tbl_deep_extend('force', {
-    prompt = icons.misc.arrow_right .. ' ',
+    prompt = prompt,
     fzf_opts = { ['--layout'] = 'reverse' },
     winopts = {
       title_pos = opts.winopts.title and 'center' or nil,
@@ -84,7 +85,7 @@ return {
       local lsp_kind = require('lspkind')
 
       local function title(str, icon, icon_hl)
-        return { { ' ' }, { (icon or ''), icon_hl }, { ' ' }, { str, 'Bold' }, { ' ' } }
+        return { { ' ' }, { (icon or ''), icon_hl or 'DevIconDefault' }, { ' ' }, { str, 'Bold' }, { ' ' } }
       end
 
       require('fzf-lua').setup({
@@ -130,8 +131,13 @@ return {
             ['esc'] = 'abort',
           },
         },
+        highlights = {
+          prompt = prompt,
+          winopts = { title = title('Highlights') },
+        },
         helptags = {
-          prompt = ' ',
+          prompt = prompt,
+          winopts = { title = title('Help', '') },
         },
         oldfiles = dropdown({
           cwd_only = true,
@@ -151,6 +157,7 @@ return {
         }),
         grep = {
           prompt = ' ',
+          winopts = { title = title('Grep', '') },
           fzf_opts = {
             ['--keep-right'] = '',
           },
@@ -203,7 +210,9 @@ return {
           },
         },
       })
-      require('fzf-lua').register_ui_select(dropdown({ winopts = { height = 0.33, width = 0.25 } }))
+      require('fzf-lua').register_ui_select(dropdown({
+        winopts = { title = title('Select one of:'), height = 0.33, width = 0.25 },
+      }))
     end,
   },
   {
