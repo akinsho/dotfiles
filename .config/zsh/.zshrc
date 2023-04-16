@@ -541,6 +541,12 @@ if exists fnm; then
   eval "$(fnm env --use-on-cd)"
 fi
 
+# solution to the too many open jobs problem unfortunately this problem is
+# troublesome and recurs in new versions of macOS
+if [[ "$(uname)" == "Darwin"  ]]; then
+  ulimit -n 10240
+fi
+
 #-------------------------------------------------------------------------------
 #               MAPPINGS
 #-------------------------------------------------------------------------------
