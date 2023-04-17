@@ -395,8 +395,8 @@ return {
   },
   {
     'moll/vim-bbye',
-    cmd = 'Bwipeout',
-    keys = { { '<leader>qq', '<Cmd>Bwipeout<CR>', desc = 'bbye: quit' } },
+    cmd = 'Bdelete',
+    keys = { { '<leader>qq', '<Cmd>Bdelete<CR>', desc = 'bbye: quit' } },
   },
   { 'nacro90/numb.nvim', event = 'CmdlineEnter', config = true },
   {
