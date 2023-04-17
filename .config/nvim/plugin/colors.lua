@@ -105,11 +105,6 @@ local function general_overrides()
     { DiagnosticUnderlineHint = { undercurl = true, fg = 'NONE' } },
     { DiagnosticUnderlineWarn = { undercurl = true, fg = 'NONE' } },
     { DiagnosticUnderlineInfo = { undercurl = true, fg = 'NONE' } },
-    -- Virtual Text
-    { DiagnosticVirtualTextInfo = { bg = { from = 'DiagnosticInfo', attr = 'fg', alter = -0.7 } } },
-    { DiagnosticVirtualTextHint = { bg = { from = 'DiagnosticHint', attr = 'fg', alter = -0.7 } } },
-    { DiagnosticVirtualTextWarn = { bg = { from = 'DiagnosticWarn', attr = 'fg', alter = -0.8 } } },
-    { DiagnosticVirtualTextError = { bg = { from = 'DiagnosticError', attr = 'fg', alter = -0.8 } } },
     -- Sign column line
     { DiagnosticSignInfoLine = { inherit = 'DiagnosticVirtualTextInfo', fg = 'NONE' } },
     { DiagnosticSignHintLine = { inherit = 'DiagnosticVirtualTextHint', fg = 'NONE' } },
