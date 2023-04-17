@@ -13,9 +13,6 @@ return {
       { 'hrsh7th/cmp-path' },
       { 'hrsh7th/cmp-buffer' },
       { 'hrsh7th/cmp-emoji' },
-      { 'hrsh7th/cmp-cmdline' },
-      { 'dmitmel/cmp-cmdline-history' },
-      { 'hrsh7th/cmp-nvim-lsp-document-symbol' },
       { 'saadparwaiz1/cmp_luasnip' },
       { 'lukas-reineke/cmp-rg' },
       { 'petertriho/cmp-git', opts = { filetypes = { 'gitcommit', 'NeogitCommitMessage' } } },
@@ -32,7 +29,7 @@ return {
         { CmpItemKindVariable = { link = 'Variable' } },
         { CmpItemAbbrMatchFuzzy = { inherit = 'CmpItemAbbrMatch', italic = true } },
         { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
-        { CmpItemMenu = { inherit = 'Comment', italic = false } },
+        { CmpItemMenu = { inherit = 'Comment', italic = true } },
       })
 
       local function shift_tab(fallback)
@@ -65,8 +62,8 @@ return {
           ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i' }),
           ['<C-space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm({ select = false }),
-          ['<S-TAB>'] = cmp.mapping(shift_tab, { 'i', 's', 'c' }),
-          ['<TAB>'] = cmp.mapping(tab, { 'i', 's', 'c' }),
+          ['<S-TAB>'] = cmp.mapping(shift_tab, { 'i', 's' }),
+          ['<TAB>'] = cmp.mapping(tab, { 'i', 's' }),
         }),
         formatting = {
           deprecated = true,
@@ -83,8 +80,6 @@ return {
             menu = {
               nvim_lsp = '[LSP]',
               nvim_lua = '[LUA]',
-              cmdline = '[CMD]',
-              cmdline_history = '[HIST]',
               emoji = '[EMOJI]',
               path = '[PATH]',
               neorg = '[NEORG]',
@@ -117,22 +112,6 @@ return {
           },
           { name = 'spell', group_index = 2 },
         },
-      })
-
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          sources = cmp.config.sources({ { name = 'nvim_lsp_document_symbol' } }, { { name = 'buffer' } }),
-        },
-      })
-
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'cmdline', keyword_pattern = [=[[^[:blank:]\!]*]=] },
-          { name = 'path' },
-          { name = 'cmdline_history', priority = 10, max_item_count = 5 },
-        }),
       })
 
       cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, { sources = { { name = 'dap' } } })
