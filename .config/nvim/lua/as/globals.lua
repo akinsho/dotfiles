@@ -280,7 +280,7 @@ local function validate_autocmd(name, command)
 end
 
 ---@class AutocmdArgs
----@field id number
+---@field id number autocmd ID
 ---@field event string
 ---@field group string?
 ---@field buf number

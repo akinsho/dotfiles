@@ -1,3 +1,4 @@
+local fn, api = vim.fn, vim.api
 local highlight = as.highlight
 local icons = as.ui.icons
 
@@ -7,6 +8,17 @@ return {
     branch = 'v2.x',
     cmd = { 'Neotree' },
     keys = { { '<C-N>', '<Cmd>Neotree toggle reveal<CR>', desc = 'NeoTree' } },
+    init = function()
+      api.nvim_create_autocmd('BufEnter', {
+        desc = 'Load NeoTree if entering a directory',
+        callback = function(args)
+          if fn.isdirectory(api.nvim_buf_get_name(args.buf)) > 0 then
+            require('lazy').load({ plugins = { 'neo-tree.nvim' } })
+            api.nvim_del_autocmd(args.id)
+          end
+        end,
+      })
+    end,
     config = function()
       highlight.plugin('NeoTree', {
         theme = {
