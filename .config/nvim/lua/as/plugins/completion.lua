@@ -29,8 +29,7 @@ return {
       local MIN_MENU_WIDTH, MAX_MENU_WIDTH = 25, math.min(50, math.floor(vim.o.columns * 0.5))
 
       highlight.plugin('Cmp', {
-        { CmpItemAbbrMatch = { bold = true } },
-        { CmpItemAbbrMatchFuzzy = { inherit = 'CmpItemAbbrMatch', bold = false, italic = true } },
+        { CmpItemAbbrMatchFuzzy = { inherit = 'CmpItemAbbrMatch', italic = true } },
         { CmpItemAbbrDeprecated = { strikethrough = true, inherit = 'Comment' } },
         { CmpItemMenu = { inherit = 'Comment', italic = false } },
       })
