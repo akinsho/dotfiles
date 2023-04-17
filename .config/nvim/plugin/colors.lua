@@ -1,6 +1,5 @@
 if not as then return end
 local P = as.ui.palette
-local L = as.ui.lsp.colors
 local highlight = as.highlight
 
 local function general_overrides()
@@ -33,7 +32,6 @@ local function general_overrides()
     { CursorLineNr = { inherit = 'CursorLine', bold = true } },
     { CursorLineSign = { link = 'CursorLine' } },
     { FoldColumn = { bg = 'bg' } },
-    { TermCursor = { ctermfg = 'green', fg = 'royalblue' } },
     { SpellBad = { undercurl = true, bg = 'NONE', fg = 'NONE', sp = 'green' } },
     { SpellRare = { undercurl = true } },
     -----------------------------------------------------------------------------//
@@ -102,16 +100,11 @@ local function general_overrides()
     { LspReferenceRead = { link = 'LspReferenceText' } },
     { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, italic = true, underline = true } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
-    -- Base colours
-    { DiagnosticHint = { fg = L.hint } },
-    { DiagnosticError = { fg = L.error } },
-    { DiagnosticWarning = { fg = L.warn } },
-    { DiagnosticInfo = { fg = L.info } },
     -- Underline
-    { DiagnosticUnderlineError = { undercurl = true, sp = L.error, fg = 'none' } },
-    { DiagnosticUnderlineHint = { undercurl = true, sp = L.hint, fg = 'none' } },
-    { DiagnosticUnderlineWarn = { undercurl = true, sp = L.warn, fg = 'none' } },
-    { DiagnosticUnderlineInfo = { undercurl = true, sp = L.info, fg = 'none' } },
+    { DiagnosticUnderlineError = { undercurl = true, fg = 'NONE' } },
+    { DiagnosticUnderlineHint = { undercurl = true, fg = 'NONE' } },
+    { DiagnosticUnderlineWarn = { undercurl = true, fg = 'NONE' } },
+    { DiagnosticUnderlineInfo = { undercurl = true, fg = 'NONE' } },
     -- Virtual Text
     { DiagnosticVirtualTextInfo = { bg = { from = 'DiagnosticInfo', attr = 'fg', alter = -0.7 } } },
     { DiagnosticVirtualTextHint = { bg = { from = 'DiagnosticHint', attr = 'fg', alter = -0.7 } } },
