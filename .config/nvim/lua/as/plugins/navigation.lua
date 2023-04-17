@@ -35,9 +35,20 @@ return {
 
       vim.g.neo_tree_remove_legacy_commands = 1
 
+      local symbols = require('lspkind').symbol_map
+      local lsp_kinds = as.ui.lsp.highlights
+
       require('neo-tree').setup({
-        sources = { 'filesystem', 'buffers', 'git_status', 'diagnostics' },
-        source_selector = { winbar = true, separator_active = ' ' },
+        sources = { 'filesystem', 'diagnostics', 'document_symbols' },
+        source_selector = {
+          winbar = true,
+          separator_active = '',
+          sources = {
+            { source = 'filesystem' },
+            { source = 'document_symbols' },
+            { source = 'diagnostics', display_name = (' %s Diagnostics '):format(icons.lsp.error) },
+          },
+        },
         enable_git_status = true,
         git_status_async = true,
         nesting_rules = {
@@ -79,6 +90,13 @@ return {
           icon = {
             folder_empty = icons.documents.open_folder,
           },
+          name = {
+            highlight_opened_files = true,
+          },
+          document_symbols = as.fold(function(acc, v, k)
+            acc[k] = { icon = v, hl = lsp_kinds[k] }
+            return acc
+          end, symbols),
           diagnostics = {
             highlights = {
               hint = 'DiagnosticHint',
