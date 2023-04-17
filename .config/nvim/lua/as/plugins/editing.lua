@@ -76,7 +76,7 @@ return {
   },
   {
     'jackMort/ChatGPT.nvim',
-    cmd = { 'ChatGPT' },
+    cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
     config = function()
       local border = { style = as.ui.border.rectangle, highlight = 'PickerBorder' }
       require('chatgpt').setup({
