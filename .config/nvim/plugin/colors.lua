@@ -12,7 +12,7 @@ local function general_overrides()
     { URL = { inherit = 'Keyword', underline = true } },
     { ErrorMsg = { bg = 'NONE' } },
     { UnderlinedTitle = { bold = true, underline = true } },
-    { PickerBorder = { fg = P.grey } },
+    { PickerBorder = { fg = P.grey, bg = 'bg' } },
     -----------------------------------------------------------------------------//
     -- Commandline
     -----------------------------------------------------------------------------//

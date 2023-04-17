@@ -74,4 +74,35 @@ return {
       })
     end,
   },
+  {
+    'jackMort/ChatGPT.nvim',
+    cmd = { 'ChatGPT' },
+    config = function()
+      local border = { style = as.ui.border.rectangle, highlight = 'PickerBorder' }
+      require('chatgpt').setup({
+        popup_window = {
+          border = border,
+        },
+        popup_input = {
+          border = border,
+          submit = '<C-s>',
+        },
+        settings_window = {
+          border = border,
+        },
+        chat = {
+          keymaps = {
+            close = {
+              '<C-c>',--[[ , '<Esc>' ]]
+            },
+          },
+        },
+      })
+    end,
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
+  },
 }

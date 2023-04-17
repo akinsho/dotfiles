@@ -3,6 +3,9 @@ local settings, highlight = as.filetype_settings, as.highlight
 local cmd, fn, api, env, opt_l = vim.cmd, vim.fn, vim.api, vim.env, vim.opt_local
 
 settings({
+  chatgpt = {
+    function() vim.treesitter.language.register('markdown', 'chatgpt') end,
+  },
   checkhealth = {
     opt = { spell = false },
   },

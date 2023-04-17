@@ -1,6 +1,5 @@
 local fn, env, highlight, ui, reqcall = vim.fn, vim.env, as.highlight, as.ui, as.reqcall
 local icons, lsp_hls = ui.icons, ui.lsp.highlights
-local P = ui.palette
 
 local fzf_lua = reqcall('fzf-lua')
 ------------------------------------------------------------------------------------------------------------------------
@@ -276,7 +275,7 @@ return {
       })
 
       highlight.plugin('telescope', {
-        { TelescopeBorder = { fg = P.grey } },
+        { TelescopeBorder = { link = 'PickerBorder' } },
         { TelescopePromptPrefix = { link = 'Statement' } },
         { TelescopeTitle = { inherit = 'Normal', bold = true } },
         { TelescopePromptTitle = { fg = { from = 'Normal' }, bold = true } },
