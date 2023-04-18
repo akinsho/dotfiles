@@ -245,6 +245,11 @@ return {
   -- Utilities {{{1
   --------------------------------------------------------------------------------
   {
+    'kazhala/close-buffers.nvim',
+    cmd = { 'BDelete' },
+    keys = { { '<leader>qq', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
+  },
+  {
     'mg979/vim-visual-multi',
     lazy = false,
     init = function()
@@ -392,11 +397,6 @@ return {
       vim.g.undotree_TreeNodeShape = '◦' -- Alternative: '◉'
       vim.g.undotree_SetFocusWhenToggle = 1
     end,
-  },
-  {
-    'moll/vim-bbye',
-    cmd = 'Bdelete',
-    keys = { { '<leader>qq', '<Cmd>Bdelete<CR>', desc = 'bbye: quit' } },
   },
   { 'nacro90/numb.nvim', event = 'CmdlineEnter', config = true },
   {

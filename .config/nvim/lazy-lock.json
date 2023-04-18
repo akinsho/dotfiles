@@ -113,7 +113,6 @@
   "typescript.nvim": { "branch": "main", "commit": "f66d4472606cb24615dfb7dbc6557e779d177624" },
   "undotree": { "branch": "master", "commit": "485f01efde4e22cb1ce547b9e8c9238f36566f21" },
   "vim-abolish": { "branch": "master", "commit": "cb3dcb220262777082f63972298d57ef9e9455ec" },
-  "vim-bbye": { "branch": "master", "commit": "25ef93ac5a87526111f43e5110675032dbcacf56" },
   "vim-dadbod": { "branch": "master", "commit": "3f57c0cd41523423fd781422dfc833820095a3e8" },
   "vim-dadbod-ui": { "branch": "master", "commit": "4c306bef457ebfdbe71c76b49672d48ef310ddd3" },
   "vim-dirtytalk": { "branch": "master", "commit": "4046f35cb9795e9edd109fea0159cbf027ad590c" },
