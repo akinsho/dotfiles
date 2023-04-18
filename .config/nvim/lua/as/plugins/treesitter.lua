@@ -80,7 +80,7 @@ return {
     end,
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'HiPhish/nvim-ts-rainbow2' },
+      { 'brokenbyte/nvim-ts-rainbow2' }, -- HiPhish
     },
   },
   { 'JoosepAlviste/nvim-ts-context-commentstring' },
