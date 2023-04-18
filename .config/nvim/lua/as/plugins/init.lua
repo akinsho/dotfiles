@@ -212,33 +212,22 @@ return {
     'cbochs/portal.nvim',
     version = '*',
     cmd = { 'Portal' },
-    dependencies = { 'cbochs/grapple.nvim' },
     init = function()
       highlight.plugin('portal', {
         { PortalNormal = { link = 'Normal' } },
-        { PortalBorder = { link = 'Label' } },
-        { PortalTitle = { link = 'Label' } },
+        { PortalTitle = { link = 'Normal' } },
+        { PortalBorder = { link = 'PickerBorder' } },
       })
     end,
     keys = {
       { '<leader>jb', '<Cmd>Portal jumplist backward<CR>', desc = 'jump: backwards' },
       { '<leader>jf', '<Cmd>Portal jumplist forward<CR>', desc = 'jump: forwards' },
-      { '<leader>jg', '<cmd>Portal grapple backward<cr>', desc = 'jump: grapple' },
     },
     config = function()
       require('portal').setup({
         filter = function(c) return vim.startswith(api.nvim_buf_get_name(c.buffer), fn.getcwd()) end,
       })
     end,
-  },
-  {
-    'cbochs/grapple.nvim',
-    cmd = { 'Grapple', 'GrapplePopup' },
-    opts = { popup_options = { border = border } },
-    keys = {
-      { '<leader>mt', function() require('grapple').toggle() end, desc = 'grapple: toggle mark' },
-      { '<leader>mm', function() require('grapple').popup_tags() end, desc = 'grapple: menu' },
-    },
   },
   -- }}}
   --------------------------------------------------------------------------------
@@ -386,8 +375,8 @@ return {
   },
   {
     'itchyny/vim-highlighturl',
-    event = 'VeryLazy',
-    config = function() vim.g.highlighturl_guifg = highlight.get('URL', 'fg') end,
+    event = 'ColorScheme',
+    config = function() vim.g.highlighturl_guifg = highlight.get('@keyword', 'fg') end,
   },
   {
     'mbbill/undotree',
@@ -407,20 +396,11 @@ return {
       window = { open = 'alternate' },
       callbacks = {
         block_end = function() require('toggleterm').toggle() end,
-        post_open = function(bufnr, winnr, ft, is_blocking)
+        post_open = function(_, winnr, _, is_blocking)
           if is_blocking then
             require('toggleterm').toggle()
           else
             api.nvim_set_current_win(winnr)
-          end
-          if ft == 'gitcommit' then
-            api.nvim_create_autocmd('BufWritePost', {
-              buffer = bufnr,
-              once = true,
-              callback = function()
-                vim.defer_fn(function() cmd.Bwipeout() end, 50)
-              end,
-            })
           end
         end,
       },

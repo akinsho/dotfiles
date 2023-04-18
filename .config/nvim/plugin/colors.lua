@@ -9,7 +9,6 @@ local function general_overrides()
     { WinSeparator = { fg = { from = 'Comment' } } },
     { mkdLineBreak = { clear = true } },
     { Directory = { inherit = 'Keyword', bold = true } },
-    { URL = { inherit = 'Keyword', underline = true } },
     { ErrorMsg = { bg = 'NONE' } },
     { UnderlinedTitle = { bold = true, underline = true } },
     { PickerBorder = { fg = P.grey, bg = 'bg' } },
@@ -71,7 +70,7 @@ local function general_overrides()
     ------------------------------------------------------------------------------//
     { ['@lsp.type.variable'] = { clear = true } },
     { ['@lsp.type.parameter'] = { italic = true, fg = { from = 'Normal' } } },
-    { ['@lsp.mod.instance'] = { inherit = 'Type', bold = false, italic = true } },
+    { ['@lsp.typemod.method'] = { link = '@method' } },
     { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
     { ['@lsp.typemod.variable.defaultLibrary'] = { italic = true } },
     { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
