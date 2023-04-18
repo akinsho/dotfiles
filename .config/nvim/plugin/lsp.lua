@@ -160,14 +160,14 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>rN', rename_file, desc = 'rename with input', capability = provider.RENAME },
   }
 
-  as.foreach(function(m)
+  vim.iter(ipairs(mappings)):each(function(_, m)
     if
       (not m.exclude or not vim.tbl_contains(m.exclude, vim.bo[bufnr].ft))
       and (not m.capability or client.server_capabilities[m.capability])
     then
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
     end
-  end, mappings)
+  end)
 end
 
 -----------------------------------------------------------------------------//
@@ -274,11 +274,11 @@ local ns = api.nvim_create_namespace('severe-diagnostics')
 ---@return fun(namespace: integer, bufnr: integer, diagnostics: table, opts: table)
 local function max_diagnostic(callback)
   return function(_, bufnr, diagnostics, opts)
-    local max_severity_per_line = as.fold(function(diag_map, d)
+    local max_severity_per_line = vim.iter(diagnostics):fold({}, function(diag_map, d)
       local m = diag_map[d.lnum]
       if not m or d.severity < m.severity then diag_map[d.lnum] = d end
       return diag_map
-    end, diagnostics, {})
+    end)
     callback(ns, bufnr, vim.tbl_values(max_severity_per_line), opts)
   end
 end

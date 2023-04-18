@@ -51,10 +51,10 @@ local function extmark_signs(curbuf)
   local lnum = v.lnum - 1
   ---@type {[1]: number, [2]: number, [3]: number, [4]: {sign_text: string, sign_hl_group: string}}
   local g_signs = api.nvim_buf_get_extmarks(curbuf, -1, { lnum, 0 }, { lnum, -1 }, { details = true, type = 'sign' })
-  local sns = as.map(
-    function(item) return { { { item[4].sign_text:gsub('%s', ''), item[4].sign_hl_group } }, after = '' } end,
-    g_signs
-  )
+  local sns = vim
+    .iter(g_signs)
+    :map(function(item) return { { { item[4].sign_text:gsub('%s', ''), item[4].sign_hl_group } }, after = '' } end)
+    :totable()
   while #sns < GIT_COL_WIDTH do
     table.insert(sns, str.spacer(1))
   end

@@ -5,64 +5,6 @@ local l = vim.log.levels
 -- Utils
 ----------------------------------------------------------------------------------------------------
 
---- Convert a list or map of items into a value by iterating all it's fields and transforming
---- them with a callback
----@generic T, S
----@param callback fun(acc: S, item: T, key: string | number): S
----@param list T[]
----@param accum S?
----@return S
-function as.fold(callback, list, accum)
-  accum = accum or {}
-  for k, v in pairs(list) do
-    accum = callback(accum, v, k)
-    assert(accum ~= nil, 'The accumulator must be returned on each iteration')
-  end
-  return accum
-end
-
----@generic T
----@param callback fun(item: T, key: string | number, list: T[]): T
----@param list T[]
----@return T[]
-function as.map(callback, list)
-  return as.fold(function(accum, v, k)
-    accum[#accum + 1] = callback(v, k, accum)
-    return accum
-  end, list, {})
-end
-
----@generic T:table
----@param callback fun(item: T, key: any)
----@param list table<any, T>
-function as.foreach(callback, list)
-  for k, v in pairs(list) do
-    callback(v, k)
-  end
-end
-
---- Check if the target matches  any item in the list.
----@param target string
----@param list string[]
----@return boolean
-function as.any(target, list)
-  for _, item in ipairs(list) do
-    if target:match(item) then return true end
-  end
-  return false
-end
-
----Find an item in a list
----@generic T
----@param matcher fun(arg: T):boolean
----@param haystack T[]
----@return T?
-function as.find(matcher, haystack)
-  for _, needle in ipairs(haystack) do
-    if matcher(needle) then return needle end
-  end
-end
-
 --- Autosize horizontal split to match its minimum content
 --- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
 ---@param min_height number
@@ -80,7 +22,7 @@ as.list = { qf = {}, loc = {} }
 ---@param list_type "loclist" | "quickfix"
 ---@return boolean
 local function is_list_open(list_type)
-  return as.find(function(win) return not as.falsy(win[list_type]) end, fn.getwininfo()) ~= nil
+  return vim.iter(fn.getwininfo()):find(function(win) return not as.falsy(win[list_type]) end) ~= nil
 end
 
 local silence = { mods = { silent = true, emsg_silent = true } }
@@ -117,10 +59,7 @@ function as.list.qf.delete(buf)
   if api.nvim_get_mode().mode:match('[vV]') then
     local first_line = fn.getpos("'<")[2]
     local last_line = fn.getpos("'>")[2]
-    list = as.fold(function(accum, item, i)
-      if i < first_line or i > last_line then accum[#accum + 1] = item end
-      return accum
-    end, list)
+    list = vim.iter(ipairs(list)):filter(function(i) return i < first_line or i > last_line end)
   else
     table.remove(list, line)
   end
@@ -188,14 +127,14 @@ function as.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 ---@param args {[1]: string, [2]: string, [3]: string, [string]: boolean | integer}[]
 ---@param buf integer
 local function apply_ft_mappings(args, buf)
-  as.foreach(function(m)
+  vim.iter(ipairs(args)):each(function(_, m)
     assert(m[1] and m[2] and m[3], 'map args must be a table with at least 3 items')
-    local opts = as.fold(function(acc, item, key)
+    local opts = vim.iter(pairs(m)):fold({ buffer = buf }, function(acc, item, key)
       if type(key) == 'string' then acc[key] = item end
       return acc
-    end, m, { buffer = buf })
+    end)
     map(m[1], m[2], m[3], opts)
-  end, args)
+  end)
 end
 
 --- A convenience wrapper that calls the ftplugin config for a plugin if it exists
@@ -224,30 +163,28 @@ end
 ---    }
 ---   })
 --- ```
---- One future idea is to generate the ftplugin files from this function, so the settings are still
---- centralized but the curation of these files is automated. Although I'm not sure this actually
---- has value over autocommands, unless ftplugin files specifically have that value
 ---
 ---@param map {[string|string[]]: FiletypeSettings | {[integer]: fun(args: AutocmdArgs)}}
 function as.filetype_settings(map)
-  local commands = as.map(function(settings, ft)
-    local name = type(ft) == 'string' and ft or table.concat(ft, ',')
+  local commands = vim.iter(map):map(function(ft, settings)
+    local name = type(ft) == 'table' and table.concat(ft, ',') or ft
     return {
       pattern = ft,
       event = 'FileType',
       desc = ('ft settings for %s'):format(name),
       command = function(args)
-        as.foreach(function(value, scope)
+        vim.iter(settings):each(function(value, scope)
           if scope == 'opt' then scope = 'opt_local' end
           if scope == 'mappings' then return apply_ft_mappings(value, args.buf) end
           if scope == 'plugins' then return as.ftplugin_conf(value) end
-          if type(value) ~= 'table' and vim.is_callable(value) then return value(args) end
-          as.foreach(function(setting, option) vim[scope][option] = setting end, value)
-        end, settings)
+          local v = type(value)
+          if v == 'function' then return value(args) end
+          if v == 'table' then vim.iter(value):each(function(setting, option) vim[scope][option] = setting end) end
+        end)
       end,
     }
-  end, map)
-  as.augroup('filetype-settings', unpack(commands))
+  end)
+  as.augroup('filetype-settings', unpack(commands:totable()))
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -260,15 +197,13 @@ local autocmd_keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group',
 ---@param name string
 ---@param command Autocommand
 local function validate_autocmd(name, command)
-  local incorrect = as.fold(function(accum, _, key)
-    if not vim.tbl_contains(autocmd_keys, key) then table.insert(accum, key) end
-    return accum
-  end, command, {})
-
+  local incorrect = vim.iter(command):map(function(key, _)
+    if not vim.tbl_contains(autocmd_keys, key) then return key end
+  end)
   if #incorrect > 0 then
     vim.schedule(function()
-      local msg = 'Incorrect keys: ' .. table.concat(incorrect, ', ')
-      vim.notify(msg, 'error', { title = fmt('Autocmd: %s', name) })
+      local msg = ('Incorrect keys: %s'):format(table.concat(incorrect, ', '))
+      vim.notify(msg, 'error', { title = ('Autocmd: %s'):format(name) })
     end)
   end
 end

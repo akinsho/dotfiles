@@ -161,7 +161,7 @@ end
 ---@param hls {[string]: HLArgs}[]
 ---@param namespace integer?
 local function all(hls, namespace)
-  as.foreach(function(hl) set(namespace or 0, next(hl)) end, hls)
+  vim.iter(ipairs(hls)):each(function(_, hl) set(namespace or 0, next(hl)) end)
 end
 
 --- Set window local highlights

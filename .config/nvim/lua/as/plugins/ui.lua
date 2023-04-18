@@ -1,6 +1,6 @@
 local api, fn = vim.api, vim.fn
 local strwidth = api.nvim_strwidth
-local highlight, ui, fold, falsy, augroup = as.highlight, as.ui, as.fold, as.falsy, as.augroup
+local highlight, ui, falsy, augroup = as.highlight, as.ui, as.falsy, as.augroup
 local icons, border = ui.icons.lsp, ui.current.border
 
 return {

@@ -66,7 +66,7 @@ end
 ---@return string
 local function chunks_to_string(chunks)
   if not chunks or not vim.tbl_islist(chunks) then return '' end
-  local strings = as.fold(function(acc, item)
+  local strings = vim.iter(ipairs(chunks)):fold({}, function(acc, _, item)
     local text, hl = unpack(item)
     if not falsy(text) then
       if type(text) == 'number' then item = tostring(item) end
@@ -74,7 +74,7 @@ local function chunks_to_string(chunks)
       table.insert(acc, not falsy(hl) and ('%%#%s#%s%%*'):format(hl, text) or text)
     end
     return acc
-  end, chunks)
+  end)
   return table.concat(strings)
 end
 
@@ -117,7 +117,7 @@ end
 -- RENDER
 ----------------------------------------------------------------------------------------------------
 local function sum_lengths(list)
-  return as.fold(function(acc, item) return acc + (item.length or 0) end, list, 0)
+  return vim.iter(list):fold(0, function(acc, item) return acc + (item.length or 0) end)
 end
 
 local function is_lowest(item, lowest)
@@ -154,20 +154,20 @@ end
 --- @param available_space number?
 --- @return string
 function M.display(sections, available_space)
-  local components = as.fold(function(acc, section, count)
+  local components = vim.iter(ipairs(sections)):fold({}, function(acc, count, section)
     if #section == 0 then
       table.insert(acc, separator())
       return acc
     end
-    as.foreach(function(args, index)
+    vim.iter(ipairs(section)):each(function(index, args)
       if not args then return end
       local ok, str = as.pcall(('Error creating component: %s'):format(vim.inspect(args)), component, args)
       if not ok then return end
       table.insert(acc, str)
       if #section == index and count ~= #sections then table.insert(acc, separator()) end
-    end, section)
+    end)
     return acc
-  end, sections)
+  end)
 
   local items = available_space and prioritize(components, available_space) or components
   local str = vim.tbl_map(function(item) return item.component end, items)

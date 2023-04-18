@@ -43,22 +43,25 @@ local function breadcrumbs()
   if not navic_loaded or not navic.is_available() then return { empty_state } end
   local ok, data = pcall(navic.get_data)
   if not ok or falsy(data) then return { empty_state } end
-  return as.map(function(crumb, index)
-    local priority = #state + #data - index
-    state[priority] = crumb.scope
-    return {
-      {
-        { separator, hls.separator },
-        { space },
-        { crumb.icon, lsp_hl[crumb.type] or hls.inactive },
-        { space },
-        { crumb.name, hls.crumb, max_size = 35 },
-      },
-      priority = priority,
-      id = priority,
-      click = 'v:lua.as.ui.winbar.click',
-    }
-  end, data)
+  return vim
+    .iter(ipairs(data))
+    :map(function(index, crumb)
+      local priority = #state + #data - index
+      state[priority] = crumb.scope
+      return {
+        {
+          { separator, hls.separator },
+          { space },
+          { crumb.icon, lsp_hl[crumb.type] or hls.inactive },
+          { space },
+          { crumb.name, hls.crumb, max_size = 35 },
+        },
+        priority = priority,
+        id = priority,
+        click = 'v:lua.as.ui.winbar.click',
+      }
+    end)
+    :totable()
 end
 
 ---@param current_win integer
@@ -78,7 +81,7 @@ function as.ui.winbar.render(current_win)
 
   local parts = vim.split(fn.fnamemodify(bufname, ':.'), '/')
 
-  as.foreach(function(part, index)
+  vim.iter(ipairs(parts)):each(function(index, part)
     local priority = (#parts - (index - 1)) * 2
     local is_last = index == #parts
     local hl = is_last and hls.normal or hls.inactive
@@ -89,7 +92,7 @@ function as.ui.winbar.render(current_win)
       priority = priority,
       click = 'v:lua.as.ui.winbar.click',
     })
-  end, parts)
+  end)
   local win = api.nvim_get_current_win()
   if win == current_win then add(unpack(breadcrumbs())) end
   return str.display({ winbar }, api.nvim_win_get_width(win))
@@ -101,7 +104,7 @@ end
 --- see: https://github.com/neovim/neovim/issues/18660
 local function set_winbar()
   local current_win = api.nvim_get_current_win()
-  as.foreach(function(w)
+  vim.iter(api.nvim_tabpage_list_wins(0)):each(function(w)
     local buf, win = vim.bo[api.nvim_win_get_buf(w)], vim.wo[w]
 
     if vim.t[0].diff_view_initialized then return end
@@ -117,7 +120,7 @@ local function set_winbar()
     elseif is_diff then
       win.winbar = nil
     end
-  end, api.nvim_tabpage_list_wins(0))
+  end)
 end
 
 as.augroup('AttachWinbar', {

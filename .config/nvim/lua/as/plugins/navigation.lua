@@ -105,10 +105,10 @@ return {
           name = {
             highlight_opened_files = true,
           },
-          document_symbols = as.fold(function(acc, v, k)
+          document_symbols = vim.iter(symbols):fold({}, function(acc, k, v)
             acc[k] = { icon = v, hl = lsp_kinds[k] }
             return acc
-          end, symbols),
+          end),
           diagnostics = {
             highlights = {
               hint = 'DiagnosticHint',

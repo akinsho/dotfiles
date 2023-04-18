@@ -59,16 +59,18 @@ return {
     }
 
     local function neovim_header()
-      return as.map(
-        function(chars, i)
-          return {
-            type = 'text',
-            val = chars,
-            opts = { hl = 'StartLogo' .. i, shrink_margin = false, position = 'center' },
-          }
-        end,
-        header
-      )
+      return vim
+        .iter(ipairs(header))
+        :map(
+          function(i, chars)
+            return {
+              type = 'text',
+              val = chars,
+              opts = { hl = 'StartLogo' .. i, shrink_margin = false, position = 'center' },
+            }
+          end
+        )
+        :totable()
     end
 
     local installed_plugins = {
@@ -158,18 +160,21 @@ return {
       local sessions = persisted.list()
       table.sort(sessions, sort_by_projects)
 
+      -- TODO: contribute this mechanism upstream
       -- this depends on the fact that the sessions are sorted by project
-      local sessions_by_dir = as.fold(function(accum, item, index)
-        if not accum.lookup[item.dir_path] then
-          accum.count = accum.count + 1
-          accum.lookup[item.dir_path] = accum.count
-        end
-        local position, sections = accum.count, accum.result
-        if position >= limit then return accum end
-        if not sections[position] then sections[position] = session_header(item) end
-        table.insert(sections[position].val, session_button(item, index))
-        return accum
-      end, sessions, { count = 0, lookup = {}, result = {} })
+      local sessions_by_dir = vim
+        .iter(ipairs(sessions))
+        :fold({ count = 0, lookup = {}, result = {} }, function(accum, index, item)
+          if not accum.lookup[item.dir_path] then
+            accum.count = accum.count + 1
+            accum.lookup[item.dir_path] = accum.count
+          end
+          local position, sections = accum.count, accum.result
+          if position >= limit then return accum end
+          if not sections[position] then sections[position] = session_header(item) end
+          table.insert(sections[position].val, session_button(item, index))
+          return accum
+        end)
 
       return { type = 'group', val = sessions_by_dir.result }
     end
