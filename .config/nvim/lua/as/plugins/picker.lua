@@ -71,7 +71,7 @@ local function list_sessions()
       previewer = false,
       actions = {
         ['default'] = function(selected)
-          local session = vim.tbl_filter(function(s) return s.name == selected[1] end, sessions)[1]
+          local session = vim.iter(sessions):find(function(s) return s.name == selected[1] end)
           if not session then return end
           persisted.load({ session = session.file_path })
         end,

@@ -123,10 +123,10 @@ return {
           name = { highlight_opened_files = true },
           document_symbols = {
             follow_cursor = true,
-            kinds = as.fold(function(acc, v, k)
+            kinds = vim.iter(symbols):fold({}, function(acc, k, v)
               acc[k] = { icon = v, hl = lsp_kinds[k] }
               return acc
-            end, symbols),
+            end),
           },
           modified = { symbol = icons.misc.circle .. ' ' },
           git_status = {

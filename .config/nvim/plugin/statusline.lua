@@ -386,11 +386,11 @@ local function diagnostic_info(context)
     hint = { count = 0, icon = lsp_icons.hint },
   }
   if vim.tbl_isempty(diagnostics) then return result end
-  return as.fold(function(accum, item)
+  return vim.iter(diagnostics):fold(result, function(accum, item)
     local severity = severities[item.severity]:lower()
     accum[severity].count = accum[severity].count + 1
     return accum
-  end, diagnostics, result)
+  end)
 end
 
 local function debugger() return not package.loaded.dap and '' or require('dap').status() end
@@ -662,16 +662,17 @@ function as.ui.statusline.render()
   -----------------------------------------------------------------------------//
   local flutter = vim.g.flutter_tools_decorations or {}
   local diagnostics = diagnostic_info(ctx)
-  local lsp_clients = as.map(function(client)
-    return {
-      {
-        { client.name, hls.client },
-        { space },
-        { '', hls.metadata_prefix },
-      },
-      priority = client.priority,
-    }
-  end, stl_lsp_clients(ctx))
+  local lsp_clients = vim
+    .iter(ipairs(stl_lsp_clients(ctx)))
+    :map(
+      function(_, client)
+        return {
+          { { client.name, hls.client }, { space }, { '', hls.metadata_prefix } },
+          priority = client.priority,
+        }
+      end
+    )
+    :totable()
   table.insert(lsp_clients[1][1], 1, { ' LSP(s): ', hls.metadata })
   lsp_clients[1].id = LSP_COMPONENT_ID -- the unique id of the component
   lsp_clients[1].click = 'v:lua.as.ui.statusline.lsp_client_click'
