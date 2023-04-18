@@ -71,6 +71,7 @@ local function general_overrides()
     ------------------------------------------------------------------------------//
     { ['@lsp.type.variable'] = { clear = true } },
     { ['@lsp.type.parameter'] = { italic = true, fg = { from = 'Normal' } } },
+    { ['@lsp.mod.instance'] = { inherit = 'Type', bold = false, italic = true } },
     { ['@lsp.typemod.variable.global'] = { bold = true, inherit = '@constant.builtin' } },
     { ['@lsp.typemod.variable.defaultLibrary'] = { italic = true } },
     { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
