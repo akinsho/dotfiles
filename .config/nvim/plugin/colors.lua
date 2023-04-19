@@ -4,33 +4,31 @@ local highlight = as.highlight
 
 local function general_overrides()
   highlight.all({
-    { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 0.25 } } },
+    -----------------------------------------------------------------------------//
+    -- Native
+    -----------------------------------------------------------------------------//
     { VertSplit = { fg = { from = 'Comment' } } },
     { WinSeparator = { fg = { from = 'Comment' } } },
-    { mkdLineBreak = { clear = true } },
-    { Directory = { inherit = 'Keyword', bold = true } },
-    { ErrorMsg = { bg = 'NONE' } },
+    -----------------------------------------------------------------------------//
+    -- Created highlights
+    -----------------------------------------------------------------------------//
+    -- { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 0.25 } } },
+    { PickerBorder = { fg = P.grey } },
     { UnderlinedTitle = { bold = true, underline = true } },
-    { PickerBorder = { fg = P.grey, bg = 'bg' } },
-    -----------------------------------------------------------------------------//
-    -- Commandline
-    -----------------------------------------------------------------------------//
-    { MsgArea = { bg = { from = 'Normal', alter = -0.1 } } },
-    { MsgSeparator = { link = 'MsgArea' } },
+    { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'CursorLine' } } },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
     { NormalFloat = { bg = { from = 'Normal', alter = -0.15 } } },
     { FloatBorder = { bg = { from = 'Normal', alter = -0.15 }, fg = { from = 'Comment' } } },
-    { FloatTitle = { inherit = 'FloatBorder', bold = true, fg = 'white', bg = { from = 'FloatBorder', attr = 'fg' } } },
+    { FloatTitle = { bold = true, fg = 'white', bg = { from = 'FloatBorder', attr = 'fg' } } },
     -----------------------------------------------------------------------------//
     { CodeBlock = { bg = { from = 'Normal', alter = 0.3 } } },
     { markdownCode = { link = 'CodeBlock' } },
     { markdownCodeBlock = { link = 'CodeBlock' } },
-    { CurSearch = { bg = { from = 'String', attr = 'fg' }, fg = 'white', bold = true } },
-    { CursorLineNr = { inherit = 'CursorLine', bold = true } },
-    { CursorLineSign = { link = 'CursorLine' } },
-    { FoldColumn = { bg = 'bg' } },
+    -----------------------------------------------------------------------------//
+    --  Spell
+    -----------------------------------------------------------------------------//
     { SpellBad = { undercurl = true, bg = 'NONE', fg = 'NONE', sp = 'green' } },
     { SpellRare = { undercurl = true } },
     -----------------------------------------------------------------------------//
@@ -55,7 +53,6 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- colorscheme overrides
     -----------------------------------------------------------------------------//
-    { Comment = { italic = true } },
     { Type = { italic = true, bold = true } },
     { Include = { italic = true, bold = false } },
     { QuickFixLine = { inherit = 'PmenuSbar', fg = 'NONE', italic = true } },
@@ -64,7 +61,6 @@ local function general_overrides()
     -- if either are specified this can lead to issues when a winhighlight is set
     { SignColumn = { bg = 'NONE' } },
     { EndOfBuffer = { bg = 'NONE' } },
-    { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'CursorLine' } } },
     ------------------------------------------------------------------------------//
     --  Semantic tokens
     ------------------------------------------------------------------------------//
@@ -100,11 +96,6 @@ local function general_overrides()
     { LspReferenceRead = { link = 'LspReferenceText' } },
     { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, italic = true, underline = true } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
-    -- Underline
-    { DiagnosticUnderlineError = { undercurl = true, fg = 'NONE' } },
-    { DiagnosticUnderlineHint = { undercurl = true, fg = 'NONE' } },
-    { DiagnosticUnderlineWarn = { undercurl = true, fg = 'NONE' } },
-    { DiagnosticUnderlineInfo = { undercurl = true, fg = 'NONE' } },
     -- Sign column line
     { DiagnosticSignInfoLine = { inherit = 'DiagnosticVirtualTextInfo', fg = 'NONE' } },
     { DiagnosticSignHintLine = { inherit = 'DiagnosticVirtualTextHint', fg = 'NONE' } },
