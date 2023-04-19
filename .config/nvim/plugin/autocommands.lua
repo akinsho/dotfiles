@@ -227,7 +227,7 @@ as.augroup('Utilities', {
 }, {
   event = { 'BufWritePre', 'FileWritePre' },
   pattern = { '*' },
-  command = "silent! call mkdir(expand('<afile>:p:h'), 'p')",
+  command = [[if @% !~# '\(://\)' | call mkdir(expand('<afile>:p:h'), 'p') | endif]],
 }, {
   event = { 'BufLeave' },
   pattern = { '*' },
