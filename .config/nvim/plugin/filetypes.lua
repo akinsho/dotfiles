@@ -1,6 +1,6 @@
 if not as then return end
 local settings, highlight = as.filetype_settings, as.highlight
-local cmd, fn, api, env, opt_l = vim.cmd, vim.fn, vim.api, vim.env, vim.opt_local
+local cmd, fn = vim.cmd, vim.fn
 
 settings({
   chatgpt = {
@@ -16,25 +16,6 @@ settings({
       signcolumn = 'yes:2',
     },
     function() as.adjust_split_height(12, math.floor(vim.o.lines * 0.3)) end,
-  },
-  dart = {
-    bo = {
-      syntax = '',
-      textwidth = 100,
-    },
-    opt = { spell = true },
-    mappings = {
-      { 'n', '<leader>cc', '<Cmd>Telescope flutter commands<CR>', desc = 'flutter: commands' },
-      { 'n', '<leader>dd', '<Cmd>FlutterDevices<CR>', desc = 'flutter: devices' },
-      { 'n', '<leader>de', '<Cmd>FlutterEmulators<CR>', desc = 'flutter: emulators' },
-      { 'n', '<leader>do', '<Cmd>FlutterOutline<CR>', desc = 'flutter: outline' },
-      { 'n', '<leader>dq', '<Cmd>FlutterQuit<CR>', desc = 'flutter: quit' },
-      { 'n', '<leader>drn', '<Cmd>FlutterRun<CR>', desc = 'flutter: server run' },
-      { 'n', '<leader>drs', '<Cmd>FlutterRestart<CR>', desc = 'flutter: server restart' },
-      { 'n', '<leader>rn', '<Cmd>FlutterRename<CR>', desc = 'flutter: rename class (& file)' },
-      -- stylua: ignore
-      { 'n', '<leader>db', "<Cmd>TermExec cmd='flutter pub run build_runner watch'<CR>", desc = 'flutter: run code generation' },
-    },
   },
   fzf = {
     function(args)
@@ -65,62 +46,6 @@ settings({
       { 'n', '<leader>gfp', '<Cmd>GoFixPlurals<CR>', desc = 'fix plurals' },
       { 'n', '<leader>gie', '<Cmd>GoIfErr<CR>', desc = 'if err' },
     },
-  },
-  help = {
-    opt = {
-      list = false,
-      wrap = false,
-      spell = true,
-      textwidth = 78,
-    },
-    plugins = {
-      ['virt-column'] = function(col)
-        if vim.bo.modifiable then col.setup_buffer({ virtcolumn = '+1' }) end
-      end,
-    },
-    function(args)
-      local opts = { buffer = args.buf }
-      -- if this a vim help file create mappings to make navigation easier otherwise enable preferred editing settings
-      if vim.startswith(fn.expand('%'), env.VIMRUNTIME) or vim.bo.readonly then
-        opt_l.spell = false
-        api.nvim_create_autocmd('BufWinEnter', { buffer = 0, command = 'wincmd L | vertical resize 80' })
-        -- https://vim.fandom.com/wiki/Learn_to_use_help
-        map('n', '<CR>', '<C-]>', opts)
-        map('n', '<BS>', '<C-T>', opts)
-      else
-        map('n', '<leader>ml', 'maGovim:tw=78:ts=8:noet:ft=help:norl:<esc>`a', opts)
-      end
-    end,
-  },
-  markdown = {
-    opt = {
-      spell = true,
-    },
-    plugins = {
-      cmp = function(cmp)
-        cmp.setup.filetype('markdown', {
-          sources = {
-            { name = 'dictionary', group_index = 1 },
-            { name = 'spell', group_index = 1 },
-            { name = 'emoji', group_index = 1 },
-            { name = 'buffer', group_index = 2 },
-          },
-        })
-      end,
-      ['nvim-surround'] = function(surround)
-        surround.buffer_setup({
-          surrounds = {
-            l = {
-              add = function() return { { '[' }, { ('](%s)'):format(fn.getreg('*')) } } end,
-            },
-          },
-        })
-      end,
-    },
-    mappings = {
-      { 'n', '<localleader>p', '<Plug>MarkdownPreviewToggle', desc = 'markdown preview' },
-    },
-    function() vim.b.formatting_disabled = not vim.startswith(fn.expand('%'), vim.env.PROJECTS_DIR .. '/personal') end,
   },
   NeogitCommitMessage = {
     opt = {
@@ -220,26 +145,6 @@ settings({
   javascript = {
     opt = { spell = true },
   },
-  qf = {
-    opt = {
-      wrap = false,
-      number = false,
-      signcolumn = 'yes',
-      buflisted = false,
-      winfixheight = true,
-    },
-    mappings = {
-      { 'n', 'dd', as.list.qf.delete, desc = 'delete current quickfix entry' },
-      { 'v', 'd', as.list.qf.delete, desc = 'delete selected quickfix entry' },
-      { 'n', 'H', ':colder<CR>' },
-      { 'n', 'L', ':cnewer<CR>' },
-    },
-    function()
-      -- force quickfix to open beneath all other splits
-      cmd.wincmd('J')
-      as.adjust_split_height(3, 10)
-    end,
-  },
   startuptime = {
     function() cmd.wincmd('H') end, -- open startup time to the left
   },
@@ -249,23 +154,6 @@ settings({
     mappings = {
       { 'n', 'gd', '<Cmd>TypescriptGoToSourceDefinition<CR>', desc = 'typescript: go to source definition' },
     },
-  },
-  vim = {
-    opt = { spell = true },
-    bo = { syntax = 'off' },
-    mappings = {
-      {
-        'n',
-        '<leader>so',
-        function()
-          cmd.source('%')
-          vim.notify('Sourced ' .. fn.expand('%'))
-        end,
-      },
-    },
-    function() -- TODO: if the syntax isn't delayed it still gets enabled
-      vim.schedule(function() vim.bo.syntax = 'off' end)
-    end,
   },
   [{ 'lua', 'python', 'rust' }] = { opt = { spell = true } },
 })
