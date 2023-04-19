@@ -100,7 +100,7 @@ return {
     event = 'VeryLazy',
     init = function()
       highlight.plugin('treesitter-context', {
-        { ContextBorder = { link = 'WinSeparator' } },
+        { ContextBorder = { link = 'Dim' } },
         { TreesitterContext = { inherit = 'Normal' } },
         { TreesitterContextLineNumber = { inherit = 'LineNr' } },
       })

@@ -12,7 +12,7 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- Created highlights
     -----------------------------------------------------------------------------//
-    -- { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 0.25 } } },
+    { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 0.25 } } },
     { PickerBorder = { fg = P.grey } },
     { UnderlinedTitle = { bold = true, underline = true } },
     { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'CursorLine' } } },
@@ -38,6 +38,7 @@ local function general_overrides()
     -- { DiffDelete = { bg = '#572E33', fg = '#5c6370', underline = false } },
     -- { DiffChange = { bg = '#273842', fg = 'NONE', underline = false } },
     -- { DiffText = { bg = '#314753', fg = 'NONE' } },
+    -- these highlights are syntax groups that are set in diff.vim
     { diffAdded = { link = 'DiffAdd' } },
     { diffChanged = { link = 'DiffChange' } },
     { diffRemoved = { link = 'DiffDelete' } },
