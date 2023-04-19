@@ -66,7 +66,10 @@ return {
             tsx = function() return nil end,
             javascript = function() return nil end,
           },
-          strategy = { require('ts-rainbow.strategy.global') },
+          strategy = {
+            require('ts-rainbow.strategy.local'),
+            dart = require('ts-rainbow.strategy.global'),
+          },
         },
         autopairs = { enable = true },
         context_commentstring = { enable = true },
