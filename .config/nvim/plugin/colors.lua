@@ -13,14 +13,14 @@ local function general_overrides()
     -- Created highlights
     -----------------------------------------------------------------------------//
     { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 0.25 } } },
-    { PickerBorder = { fg = P.grey } },
+    { PickerBorder = { fg = P.grey, bg = 'bg' } },
     { UnderlinedTitle = { bold = true, underline = true } },
     { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'CursorLine' } } },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
     { NormalFloat = { bg = { from = 'Normal', alter = -0.15 } } },
-    { FloatBorder = { bg = { from = 'Normal', alter = -0.15 }, fg = { from = 'Comment' } } },
+    { FloatBorder = { bg = { from = 'NormalFloat' }, fg = { from = 'Comment' } } },
     { FloatTitle = { bold = true, fg = 'white', bg = { from = 'FloatBorder', attr = 'fg' } } },
     -----------------------------------------------------------------------------//
     { CodeBlock = { bg = { from = 'Normal', alter = 0.3 } } },
