@@ -304,7 +304,7 @@ diagnostic.config({
   virtual_text = false and {
     severity = { min = S.WARN },
     spacing = 1,
-    prefix = '',
+    prefix = '', -- TODO: in nvim-0.10.0 this can be a function, so format won't be necessary
     format = function(d)
       local level = diagnostic.severity[d.severity]
       return fmt('%s %s', icons[level:lower()], d.message)
