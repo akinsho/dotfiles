@@ -206,6 +206,7 @@ return {
       local groups = require('bufferline.groups')
       local pattern = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
       require('bufferline').setup({
+        -- TODO: add some version of this behaviour as an option in the plugin
         highlights = function(defaults)
           local normal = highlight.get('Normal')
           local visible = highlight.tint(normal.fg, -0.4)

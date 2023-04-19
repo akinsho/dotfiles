@@ -1,4 +1,4 @@
-local fn = vim.fn
+local fn, api = vim.fn, vim.api
 
 local function import_suffix(import_name)
   local parts = vim.split(import_name[1][1], '.', true)
@@ -98,5 +98,26 @@ return {
         t(''),
       }),
     })
+  ),
+}, {
+  s(
+    {
+      trig = 'if',
+      condition = function()
+        local ignored_nodes = { 'string', 'comment' }
+        local pos = api.nvim_win_get_cursor(0)
+        local row, col = pos[1] - 1, pos[2] - 1
+        local node_type = vim.treesitter.get_node({ pos = { row, col } }):type()
+        return not vim.tbl_contains(ignored_nodes, node_type)
+      end,
+    },
+    fmt(
+      [[
+        if {} then
+          {}
+        end
+      ]],
+      { i(1), i(2) }
+    )
   ),
 }

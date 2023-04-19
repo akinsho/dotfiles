@@ -348,7 +348,6 @@ return {
     dependencies = { 'hrsh7th/nvim-cmp' },
     config = function()
       local autopairs = require('nvim-autopairs')
-      local Rule = require('nvim-autopairs.rule')
       local cmp_autopairs = require('nvim-autopairs.completion.cmp')
       require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
       autopairs.setup({
@@ -360,11 +359,6 @@ return {
           dart = { 'string' },
           javascript = { 'template_string' },
         },
-      })
-      -- credit: https://github.com/JoosepAlviste
-      autopairs.add_rules({
-        -- Typing n when the| -> then|end
-        Rule('then', 'end', 'lua'):end_wise(function(opts) return string.match(opts.line, '^%s*if') ~= nil end),
       })
     end,
   },
