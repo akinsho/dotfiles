@@ -15,7 +15,7 @@ local function general_overrides()
     { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 0.25 } } },
     { PickerBorder = { fg = P.grey, bg = 'bg' } },
     { UnderlinedTitle = { bold = true, underline = true } },
-    { StatusColSep = { fg = { from = 'WinSeparator' }, bg = { from = 'CursorLine' } } },
+    { StatusColSep = { fg = { from = 'LineNr' }, bg = { from = 'CursorLine' } } },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
