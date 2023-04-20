@@ -14,8 +14,8 @@ return {
       require('nvim-treesitter.configs').setup({
         -- stylua: ignore
         ensure_installed = {
-          'c', 'vim', 'vimdoc', 'query', 'lua', 'luadoc', 'luap', 'go', 'dart', 'rust', 'typescript',
-          'tsx', 'jsdoc', 'diff', 'regex', 'gitcommit', 'git_rebase', 'markdown', 'markdown_inline',
+          'c', 'vim', 'vimdoc', 'query', 'lua', 'luadoc', 'luap',
+          'diff', 'regex', 'gitcommit', 'git_config', 'git_rebase', 'markdown', 'markdown_inline',
         },
         auto_install = true,
         highlight = {
