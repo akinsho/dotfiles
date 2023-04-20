@@ -4,6 +4,12 @@ local strwidth = api.nvim_strwidth
 
 ---@alias Session {dir_path: string, name: string, file_path: string, branch: string}
 
+local function get_installed_plugins()
+  local ok, lazy = pcall(require, 'lazy')
+  if not ok then return 0 end
+  return lazy.stats().count
+end
+
 return {
   'goolord/alpha-nvim',
   event = 'VimEnter',
@@ -67,7 +73,7 @@ return {
 
     local installed_plugins = {
       type = 'text',
-      val = f(' %d plugins installed', as.installed_plugins()),
+      val = f(' %d plugins installed', get_installed_plugins()),
       opts = { position = 'center', hl = 'NonText' },
     }
 

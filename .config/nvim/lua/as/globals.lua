@@ -63,12 +63,6 @@ function as.find(matcher, haystack)
   end
 end
 
-function as.installed_plugins()
-  local ok, lazy = pcall(require, 'lazy')
-  if not ok then return 0 end
-  return lazy.stats().count
-end
-
 --- Autosize horizontal split to match its minimum content
 --- https://vim.fandom.com/wiki/Automatically_fitting_a_quickfix_window_height
 ---@param min_height number
