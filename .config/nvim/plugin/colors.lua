@@ -174,7 +174,6 @@ local function colorscheme_overrides()
       { Constant = { bold = true } },
       { NonText = { fg = { from = 'Comment' } } },
       { TabLineSel = { bg = { from = 'SpecialKey', attr = 'fg' } } },
-      { VisibleTab = { bg = { from = 'Normal', alter = 0.4 }, bold = true } },
       { ['@variable'] = { fg = { from = 'Normal' } } },
       { ['@constant.comment'] = { inherit = 'Constant', bold = true } },
       { ['@constructor.lua'] = { inherit = 'Type', italic = false, bold = false } },

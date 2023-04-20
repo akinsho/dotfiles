@@ -1,4 +1,4 @@
-local r, api, fn = vim.regex, vim.api, vim.fn
+local api, fn = vim.api, vim.fn
 local strwidth = api.nvim_strwidth
 local highlight, ui, fold, falsy, augroup = as.highlight, as.ui, as.fold, as.falsy, as.augroup
 local icons, border = ui.icons.lsp, ui.current.border
@@ -203,38 +203,11 @@ return {
     event = 'UIEnter',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
-      local groups = require('bufferline.groups')
-      local pattern = r([[\(error_selected\|warning_selected\|info_selected\|hint_selected\)]])
-      require('bufferline').setup({
-        -- TODO: add some version of this behaviour as an option in the plugin
-        highlights = function(defaults)
-          local normal = highlight.get('Normal')
-          local visible = highlight.tint(normal.fg, -0.4)
-          local visible_tab = { highlight = 'VisibleTab', attribute = 'bg' }
-
-          local hl = fold(function(accum, attrs, name)
-            local formatted = name:lower()
-            local is_group = formatted:match('group')
-            local is_offset = formatted:match('offset')
-            local is_separator = formatted:match('separator')
-            if pattern and pattern:match_str(formatted) then attrs.fg = normal.fg end
-            if not is_group or (is_group and is_separator) then attrs.bg = normal.bg end
-            if not is_group and not is_offset and is_separator then attrs.fg = normal.bg end
-            accum[name] = attrs
-            return accum
-          end, defaults.highlights)
-
-          -- Make the visible buffers and selected tab more "visible"
-          hl.buffer_visible.bold = true
-          hl.buffer_visible.italic = true
-          hl.buffer_visible.fg = visible
-          hl.tab_selected.bold = true
-          hl.tab_selected.bg = visible_tab
-          hl.tab_separator_selected.bg = visible_tab
-          return hl
-        end,
+      local bufferline = require('bufferline')
+      bufferline.setup({
         options = {
           debug = { logging = true },
+          style_preset = { bufferline.style_preset.minimal },
           mode = 'buffers',
           sort_by = 'insert_after_current',
           right_mouse_command = 'vert sbuffer %d',
@@ -284,8 +257,8 @@ return {
           groups = {
             options = { toggle_hidden_on_enter = true },
             items = {
-              groups.builtin.pinned:with({ icon = '' }),
-              groups.builtin.ungrouped,
+              bufferline.groups.builtin.pinned:with({ icon = '' }),
+              bufferline.groups.builtin.ungrouped,
               {
                 name = 'Dependencies',
                 icon = '',
