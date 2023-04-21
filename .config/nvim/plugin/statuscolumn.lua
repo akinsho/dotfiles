@@ -73,7 +73,8 @@ function ui.statuscolumn.render()
 
   local line_count = api.nvim_buf_line_count(curbuf)
   local is_absolute_lnum = v.virtnum >= 0 and falsy(v.relnum)
-  local separator_hl = is_absolute_lnum and (curwin == vim.g.actual_curwin) and sep_hl or nil
+  -- TODO: add a check for current window -> and (curwin == vim.g.actual_curwin)
+  local separator_hl = is_absolute_lnum and sep_hl or nil
 
   local statuscol = {}
   local add = str.append(statuscol)

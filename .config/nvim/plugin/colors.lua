@@ -173,7 +173,7 @@ local function colorscheme_overrides()
     ['horizon'] = {
       { Constant = { bold = true } },
       { NonText = { fg = { from = 'Comment' } } },
-      { TabLineSel = { bg = { from = 'SpecialKey', attr = 'fg' } } },
+      { TabLineSel = { fg = { from = 'SpecialKey' } } },
       { ['@variable'] = { fg = { from = 'Normal' } } },
       { ['@constant.comment'] = { inherit = 'Constant', bold = true } },
       { ['@constructor.lua'] = { inherit = 'Type', italic = false, bold = false } },

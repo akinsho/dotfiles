@@ -275,15 +275,14 @@ return {
               },
               {
                 name = 'SQL',
-                matcher = function(buf) return buf.filename:match('%.sql$') end,
+                matcher = function(buf) return buf.name:match('%.sql$') end,
               },
               {
                 name = 'tests',
                 icon = '',
                 matcher = function(buf)
-                  local name = buf.filename
-                  if name:match('%.sql$') == nil then return false end
-                  return name:match('_spec') or name:match('_test')
+                  local name = buf.name
+                  return name:match('[_%.]spec') or name:match('[_%.]test')
                 end,
               },
               {
