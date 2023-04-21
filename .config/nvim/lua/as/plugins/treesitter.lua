@@ -67,8 +67,7 @@ return {
             javascript = function() return nil end,
           },
           strategy = {
-            require('ts-rainbow.strategy.local'),
-            dart = require('ts-rainbow.strategy.global'),
+            require('ts-rainbow.strategy.global'),
           },
         },
         autopairs = { enable = true },
