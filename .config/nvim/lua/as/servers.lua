@@ -110,7 +110,6 @@ return function(name)
   local ok, cmp_nvim_lsp = as.pcall(require, 'cmp_nvim_lsp')
   if ok then config.capabilities = cmp_nvim_lsp.default_capabilities() end
   config.capabilities = vim.tbl_deep_extend('keep', config.capabilities or {}, {
-    workspace = { didChangeWatchedFiles = { dynamicRegistration = true } },
     textDocument = { foldingRange = { dynamicRegistration = false, lineFoldingOnly = true } },
   })
   return config
