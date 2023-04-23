@@ -74,7 +74,7 @@ local smart_close_buftypes = as.p_table({
 })
 
 local function smart_close()
-  if fn.winnr('$') ~= 1 then api.nvim_win_close(0, true) end
+  if fn.winnr('$') ~= 1 then api.nvim_win_close(0) end
 end
 
 as.augroup('SmartClose', {
@@ -198,7 +198,7 @@ local function can_save()
 end
 
 as.augroup('Utilities', {
-  -- @source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
+  ---@source: https://vim.fandom.com/wiki/Use_gf_to_open_a_file_via_its_URL
   event = { 'BufReadCmd' },
   pattern = { 'file:///*' },
   nested = true,
@@ -243,7 +243,7 @@ as.augroup('Utilities', {
       cmd([[
         unlet! b:ftdetect
         filetype detect
-        echom 'Filetype set to ' . &ft
+        call nvim_notify('Filetype set to ' . &ft)
       ]])
     end
   end,
@@ -253,8 +253,6 @@ as.augroup('TerminalAutocommands', {
   event = { 'TermClose' },
   command = function(args)
     --- automatically close a terminal if the job was successful
-    if as.falsy(v.event.status) and as.falsy(vim.bo[args.buf].ft) then
-      cmd.bdelete({ fn.expand('<abuf>'), bang = true })
-    end
+    if as.falsy(v.event.status) and as.falsy(vim.bo[args.buf].ft) then cmd.bdelete({ args.buf, bang = true }) end
   end,
 })
