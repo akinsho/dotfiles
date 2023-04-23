@@ -178,6 +178,7 @@ return {
         git = {
           files = dropdown({
             path_shorten = false, -- this doesn't use any clever strategy unlike telescope so is somewhat useless
+            cmd = 'git ls-files --others --exclude-standard',
             winopts = { title = title('Git Files', '') },
           }),
           branches = dropdown({
