@@ -171,7 +171,7 @@ function as.pcall(msg, func, ...)
   end, unpack(args))
 end
 
-local LATEST_NIGHTLY_MINOR = 9
+local LATEST_NIGHTLY_MINOR = 10
 function as.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
 ----------------------------------------------------------------------------------------------------
