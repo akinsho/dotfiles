@@ -6,7 +6,7 @@ local fzf_lua = reqcall('fzf-lua')
 -- FZF-LUA HELPERS
 ------------------------------------------------------------------------------------------------------------------------
 local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
-local prompt = icons.misc.arrow_right .. ' '
+local prompt = icons.misc.telescope .. ' '
 
 local function git_files_cwd_aware(opts)
   opts = opts or {}
