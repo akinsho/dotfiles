@@ -225,14 +225,10 @@ as.augroup('Utilities', {
     vim.b[args.buf].formatting_disabled = match ~= nil
   end,
 }, {
-  event = { 'BufWritePre', 'FileWritePre' },
-  pattern = { '*' },
-  command = [[if @% !~# '\(://\)' | call mkdir(expand('<afile>:p:h'), 'p') | endif]],
-}, {
   event = { 'BufLeave' },
   pattern = { '*' },
   command = function()
-    if can_save() then cmd.update({ mods = { silent = true } }) end
+    if can_save() then cmd('silent! write ++p') end
   end,
 }, {
   event = { 'BufWritePost' },
