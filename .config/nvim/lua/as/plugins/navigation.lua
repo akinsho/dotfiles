@@ -105,10 +105,13 @@ return {
           name = {
             highlight_opened_files = true,
           },
-          document_symbols = as.fold(function(acc, v, k)
-            acc[k] = { icon = v, hl = lsp_kinds[k] }
-            return acc
-          end, symbols),
+          document_symbols = {
+            follow_cursor = true,
+            kinds = as.fold(function(acc, v, k)
+              acc[k] = { icon = v, hl = lsp_kinds[k] }
+              return acc
+            end, symbols),
+          },
           diagnostics = {
             highlights = {
               hint = 'DiagnosticHint',
