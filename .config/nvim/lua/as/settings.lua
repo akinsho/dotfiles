@@ -24,7 +24,7 @@ o.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
-if as.nightly() then o.splitkeep = 'screen' end
+o.splitkeep = 'screen'
 o.splitbelow = true
 o.splitright = true
 o.eadirection = 'hor'
@@ -53,8 +53,8 @@ opt.diffopt = opt.diffopt
     'context:4',
     'algorithm:histogram',
     'indent-heuristic',
+    'linematch:60',
   }
-if as and as.has('nvim-0.9') then opt.diffopt:append({ 'linematch:60' }) end
 -----------------------------------------------------------------------------//
 -- Format Options {{{1
 -----------------------------------------------------------------------------//
