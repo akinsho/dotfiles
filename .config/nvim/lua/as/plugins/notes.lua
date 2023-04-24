@@ -23,9 +23,9 @@ return {
             end,
           },
         },
-        ['core.norg.completion'] = { config = { engine = 'nvim-cmp' } },
-        ['core.norg.concealer'] = {},
-        ['core.norg.dirman'] = {
+        ['core.completion'] = { config = { engine = 'nvim-cmp' } },
+        ['core.concealer'] = {},
+        ['core.dirman'] = {
           config = {
             workspaces = {
               notes = sync('neorg/notes/'),

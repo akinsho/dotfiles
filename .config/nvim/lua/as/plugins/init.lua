@@ -10,7 +10,6 @@ return {
   {
     'olimorris/persisted.nvim',
     lazy = false,
-    branch = 'feat/no-branch-session',
     init = function()
       as.command('ListSessions', 'Telescope persisted')
       as.augroup('PersistedEvents', {
