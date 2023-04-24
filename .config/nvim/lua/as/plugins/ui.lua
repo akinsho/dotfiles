@@ -9,9 +9,6 @@ return {
     event = 'VimEnter',
     opts = { char = '▕' },
     init = function()
-      highlight.plugin('virt_column', {
-        { VirtColumn = { fg = { from = 'Comment', alter = 0.10 } } },
-      })
       augroup('VirtCol', {
         event = { 'VimEnter', 'BufEnter', 'WinEnter' },
         command = function(args)
