@@ -178,6 +178,7 @@ local function colorscheme_overrides()
       { ['@constant.comment'] = { inherit = 'Constant', bold = true } },
       { ['@constructor.lua'] = { inherit = 'Type', italic = false, bold = false } },
       { ['@lsp.type.parameter'] = { fg = { from = 'Normal' } } },
+      { VisibleTab = { bg = { from = 'Normal', alter = 0.4 }, bold = true } },
       { PanelBackground = { link = 'Normal' } },
       { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
       { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -0.3 } } },
