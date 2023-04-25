@@ -70,6 +70,7 @@ return {
             { event = 'msg_show', find = '%d+L, %d+B' },
             { event = 'msg_show', find = '^Hunk %d+ of %d' },
             { event = 'msg_show', find = '%d+ change' },
+            { event = 'msg_show', find = '%d+ line' },
             { event = 'msg_show', find = '%d+ more line' },
             -- TODO: investigate the source of this LSP message and disable it happens in typescript files
             { event = 'notify', find = 'No information available' },
