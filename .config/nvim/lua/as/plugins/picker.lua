@@ -77,8 +77,8 @@ return {
       { '<localleader>p', fzf_lua.registers, desc = 'Registers' },
       { '<leader>fd', function() file_picker(vim.env.DOTFILES) end, desc = 'dotfiles' },
       { '<leader>fc', function() file_picker(vim.g.vim_dir) end, desc = 'nvim config' },
-      { '<leader>fO', function() file_picker(fn.resolve(env.SYNC_DIR .. '/org')) end, desc = 'org files' },
-      { '<leader>fN', function() file_picker(fn.resolve(env.SYNC_DIR .. '/neorg')) end, desc = 'norg files' },
+      { '<leader>fO', function() file_picker(env.SYNC_DIR .. '/notes/org') end, desc = 'org files' },
+      { '<leader>fN', function() file_picker(env.SYNC_DIR .. '/notes/neorg') end, desc = 'norg files' },
     },
     config = function()
       local lsp_kind = require('lspkind')
