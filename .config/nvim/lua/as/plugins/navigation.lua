@@ -1,15 +1,28 @@
 local fn, api = vim.fn, vim.api
 local highlight = as.highlight
 local icons = as.ui.icons
+local autocmd = api.nvim_create_autocmd
 
 return {
+  {
+    'LeonHeidelbach/trailblazer.nvim',
+    event = 'VeryLazy',
+    opts = {
+      auto_save_trailblazer_state_on_exit = true,
+      auto_load_trailblazer_state_on_enter = true,
+      newest_mark_symbol = '⬤',
+      cursor_mark_symbol = '⬤',
+      next_mark_symbol = '⬤',
+      previous_mark_symbol = '⬤',
+    },
+  },
   {
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v2.x',
     cmd = { 'Neotree' },
     keys = { { '<C-N>', '<Cmd>Neotree toggle reveal<CR>', desc = 'NeoTree' } },
     init = function()
-      api.nvim_create_autocmd('BufEnter', {
+      autocmd('BufEnter', {
         desc = 'Load NeoTree if entering a directory',
         callback = function(args)
           if fn.isdirectory(api.nvim_buf_get_name(args.buf)) > 0 then
