@@ -93,15 +93,15 @@ return {
           end,
         },
       },
-      config = function()
-        require('mason-lspconfig').setup({ automatic_installation = true })
-        require('mason-lspconfig').setup_handlers({
+      opts = {
+        automatic_installation = true,
+        handlers = {
           function(name)
             local config = require('as.servers')(name)
             if config then require('lspconfig')[name].setup(config) end
           end,
-        })
-      end,
+        },
+      },
     },
   },
   {
