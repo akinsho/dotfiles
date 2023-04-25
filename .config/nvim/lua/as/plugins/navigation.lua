@@ -5,18 +5,6 @@ local autocmd = api.nvim_create_autocmd
 
 return {
   {
-    'LeonHeidelbach/trailblazer.nvim',
-    event = 'VeryLazy',
-    opts = {
-      auto_save_trailblazer_state_on_exit = true,
-      auto_load_trailblazer_state_on_enter = true,
-      newest_mark_symbol = '⬤',
-      cursor_mark_symbol = '⬤',
-      next_mark_symbol = '⬤',
-      previous_mark_symbol = '⬤',
-    },
-  },
-  {
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v2.x',
     cmd = { 'Neotree' },

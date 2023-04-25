@@ -212,6 +212,9 @@ return {
     'cbochs/portal.nvim',
     version = '*',
     cmd = { 'Portal' },
+    dependencies = {
+      'cbochs/grapple.nvim',
+    },
     init = function()
       highlight.plugin('portal', {
         { PortalNormal = { link = 'Normal' } },
@@ -222,12 +225,22 @@ return {
     keys = {
       { '<leader>jb', '<Cmd>Portal jumplist backward<CR>', desc = 'jump: backwards' },
       { '<leader>jf', '<Cmd>Portal jumplist forward<CR>', desc = 'jump: forwards' },
+      { '<leader>jg', '<Cmd>Portal grapple forward<CR>', desc = 'jump: grapple forwards' },
     },
     config = function()
       require('portal').setup({
         filter = function(c) return vim.startswith(api.nvim_buf_get_name(c.buffer), fn.getcwd()) end,
       })
     end,
+  },
+  {
+    'cbochs/grapple.nvim',
+    cmd = { 'Grapple', 'GrapplePopup' },
+    opts = { popup_options = { border = border } },
+    keys = {
+      { '<leader>mt', function() require('grapple').toggle() end, desc = 'grapple: toggle mark' },
+      { '<leader>mm', function() require('grapple').popup_tags() end, desc = 'grapple: menu' },
+    },
   },
   -- }}}
   --------------------------------------------------------------------------------
