@@ -39,8 +39,8 @@ as.ui.icons = {
   },
   lsp = {
     error = '', -- '✗'
-    warn = '',
-    info = '', --  
+    warn = '', -- 
+    info = '', --  ℹ 󰙎 
     hint = '', --  ⚑
   },
   git = {
