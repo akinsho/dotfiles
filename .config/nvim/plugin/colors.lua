@@ -9,13 +9,14 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     { VertSplit = { fg = { from = 'Comment' } } },
     { WinSeparator = { fg = { from = 'Comment' } } },
+    { CursorLineNr = { bg = 'NONE' } },
     -----------------------------------------------------------------------------//
     -- Created highlights
     -----------------------------------------------------------------------------//
     { Dim = { fg = { from = 'Normal', attr = 'bg', alter = 0.25 } } },
     { PickerBorder = { fg = P.grey, bg = 'bg' } },
     { UnderlinedTitle = { bold = true, underline = true } },
-    { StatusColSep = { fg = { from = 'LineNr' }, bg = { from = 'CursorLine' } } },
+    { StatusColSep = { link = 'LineNr' } },
     -----------------------------------------------------------------------------//
     -- Floats
     -----------------------------------------------------------------------------//
@@ -102,21 +103,6 @@ local function general_overrides()
     { DiagnosticSignHintLine = { inherit = 'DiagnosticVirtualTextHint', fg = 'NONE' } },
     { DiagnosticSignErrorLine = { inherit = 'DiagnosticVirtualTextError', fg = 'NONE' } },
     { DiagnosticSignWarnLine = { inherit = 'DiagnosticVirtualTextWarn', fg = 'NONE' } },
-    -- Sign column signs
-    { DiagnosticSignInfo = { fg = { from = 'DiagnosticInfo' } } },
-    { DiagnosticSignHint = { fg = { from = 'DiagnosticHint' } } },
-    { DiagnosticSignWarn = { bg = { from = 'DiagnosticVirtualTextWarn' }, fg = { from = 'DiagnosticWarn' } } },
-    { DiagnosticSignError = { bg = { from = 'DiagnosticVirtualTextError' }, fg = { from = 'DiagnosticError' } } },
-    -- Sign column line number
-    { DiagnosticSignWarnNr = { link = 'DiagnosticSignWarn' } },
-    { DiagnosticSignInfoNr = { link = 'DiagnosticSignInfo' } },
-    { DiagnosticSignHintNr = { link = 'DiagnosticSignHint' } },
-    { DiagnosticSignErrorNr = { link = 'DiagnosticSignError' } },
-    -- Sign column cursor line number
-    { DiagnosticSignWarnCursorNr = { inherit = 'DiagnosticSignWarn', bold = true } },
-    { DiagnosticSignInfoCursorNr = { inherit = 'DiagnosticSignInfo', bold = true } },
-    { DiagnosticSignHintCursorNr = { inherit = 'DiagnosticSignHint', bold = true } },
-    { DiagnosticSignErrorCursorNr = { inherit = 'DiagnosticSignError', bold = true } },
     -- Floating windows
     { DiagnosticFloatingWarn = { link = 'DiagnosticWarn' } },
     { DiagnosticFloatingInfo = { link = 'DiagnosticInfo' } },

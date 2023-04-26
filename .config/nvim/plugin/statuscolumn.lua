@@ -8,7 +8,7 @@ local SIGN_COL_WIDTH, GIT_COL_WIDTH, space = 2, 1, ' '
 local fcs = opt.fillchars:get()
 local fold_opened, fold_closed = fcs.foldopen, fcs.foldclose -- '▶'
 local shade, separator = separators.light_shade_block, separators.left_thin_block -- '│'
-local sep_hl = 'StatusColSep'
+local sep_hl = 'LineNr'
 
 local function fdm()
   if fn.foldlevel(v.lnum) <= fn.foldlevel(v.lnum - 1) then return space end
@@ -72,9 +72,6 @@ function ui.statuscolumn.render()
   local gitsign, sns = extmark_signs(curbuf), signplaced_signs(curbuf)
 
   local line_count = api.nvim_buf_line_count(curbuf)
-  local is_absolute_lnum = v.virtnum >= 0 and falsy(v.relnum)
-  -- TODO: add a check for current window -> and (curwin == vim.g.actual_curwin)
-  local separator_hl = is_absolute_lnum and sep_hl or nil
 
   local statuscol = {}
   local add = str.append(statuscol)
@@ -82,7 +79,7 @@ function ui.statuscolumn.render()
   add(str.spacer(1), { { { nr(curwin, line_count) } } })
   add(unpack(sns))
   add(unpack(gitsign))
-  add({ { { separator, separator_hl } }, after = '' }, { { { fdm() } } })
+  add({ { { separator, sep_hl } }, after = '' }, { { { fdm() } } })
 
   return str.display({ {}, statuscol })
 end

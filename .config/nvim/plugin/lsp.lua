@@ -248,9 +248,7 @@ local function sign(opts)
   fn.sign_define(opts.highlight, {
     text = opts.icon,
     texthl = opts.highlight,
-    numhl = opts.highlight .. 'Nr' or nil,
-    culhl = opts.highlight .. 'CursorNr' or nil,
-    linehl = opts.highlight .. 'Line' or nil,
+    linehl = opts.highlight .. 'Line',
   })
 end
 
