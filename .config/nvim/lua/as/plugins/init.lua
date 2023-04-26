@@ -39,7 +39,6 @@ return {
     'mrjones2014/smart-splits.nvim',
     config = true,
     build = './kitty/install-kittens.bash',
-    -- stylua: ignore
     keys = {
       { '<A-h>', function() require('smart-splits').resize_left() end },
       { '<A-l>', function() require('smart-splits').resize_right() end },

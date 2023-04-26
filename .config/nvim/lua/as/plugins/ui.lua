@@ -2,8 +2,30 @@ local api, fn = vim.api, vim.fn
 local strwidth = api.nvim_strwidth
 local highlight, ui, falsy, augroup = as.highlight, as.ui, as.falsy, as.augroup
 local icons, border = ui.icons.lsp, ui.current.border
+local codewindow = as.reqcall('codewindow')
 
 return {
+  {
+    'gorbit99/codewindow.nvim',
+    dev = false,
+    lazy = false,
+    init = function() highlight.plugin('codewindow', { { CodewindowBorder = { link = 'PickerBorder' } } }) end,
+    keys = {
+      { '<localleader>mo', codewindow.open_minimap, desc = 'minimap: open' },
+      { '<localleader>mc', codewindow.close_minimap, desc = 'minimap: close' },
+      { '<localleader>mt', codewindow.toggle_minimap, desc = 'minimap: toggle window' },
+      { '<localleader>mf', codewindow.toggle_focus, desc = 'minimap: toggle focus' },
+    },
+    opts = {
+      auto_enable = true,
+      relative = 'editor',
+      -- stylua: ignore
+      exclude_filetypes = {
+        'lazy', 'neo-tree', 'undotree', 'alpha', 'gitcommit', 'gitrebase', 'Glance', 'help',
+      },
+      z_index = 1000,
+    },
+  },
   {
     'lukas-reineke/virt-column.nvim',
     event = 'VimEnter',
