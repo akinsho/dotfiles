@@ -267,11 +267,6 @@ function as.command(name, rhs, opts)
   api.nvim_create_user_command(name, rhs, opts)
 end
 
----A terser proxy for `nvim_replace_termcodes`
----@param str string
----@return string
-function as.replace_termcodes(str) return api.nvim_replace_termcodes(str, true, true, true) end
-
 ---check if a certain feature/version/commit exists in nvim
 ---@param feature string
 ---@return boolean

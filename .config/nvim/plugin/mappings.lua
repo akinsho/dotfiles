@@ -334,7 +334,7 @@ nnoremap('cN', '*``cgN')
 -- 4. Hit Enter to repeat the macro over search matches.
 function as.mappings.setup_map() nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]]) end
 
-vim.g.mc = as.replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
+vim.g.mc = vim.keycode([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
 xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap('cq', [[:\<C-u>call v:lua.as.mappings.setup_map()<CR>*``qz]])

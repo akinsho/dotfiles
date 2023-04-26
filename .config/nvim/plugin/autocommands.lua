@@ -20,7 +20,7 @@ map({ 'n', 'v', 'o', 'i', 'c' }, '<Plug>(StopHL)', 'execute("nohlsearch")[-1]', 
 
 local function stop_hl()
   if v.hlsearch == 0 or api.nvim_get_mode().mode ~= 'n' then return end
-  api.nvim_feedkeys(as.replace_termcodes('<Plug>(StopHL)'), 'm', false)
+  api.nvim_feedkeys(vim.keycode('<Plug>(StopHL)'), 'm', false)
 end
 
 local function hl_search()
