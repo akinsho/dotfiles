@@ -1,87 +1,97 @@
 if not as or not as.ui.statuscolumn.enable then return end
 
+---@alias ExtmarkSign {[1]: number, [2]: number, [3]: number, [4]: {sign_text: string, sign_hl_group: string}}
+
 local fn, v, api, opt, optl = vim.fn, vim.v, vim.api, vim.opt, vim.opt_local
 local ui, separators, falsy = as.ui, as.ui.icons.separators, as.falsy
 local str = require('as.strings')
 
-local SIGN_COL_WIDTH, GIT_COL_WIDTH, space = 2, 1, ' '
+local space = ' '
 local fcs = opt.fillchars:get()
-local fold_opened, fold_closed = fcs.foldopen, fcs.foldclose -- '▶'
 local shade, separator = separators.light_shade_block, separators.left_thin_block -- '│'
 local sep_hl = 'LineNr'
 
-local function fdm()
-  if fn.foldlevel(v.lnum) <= fn.foldlevel(v.lnum - 1) then return space end
-  return fn.foldclosed(v.lnum) == -1 and fold_opened or fold_closed
+local function fdm(lnum)
+  if fn.foldlevel(lnum) <= fn.foldlevel(lnum - 1) then return space end
+  return fn.foldclosed(lnum) == -1 and fcs.foldopen or fcs.foldclose
 end
 
----@param win number
----@param line_count number
+---@param win integer
+---@param line_count integer
+---@param lnum integer
+---@param relnum integer
+---@param virtnum integer
 ---@return string
-local function nr(win, line_count)
+local function nr(win, lnum, relnum, virtnum, line_count)
   local col_width = api.nvim_strwidth(tostring(line_count))
-  local padding = string.rep(space, col_width - 1)
-  if v.virtnum < 0 then return padding .. shade end -- virtual line
-  if v.virtnum > 0 then return padding .. space end -- wrapped line
-  local num = vim.wo[win].relativenumber and not falsy(v.relnum) and v.relnum or v.lnum
+  if virtnum and virtnum ~= 0 then return space:rep(col_width - 1) .. (virtnum < 0 and shade or space) end -- virtual line
+  local num = vim.wo[win].relativenumber and not falsy(relnum) and relnum or lnum
   if line_count >= 1000 then col_width = col_width + 1 end
-  local lnum = fn.substitute(num, '\\d\\zs\\ze\\%(\\d\\d\\d\\)\\+$', ',', 'g')
-  local num_width = col_width - api.nvim_strwidth(lnum)
-  return string.rep(space, num_width) .. lnum
+  local ln = fn.substitute(num, '\\d\\zs\\ze\\%(\\d\\d\\d\\)\\+$', ',', 'g')
+  local num_width = col_width - api.nvim_strwidth(ln)
+  return string.rep(space, num_width) .. ln
+end
+
+---@generic T:table<string, any>
+---@param t T the object to format
+---@param k string the key to format
+---@return T?
+local function format_text(t, k)
+  local txt = t[k] and t[k]:gsub('%s', '') or ''
+  if #txt < 1 then return end
+  t[k] = txt
+  return t
 end
 
 ---@param curbuf integer
+---@param lnum integer
 ---@return StringComponent[] sgns non-git signs
-local function signplaced_signs(curbuf)
-  local sgns = vim.tbl_map(function(sign)
-    local s = fn.sign_getdefined(sign.name)[1]
-    return { { { s.text:gsub('%s', ''), s.texthl } }, after = '' }
-  end, fn.sign_getplaced(curbuf, { group = '*', lnum = v.lnum })[1].signs)
-
-  while #sgns < SIGN_COL_WIDTH do
-    table.insert(sgns, str.spacer(1))
-  end
-  return sgns
+local function signplaced_signs(curbuf, lnum)
+  return vim.tbl_map(function(s)
+    local sign = format_text(fn.sign_getdefined(s.name)[1], 'text')
+    return { { { sign.text, sign.texthl } }, after = '' }
+  end, fn.sign_getplaced(curbuf, { group = '*', lnum = lnum })[1].signs)
 end
 
 ---@param curbuf integer
----@return StringComponent[]
---- TODO: this currently does not separate signs by type, it just assumes that only git signs are extmark signs
-local function extmark_signs(curbuf)
-  local lnum = v.lnum - 1
-  ---@type {[1]: number, [2]: number, [3]: number, [4]: {sign_text: string, sign_hl_group: string}}
-  local g_signs = api.nvim_buf_get_extmarks(curbuf, -1, { lnum, 0 }, { lnum, -1 }, { details = true, type = 'sign' })
-  local sns = as.map(
-    function(item) return { { { item[4].sign_text:gsub('%s', ''), item[4].sign_hl_group } }, after = '' } end,
-    g_signs
-  )
-  while #sns < GIT_COL_WIDTH do
-    table.insert(sns, str.spacer(1))
-  end
-  return sns
+---@return StringComponent[], StringComponent[]
+local function extmark_signs(curbuf, lnum)
+  lnum = lnum - 1
+  ---@type ExtmarkSign[]
+  local signs = api.nvim_buf_get_extmarks(curbuf, -1, { lnum, 0 }, { lnum, -1 }, { details = true, type = 'sign' })
+  local sns = as.fold(function(acc, item)
+    item = format_text(item[4], 'sign_text')
+    local txt, hl = item.sign_text, item.sign_hl_group
+    local is_git = hl:match('^Git')
+    local target = is_git and acc.git or acc.other
+    table.insert(target, { { { txt, hl } }, after = '' })
+    return acc
+  end, signs, { git = {}, other = {} })
+  if #sns.git == 0 then sns.git = { str.spacer(1) } end
+  return sns.git, sns.other
 end
 
---- TODO: currently auto-resizing the statuscolumn does not update each line but only the line with
---- the most signs. The simplest solution would be to use the "%s" signcolumn component but this
---- currently includes the git signs which I'm trying to specifically position at then end of the statuscolumn.
---- if gitsigns ever supports querying signs per line refactor this to use that API and just use "%s"
---- alternatively calculate the max width of the statuscolumn and use that to adjust all lines.
+--- The vast majority of the complexity in this statuscolumn is due to the fact
+--- that you cannot place signs in a particular separate column in neovim e.g. gitsigns
+--- cannot be placed in the same column as other git signs which means they have to be manually
+--- split out and placed.
 function ui.statuscolumn.render()
-  local curwin = api.nvim_get_current_win()
-  local curbuf = api.nvim_win_get_buf(curwin)
-  local gitsign, sns = extmark_signs(curbuf), signplaced_signs(curbuf)
+  local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
+  local win = api.nvim_get_current_win()
+  local buf = api.nvim_win_get_buf(win)
 
-  local line_count = api.nvim_buf_line_count(curbuf)
+  local gitsign, other_sns = extmark_signs(buf, lnum)
+  local sns = signplaced_signs(buf, lnum)
+  vim.list_extend(sns, other_sns)
 
-  local statuscol = {}
-  local add = str.append(statuscol)
+  local line_count = api.nvim_buf_line_count(buf)
 
-  add(str.spacer(1), { { { nr(curwin, line_count) } } })
-  add(unpack(sns))
-  add(unpack(gitsign))
-  add({ { { separator, sep_hl } }, after = '' }, { { { fdm() } } })
+  local right = {}
+  local add = str.append(right)
+  add(str.spacer(1), { { { nr(win, lnum, relnum, virtnum, line_count) } } }, unpack(gitsign))
+  add({ { { separator, sep_hl } }, after = '' }, { { { fdm(lnum) } } })
 
-  return str.display({ {}, statuscol })
+  return str.display({ sns, right })
 end
 
 vim.o.statuscolumn = '%{%v:lua.as.ui.statuscolumn.render()%}'
