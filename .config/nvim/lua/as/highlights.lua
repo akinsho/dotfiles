@@ -107,10 +107,11 @@ local function get(group, attribute, fallback)
   assert(attrs[attribute], ('the attribute passed in is invalid: %s'):format(attribute))
   local color = data[attribute] or fallback
   if not color then
-    vim.schedule(function()
-      local msg = fmt('failed to get highlight %s for attribute %s\n%s', group, attribute, debug.traceback())
-      notify(msg, 'error', { title = fmt('highlight - get(%s)', group) })
-    end)
+    vim.defer_fn(function()
+      notify(fmt('failed to get highlight %s for attribute %s\n%s', group, attribute, debug.traceback()), 'ERROR', {
+        title = fmt('Highlight - get(%s)', group),
+      }) -- stylua: ignore
+    end, 2000)
     return 'NONE'
   end
   return color
