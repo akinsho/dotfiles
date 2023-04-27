@@ -9,7 +9,7 @@ return {
     'gorbit99/codewindow.nvim',
     dev = false,
     lazy = false,
-    init = function() highlight.plugin('codewindow', { { CodewindowBorder = { link = 'PickerBorder' } } }) end,
+    init = function() highlight.plugin('codewindow', { { CodewindowBorder = { link = 'Dim' } } }) end,
     keys = {
       { '<localleader>mo', codewindow.open_minimap, desc = 'minimap: open' },
       { '<localleader>mc', codewindow.close_minimap, desc = 'minimap: close' },
@@ -19,11 +19,13 @@ return {
     opts = {
       auto_enable = true,
       relative = 'editor',
+      z_index = 1000,
+      minimap_width = 12,
+      max_minimap_height = math.floor(vim.o.lines * 0.7),
       -- stylua: ignore
       exclude_filetypes = {
-        'lazy', 'neo-tree', 'undotree', 'alpha', 'gitcommit', 'gitrebase', 'Glance', 'help',
+        'lazy', 'neo-tree', 'undotree', 'alpha', 'gitcommit', 'gitrebase', 'Glance', 'help', 'mason',
       },
-      z_index = 1000,
     },
   },
   {
