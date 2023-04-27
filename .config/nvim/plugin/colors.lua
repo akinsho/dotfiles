@@ -10,6 +10,7 @@ local function general_overrides()
     { VertSplit = { fg = { from = 'Comment' } } },
     { WinSeparator = { fg = { from = 'Comment' } } },
     { CursorLineNr = { bg = 'NONE' } },
+    { iCursor = { bg = P.dark_blue } },
     -----------------------------------------------------------------------------//
     -- Created highlights
     -----------------------------------------------------------------------------//
