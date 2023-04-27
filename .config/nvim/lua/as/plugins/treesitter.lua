@@ -87,7 +87,7 @@ return {
   { 'JoosepAlviste/nvim-ts-context-commentstring' },
   {
     'windwp/nvim-ts-autotag',
-    ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue' },
+    ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue', 'svelte' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = true,
   },

@@ -75,7 +75,7 @@ return {
 ]]
 
     Hydra({
-      name = 'Window management',
+      name = 'Windows',
       hint = window_hint,
       config = base_config({ invoke_on_body = true }),
       mode = 'n',

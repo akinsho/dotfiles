@@ -152,7 +152,6 @@ o.shiftround = true
 o.expandtab = true
 o.shiftwidth = 2
 -----------------------------------------------------------------------------//
--- vim.o.debug = "msg"
 o.pumheight = 15
 o.confirm = true -- make vim prompt me to save before doing destructive things
 opt.completeopt = { 'menuone', 'noselect' }
