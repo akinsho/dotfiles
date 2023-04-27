@@ -60,8 +60,11 @@ return {
         },
         rainbow = {
           enable = true,
-          disable = { 'lua', 'tsx', 'jsx' },
-          query = { 'rainbow-parens' },
+          disable = { 'lua', 'tsx', 'jsx', 'html' },
+          query = {
+            'rainbow-parens',
+            html = 'rainbow-tags', -- TODO: fix the awful default appearance
+          },
           strategy = {
             dart = require('ts-rainbow.strategy.global'),
           },
