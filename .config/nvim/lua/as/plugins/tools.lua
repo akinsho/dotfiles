@@ -8,13 +8,18 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = { 'mason.nvim', 'null-ls.nvim' },
     config = function()
+      local null_ls = require('null-ls')
       require('mason-null-ls').setup({
         automatic_setup = true,
         automatic_installation = true,
         ensure_installed = { 'buf', 'goimports', 'golangci_lint', 'stylua', 'prettier' },
-        handlers = {},
+        handlers = {
+          eslint = function()
+            null_ls.register(null_ls.builtins.diagnostics.eslint.with({ extra_filetypes = { 'svelte' } }))
+          end,
+        },
       })
-      require('null-ls').setup()
+      null_ls.setup()
     end,
   },
 }
