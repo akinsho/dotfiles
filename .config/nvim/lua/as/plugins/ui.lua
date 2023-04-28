@@ -21,10 +21,11 @@ return {
       relative = 'editor',
       z_index = 1000,
       minimap_width = 12,
-      max_minimap_height = math.floor(vim.o.lines * 0.7),
+      max_minimap_height = math.floor(vim.o.lines * 0.8),
       -- stylua: ignore
       exclude_filetypes = {
         'lazy', 'neo-tree', 'undotree', 'alpha', 'gitcommit', 'gitrebase', 'Glance', 'help', 'mason',
+        'noice'
       },
     },
   },
