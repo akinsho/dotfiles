@@ -152,7 +152,7 @@ settings({
     bo = { textwidth = 100 },
     opt = { spell = true },
     mappings = {
-      { 'n', 'gd', '<Cmd>TypescriptGoToSourceDefinition<CR>', desc = 'typescript: go to source definition' },
+      { 'n', 'gd', '<Cmd>VtsExec goto_source_definition<CR>', desc = 'typescript: go to source definition' },
     },
   },
   [{ 'lua', 'python', 'rust' }] = { opt = { spell = true } },

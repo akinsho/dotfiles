@@ -95,6 +95,10 @@ return {
       opts = {
         automatic_installation = true,
         handlers = {
+          vtsls = function()
+            require('lspconfig.configs').vtsls = require('vtsls').lspconfig
+            require('lspconfig').vtsls.setup(require('as.servers')('vtsls'))
+          end,
           function(name)
             local config = require('as.servers')(name)
             if config then require('lspconfig')[name].setup(config) end
@@ -507,8 +511,10 @@ return {
       vim.g.mkdp_auto_close = 1
     end,
   },
+  { 'yioneko/nvim-vtsls' },
   {
     'jose-elias-alvarez/typescript.nvim',
+    enabled = false,
     ft = { 'typescript', 'typescriptreact' },
     dependencies = { 'jose-elias-alvarez/null-ls.nvim' },
     config = function()
