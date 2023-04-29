@@ -55,7 +55,7 @@ return {
       { 'rouge8/neotest-rust' },
       { 'haydenmeade/neotest-jest' },
       { 'neotest/neotest-go', dev = true },
-      { 'rcarriga/neotest-plenary', commit = 'd49bfd9', dependencies = { 'nvim-lua/plenary.nvim' } },
+      { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
     },
   },
 }
