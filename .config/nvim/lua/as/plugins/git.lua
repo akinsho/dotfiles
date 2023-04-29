@@ -124,7 +124,7 @@ return {
     opts = {
       mappings = nil,
       callbacks = {
-        ['github-work'] = function(url_data) -- Resolve the host for work repostories
+        ['github-work'] = function(url_data) -- Resolve the host for work repositories
           url_data.host = 'github.com'
           return require('gitlinker.hosts').get_github_type_url(url_data)
         end,
@@ -144,6 +144,7 @@ return {
         untracked = { text = icons.light_shade_block },
       },
       -- Experimental ------------------------------------------------------------------------------
+      _inline2 = true,
       _extmark_signs = true,
       _signs_staged_enable = false,
       ----------------------------------------------------------------------------------------------
