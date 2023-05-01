@@ -368,6 +368,7 @@ return {
       require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
       autopairs.setup({
         close_triple_quotes = true,
+        disable_filetype = { 'neo-tree-popup' },
         check_ts = true,
         fast_wrap = { map = '<c-e>' },
         ts_config = {

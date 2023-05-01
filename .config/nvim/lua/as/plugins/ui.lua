@@ -7,7 +7,7 @@ local codewindow = as.reqcall('codewindow')
 return {
   {
     'gorbit99/codewindow.nvim',
-    dev = false,
+    dev = true,
     lazy = false,
     init = function() highlight.plugin('codewindow', { { CodewindowBorder = { link = 'Dim' } } }) end,
     keys = {
@@ -25,7 +25,7 @@ return {
       -- stylua: ignore
       exclude_filetypes = {
         'lazy', 'neo-tree', 'undotree', 'alpha', 'gitcommit', 'gitrebase', 'Glance', 'help', 'mason',
-        'noice'
+        'noice', 'neo-tree-popup'
       },
     },
   },

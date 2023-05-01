@@ -84,7 +84,7 @@ return {
         filesystem = {
           hijack_netrw_behavior = 'open_current',
           use_libuv_file_watcher = true,
-          group_empty_dirs = true,
+          group_empty_dirs = false,
           follow_current_file = false,
           filtered_items = {
             visible = true,
