@@ -180,7 +180,7 @@ return {
   -----------------------------------------------------------------------------//
   {
     'uga-rosa/ccc.nvim',
-    ft = { 'lua', 'vim', 'typescript', 'typescriptreact', 'javascriptreact' },
+    ft = { 'lua', 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
     cmd = { 'CccHighlighterToggle' },
     opts = {
       win_opts = { border = border },
