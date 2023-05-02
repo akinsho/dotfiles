@@ -23,7 +23,7 @@ local padding = ' '
 ----------------------------------------------------------------------------------------------------
 
 ---@return StringComponent
-local function separator() return { component = '%=', length = 0, priority = 0 } end
+local separator = { component = '%=', length = 0, priority = 0 }
 
 ---@param func_name string
 ---@param id string
@@ -152,36 +152,42 @@ local function order_by_priority(components, available_space)
       is_too_big = next_size > available_space
       if is_too_big then break end
       size = next_size
-      result[index] = item
-      ordered_tuples[i] = nil
+      result[index], ordered_tuples[i] = item, nil
     end
   end
   return vim.iter(pairs(result)):fold('', function(acc, _, item) return acc .. (item and item.component or '') end)
+end
+
+--- Take a list of sections e.g. `{{c_1, c_2}, {c_5}, {c_3, c_4}}` and returns a list of components
+--- and convert them to a list of components e.g. `{c_1, c_2, sep, c_5, sep, c_3, c_4}`
+---@param sections ComponentOpts[][]
+local function flatten_sections(sections)
+  return vim.iter(ipairs(sections)):fold({ items = {}, size = 0 }, function(acc, count, section)
+    if #section == 0 then
+      table.insert(acc.items, separator)
+      return acc
+    end
+    vim.iter(ipairs(section)):each(function(index, args)
+      if not args then return end
+      local ok, cmp = as.pcall(fmt('creating component'), component, args)
+      if not ok then return end
+      table.insert(acc.items, cmp)
+      acc.size = acc.size + (cmp and cmp.length or 0)
+      if #section == index and count ~= #sections then table.insert(acc.items, separator) end
+    end)
+    return acc
+  end)
 end
 
 --- @param sections ComponentOpts[][]
 --- @param available_space number?
 --- @return string
 function M.display(sections, available_space)
-  local components = vim.iter(ipairs(sections)):fold({}, function(acc, count, section)
-    if #section == 0 then
-      table.insert(acc, separator())
-      return acc
-    end
-    vim.iter(ipairs(section)):each(function(index, args)
-      if not args then return end
-      local ok, str = as.pcall('Error creating component', component, args)
-      if not ok then return end
-      table.insert(acc, str)
-      if #section == index and count ~= #sections then table.insert(acc, separator()) end
-    end)
-    return acc
-  end)
-
-  if not available_space then
-    return vim.iter(components):fold('', function(acc, item) return acc .. item.component end)
+  local res = flatten_sections(sections)
+  if not available_space or res.size < available_space then
+    return vim.iter(res.items):fold('', function(acc, item) return acc .. item.component end)
   end
-  return order_by_priority(components, available_space)
+  return order_by_priority(res.items, available_space)
 end
 
 --- A helper class that allow collecting `...StringComponent`
