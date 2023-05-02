@@ -8,7 +8,10 @@
 local api, L = vim.api, vim.log.levels
 local strwidth, fmt, falsy = api.nvim_strwidth, string.format, as.falsy
 
----@alias StringComponent {component: string, length: integer, priority: integer}
+---@class StringComponent
+---@field component string
+---@field length integer,
+---@field priority integer
 
 local M = {}
 
@@ -120,38 +123,40 @@ end
 ----------------------------------------------------------------------------------------------------
 -- RENDER
 ----------------------------------------------------------------------------------------------------
-local function sum_lengths(list)
-  return vim.iter(list):fold(0, function(acc, item) return acc + (item.length or 0) end)
-end
 
-local function is_lowest(item, lowest)
-  -- if there hasn't been a lowest selected so far, then the item is the lowest
-  if not lowest or not lowest.length then return true end
-  -- if the item doesn't have a priority or a length, it is likely a special character so should never be the lowest
-  if not item.priority or not item.length then return false end
-  -- if the item has the same priority as the lowest, then if the item has a greater length it should become the lowest
-  if item.priority == lowest.priority then return item.length > lowest.length end
-  return item.priority > lowest.priority
-end
+--- Sort components by size and priority use a stack for the components and remove the next most important
+--- TODO: also tracking what we remove in a separate list ordered by size and priority
+--- and trying to re-add them in that order if there is space
+---
+---@param components StringComponent[]
+---@param available_space integer
+local function order_by_priority(components, available_space)
+  ---@type {[1]: StringComponent[], [2]: integer}
+  local ordered_tuples = vim.iter(ipairs(components)):map(function(idx, item) return { idx, item } end):totable()
 
---- Take the lowest priority items out of the statusline if we don't have
---- space for them.
---- TODO: currently this doesn't account for if an item that has a lower priority
---- could be fit in instead
---- @param statusline table
---- @param space number
---- @param length number
-local function prioritize(statusline, space, length)
-  length = length or sum_lengths(statusline)
-  if length <= space then return statusline end
-  local lowest, index_to_remove
-  for idx, c in ipairs(statusline) do
-    if is_lowest(c, lowest) then
-      lowest, index_to_remove = c, idx
+  table.sort(ordered_tuples, function(a_item, b_item)
+    local a, b = a_item[2], b_item[2]
+    if not a.priority then return a.priority < b.priority end
+    if not b.priority then return a.priority > b.priority end
+    if not a.priority and not b.priority then return 0 end
+    if a.priority == b.priority then return a.length < b.length end
+    return a.priority > b.priority
+  end)
+
+  ---@type {[integer]: StringComponent[]}
+  local result, size, is_too_big = {}, 0, false
+  while available_space and not is_too_big and #ordered_tuples > 0 do
+    for i = #ordered_tuples, 1, -1 do
+      local index, item = ordered_tuples[i][1], ordered_tuples[i][2]
+      local next_size = size + item.length
+      is_too_big = next_size > available_space
+      if is_too_big then break end
+      size = next_size
+      result[index] = item
+      ordered_tuples[i] = nil
     end
   end
-  table.remove(statusline, index_to_remove)
-  return prioritize(statusline, space, length - lowest.length)
+  return vim.iter(pairs(result)):fold('', function(acc, _, item) return acc .. (item and item.component or '') end)
 end
 
 --- @param sections ComponentOpts[][]
@@ -173,9 +178,10 @@ function M.display(sections, available_space)
     return acc
   end)
 
-  local items = available_space and prioritize(components, available_space) or components
-  local str = vim.tbl_map(function(item) return item.component end, items)
-  return table.concat(str)
+  if not available_space then
+    return vim.iter(components):fold('', function(acc, item) return acc .. item.component end)
+  end
+  return order_by_priority(components, available_space)
 end
 
 --- A helper class that allow collecting `...StringComponent`
