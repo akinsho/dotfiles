@@ -174,16 +174,30 @@ function M.display(sections, available_space)
   return table.concat(str)
 end
 
----Aggregate pieces of the statusline
----@param tbl StringComponent[]
----@return fun(...:ComponentOpts)
-function M.append(tbl)
-  return function(...)
-    for i = 1, select('#', ...) do
-      local item = select(i, ...)
-      if item then tbl[#tbl + 1] = item end
+--- A helper class that allow collecting `...StringComponent`
+--- into sections that can then be added to each other
+--- i.e.
+--- ```lua
+--- section1:new(1, 2, 3) + section2:new(4, 5, 6) + section3(7, 8, 9)
+--- {1, 2, 3, 4, 5, 6, 7, 8, 9} -- <--
+--- ```
+---@class Section
+---@field __add fun(l:Section, r:Section): StringComponent[]
+---@field __index Section
+---@field new fun(...:StringComponent[]): Section
+local section = {}
+function section:new(...)
+  local o = { ... }
+  self.__index = self
+  self.__add = function(l, r)
+    local rt = { unpack(l) }
+    for _, v in ipairs(r) do
+      rt[#rt + 1] = v
     end
+    return rt
   end
+  return setmetatable(o, self)
 end
+M.section = section
 
 return M

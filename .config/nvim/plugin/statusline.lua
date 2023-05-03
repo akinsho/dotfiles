@@ -24,6 +24,7 @@ local state = { lsp_clients_visible = true }
 
 local str = require('as.strings')
 
+local section, spacer, display = str.section, str.spacer, str.display
 local icons, lsp, highlight, decorations = as.ui.icons, as.ui.lsp, as.highlight, as.ui.decorations
 local api, fn, fs, fmt, strwidth = vim.api, vim.fn, vim.fs, string.format, vim.api.nvim_strwidth
 local P, falsy = as.ui.palette, as.falsy
@@ -658,18 +659,13 @@ function as.ui.statusline.render()
   ----------------------------------------------------------------------------//
   -- Setup
   ----------------------------------------------------------------------------//
-  local left, middle, right = {}, {}, {}
-  local add_left = str.append(left)
-  local add_middle = str.append(middle)
-  local add_right = str.append(right)
-
-  add_left({
+  local l1 = section:new({
     { { icons.misc.block, hls.indicator } },
     cond = not plain,
     before = '',
     after = '',
     priority = 0,
-  }, str.spacer(1))
+  }, spacer(1))
   ----------------------------------------------------------------------------//
   -- Filename
   ----------------------------------------------------------------------------//
@@ -682,8 +678,8 @@ function as.ui.statusline.render()
   -- show a minimal statusline with only the mode and file component
   ----------------------------------------------------------------------------//
   if plain or not focused then
-    add_left(readonly_component, path.env, path.dir, path.parent, path.file)
-    return str.display({ left }, available_space)
+    local l2 = section:new(readonly_component, path.env, path.dir, path.parent, path.file)
+    return display({ l1 + l2 }, available_space)
   end
   -----------------------------------------------------------------------------//
   -- Variables
@@ -733,7 +729,7 @@ function as.ui.statusline.render()
   -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
-  add_left(
+  local l2 = section:new(
     { { { file_modified, hls.modified } }, cond = ctx.modified, priority = 1 },
     readonly_component,
     { { { mode, mode_hl } }, priority = 0 },
@@ -774,7 +770,7 @@ function as.ui.statusline.render()
   -- Neovim allows unlimited alignment sections so we can put things in the
   -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
   -----------------------------------------------------------------------------//
-  add_middle({
+  local m1 = section:new({
     { { noice_mode, hls.title } },
     cond = has_noice_mode,
     before = ' ',
@@ -787,7 +783,7 @@ function as.ui.statusline.render()
   -----------------------------------------------------------------------------//
   -- Right section
   -----------------------------------------------------------------------------//
-  add_right(
+  local r1 = section:new(
     {
       { { 'updates:', hls.comment }, { space }, { pending_updates, hls.title } },
       priority = 3,
@@ -800,7 +796,7 @@ function as.ui.statusline.render()
     -----------------------------------------------------------------------------//
     unpack(lsp_clients)
   )
-  add_right(
+  local r2 = section:new(
     {
       { { icons.misc.bug }, { space }, { debugger(), hls.metadata } },
       priority = 4,
@@ -868,7 +864,7 @@ function as.ui.statusline.render()
     }
   )
   -- removes 5 columns to add some padding
-  return str.display({ left, middle, right }, available_space - 5)
+  return display({ l1 + l2, m1, r1 + r2 }, available_space - 5)
 end
 
 -- :h qf.vim, disable qf statusline

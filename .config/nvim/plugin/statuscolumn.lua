@@ -3,14 +3,13 @@ if not as or not as.ui.statuscolumn.enable then return end
 ---@alias ExtmarkSign {[1]: number, [2]: number, [3]: number, [4]: {sign_text: string, sign_hl_group: string}}
 
 local str = require('as.strings')
+local section, spacer, display = str.section, str.spacer, str.display
 local fn, v, api, opt = vim.fn, vim.v, vim.api, vim.opt
-local ui, separators, falsy = as.ui, as.ui.icons.separators, as.falsy
+local ui, sep, falsy = as.ui, as.ui.icons.separators, as.falsy
 
-local space = ' '
+local MIN_SIGN_WIDTH, space = 1, ' '
 local fcs = opt.fillchars:get()
-local shade, separator = separators.light_shade_block, separators.left_thin_block -- '│'
-local sep_hl = 'LineNr'
-local MIN_SIGN_WIDTH = 1
+local shade, separator = sep.light_shade_block, sep.left_thin_block -- '│'
 
 local function fdm(lnum)
   if fn.foldlevel(lnum) <= fn.foldlevel(lnum - 1) then return space end
@@ -80,34 +79,28 @@ function ui.statuscolumn.render()
   local lnum, relnum, virtnum = v.lnum, v.relnum, v.virtnum
   local win = api.nvim_get_current_win()
   local buf = api.nvim_win_get_buf(win)
+  local line_count = api.nvim_buf_line_count(buf)
 
   local gitsign, other_sns = extmark_signs(buf, lnum)
   local sns = signplaced_signs(buf, lnum)
   vim.list_extend(sns, other_sns)
   while #sns < MIN_SIGN_WIDTH do
-    table.insert(sns, str.spacer(1))
+    table.insert(sns, spacer(1))
   end
 
-  local line_count = api.nvim_buf_line_count(buf)
+  local r1 = section:new(spacer(1), { { { nr(win, lnum, relnum, virtnum, line_count) } } }, unpack(gitsign))
+  local r2 = section:new({ { { separator, 'LineNr' } }, after = '' }, { { { fdm(lnum) } } })
 
-  local right = {}
-  local add = str.append(right)
-  add(str.spacer(1), { { { nr(win, lnum, relnum, virtnum, line_count) } } }, unpack(gitsign))
-  add({ { { separator, sep_hl } }, after = '' }, { { { fdm(lnum) } } })
-
-  return str.display({ sns, right })
+  return display({ sns, r1 + r2 })
 end
 
-vim.o.statuscolumn = '%{%v:lua.as.ui.statuscolumn.render()%}'
+opt.statuscolumn = '%{%v:lua.as.ui.statuscolumn.render()%}'
 
 as.augroup('StatusCol', {
   event = { 'BufEnter', 'FileType' },
   command = function(args)
-    local decor = ui.decorations.get({
-      ft = vim.bo[args.buf].ft,
-      fname = fn.bufname(args.buf),
-      setting = 'statuscolumn',
-    })
-    if decor.ft == false or decor.fname == false then vim.opt_local.statuscolumn = '' end
+    local buf = args.buf
+    local d = ui.decorations.get({ ft = vim.bo[buf].ft, fname = fn.bufname(buf), setting = 'statuscolumn' })
+    if d.ft == false or d.fname == false then vim.opt_local.statuscolumn = '' end
   end,
 })
