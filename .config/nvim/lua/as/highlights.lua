@@ -91,6 +91,12 @@ local function tint(color, percent)
   return fmt('#%02x%02x%02x', blend(r), blend(g), blend(b))
 end
 
+local err_warn = vim.schedule_wrap(function(group, attribute)
+  notify(fmt('failed to get highlight %s for attribute %s\n%s', group, attribute, debug.traceback()), 'ERROR', {
+    title = fmt('Highlight - get(%s)', group),
+  }) -- stylua: ignore
+end)
+
 ---Get the value a highlight group whilst handling errors, fallbacks as well as returning a gui value
 ---If no attribute is specified return the entire highlight table
 ---in the right format
@@ -107,11 +113,15 @@ local function get(group, attribute, fallback)
   assert(attrs[attribute], ('the attribute passed in is invalid: %s'):format(attribute))
   local color = data[attribute] or fallback
   if not color then
-    vim.defer_fn(function()
-      notify(fmt('failed to get highlight %s for attribute %s\n%s', group, attribute, debug.traceback()), 'ERROR', {
-        title = fmt('Highlight - get(%s)', group),
-      }) -- stylua: ignore
-    end, 2000)
+    if vim.v.vim_did_enter == 0 then
+      api.nvim_create_autocmd('User', {
+        pattern = 'LazyDone',
+        once = true,
+        callback = function() err_warn(group, attribute) end,
+      })
+    else
+      vim.schedule(function() err_warn(group, attribute) end)
+    end
     return 'NONE'
   end
   return color
