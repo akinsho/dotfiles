@@ -94,6 +94,7 @@
   "nvim-window-picker": { "branch": "main", "commit": "5902827d0e338890a22849e2f18dc80d1cc1a8db" },
   "orgmode": { "branch": "master", "commit": "4647d20e33bf14c70fd44e1a4ee071ce1351d139" },
   "persisted.nvim": { "branch": "main", "commit": "304a3c55514df408781c965d2b5aae21c34857fb" },
+  "pgsql.vim": { "branch": "master", "commit": "736c9899163a7f4e212c1675d8a1fe42570a027a" },
   "playground": { "branch": "master", "commit": "2b81a018a49f8e476341dfcb228b7b808baba68b" },
   "plenary.nvim": { "branch": "master", "commit": "9ac3e9541bbabd9d73663d757e4fe48a675bb054" },
   "portal.nvim": { "branch": "main", "commit": "a108a87639a43f5386dd70bdf512de3806a71f7d" },
