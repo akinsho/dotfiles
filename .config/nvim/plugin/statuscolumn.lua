@@ -2,14 +2,15 @@ if not as or not as.ui.statuscolumn.enable then return end
 
 ---@alias ExtmarkSign {[1]: number, [2]: number, [3]: number, [4]: {sign_text: string, sign_hl_group: string}}
 
-local fn, v, api, opt, optl = vim.fn, vim.v, vim.api, vim.opt, vim.opt_local
-local ui, separators, falsy = as.ui, as.ui.icons.separators, as.falsy
 local str = require('as.strings')
+local fn, v, api, opt = vim.fn, vim.v, vim.api, vim.opt
+local ui, separators, falsy = as.ui, as.ui.icons.separators, as.falsy
 
 local space = ' '
 local fcs = opt.fillchars:get()
 local shade, separator = separators.light_shade_block, separators.left_thin_block -- '│'
 local sep_hl = 'LineNr'
+local MIN_SIGN_WIDTH = 1
 
 local function fdm(lnum)
   if fn.foldlevel(lnum) <= fn.foldlevel(lnum - 1) then return space end
@@ -83,6 +84,9 @@ function ui.statuscolumn.render()
   local gitsign, other_sns = extmark_signs(buf, lnum)
   local sns = signplaced_signs(buf, lnum)
   vim.list_extend(sns, other_sns)
+  while #sns < MIN_SIGN_WIDTH do
+    table.insert(sns, str.spacer(1))
+  end
 
   local line_count = api.nvim_buf_line_count(buf)
 
@@ -104,6 +108,6 @@ as.augroup('StatusCol', {
       fname = fn.bufname(args.buf),
       setting = 'statuscolumn',
     })
-    if decor.ft == false or decor.fname == false then optl.statuscolumn = '' end
+    if decor.ft == false or decor.fname == false then vim.opt_local.statuscolumn = '' end
   end,
 })
