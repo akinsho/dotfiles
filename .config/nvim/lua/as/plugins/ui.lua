@@ -8,7 +8,7 @@ return {
   {
     'gorbit99/codewindow.nvim',
     dev = true,
-    lazy = false,
+    event = { 'BufReadPre', 'BufNewFile' },
     init = function() highlight.plugin('codewindow', { { CodewindowBorder = { link = 'Dim' } } }) end,
     keys = {
       { '<localleader>mo', codewindow.open_minimap, desc = 'minimap: open' },
@@ -18,6 +18,8 @@ return {
     },
     opts = {
       auto_enable = true,
+      auto_disable = { 'help', 'pgsql' },
+      show_cursor = false,
       relative = 'editor',
       z_index = 1000,
       minimap_width = 12,
