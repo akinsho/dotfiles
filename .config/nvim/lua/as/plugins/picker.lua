@@ -172,6 +172,13 @@ return {
             winopts = { title = title('Code Actions', '', '@type') },
           }),
         },
+        jumps = dropdown({
+          winopts = { title = title('Jumps', ''), preview = { hidden = 'nohidden' } },
+        }),
+        changes = dropdown({
+          prompt = '',
+          winopts = { title = title('Changes', '⟳'), preview = { hidden = 'nohidden' } },
+        }),
         diagnostics = dropdown({
           winopts = { title = title('Diagnostics', '', 'DiagnosticError') },
         }),
