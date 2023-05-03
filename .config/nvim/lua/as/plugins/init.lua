@@ -261,9 +261,9 @@ return {
       vim.g.VM_highlight_matches = 'underline'
       vim.g.VM_theme = 'codedark'
       vim.g.VM_maps = {
-        ['Find Word'] = '<C-E>',
-        ['Find Under'] = '<C-E>',
-        ['Find Subword Under'] = '<C-E>',
+        ['Find Word'] = '<M-e>',
+        ['Find Under'] = '<M-e>',
+        ['Find Subword Under'] = '<M-e>',
         ['Select Cursor Down'] = '\\j',
         ['Select Cursor Up'] = '\\k',
       }
@@ -382,7 +382,7 @@ return {
   {
     'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
     event = 'VeryLazy',
-    opts = { hide_cursor = true, mappings = { '<C-d>', '<C-u>', '<C-y>', 'zt', 'zz', 'zb' } },
+    opts = { hide_cursor = true, mappings = { '<C-d>', '<C-u>', 'zt', 'zz', 'zb' } },
   },
   {
     'itchyny/vim-highlighturl',
