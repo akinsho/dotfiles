@@ -52,14 +52,13 @@ return {
       local lsp_kinds = as.ui.lsp.highlights
 
       require('neo-tree').setup({
-        sources = { 'filesystem', 'diagnostics', 'document_symbols' },
+        sources = { 'filesystem', 'document_symbols' },
         source_selector = {
           winbar = true,
           separator_active = '',
           sources = {
             { source = 'filesystem' },
             { source = 'document_symbols' },
-            { source = 'diagnostics', display_name = (' %s Diagnostics '):format(icons.lsp.error) },
           },
         },
         enable_git_status = true,
@@ -113,14 +112,6 @@ return {
               return acc
             end, symbols),
           },
-          diagnostics = {
-            highlights = {
-              hint = 'DiagnosticHint',
-              info = 'DiagnosticInfo',
-              warn = 'DiagnosticWarn',
-              error = 'DiagnosticError',
-            },
-          },
           modified = {
             symbol = icons.misc.circle .. ' ',
           },
@@ -154,7 +145,6 @@ return {
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
       'nvim-tree/nvim-web-devicons',
-      { 'mrbjarksen/neo-tree-diagnostics.nvim' },
       {
         's1n7ax/nvim-window-picker',
         version = '*',
