@@ -513,18 +513,6 @@ return {
     end,
   },
   { 'yioneko/nvim-vtsls' },
-  {
-    'jose-elias-alvarez/typescript.nvim',
-    enabled = false,
-    ft = { 'typescript', 'typescriptreact' },
-    dependencies = { 'jose-elias-alvarez/null-ls.nvim' },
-    config = function()
-      require('typescript').setup({ server = require('as.servers')('tsserver') })
-      require('null-ls').register({
-        sources = { require('typescript.extensions.null-ls.code-actions') },
-      })
-    end,
-  },
   { 'fladson/vim-kitty', lazy = false },
   { 'mtdl9/vim-log-highlighting', lazy = false },
   -- }}}
