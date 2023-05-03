@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------//
 ---@type lspconfig.options
 local servers = {
-  sqlls = {},
+  sqlls = false,
   eslint = {},
   ccls = {},
   jsonls = {},
