@@ -46,12 +46,6 @@ _G.map = vim.keymap.set
 _G.P = vim.print
 
 ----------------------------------------------------------------------------------------------------
---  $NVIM
-----------------------------------------------------------------------------------------------------
--- If opening from inside neovim terminal then do not load other plugins
-if env.NVIM then return require('lazy').setup({ { 'willothy/flatten.nvim', config = true } }) end
-
-----------------------------------------------------------------------------------------------------
 -- Settings
 ----------------------------------------------------------------------------------------------------
 -- Order matters here as globals needs to be instantiated first etc.
@@ -75,6 +69,13 @@ if not loop.fs_stat(lazypath) then
   vim.notify('Installed lazy.nvim')
 end
 opt.runtimepath:prepend(lazypath)
+----------------------------------------------------------------------------------------------------
+--  $NVIM
+----------------------------------------------------------------------------------------------------
+-- NOTE: this must happen after the lazy path is setup
+
+-- If opening from inside neovim terminal then do not load other plugins
+if env.NVIM then return require('lazy').setup({ { 'willothy/flatten.nvim', config = true } }) end
 ------------------------------------------------------------------------------------------------------
 require('lazy').setup('as.plugins', {
   ui = { border = as.ui.current.border },
