@@ -14,6 +14,16 @@ return {
         automatic_installation = true,
         ensure_installed = { 'buf', 'goimports', 'golangci_lint', 'stylua', 'prettier' },
         handlers = {
+          sql_formatter = function()
+            null_ls.register(null_ls.builtins.formatting.sql_formatter.with({
+              extra_filetypes = { 'pgsql' },
+              args = function(params)
+                local config_path = params.cwd .. '/.sql-formatter.json'
+                if vim.loop.fs_stat(config_path) then return { '--config', config_path } end
+                return { '--language', 'postgresql' }
+              end,
+            }))
+          end,
           eslint = function()
             null_ls.register(null_ls.builtins.diagnostics.eslint.with({ extra_filetypes = { 'svelte' } }))
           end,
