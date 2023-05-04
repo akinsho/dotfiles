@@ -32,7 +32,7 @@ local namespace = {
   ui = {
     winbar = { enable = true },
     statuscolumn = { enable = true },
-    foldtext = { enable = false },
+    statusline = { enable = true },
   },
   -- some vim mappings require a mixture of commandline commands and function calls
   -- this table is place to store lua functions to be called in those mappings

@@ -1,4 +1,4 @@
-if not as then return end
+if not as or not as.ui.statusline.enable then return end
 
 as.ui.statusline = {}
 
