@@ -125,13 +125,7 @@ as.augroup('CheckOutsideTime', {
 as.augroup('TextYankHighlight', {
   -- don't execute silently in case of errors
   event = { 'TextYankPost' },
-  command = function()
-    vim.highlight.on_yank({
-      timeout = 500,
-      on_visual = false,
-      higroup = 'Visual',
-    })
-  end,
+  command = function() vim.highlight.on_yank({ timeout = 500, on_visual = false, higroup = 'Visual' }) end,
 })
 
 as.augroup('UpdateVim', {
@@ -227,7 +221,8 @@ as.augroup('Utilities', {
 }, {
   event = { 'BufLeave' },
   pattern = { '*' },
-  command = function()
+  command = function(args)
+    if api.nvim_buf_line_count(args.buf) <= 1 then return end
     if can_save() then cmd('silent! write ++p') end
   end,
 }, {

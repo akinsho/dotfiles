@@ -325,7 +325,7 @@ local function filename(ctx)
   local path = api.nvim_buf_get_name(buf)
   if falsy(path) then return { fname = 'No Name' } end
   --- add ":." to the expansion i.e. to make the directory path relative to the current vim directory
-  local parts = vim.split(fn.fnamemodify(path, ':~'), sep)
+  local parts = vim.split(path, sep)
   local fname = table.remove(parts)
 
   local name = identifiers.names[ft]
