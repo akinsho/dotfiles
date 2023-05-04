@@ -6,7 +6,7 @@ vim.filetype.add({
   },
   filename = {
     ['NEOGIT_COMMIT_EDITMSG'] = 'NeogitCommitMessage',
-    ['.psqlrc'] = 'conf', -- TODO: find a better filetype
+    ['.psqlrc'] = 'conf',
     ['launch.json'] = 'jsonc',
     Podfile = 'ruby',
     Brewfile = 'ruby',
