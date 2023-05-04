@@ -263,12 +263,6 @@ return {
       { '<leader>dC', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
     },
   },
-  -- prevent select and visual mode from overwriting the clipboard
-  {
-    'kevinhwang91/nvim-hclipboard',
-    event = 'InsertCharPre',
-    config = function() require('hclipboard').start() end,
-  },
   {
     'jghauser/fold-cycle.nvim',
     config = true,
