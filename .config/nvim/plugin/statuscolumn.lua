@@ -26,8 +26,8 @@ local function nr(win, lnum, relnum, virtnum, line_count)
   local col_width = api.nvim_strwidth(tostring(line_count))
   if virtnum and virtnum ~= 0 then return space:rep(col_width - 1) .. (virtnum < 0 and shade or space) end -- virtual line
   local num = vim.wo[win].relativenumber and not falsy(relnum) and relnum or lnum
-  if line_count >= 1000 then col_width = col_width + 1 end
-  local ln = fn.substitute(num, '\\d\\zs\\ze\\%(\\d\\d\\d\\)\\+$', ',', 'g')
+  if line_count > 999 then col_width = col_width + 1 end
+  local ln = tostring(num):reverse():gsub('(%d%d%d)', '%1,'):reverse():gsub('^,', '')
   local num_width = col_width - api.nvim_strwidth(ln)
   return string.rep(space, num_width) .. ln
 end
