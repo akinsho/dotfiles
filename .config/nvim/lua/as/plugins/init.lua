@@ -275,13 +275,6 @@ return {
   {
     'rainbowhxch/beacon.nvim',
     event = 'VeryLazy',
-    init = function()
-      as.augroup('BeaconCmds', {
-        event = 'BufReadPre',
-        pattern = '*.norg',
-        command = function() require('beacon').beacon_off() end,
-      })
-    end,
     opts = {
       minimal_jump = 20,
       ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },

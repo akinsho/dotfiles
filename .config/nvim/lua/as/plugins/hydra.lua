@@ -14,8 +14,8 @@ return {
       return vim.tbl_extend('force', {
         invoke_on_body = true,
         hint = hint_opts,
-        on_enter = function() vim.cmd.BeaconOff() end,
-        on_exit = function() vim.cmd.BeaconOn() end,
+        on_enter = function() vim.cmd('silent! BeaconOff') end,
+        on_exit = function() vim.cmd('silent! BeaconOn') end,
       }, opts or {})
     end
 
