@@ -1,6 +1,6 @@
 return {
   'anuvyklack/hydra.nvim',
-  keys = { 'z', '<leader>z', '<leader>b', '<leader>dh', '<C-W>' },
+  event = 'CursorHold',
   config = function()
     local Hydra = require('hydra')
     local pcmd = require('hydra.keymap-util').pcmd
@@ -8,7 +8,6 @@ return {
 
     local splits = as.reqcall('smart-splits')
     local fold_cycle = as.reqcall('fold-cycle')
-    local dap = as.reqcall('dap')
 
     local base_config = function(opts)
       return vim.tbl_extend('force', {
@@ -77,7 +76,7 @@ return {
     Hydra({
       name = 'Windows',
       hint = window_hint,
-      config = base_config({ invoke_on_body = true }),
+      config = base_config({ invoke_on_body = false }),
       mode = 'n',
       body = '<C-w>',
       heads = {
@@ -111,44 +110,6 @@ return {
         { '<C-c>', pcmd('close', 'E444'), { desc = false } },
         { '<C-q>', pcmd('close', 'E444'), { desc = false } },
         { '<Esc>', nil, { exit = true } },
-      },
-    })
-
-    local hint = [[
- _n_: step over   _s_: Continue/Start   _b_: Breakpoint     _K_: Eval
- _i_: step into   _x_: Quit             ^ ^                 ^ ^
- _o_: step out    _X_: Stop             ^ ^
- _c_: to cursor   _C_: Close UI
- ^
- ^ ^              _q_: exit
-]]
-
-    Hydra({
-      hint = hint,
-      config = {
-        color = 'pink',
-        invoke_on_body = true,
-        hint = hint_opts,
-      },
-      name = 'dap',
-      mode = { 'n', 'x' },
-      body = '<leader>dh',
-      heads = {
-        { 'n', dap.step_over, { silent = true } },
-        { 'i', dap.step_into, { silent = true } },
-        { 'o', dap.step_out, { silent = true } },
-        { 'c', dap.run_to_cursor, { silent = true } },
-        { 's', dap.continue, { silent = true } },
-        { 'x', function() dap.disconnect({ terminateDebuggee = false }) end, { exit = true, silent = true } },
-        { 'X', dap.close, { silent = true } },
-        {
-          'C',
-          ":lua require('dapui').close()<cr>:DapVirtualTextForceRefresh<CR>",
-          { silent = true },
-        },
-        { 'b', dap.toggle_breakpoint, { silent = true } },
-        { 'K', ":lua require('dap.ui.widgets').hover()<CR>", { silent = true } },
-        { 'q', nil, { exit = true, nowait = true } },
       },
     })
   end,
