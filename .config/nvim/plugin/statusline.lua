@@ -300,6 +300,7 @@ local function dir_env(directory)
   if not directory then return '', '' end
   local paths = {
     [vim.g.dotfiles] = '$DOTFILES',
+    [vim.env.HOME] = '~',
     [vim.g.work_dir] = '$WORK',
     [vim.g.projects_dir] = '$PROJECTS',
     [vim.env.VIMRUNTIME] = '$VIMRUNTIME',
