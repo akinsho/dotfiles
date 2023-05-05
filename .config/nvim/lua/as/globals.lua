@@ -166,7 +166,7 @@ function as.pcall(msg, func, ...)
     args, func, msg = { arg, unpack(args) }, msg, nil
   end
   return xpcall(func, function(err)
-    msg = debug.traceback(msg and fmt('%s:\n%s', msg, err) or err)
+    msg = debug.traceback(msg and fmt('%s:\n%s\n%s', msg, vim.inspect(args), err) or err)
     vim.schedule(function() vim.notify(msg, l.ERROR, { title = 'ERROR' }) end)
   end, unpack(args))
 end

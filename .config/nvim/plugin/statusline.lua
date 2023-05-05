@@ -591,17 +591,6 @@ local function git_updates() run_task_on_interval(10000, update_git_status) end
 ----------------------------------------------------------------------------------------------------
 --  PLUGINS
 ----------------------------------------------------------------------------------------------------
---  Grapple
-----------------------------------------------------------------------------------------------------
----@return boolean
----@return {icon: string?, name: string?}
-local function grapple_stl()
-  local ok, grapple = pcall(require, 'grapple')
-  if not ok then return false, {} end
-  local exists = grapple.exists()
-  if not exists then return false, {} end
-  return grapple.exists(), { name = fmt('[%s]', grapple.key()), icon = '' }
-end
 
 ----------------------------------------------------------------------------------------------------
 --  Utility functions
@@ -707,8 +696,6 @@ function as.ui.statusline.render()
   local pending_updates = lazy_ok and lazy.updates() or nil
   local has_pending_updates = lazy_ok and lazy.has_updates() or false
   -----------------------------------------------------------------------------//
-  local grapple_ok, grapple = grapple_stl()
-  -----------------------------------------------------------------------------//
   -- LSP
   -----------------------------------------------------------------------------//
   local flutter = vim.g.flutter_tools_decorations or {}
@@ -756,11 +743,6 @@ function as.ui.statusline.render()
     {
       { { icons.misc.shaded_lock, hls.metadata } },
       cond = vim.b[ctx.bufnum].formatting_disabled == true or vim.g.formatting_disabled == true,
-      priority = 5,
-    },
-    {
-      { { grapple.icon, hls.directory }, { space }, { grapple.name, hls.comment } },
-      cond = grapple_ok,
       priority = 5,
     }
   )
