@@ -136,7 +136,7 @@ return {
             ['<c-s>'] = 'split_with_window_picker',
             ['<c-v>'] = 'vsplit_with_window_picker',
             ['<esc>'] = 'revert_preview',
-            ['P'] = { 'toggle_preview', config = { use_float = true } },
+            ['P'] = { 'toggle_preview', config = { use_float = false } },
           },
         },
       })
@@ -148,18 +148,20 @@ return {
       {
         's1n7ax/nvim-window-picker',
         version = '*',
-        opts = {
-          use_winbar = 'smart',
-          autoselect_one = true,
-          include_current = false,
-          other_win_hl_color = highlight.get('Visual', 'bg'),
-          filter_rules = {
-            bo = {
-              filetype = { 'neo-tree-popup', 'quickfix' },
-              buftype = { 'terminal', 'quickfix', 'nofile' },
+        config = function()
+          require('window-picker').setup({
+            use_winbar = 'smart',
+            autoselect_one = true,
+            include_current = false,
+            other_win_hl_color = highlight.get('Visual', 'bg'),
+            filter_rules = {
+              bo = {
+                filetype = { 'neo-tree-popup', 'quickfix' },
+                buftype = { 'terminal', 'quickfix', 'nofile' },
+              },
             },
-          },
-        },
+          })
+        end,
       },
     },
   },
