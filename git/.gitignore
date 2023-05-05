@@ -7,8 +7,7 @@ tags.lock
 tags.temp
 *.un~
 Session.vim
-# Compiled source #
-###################
+# Compiled source
 *.com
 *.class
 *.dll
@@ -17,13 +16,11 @@ Session.vim
 .lvimrc
 .idea
 
-# Logs and databases #
-######################
+# Logs and databases
 *.log
 *.sqlite
 
-# OS generated files #
-######################
+# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -37,8 +34,8 @@ gin-bin
 # VSCode workspaces
 *.code-workspace
 .vscode
-:merlin-log:
 *.doc#
+:merlin-log:
 
 CMakeLists.txt.user
 CMakeCache.txt
@@ -51,13 +48,16 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 .vim/
-*.add.spl
-.vim-spell-en.utf-8.add.spl
 .nvimrc
 .projections.json
 .classpath
 .factorypath
 .settings/
+
+# Spell files (ignore all but those my personal dictionary)
+*.add
+*.add.spl
+!/.dotfiles/**/*.add
 
 # Vim Wiki tag files
 .vimwiki_tags
