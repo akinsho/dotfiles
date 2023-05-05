@@ -4,19 +4,17 @@ return {
   init = function()
     vim.g.projectionist_heuristics = {
       ['*.go'] = {
-        ['*.go'] = {
-          alternate = '{}_test.go',
-          type = 'source',
-          template = {
-            'package {basename|camelcase}',
-          },
+        alternate = '{}_test.go',
+        type = 'source',
+        template = {
+          'package {basename|camelcase}',
         },
-        ['*_test.go'] = {
-          alternate = '{}.go',
-          type = 'test',
-          template = {
-            'package {basename|camelcase}',
-          },
+      },
+      ['*_test.go'] = {
+        alternate = '{}.go',
+        type = 'test',
+        template = {
+          'package {basename|camelcase}',
         },
       },
       ['src/'] = {
@@ -70,7 +68,7 @@ return {
           },
         },
       },
-      ['*/routes/*'] = {
+      ['src/routes/*'] = {
         ['*.svelte'] = {
           alternate = { '{}.server.ts', '{}.ts' },
           type = 'view',

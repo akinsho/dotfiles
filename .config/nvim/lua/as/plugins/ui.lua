@@ -123,6 +123,11 @@ return {
           if not api.nvim_win_is_valid(win) then return end
           api.nvim_win_set_config(win, { border = border })
         end,
+        render = function(...)
+          local notification = select(2, ...)
+          local style = falsy(notification.title[1]) and 'minimal' or 'default'
+          require('notify.render')[style](...)
+        end,
       })
       map('n', '<leader>nd', function() notify.dismiss({ silent = true, pending = true }) end, {
         desc = 'dismiss notifications',
