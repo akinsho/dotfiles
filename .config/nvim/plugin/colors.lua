@@ -11,6 +11,16 @@ local function general_overrides()
     { WinSeparator = { fg = { from = 'Comment' } } },
     { CursorLineNr = { bg = 'NONE' } },
     { iCursor = { bg = P.dark_blue } },
+    --------------------------------------------//
+    -- Floats
+    ---------------------------------------------//
+    { NormalFloat = { bg = { from = 'Normal', alter = -0.15 } } },
+    { FloatBorder = { bg = { from = 'NormalFloat' }, fg = { from = 'Comment' } } },
+    { FloatTitle = { bold = true, fg = 'white', bg = { from = 'FloatBorder', attr = 'fg' } } },
+    ---------------------------------------------//
+    -- Popup menu
+    ---------------------------------------------//
+    { Pmenu = { bg = { from = 'Normal', alter = -0.15 } } },
     -----------------------------------------------------------------------------//
     -- Created highlights
     -----------------------------------------------------------------------------//
@@ -18,12 +28,6 @@ local function general_overrides()
     { PickerBorder = { fg = P.grey, bg = 'bg' } },
     { UnderlinedTitle = { bold = true, underline = true } },
     { StatusColSep = { link = 'LineNr' } },
-    -----------------------------------------------------------------------------//
-    -- Floats
-    -----------------------------------------------------------------------------//
-    { NormalFloat = { bg = { from = 'Normal', alter = -0.15 } } },
-    { FloatBorder = { bg = { from = 'NormalFloat' }, fg = { from = 'Comment' } } },
-    { FloatTitle = { bold = true, fg = 'white', bg = { from = 'FloatBorder', attr = 'fg' } } },
     -----------------------------------------------------------------------------//
     { CodeBlock = { bg = { from = 'Normal', alter = 0.3 } } },
     { markdownCode = { link = 'CodeBlock' } },
