@@ -11,10 +11,6 @@ local command = as.command
 
 if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 
------------------------------------------------------------------------------//
--- Autocommands
------------------------------------------------------------------------------//
-
 ---@enum
 local provider = {
   HOVER = 'hoverProvider',
@@ -25,51 +21,6 @@ local provider = {
   REFERENCES = 'documentHighlightProvider',
   DEFINITION = 'definitionProvider',
 }
-
----@param client lsp.Client
----@param buf integer
-local function setup_autocommands(client, buf)
-  if client.server_capabilities[provider.FORMATTING] then
-    augroup(('LspFormatting%d'):format(buf), {
-      event = 'BufWritePre',
-      buffer = buf,
-      desc = 'LSP: Format on save',
-      command = function(args)
-        if not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
-          local clients = vim.tbl_filter(
-            function(c) return c.server_capabilities[provider.FORMATTING] end,
-            lsp.get_active_clients({ buffer = buf })
-          )
-          if #clients >= 1 then lsp.buf.format({ bufnr = args.buf, async = #clients == 1 }) end
-        end
-      end,
-    })
-  end
-
-  if client.server_capabilities[provider.CODELENS] then
-    augroup(('LspCodeLens%d'):format(buf), {
-      event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
-      desc = 'LSP: Code Lens',
-      buffer = buf,
-      -- call via vimscript so that errors are silenced
-      command = 'silent! lua vim.lsp.codelens.refresh()',
-    })
-  end
-
-  if client.server_capabilities[provider.REFERENCES] then
-    augroup(('LspReferences%d'):format(buf), {
-      event = { 'CursorHold', 'CursorHoldI' },
-      buffer = buf,
-      desc = 'LSP: References',
-      command = function() lsp.buf.document_highlight() end,
-    }, {
-      event = 'CursorMoved',
-      desc = 'LSP: References Clear',
-      buffer = buf,
-      command = function() lsp.buf.clear_references() end,
-    })
-  end
-end
 
 ----------------------------------------------------------------------------------------------------
 --  LSP file Rename
@@ -143,13 +94,13 @@ end
 ---@param client lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
+  local ts = { 'typescript', 'typescriptreact' }
   local mappings = {
     { 'n', ']c', prev_diagnostic(), desc = 'go to prev diagnostic' },
     { 'n', '[c', next_diagnostic(), desc = 'go to next diagnostic' },
     { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = provider.CODEACTIONS },
-    { 'n', '<leader>rf', lsp.buf.format, desc = 'format buffer', capability = provider.FORMATTING },
-    -- stylua: ignore
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = { 'typescript', 'typescriptreact' } },
+    { 'n', '<leader>rf', lsp.buf.format, desc = 'format buffer', capability = provider.FORMATTING, exclude = ts },
+    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = ts },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
     { 'n', 'K', lsp.buf.hover, desc = 'hover', capability = provider.HOVER },
     { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls' }, -- TODO: what provider is this?
@@ -190,6 +141,10 @@ local client_overrides = {
   },
 }
 
+-----------------------------------------------------------------------------//
+-- Semantic Tokens
+-----------------------------------------------------------------------------//
+
 ---@param client lsp.Client
 ---@param bufnr number
 local function setup_semantic_tokens(client, bufnr)
@@ -201,6 +156,54 @@ local function setup_semantic_tokens(client, bufnr)
     desc = fmt('Configure the semantic tokens for the %s', client.name),
     command = function(args) overrides.semantic_tokens(args.buf, client, args.data.token) end,
   })
+end
+-----------------------------------------------------------------------------//
+-- Autocommands
+-----------------------------------------------------------------------------//
+
+---@param client lsp.Client
+---@param buf integer
+local function setup_autocommands(client, buf)
+  if not client.server_capabilities[provider.FORMATTING] then
+    augroup(('LspFormatting%d'):format(buf), {
+      event = 'BufWritePre',
+      buffer = buf,
+      desc = 'LSP: Format on save',
+      command = function(args)
+        if not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
+          local clients = vim.tbl_filter(
+            function(c) return c.server_capabilities[provider.FORMATTING] end,
+            lsp.get_active_clients({ buffer = buf })
+          )
+          lsp.buf.format({ bufnr = args.buf, async = #clients == 1 })
+        end
+      end,
+    })
+  end
+
+  if client.server_capabilities[provider.CODELENS] then
+    augroup(('LspCodeLens%d'):format(buf), {
+      event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
+      desc = 'LSP: Code Lens',
+      buffer = buf,
+      -- call via vimscript so that errors are silenced
+      command = 'silent! lua vim.lsp.codelens.refresh()',
+    })
+  end
+
+  if client.server_capabilities[provider.REFERENCES] then
+    augroup(('LspReferences%d'):format(buf), {
+      event = { 'CursorHold', 'CursorHoldI' },
+      buffer = buf,
+      desc = 'LSP: References',
+      command = function() lsp.buf.document_highlight() end,
+    }, {
+      event = 'CursorMoved',
+      desc = 'LSP: References Clear',
+      buffer = buf,
+      command = function() lsp.buf.clear_references() end,
+    })
+  end
 end
 
 -- Add buffer local mappings, autocommands etc for attaching servers

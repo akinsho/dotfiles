@@ -153,6 +153,16 @@ settings({
     opt = { spell = true },
     mappings = {
       { 'n', 'gd', '<Cmd>VtsExec goto_source_definition<CR>', desc = 'typescript: go to source definition' },
+      {
+        desc = 'typescript: remove unused imports and add missing imports',
+        'n',
+        '<leader>rf',
+        function()
+          cmd.VtsExec('add_missing_imports')
+          cmd.VtsExec('remove_unused_imports')
+          cmd.update()
+        end,
+      },
     },
   },
   [{ 'lua', 'python', 'rust' }] = { opt = { spell = true } },
