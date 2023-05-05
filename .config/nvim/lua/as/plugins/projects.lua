@@ -19,7 +19,7 @@ return {
           },
         },
       },
-      ['*.ts'] = {
+      ['src/'] = {
         ['*.ts'] = {
           alternate = '{}.test.ts',
           type = 'source',
@@ -37,8 +37,6 @@ return {
             '{close});',
           },
         },
-      },
-      ['*.tsx'] = {
         ['*.tsx'] = {
           alternate = '{}.test.tsx',
           type = 'source',
@@ -69,6 +67,35 @@ return {
             '    expect(asFragment()).toMatchSnapshot();',
             '   {close});',
             '{close});',
+          },
+        },
+      },
+      ['*/routes/*'] = {
+        ['*.svelte'] = {
+          alternate = { '{}.server.ts', '{}.ts' },
+          type = 'view',
+        },
+        ['*.server.ts'] = {
+          alternate = { '{}.svelte', '{}.ts' },
+          type = 'server',
+          template = {
+            "import type { PageServerLoad } from './$types';",
+            "import { redirect } from '@sveltejs/kit';",
+            '',
+            'export const load: PageServerLoad = async ({ url, locals: { getSession } }) => {',
+            'const session = await getSession();',
+            "// TODO: hard part's done",
+            '};',
+          },
+        },
+        ['*.ts'] = {
+          alternate = { '{}.svelte' },
+          type = 'client',
+          template = {
+            "import type { PageClientLoad } from './$types';",
+            '',
+            'export const load: PageClientLoad = async ({ page }) => {',
+            '}',
           },
         },
       },
