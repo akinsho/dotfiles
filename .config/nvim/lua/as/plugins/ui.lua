@@ -17,7 +17,7 @@ return {
       { '<localleader>mf', codewindow.toggle_focus, desc = 'minimap: toggle focus' },
     },
     opts = {
-      auto_enable = true,
+      auto_enable = false,
       auto_disable = { 'help', 'pgsql' },
       show_cursor = false,
       relative = 'editor',

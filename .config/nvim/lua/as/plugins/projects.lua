@@ -43,7 +43,7 @@ return {
           alternate = '{}.test.tsx',
           type = 'source',
           template = {
-            "import type {open} FC {close} from 'react';",
+            "import type React, {open} FC {close} from 'react';",
             '',
             'type {basename|camelcase|capitalize}Props = {open}',
             '  property?: unknown;',

@@ -105,7 +105,7 @@ return {
         { 'K', function() splits.swap_buf_up() end },
         { 'L', function() splits.swap_buf_right() end },
 
-        { 'c', pcmd('close', 'E444') },
+        { 'c', pcmd('close', 'E444'), { exit = true, desc = 'exit' } },
         { 'q', pcmd('close', 'E444'), { desc = 'close window' } },
         { '<C-c>', pcmd('close', 'E444'), { desc = false } },
         { '<C-q>', pcmd('close', 'E444'), { desc = false } },
