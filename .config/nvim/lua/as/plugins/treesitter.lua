@@ -60,7 +60,7 @@ return {
         },
         rainbow = {
           enable = true,
-          disable = { 'lua', 'tsx', 'jsx', 'html' },
+          disable = { 'tsx', 'jsx', 'html' },
           query = {
             'rainbow-parens',
             html = 'rainbow-tags', -- TODO: fix the awful default appearance
