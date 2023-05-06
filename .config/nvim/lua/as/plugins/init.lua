@@ -82,6 +82,7 @@ return {
               cmd = { 'Neoconf' },
               opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
             },
+            'b0o/schemastore.nvim',
           },
           config = function()
             highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })

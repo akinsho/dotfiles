@@ -6,7 +6,17 @@ local servers = {
   sqlls = false,
   eslint = {},
   ccls = {},
-  jsonls = {},
+  ---@type fun(): lspconfig.options.jsonls
+  jsonls = function()
+    return {
+      settings = {
+        json = {
+          schemas = require('schemastore').json.schemas(),
+          validate = { enable = true },
+        },
+      },
+    }
+  end,
   bashls = {},
   vimls = {},
   terraformls = {},
