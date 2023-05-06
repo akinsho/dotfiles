@@ -54,6 +54,7 @@ return {
         ['IN-PROGRESS'] = ':foreground royalblue :weight bold',
         ['CANCELLED'] = ':foreground darkred :weight bold',
       },
+      org_hide_emphasis_markers = true,
       org_hide_leading_stars = true,
       org_agenda_skip_scheduled_if_done = true,
       org_agenda_skip_deadline_if_done = true,

@@ -11,6 +11,7 @@ return {
       format = {
         IncRename = { title = ' Rename ' },
         substitute = { pattern = '^:%%?s/', icon = ' ', ft = 'regex', title = '' },
+        input = { icon = ' ', lang = 'text', view = 'cmdline_popup', title = '' },
       },
     },
     popupmenu = {
