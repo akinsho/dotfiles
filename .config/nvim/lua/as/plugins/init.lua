@@ -196,11 +196,7 @@ return {
   --------------------------------------------------------------------------------
   -- Utilities {{{1
   --------------------------------------------------------------------------------
-  {
-    'kazhala/close-buffers.nvim',
-    cmd = { 'BDelete' },
-    keys = { { '<leader>qq', '<Cmd>BDelete this<CR>', desc = 'buffer delete' } },
-  },
+  { 'famiu/bufdelete.nvim', keys = { { '<leader>qq', '<Cmd>Bdelete<CR>', desc = 'buffer delete' } } },
   {
     'mg979/vim-visual-multi',
     lazy = false,
