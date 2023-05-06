@@ -155,24 +155,6 @@ return {
     },
   },
   { 'simrat39/rust-tools.nvim', dependencies = { 'nvim-lspconfig' } },
-  {
-    'saecki/crates.nvim',
-    version = '*',
-    event = 'BufRead Cargo.toml',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    opts = {
-      popup = { border = border },
-      null_ls = { enabled = true },
-    },
-    config = function(_, opts)
-      as.augroup('CmpSourceCargo', {
-        event = 'BufRead',
-        pattern = 'Cargo.toml',
-        command = function() require('cmp').setup.buffer({ sources = { { name = 'crates' } } }) end,
-      })
-      require('crates').setup(opts)
-    end,
-  },
   -- }}}
   -----------------------------------------------------------------------------//
   -- UI {{{1
@@ -443,6 +425,30 @@ return {
     config = function()
       vim.g.mkdp_auto_start = 0
       vim.g.mkdp_auto_close = 1
+    end,
+  },
+  {
+    'vuki656/package-info.nvim',
+    event = 'BufRead package.json',
+    requires = 'MunifTanjim/nui.nvim',
+    config = true,
+  },
+  {
+    'saecki/crates.nvim',
+    version = '*',
+    event = 'BufRead Cargo.toml',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      popup = { border = border },
+      null_ls = { enabled = true },
+    },
+    config = function(_, opts)
+      as.augroup('CmpSourceCargo', {
+        event = 'BufRead',
+        pattern = 'Cargo.toml',
+        command = function() require('cmp').setup.buffer({ sources = { { name = 'crates' } } }) end,
+      })
+      require('crates').setup(opts)
     end,
   },
   { 'yioneko/nvim-vtsls' },
