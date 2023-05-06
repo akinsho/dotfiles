@@ -13,6 +13,7 @@ return {
   {
     'gorbit99/codewindow.nvim',
     dev = true,
+    enabled = false,
     event = { 'BufReadPre', 'BufNewFile' },
     init = function() highlight.plugin('codewindow', { { CodewindowBorder = { link = 'Dim' } } }) end,
     keys = {
