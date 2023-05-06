@@ -8,7 +8,10 @@ return {
   {
     'lewis6991/satellite.nvim',
     event = 'VeryLazy',
-    opts = { excluded_filetypes = { 'help', 'alpha', 'undotree', 'neo-tree', 'gitcommit', 'gitrebase' } },
+    opts = {
+      current_only = true,
+      excluded_filetypes = { 'help', 'alpha', 'undotree', 'neo-tree', 'gitcommit', 'gitrebase' },
+    },
   },
   {
     'gorbit99/codewindow.nvim',
