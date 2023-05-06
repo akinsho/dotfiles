@@ -305,3 +305,7 @@ sveltekit
 src
 fallbacks
 Netlify
+netlify
+vite
+Vue
+Tiptap
