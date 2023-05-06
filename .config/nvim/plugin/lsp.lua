@@ -32,7 +32,7 @@ local function prepare_rename(data)
   for _, client in pairs(lsp.get_active_clients({ bufnr = bufnr })) do
     local rename_path = { 'server_capabilities', 'workspace', 'fileOperations', 'willRename' }
     if not vim.tbl_get(client, rename_path) then
-      vim.notify(fmt('%s does not support rename files'), 'error', { title = 'LSP' })
+      return vim.notify(fmt('%s does not LSP file rename', client.name), 'info', { title = 'LSP' })
     end
     local params = {
       files = { { newUri = 'file://' .. data.new_name, oldUri = 'file://' .. data.old_name } },
@@ -43,10 +43,13 @@ local function prepare_rename(data)
 end
 
 local function rename_file()
-  local old_name = api.nvim_buf_get_name(0)
-  local new_name = fmt('%s/%s', fs.dirname(old_name), fn.input('New name: '))
-  prepare_rename({ old_name = old_name, new_name })
-  lsp.util.rename(old_name, new_name)
+  vim.ui.input({ prompt = 'New name: ' }, function(name)
+    if not name then return end
+    local old_name = api.nvim_buf_get_name(0)
+    local new_name = fmt('%s/%s', fs.dirname(old_name), name)
+    prepare_rename({ old_name = old_name, new_name = new_name })
+    lsp.util.rename(old_name, new_name)
+  end)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -108,7 +111,7 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>gd', lsp.buf.type_definition, desc = 'go to type definition', capability = provider.DEFINITION },
     { 'n', '<leader>cl', lsp.codelens.run, desc = 'run code lens', capability = provider.CODELENS },
     { 'n', '<leader>ri', lsp.buf.rename, desc = 'rename', capability = provider.RENAME },
-    { 'n', '<leader>rN', rename_file, desc = 'rename with input', capability = provider.RENAME },
+    { 'n', '<leader>rm', rename_file, desc = 'rename file', capability = provider.RENAME },
   }
 
   as.foreach(function(m)
