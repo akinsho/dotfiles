@@ -6,6 +6,11 @@ local codewindow = as.reqcall('codewindow')
 
 return {
   {
+    'lewis6991/satellite.nvim',
+    event = 'VeryLazy',
+    opts = { excluded_filetypes = { 'help', 'alpha', 'undotree', 'neo-tree', 'gitcommit', 'gitrebase' } },
+  },
+  {
     'gorbit99/codewindow.nvim',
     dev = true,
     event = { 'BufReadPre', 'BufNewFile' },
@@ -136,29 +141,31 @@ return {
   },
   {
     'levouh/tint.nvim',
-    event = 'WinNew',
-    enabled = false,
+    event = 'UIEnter',
+    enabled = true,
     opts = {
-      tint = -30,
-      -- stylua: ignore
+      tint = -15,
       highlight_ignore_patterns = {
-        'WinSeparator', 'St.*', 'Comment', 'Panel.*', 'Telescope.*',
-        'Bqf.*', 'VirtColumn', 'Headline.*', 'NeoTree.*',
+        'WinSeparator',
+        'St.*',
+        'Comment',
+        'Panel.*',
+        'Telescope.*',
+        'IndentBlankline.*',
+        'Bqf.*',
+        'VirtColumn',
+        'Headline.*',
+        'NeoTree.*',
+        'LineNr',
+        'NeoTree.*',
+        'Telescope.*',
+        'VisibleTab',
       },
       window_ignore_function = function(win_id)
         local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
-        -- TODO: ideally tint should just ignore all buffers with a special type other than maybe "acwrite"
-        -- since if there is a custom buftype it's probably a special buffer we always want to pay
-        -- attention to whilst its open.
-        -- BUG: neo-tree cannot be ignore as either nofile or by filetype as this causes tinting bugs
         if win.diff or not falsy(fn.win_gettype(win_id)) then return true end
         local ignore_bt = as.p_table({ terminal = true, prompt = true, nofile = false })
-        local ignore_ft = as.p_table({
-          ['Telescope.*'] = true,
-          ['Neogit.*'] = true,
-          ['flutterTools.*'] = true,
-          ['qf'] = true,
-        })
+        local ignore_ft = as.p_table({ ['Neogit.*'] = true, ['flutterTools.*'] = true, ['qf'] = true })
         return ignore_bt[buf.buftype] or ignore_ft[buf.filetype]
       end,
     },
