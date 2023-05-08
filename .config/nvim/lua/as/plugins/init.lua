@@ -428,6 +428,12 @@ return {
     event = 'BufRead package.json',
     requires = 'MunifTanjim/nui.nvim',
     config = true,
+    init = function()
+      highlight.plugin('packageInfo', {
+        { PackageInfoOutdatedVersion = { fg = '#d19a66' } },
+        { PackageInfoUpToDateVersion = { fg = '#3C4048' } },
+      })
+    end,
   },
   {
     'saecki/crates.nvim',
