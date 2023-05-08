@@ -57,6 +57,7 @@ return {
   -- LSP,Completion & Debugger {{{1
   -----------------------------------------------------------------------------//
   'onsails/lspkind.nvim',
+  'b0o/schemastore.nvim',
   {
     {
       'williamboman/mason.nvim',
@@ -82,7 +83,6 @@ return {
               cmd = { 'Neoconf' },
               opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
             },
-            'b0o/schemastore.nvim',
           },
           config = function()
             highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
