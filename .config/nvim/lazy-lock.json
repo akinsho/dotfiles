@@ -14,7 +14,7 @@
   "cmp-rg": { "branch": "master", "commit": "1cad8eb315643d0df13c37401c03d7986f891011" },
   "cmp-spell": { "branch": "master", "commit": "60584cb75e5e8bba5a0c9e4c3ab0791e0698bffa" },
   "cmp_luasnip": { "branch": "master", "commit": "18095520391186d634a0045dacaa346291096566" },
-  "copilot.vim": { "branch": "release", "commit": "1358e8e45ecedc53daf971924a0541ddf6224faf" },
+  "copilot.lua": { "branch": "master", "commit": "3bfdf96d5eb7704ece1013ef04d0b0d211d12ee7" },
   "crates.nvim": { "branch": "main", "commit": "1dffccc0a95f656ebe00cacb4de282473430c5a1" },
   "danger": { "branch": "main", "commit": "341b5eaac0bbd52c0bbf3dff33d280e5a3b35112" },
   "debugprint.nvim": { "branch": "main", "commit": "c4219fde3ddfe15f93819b301897e528031b3c5d" },

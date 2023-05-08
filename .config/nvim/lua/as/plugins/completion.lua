@@ -1,5 +1,5 @@
-local highlight, ui, t = as.highlight, as.ui, as.replace_termcodes
-local api, fn = vim.api, vim.fn
+local highlight, ui, k = as.highlight, as.ui, as.replace_termcodes
+local api = vim.api
 local border = ui.current.border
 
 return {
@@ -44,7 +44,11 @@ return {
         cmp.confirm()
       end
 
-      local function copilot() api.nvim_feedkeys(fn['copilot#Accept'](t('<Tab>')), 'n', true) end
+      local function copilot()
+        local suggestion = require('copilot.suggestion')
+        if suggestion.is_visible() then return suggestion.accept() end
+        api.nvim_feedkeys(k('<Tab>'), 'n', false)
+      end
 
       local window_opts = {
         border = border,
@@ -118,42 +122,28 @@ return {
     end,
   },
   {
-    'github/copilot.vim',
+    'zbirenbaum/copilot.lua',
     event = 'InsertEnter',
     dependencies = { 'nvim-cmp' },
-    init = function() vim.g.copilot_no_tab_map = true end,
-    config = function()
-      local function accept_word()
-        fn['copilot#Accept']('')
-        local output = fn['copilot#TextQueuedForInsertion']()
-        return fn.split(output, [[[ .]\zs]])[1]
-      end
-
-      local function accept_line()
-        fn['copilot#Accept']('')
-        local output = fn['copilot#TextQueuedForInsertion']()
-        return fn.split(output, [[[\n]\zs]])[1]
-      end
-      map('i', '<Plug>(as-copilot-accept)', "copilot#Accept('<Tab>')", {
-        expr = true,
-        remap = true,
-        silent = true,
-      })
-      map('i', '<M-]>', '<Plug>(copilot-next)', { desc = 'next suggestion' })
-      map('i', '<M-[>', '<Plug>(copilot-previous)', { desc = 'previous suggestion' })
-      map('i', '<C-\\>', '<Cmd>vertical Copilot panel<CR>', { desc = 'open copilot panel' })
-      map('i', '<M-w>', accept_word, { expr = true, remap = false, desc = 'accept word' })
-      map('i', '<M-l>', accept_line, { expr = true, remap = false, desc = 'accept line' })
-      vim.g.copilot_filetypes = {
-        ['*'] = true,
+    opts = {
+      panel = {
+        enabled = true,
+        auto_refresh = true,
+        keymap = { open = '<M-CR>' },
+        layout = { position = 'right', ratio = 0.4 },
+      },
+      suggestion = {
+        auto_trigger = true,
+        keymap = { accept = false, accept_word = '<M-w>', accept_line = '<M-l>' },
+      },
+      filetypes = {
         gitcommit = false,
         NeogitCommitMessage = false,
         DressingInput = false,
         TelescopePrompt = false,
         ['neo-tree-popup'] = false,
         ['dap-repl'] = false,
-      }
-      highlight.plugin('copilot', { { CopilotSuggestion = { link = 'Comment' } } })
-    end,
+      },
+    },
   },
 }
