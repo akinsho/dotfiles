@@ -144,7 +144,7 @@ return {
         untracked = { text = icons.light_shade_block },
       },
       -- Experimental ------------------------------------------------------------------------------
-      _inline2 = true,
+      _inline2 = false,
       _extmark_signs = true,
       _signs_staged_enable = false,
       ----------------------------------------------------------------------------------------------
