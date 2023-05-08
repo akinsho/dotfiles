@@ -60,10 +60,11 @@ return {
         },
         rainbow = {
           enable = true,
-          disable = { 'tsx', 'jsx', 'html' },
           query = {
+            --- @ref: https://github.com/HiPhish/nvim-ts-rainbow2/issues/18#issuecomment-1498400902
             'rainbow-parens',
-            html = 'rainbow-tags', -- TODO: fix the awful default appearance
+            html = 'rainbow-tags',
+            svelte = 'rainbow-tags',
           },
           strategy = {
             dart = require('ts-rainbow.strategy.global'),
