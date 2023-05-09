@@ -6,17 +6,9 @@ local codewindow = as.reqcall('codewindow')
 
 return {
   {
-    'lewis6991/satellite.nvim',
-    event = 'VeryLazy',
-    opts = {
-      current_only = true,
-      excluded_filetypes = { 'help', 'alpha', 'undotree', 'neo-tree', 'gitcommit', 'gitrebase' },
-    },
-  },
-  {
     'gorbit99/codewindow.nvim',
     dev = true,
-    enabled = false,
+    enabled = true,
     event = { 'BufReadPre', 'BufNewFile' },
     init = function() highlight.plugin('codewindow', { { CodewindowBorder = { link = 'Dim' } } }) end,
     keys = {
