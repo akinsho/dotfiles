@@ -3,8 +3,9 @@ local highlight = as.highlight
 local border = as.ui.current.border
 local icons = as.ui.icons.separators
 
-local function linker() return require('gitlinker') end
-local function neogit() return require('neogit') end
+local neogit = as.reqidx('neogit')
+local gitlinker = as.reqidx('gitlinker')
+
 local function browser_open() return { action_callback = require('gitlinker.actions').open_in_browser } end
 
 return {
@@ -13,10 +14,10 @@ return {
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
-      { '<localleader>gs', function() neogit().open() end, desc = 'open status buffer' },
-      { '<localleader>gc', function() neogit().open({ 'commit' }) end, desc = 'open commit buffer' },
-      { '<localleader>gl', function() neogit().popups.pull.create() end, desc = 'open pull popup' },
-      { '<localleader>gp', function() neogit().popups.push.create() end, desc = 'open push popup' },
+      { '<localleader>gs', function() neogit.open() end, desc = 'open status buffer' },
+      { '<localleader>gc', function() neogit.open({ 'commit' }) end, desc = 'open commit buffer' },
+      { '<localleader>gl', function() neogit.popups.pull.create() end, desc = 'open pull popup' },
+      { '<localleader>gp', function() neogit.popups.push.create() end, desc = 'open push popup' },
     },
     opts = {
       disable_signs = false,
@@ -94,29 +95,29 @@ return {
     keys = {
       {
         '<localleader>gu',
-        function() linker().get_buf_range_url('n') end,
+        function() gitlinker.get_buf_range_url('n') end,
         desc = 'gitlinker: copy line to clipboard',
         mode = 'n',
       },
       {
         '<localleader>gu',
-        function() linker().get_buf_range_url('v') end,
+        function() gitlinker.get_buf_range_url('v') end,
         desc = 'gitlinker: copy range to clipboard',
         mode = 'v',
       },
       {
         '<localleader>go',
-        function() linker().get_repo_url(browser_open()) end,
+        function() gitlinker.get_repo_url(browser_open()) end,
         desc = 'gitlinker: open in browser',
       },
       {
         '<localleader>go',
-        function() linker().get_buf_range_url('n', browser_open()) end,
+        function() gitlinker.get_buf_range_url('n', browser_open()) end,
         desc = 'gitlinker: open current line in browser',
       },
       {
         '<localleader>go',
-        function() linker().get_buf_range_url('v', browser_open()) end,
+        function() gitlinker.get_buf_range_url('v', browser_open()) end,
         desc = 'gitlinker: open current selection in browser',
         mode = 'v',
       },
