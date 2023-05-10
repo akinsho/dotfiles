@@ -93,6 +93,12 @@ return {
         opts = { timeout = 10000 },
       },
       {
+        view = 'notify',
+        filter = { event = 'notify', find = 'Type%-checking' },
+        opts = { replace = true, merge = true, title = 'TSC' },
+        stop = true,
+      },
+      {
         view = 'mini',
         filter = {
           any = {

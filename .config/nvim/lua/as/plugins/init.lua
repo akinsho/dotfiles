@@ -454,6 +454,7 @@ return {
     end,
   },
   { 'yioneko/nvim-vtsls' },
+  { 'dmmulroy/tsc.nvim', cmd = 'TSC', config = true, ft = { 'typescript', 'typescriptreact' } },
   { 'fladson/vim-kitty', lazy = false },
   { 'mtdl9/vim-log-highlighting', lazy = false },
   -- }}}
