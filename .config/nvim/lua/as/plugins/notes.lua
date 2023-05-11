@@ -1,4 +1,4 @@
-local fmt, fn = string.format, vim.fn
+local fmt, fn, ui = string.format, vim.fn, vim.ui
 local highlight, border = as.highlight, as.ui.current.border
 local function sync(path) return fmt('%s/notes/%s', fn.expand('$SYNC_DIR'), path) end
 
@@ -48,6 +48,17 @@ return {
       },
     },
     opts = {
+      ui = {
+        menu = {
+          handler = function(data)
+            local items = vim.tbl_filter(function(i) return i.key and i.label:lower() ~= 'quit' end, data.items)
+            ui.select(items, { prompt = data.propmt, format_item = function(item) return item.label end }, function(ch)
+              if not ch then return end
+              if ch.action then ch.action() end
+            end)
+          end,
+        },
+      },
       org_agenda_files = { sync('org/**/*') },
       org_default_notes_file = sync('org/refile.org'),
       org_todo_keywords = { 'TODO(t)', 'WAITING', 'IN-PROGRESS', '|', 'DONE(d)', 'CANCELLED' },
