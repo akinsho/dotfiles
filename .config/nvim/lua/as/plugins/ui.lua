@@ -8,7 +8,6 @@ return {
   {
     'gorbit99/codewindow.nvim',
     dev = true,
-    enabled = true,
     event = { 'BufReadPre', 'BufNewFile' },
     init = function() highlight.plugin('codewindow', { { CodewindowBorder = { link = 'Dim' } } }) end,
     keys = {
@@ -18,7 +17,7 @@ return {
       { '<localleader>mf', codewindow.toggle_focus, desc = 'minimap: toggle focus' },
     },
     opts = {
-      auto_enable = false,
+      auto_enable = true,
       auto_disable = { 'help', 'pgsql' },
       show_cursor = false,
       relative = 'editor',
