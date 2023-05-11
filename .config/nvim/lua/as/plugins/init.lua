@@ -11,7 +11,6 @@ return {
     'olimorris/persisted.nvim',
     lazy = false,
     init = function()
-      as.command('ListSessions', 'Telescope persisted')
       as.augroup('PersistedEvents', {
         event = 'User',
         pattern = 'PersistedTelescopeLoadPre',

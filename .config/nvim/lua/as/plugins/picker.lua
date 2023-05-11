@@ -1,12 +1,16 @@
 local fn, env, highlight, ui, reqcall = vim.fn, vim.env, as.highlight, as.ui, as.reqcall
 local icons, lsp_hls = ui.icons, ui.lsp.highlights
+local prompt = icons.misc.telescope .. '  '
 
-local fzf_lua = reqcall('fzf-lua')
+local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 ------------------------------------------------------------------------------------------------------------------------
 -- FZF-LUA HELPERS
 ------------------------------------------------------------------------------------------------------------------------
+local function title(str, icon, icon_hl)
+  return { { ' ' }, { (icon or ''), icon_hl or 'DevIconDefault' }, { ' ' }, { str, 'Bold' }, { ' ' } }
+end
+
 local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
-local prompt = icons.misc.telescope .. ' '
 
 local function git_files_cwd_aware(opts)
   opts = opts or {}
@@ -47,6 +51,35 @@ local function cursor_dropdown(opts)
     },
   }, opts)
 end
+
+local function list_sessions()
+  local ok, persisted = as.pcall(require, 'persisted')
+  if not ok then return end
+  local sessions = persisted.list()
+  fzf_lua.fzf_exec(
+    vim.tbl_map(function(s) return s.name end, sessions),
+    dropdown({
+      winopts = { title = title('Sessions', ''), height = 0.33, row = 0.5 },
+      previewer = false,
+      actions = {
+        ['default'] = function(selected)
+          local session = vim.tbl_filter(function(s) return s.name == selected[1] end, sessions)[1]
+          if not session then return end
+          persisted.load({ session = session.file_path })
+        end,
+        ['ctrl-d'] = {
+          function(selected)
+            local session = vim.iter(sessions):find(function(s) return s.name == selected[1] end)
+            if not session then return end
+            fn.delete(vim.fn.expand(session.file_path))
+          end,
+          fzf_lua.actions.resume,
+        },
+      },
+    })
+  )
+end
+
 as.fzf = { dropdown = dropdown, cursor_dropdown = cursor_dropdown }
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -83,11 +116,7 @@ return {
     config = function()
       local lsp_kind = require('lspkind')
 
-      local function title(str, icon, icon_hl)
-        return { { ' ' }, { (icon or ''), icon_hl or 'DevIconDefault' }, { ' ' }, { str, 'Bold' }, { ' ' } }
-      end
-
-      require('fzf-lua').setup({
+      fzf_lua.setup({
         fzf_opts = {
           ['--info'] = 'default', -- hidden OR inline:⏐
           ['--reverse'] = false,
@@ -217,9 +246,12 @@ return {
           },
         },
       })
-      require('fzf-lua').register_ui_select(dropdown({
-        winopts = { title = title('Select one of:'), height = 0.33, width = 0.25 },
+
+      fzf_lua.register_ui_select(dropdown({
+        winopts = { title = title('Select one of:'), height = 0.33, row = 0.5 },
       }))
+
+      as.command('SessionList', list_sessions)
     end,
   },
   {
