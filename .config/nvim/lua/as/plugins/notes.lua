@@ -54,6 +54,7 @@ return {
             local items = vim.tbl_filter(function(i) return i.key and i.label:lower() ~= 'quit' end, data.items)
             ui.select(items, {
               prompt = data.prompt,
+              kind = 'orgmode',
               format_item = function(item) return fmt('%s → %s', item.key, item.label) end,
             }, function(choice)
               if not choice then return end

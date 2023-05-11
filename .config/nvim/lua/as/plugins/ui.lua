@@ -1,7 +1,7 @@
 local api, fn = vim.api, vim.fn
 local strwidth = api.nvim_strwidth
 local highlight, ui, falsy, augroup = as.highlight, as.ui, as.falsy, as.augroup
-local icons, border = ui.icons.lsp, ui.current.border
+local icons, border, rect = ui.icons.lsp, ui.current.border, ui.border.rectangle
 
 return {
   {
@@ -68,9 +68,28 @@ return {
           win_options = { winblend = 10 },
           mappings = { n = { ['q'] = 'Close' } },
         },
+        get_config = function(opts)
+          if opts.kind == 'orgmode' then
+            return {
+              backend = 'nui',
+              nui = {
+                position = '97%',
+                border = { style = rect },
+                min_width = vim.o.columns - 2,
+              },
+            }
+          end
+        end,
         nui = {
           min_height = 10,
-          win_options = { winblend = 10 },
+          win_options = {
+            winhighlight = table.concat({
+              'Normal:Normal',
+              'FloatBorder:PickerBorder',
+              'FloatTitle:Title',
+              'CursorLine:Visual',
+            }, ','),
+          },
         },
       },
     },
