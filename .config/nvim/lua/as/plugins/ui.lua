@@ -2,33 +2,14 @@ local api, fn = vim.api, vim.fn
 local strwidth = api.nvim_strwidth
 local highlight, ui, falsy, augroup = as.highlight, as.ui, as.falsy, as.augroup
 local icons, border = ui.icons.lsp, ui.current.border
-local codewindow = as.reqcall('codewindow')
 
 return {
   {
-    'gorbit99/codewindow.nvim',
-    dev = true,
-    event = { 'BufReadPre', 'BufNewFile' },
-    init = function() highlight.plugin('codewindow', { { CodewindowBorder = { link = 'Dim' } } }) end,
-    keys = {
-      { '<localleader>mo', codewindow.open_minimap, desc = 'minimap: open' },
-      { '<localleader>mc', codewindow.close_minimap, desc = 'minimap: close' },
-      { '<localleader>mt', codewindow.toggle_minimap, desc = 'minimap: toggle window' },
-      { '<localleader>mf', codewindow.toggle_focus, desc = 'minimap: toggle focus' },
-    },
+    'lewis6991/satellite.nvim',
+    event = 'VeryLazy',
     opts = {
-      auto_enable = true,
-      auto_disable = { 'help', 'pgsql' },
-      show_cursor = false,
-      relative = 'editor',
-      z_index = 1000,
-      minimap_width = 12,
-      max_minimap_height = math.floor(vim.o.lines * 0.8),
-      -- stylua: ignore
-      exclude_filetypes = {
-        'lazy', 'neo-tree', 'undotree', 'alpha', 'gitcommit', 'gitrebase', 'Glance', 'help', 'mason',
-        'noice', 'neo-tree-popup'
-      },
+      current_only = true,
+      excluded_filetypes = { 'help', 'alpha', 'undotree', 'neo-tree', 'gitcommit', 'gitrebase' },
     },
   },
   {
