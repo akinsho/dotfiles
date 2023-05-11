@@ -6,6 +6,7 @@ return {
   {
     'vhyrro/neorg',
     ft = 'norg',
+    version = '*',
     build = ':Neorg sync-parsers',
     dependencies = { 'vhyrro/neorg-telescope' },
     opts = {
