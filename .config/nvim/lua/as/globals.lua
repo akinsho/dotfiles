@@ -114,7 +114,8 @@ function as.list.qf.delete(buf)
   buf = buf or api.nvim_get_current_buf()
   local list = fn.getqflist()
   local line = api.nvim_win_get_cursor(0)[1]
-  if api.nvim_get_mode().mode:match('[vV]') then
+  local mode = api.nvim_get_mode().mode
+  if mode:match('[vV]') then
     local first_line = fn.getpos("'<")[2]
     local last_line = fn.getpos("'>")[2]
     list = as.fold(function(accum, item, i)
