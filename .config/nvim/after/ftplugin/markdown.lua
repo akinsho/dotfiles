@@ -1,4 +1,7 @@
+if not as then return end
+
 local opt, b, fn = vim.opt_local, vim.b, vim.fn
+local map = map or vim.keymap.set
 
 opt.spell = true
 
