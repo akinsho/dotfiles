@@ -1,5 +1,5 @@
 os:
-  editCommandTemplate: "{{editor}} +{{line}} -- {{filename}}"
+  editPreset: "nvim"
 gui:
   ## stuff relating to the UI
   scrollHeight: 2
