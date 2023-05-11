@@ -90,6 +90,7 @@ return {
   },
   {
     'lukas-reineke/headlines.nvim',
+    enabled = false,
     ft = { 'org', 'norg', 'markdown', 'yaml' },
     config = function()
       highlight.plugin('Headlines', {
