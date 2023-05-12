@@ -52,9 +52,12 @@ return {
         menu = {
           handler = function(data)
             local items = vim.tbl_filter(function(i) return i.key and i.label:lower() ~= 'quit' end, data.items)
-            ui.select(items, { prompt = data.propmt, format_item = function(item) return item.label end }, function(ch)
-              if not ch then return end
-              if ch.action then ch.action() end
+            ui.select(items, {
+              prompt = data.prompt,
+              format_item = function(item) return fmt('%s → %s', item.key, item.label) end,
+            }, function(choice)
+              if not choice then return end
+              if choice.action then choice.action() end
             end)
           end,
         },
