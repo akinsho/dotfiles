@@ -69,8 +69,9 @@ local function chunks_to_string(chunks)
   local strings = as.fold(function(acc, item)
     local text, hl = unpack(item)
     if not falsy(text) then
-      if type(text) == 'number' then item = tostring(item) end
+      if type(text) ~= 'string' then text = tostring(text) end
       if item.max_size then text = truncate_str(text, item.max_size) end
+      text = text:gsub('%%', '%%%1')
       table.insert(acc, not falsy(hl) and ('%%#%s#%s%%*'):format(hl, text) or text)
     end
     return acc
