@@ -240,11 +240,11 @@ return {
           icons = {
             ['M'] = { icon = icons.git.mod, color = 'yellow' },
             ['D'] = { icon = icons.git.remove, color = 'red' },
-            ['A'] = { icon = icons.git.add, color = 'green' },
+            ['A'] = { icon = icons.git.staged, color = 'green' },
             ['R'] = { icon = icons.git.rename, color = 'yellow' },
-            ['C'] = { icon = icons.git.mod, color = 'yellow' },
+            ['C'] = { icon = icons.git.conflict, color = 'yellow' },
             ['T'] = { icon = icons.git.mod, color = 'magenta' },
-            ['?'] = { icon = '?', color = 'magenta' },
+            ['?'] = { icon = icons.git.untracked, color = 'magenta' },
           },
         },
       })
