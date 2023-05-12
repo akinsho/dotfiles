@@ -69,6 +69,12 @@ return {
           mappings = { n = { ['q'] = 'Close' } },
         },
         get_config = function(opts)
+          if opts.kind == 'codeaction' then
+            return {
+              backend = 'fzf_lua',
+              fzf_lua = as.fzf.cursor_dropdown(opts),
+            }
+          end
           if opts.kind == 'orgmode' then
             return {
               backend = 'nui',
@@ -80,6 +86,13 @@ return {
             }
           end
         end,
+        fzf_lua = as.fzf.dropdown({
+          winopts = {
+            title = 'Select one of:',
+            height = 0.33,
+            row = 0.5,
+          },
+        }),
         nui = {
           min_height = 10,
           win_options = {

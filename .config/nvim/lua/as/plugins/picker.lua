@@ -6,7 +6,7 @@ local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 ------------------------------------------------------------------------------------------------------------------------
 -- FZF-LUA HELPERS
 ------------------------------------------------------------------------------------------------------------------------
-local function title(str, icon, icon_hl)
+local function format_title(str, icon, icon_hl)
   return { { ' ' }, { (icon or ''), icon_hl or 'DevIconDefault' }, { ' ' }, { str, 'Bold' }, { ' ' } }
 end
 
@@ -28,11 +28,13 @@ end
 
 local function dropdown(opts, ...)
   opts = opts or { winopts = {} }
+  local title = vim.tbl_get(opts, 'winopts', 'title') ---@type string?
+  if title and type(title) == 'string' then opts.winopts.title = format_title(title) end
   return vim.tbl_deep_extend('force', {
     prompt = prompt,
     fzf_opts = { ['--layout'] = 'reverse' },
     winopts = {
-      title_pos = opts.winopts.title and 'center' or nil,
+      title_pos = title and 'center' or nil,
       height = 0.70,
       width = 0.45,
       row = 0.1,
@@ -42,6 +44,7 @@ local function dropdown(opts, ...)
 end
 
 local function cursor_dropdown(opts)
+  if opts.prompt then opts.prompt = prompt end
   return dropdown({
     winopts = {
       row = 1,
@@ -60,7 +63,7 @@ local function list_sessions()
   fzf.fzf_exec(
     vim.tbl_map(function(s) return s.name end, sessions),
     dropdown({
-      winopts = { title = title('Sessions', ''), height = 0.33, row = 0.5 },
+      winopts = { title = format_title('Sessions', ''), height = 0.33, row = 0.5 },
       previewer = false,
       actions = {
         ['default'] = function(selected)
@@ -163,31 +166,31 @@ return {
         },
         highlights = {
           prompt = prompt,
-          winopts = { title = title('Highlights') },
+          winopts = { title = format_title('Highlights') },
         },
         helptags = {
           prompt = prompt,
-          winopts = { title = title('Help', '') },
+          winopts = { title = format_title('Help', '') },
         },
         oldfiles = dropdown({
           cwd_only = true,
-          winopts = { title = title('History', '') },
+          winopts = { title = format_title('History', '') },
         }),
         files = dropdown({
-          winopts = { title = title('Files', '') },
+          winopts = { title = format_title('Files', '') },
         }),
         buffers = dropdown({
-          winopts = { title = title('Buffers', '﬘') },
+          winopts = { title = format_title('Buffers', '﬘') },
         }),
         keymaps = dropdown({
-          winopts = { title = title('Keymaps', ''), width = 0.7 },
+          winopts = { title = format_title('Keymaps', ''), width = 0.7 },
         }),
         registers = cursor_dropdown({
-          winopts = { title = title('Registers', ''), width = 0.6 },
+          winopts = { title = format_title('Registers', ''), width = 0.6 },
         }),
         grep = {
           prompt = ' ',
-          winopts = { title = title('Grep', '') },
+          winopts = { title = format_title('Grep', '') },
           fzf_opts = {
             ['--keep-right'] = '',
           },
@@ -200,42 +203,42 @@ return {
             symbol_hl = function(s) return lsp_hls[s] end,
           },
           code_actions = cursor_dropdown({
-            winopts = { title = title('Code Actions', '', '@type') },
+            winopts = { title = format_title('Code Actions', '', '@type') },
           }),
         },
         jumps = dropdown({
-          winopts = { title = title('Jumps', ''), preview = { hidden = 'nohidden' } },
+          winopts = { title = format_title('Jumps', ''), preview = { hidden = 'nohidden' } },
         }),
         changes = dropdown({
           prompt = '',
-          winopts = { title = title('Changes', '⟳'), preview = { hidden = 'nohidden' } },
+          winopts = { title = format_title('Changes', '⟳'), preview = { hidden = 'nohidden' } },
         }),
         diagnostics = dropdown({
-          winopts = { title = title('Diagnostics', '', 'DiagnosticError') },
+          winopts = { title = format_title('Diagnostics', '', 'DiagnosticError') },
         }),
         git = {
           files = dropdown({
             path_shorten = false, -- this doesn't use any clever strategy unlike telescope so is somewhat useless
             cmd = 'git ls-files --others --cached --exclude-standard',
-            winopts = { title = title('Git Files', '') },
+            winopts = { title = format_title('Git Files', '') },
           }),
           branches = dropdown({
-            winopts = { title = title('Branches', ''), height = 0.3, row = 0.4 },
+            winopts = { title = format_title('Branches', ''), height = 0.3, row = 0.4 },
           }),
           status = {
             prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
-            winopts = { title = title('Git Status', '') },
+            winopts = { title = format_title('Git Status', '') },
           },
           bcommits = {
             prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
-            winopts = { title = title('', 'Buffer Commits') },
+            winopts = { title = format_title('', 'Buffer Commits') },
           },
           commits = {
             prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
-            winopts = { title = title('', 'Commits') },
+            winopts = { title = format_title('', 'Commits') },
           },
           icons = {
             ['M'] = { icon = icons.git.mod, color = 'yellow' },
@@ -248,10 +251,6 @@ return {
           },
         },
       })
-
-      fzf.register_ui_select(dropdown({
-        winopts = { title = title('Select one of:'), height = 0.33, row = 0.5 },
-      }))
 
       as.command('SessionList', list_sessions)
     end,
