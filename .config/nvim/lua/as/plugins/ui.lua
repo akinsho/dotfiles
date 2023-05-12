@@ -69,10 +69,13 @@ return {
           mappings = { n = { ['q'] = 'Close' } },
         },
         get_config = function(opts)
+          opts.prompt = opts.prompt and vim.trim(opts.prompt:gsub(':', ''))
           if opts.kind == 'codeaction' then
             return {
               backend = 'fzf_lua',
-              fzf_lua = as.fzf.cursor_dropdown(opts),
+              fzf_lua = as.fzf.cursor_dropdown({
+                winopts = { title = opts.prompt },
+              }),
             }
           end
           if opts.kind == 'orgmode' then
@@ -85,19 +88,18 @@ return {
               },
             }
           end
+          return {
+            backend = 'fzf_lua',
+            fzf_lua = as.fzf.dropdown({
+              winopts = { title = opts.prompt, height = 0.33, row = 0.5 },
+            }),
+          }
         end,
-        fzf_lua = as.fzf.dropdown({
-          winopts = {
-            title = 'Select one of:',
-            height = 0.33,
-            row = 0.5,
-          },
-        }),
         nui = {
           min_height = 10,
           win_options = {
             winhighlight = table.concat({
-              'Normal:Normal',
+              'Normal:Italic',
               'FloatBorder:PickerBorder',
               'FloatTitle:Title',
               'CursorLine:Visual',
