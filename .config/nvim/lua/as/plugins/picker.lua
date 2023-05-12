@@ -53,10 +53,11 @@ local function cursor_dropdown(opts)
 end
 
 local function list_sessions()
+  local fzf = require('fzf-lua')
   local ok, persisted = as.pcall(require, 'persisted')
   if not ok then return end
   local sessions = persisted.list()
-  fzf_lua.fzf_exec(
+  fzf.fzf_exec(
     vim.tbl_map(function(s) return s.name end, sessions),
     dropdown({
       winopts = { title = title('Sessions', ''), height = 0.33, row = 0.5 },
@@ -73,7 +74,7 @@ local function list_sessions()
             if not session then return end
             fn.delete(vim.fn.expand(session.file_path))
           end,
-          fzf_lua.actions.resume,
+          fzf.actions.resume,
         },
       },
     })
@@ -115,8 +116,9 @@ return {
     },
     config = function()
       local lsp_kind = require('lspkind')
+      local fzf = require('fzf-lua')
 
-      fzf_lua.setup({
+      fzf.setup({
         fzf_opts = {
           ['--info'] = 'default', -- hidden OR inline:⏐
           ['--reverse'] = false,
@@ -247,7 +249,7 @@ return {
         },
       })
 
-      fzf_lua.register_ui_select(dropdown({
+      fzf.register_ui_select(dropdown({
         winopts = { title = title('Select one of:'), height = 0.33, row = 0.5 },
       }))
 
