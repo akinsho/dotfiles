@@ -35,13 +35,13 @@ return {
             -- stylua: ignore
             { NeoTreeTabSeparatorInactive = { inherit = 'NeoTreeTabInactive', fg = { from = 'PanelDarkBackground', attr = 'bg' } } },
           },
+          -- NOTE: panel background colours don't get ignored by tint.nvim so avoid using them for now
           horizon = {
             { NeoTreeWinSeparator = { link = 'WinSeparator' } },
-            { NeoTreeTabInactive = { bg = { from = 'PanelBackground' }, fg = { from = 'Comment' } } },
             { NeoTreeTabActive = { link = 'VisibleTab' } },
             { NeoTreeTabSeparatorActive = { link = 'VisibleTab' } },
-            -- stylua: ignore
-            { NeoTreeTabSeparatorInactive = { inherit = 'NeoTreeTabInactive', fg = { from = 'PanelBackground', attr = 'bg' } } },
+            { NeoTreeTabInactive = { inherit = 'Comment', italic = false } },
+            { NeoTreeTabSeparatorInactive = { link = 'WinSeparator' } },
           },
         },
       })

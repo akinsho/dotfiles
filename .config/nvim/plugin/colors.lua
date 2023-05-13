@@ -131,13 +131,11 @@ local function set_sidebar_highlight()
 end
 
 local sidebar_fts = {
-  'packer',
   'flutterToolsOutline',
   'undotree',
   'Outline',
   'dbui',
   'neotest-summary',
-  'pr',
 }
 
 local function on_sidebar_enter()
@@ -154,13 +152,6 @@ end
 
 local function colorscheme_overrides()
   local overrides = {
-    ['doom-one'] = {
-      { ['@namespace'] = { fg = P.blue } },
-      { CursorLineNr = { fg = { from = 'Keyword' } } },
-      { LineNr = { bg = 'NONE' } },
-      { NeoTreeIndentMarker = { link = 'Comment' } },
-      { NeoTreeRootName = { bold = true, italic = true, fg = 'LightMagenta' } },
-    },
     ['horizon'] = {
       { Constant = { bold = true } },
       { NonText = { fg = { from = 'Comment' } } },
@@ -178,8 +169,7 @@ local function colorscheme_overrides()
     },
   }
   local hls = overrides[vim.g.colors_name]
-  if not hls then return end
-  highlight.all(hls)
+  if hls then highlight.all(hls) end
 end
 
 local function user_highlights()
