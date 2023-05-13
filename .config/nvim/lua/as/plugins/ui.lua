@@ -69,7 +69,7 @@ return {
           mappings = { n = { ['q'] = 'Close' } },
         },
         get_config = function(opts)
-          opts.prompt = opts.prompt and vim.trim(opts.prompt:gsub(':', ''))
+          opts.prompt = opts.prompt and opts.prompt:gsub(':', '')
           if opts.kind == 'codeaction' then
             return {
               backend = 'fzf_lua',

@@ -7,7 +7,12 @@ local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 -- FZF-LUA HELPERS
 ------------------------------------------------------------------------------------------------------------------------
 local function format_title(str, icon, icon_hl)
-  return { { ' ' }, { (icon or ''), icon_hl or 'DevIconDefault' }, { ' ' }, { str, 'Bold' }, { ' ' } }
+  return {
+    { ' ' },
+    { (icon and icon .. ' ' or ''), icon_hl or 'DevIconDefault' },
+    { str, 'Bold' },
+    { ' ' },
+  }
 end
 
 local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
