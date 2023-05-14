@@ -82,7 +82,7 @@ return {
     end,
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'HiPhish/nvim-ts-rainbow2' },
+      { 'luozhiya/nvim-ts-rainbow2', branch = 'detach' },
     },
   },
   { 'JoosepAlviste/nvim-ts-context-commentstring' },
