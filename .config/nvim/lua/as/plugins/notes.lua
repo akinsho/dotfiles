@@ -8,22 +8,10 @@ return {
     ft = 'norg',
     version = '*',
     build = ':Neorg sync-parsers',
-    dependencies = { 'vhyrro/neorg-telescope' },
     opts = {
       configure_parsers = true,
       load = {
         ['core.defaults'] = {},
-        ['core.integrations.telescope'] = {},
-        ['core.keybinds'] = {
-          config = {
-            default_keybinds = true,
-            neorg_leader = '<localleader>',
-            hook = function(keybinds)
-              keybinds.unmap('norg', 'n', '<C-s>')
-              keybinds.map_event('norg', 'n', '<C-x>', 'core.integrations.telescope.find_linkable')
-            end,
-          },
-        },
         ['core.completion'] = { config = { engine = 'nvim-cmp' } },
         ['core.concealer'] = {},
         ['core.dirman'] = {

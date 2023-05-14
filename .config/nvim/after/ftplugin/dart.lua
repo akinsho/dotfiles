@@ -2,7 +2,6 @@ vim.bo.syntax = ''
 vim.bo.textwidth = 100
 vim.opt_local.spell = true
 
-map('n', '<leader>cc', '<Cmd>Telescope flutter commands<CR>', { desc = 'flutter: commands', buffer = 0 })
 map('n', '<leader>dd', '<Cmd>FlutterDevices<CR>', { desc = 'flutter: devices', buffer = 0 })
 map('n', '<leader>de', '<Cmd>FlutterEmulators<CR>', { desc = 'flutter: emulators', buffer = 0 })
 map('n', '<leader>do', '<Cmd>FlutterOutline<CR>', { desc = 'flutter: outline', buffer = 0 })

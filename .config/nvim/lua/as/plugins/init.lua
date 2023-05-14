@@ -13,12 +13,6 @@ return {
     init = function()
       as.augroup('PersistedEvents', {
         event = 'User',
-        pattern = 'PersistedTelescopeLoadPre',
-        command = function()
-          vim.schedule(function() cmd('%bd') end)
-        end,
-      }, {
-        event = 'User',
         pattern = 'PersistedSavePre',
         -- Arguments are always persisted in a session and can't be removed using 'sessionoptions'
         -- so remove them when saving a session
