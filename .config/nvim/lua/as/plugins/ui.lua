@@ -5,14 +5,6 @@ local icons, border, rect = ui.icons.lsp, ui.current.border, ui.border.rectangle
 
 return {
   {
-    'lewis6991/satellite.nvim',
-    event = 'VeryLazy',
-    opts = {
-      current_only = true,
-      excluded_filetypes = { 'help', 'alpha', 'undotree', 'neo-tree', 'gitcommit', 'gitrebase' },
-    },
-  },
-  {
     'lukas-reineke/virt-column.nvim',
     event = 'VimEnter',
     opts = { char = '▕' },
@@ -154,7 +146,7 @@ return {
     event = 'UIEnter',
     enabled = true,
     opts = {
-      tint = -15,
+      tint = -25,
       highlight_ignore_patterns = {
         'WinSeparator',
         'St.*',
