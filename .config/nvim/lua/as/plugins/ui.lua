@@ -146,7 +146,7 @@ return {
     event = 'UIEnter',
     enabled = true,
     opts = {
-      tint = -25,
+      tint = -15,
       highlight_ignore_patterns = {
         'WinSeparator',
         'St.*',

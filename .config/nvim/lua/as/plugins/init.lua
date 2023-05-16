@@ -156,13 +156,22 @@ return {
     'uga-rosa/ccc.nvim',
     ft = { 'lua', 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
     cmd = { 'CccHighlighterToggle' },
-    opts = {
-      win_opts = { border = border },
-      highlighter = {
-        auto_enable = true,
-        excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
-      },
-    },
+    opts = function()
+      local ccc = require('ccc')
+      local p = ccc.picker
+      p.hex.pattern = {
+        [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)>]=],
+        [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)(\x\x)>]=],
+      }
+      ccc.setup({
+        win_opts = { border = border },
+        pickers = { p.hex, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
+        highlighter = {
+          auto_enable = true,
+          excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
+        },
+      })
+    end,
   },
   {
     'SmiteshP/nvim-navic',

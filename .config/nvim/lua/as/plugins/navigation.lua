@@ -52,12 +52,13 @@ return {
       local lsp_kinds = as.ui.lsp.highlights
 
       require('neo-tree').setup({
-        sources = { 'filesystem', 'document_symbols' },
+        sources = { 'filesystem', 'git_status', 'document_symbols' },
         source_selector = {
           winbar = true,
           separator_active = '',
           sources = {
             { source = 'filesystem' },
+            { source = 'git_status' },
             { source = 'document_symbols' },
           },
         },
