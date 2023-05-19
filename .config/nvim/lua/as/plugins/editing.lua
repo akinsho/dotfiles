@@ -80,16 +80,9 @@ return {
     config = function()
       local border = { style = as.ui.border.rectangle, highlight = 'PickerBorder' }
       require('chatgpt').setup({
-        popup_window = {
-          border = border,
-        },
-        popup_input = {
-          border = border,
-          submit = '<C-s>',
-        },
-        settings_window = {
-          border = border,
-        },
+        popup_window = { border = border },
+        popup_input = { border = border, submit = '<C-s>' },
+        settings_window = { border = border },
         chat = {
           keymaps = {
             close = {

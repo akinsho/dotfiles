@@ -515,11 +515,8 @@ local function stl_lsp_clients(ctx)
   if not state.lsp_clients_visible then return { { name = fmt('%d attached', #clients), priority = 7 } } end
   if falsy(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
   table.sort(clients, function(a, b)
-    if a.name == 'null-ls' then
-      return false
-    elseif b.name == 'null-ls' then
-      return true
-    end
+    if a.name == 'null-ls' then return false end
+    if b.name == 'null-ls' then return true end
     return a.name < b.name
   end)
 
