@@ -87,10 +87,6 @@ return {
       opts = {
         automatic_installation = true,
         handlers = {
-          vtsls = function()
-            require('lspconfig.configs').vtsls = require('vtsls').lspconfig
-            require('lspconfig').vtsls.setup(require('as.servers')('vtsls'))
-          end,
           function(name)
             local config = require('as.servers')(name)
             if config then require('lspconfig')[name].setup(config) end
@@ -455,8 +451,19 @@ return {
       require('crates').setup(opts)
     end,
   },
-  { 'yioneko/nvim-vtsls' },
+  { 'yioneko/nvim-vtsls', enabled = false }, -- TODO: doesn't work with svelte typescript plugins
   { 'dmmulroy/tsc.nvim', cmd = 'TSC', config = true, ft = { 'typescript', 'typescriptreact' } },
+  {
+    'jose-elias-alvarez/typescript.nvim',
+    ft = { 'typescript', 'typescriptreact' },
+    dependencies = { 'jose-elias-alvarez/null-ls.nvim' },
+    config = function()
+      require('typescript').setup({ server = require('as.servers')('tsserver') })
+      require('null-ls').register({
+        sources = { require('typescript.extensions.null-ls.code-actions') },
+      })
+    end,
+  },
   { 'fladson/vim-kitty', lazy = false },
   { 'mtdl9/vim-log-highlighting', lazy = false },
   -- }}}

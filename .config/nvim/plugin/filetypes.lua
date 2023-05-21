@@ -152,17 +152,7 @@ settings({
     bo = { textwidth = 100 },
     opt = { spell = true },
     mappings = {
-      { 'n', 'gd', '<Cmd>VtsExec goto_source_definition<CR>', desc = 'typescript: go to source definition' },
-      {
-        desc = 'typescript: remove unused imports and add missing imports',
-        'n',
-        '<leader>rf',
-        function()
-          cmd.VtsExec('add_missing_imports')
-          cmd.VtsExec('remove_unused_imports')
-          cmd.update()
-        end,
-      },
+      { 'n', 'gd', '<Cmd>TypescriptGoToSourceDefinition<CR>', desc = 'typescript: go to source definition' },
     },
   },
   [{ 'lua', 'python', 'rust' }] = { opt = { spell = true } },
