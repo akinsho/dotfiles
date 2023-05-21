@@ -184,6 +184,7 @@ return {
           winopts = { title = format_title('Files', '') },
         }),
         buffers = dropdown({
+          fzf_opts = { ["--delimiter"]="' '",["--with-nth"]="-1.." },
           winopts = { title = format_title('Buffers', '󰈙') },
         }),
         keymaps = dropdown({
