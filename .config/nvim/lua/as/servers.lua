@@ -1,6 +1,9 @@
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
+-- svelte requires the additional installation of the typescript-svelte-plugin, per project
+-- https://github.com/sveltejs/language-tools/tree/master/packages/typescript-plugin#usage
+
 ---@type lspconfig.options
 local servers = {
   sqlls = false,
