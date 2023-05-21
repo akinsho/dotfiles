@@ -274,7 +274,7 @@ return {
               separator = true,
             },
             {
-              text = ' DATABASE VIEWER',
+              text = '󰆼 DATABASE VIEWER',
               filetype = 'dbui',
               highlight = 'PanelHeading',
               separator = true,

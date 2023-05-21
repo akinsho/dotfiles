@@ -26,9 +26,9 @@ return {
       disable_builtin_notifications = true,
       disable_insert_on_commit = false,
       signs = {
-        section = { '', '' }, -- "", ""
+        section = { '', '' }, -- "󰁙", "󰁊"
         item = { '▸', '▾' },
-        hunk = { '樂', '' },
+        hunk = { '󰐕', '󰍴' },
       },
       integrations = {
         diffview = true,

@@ -67,7 +67,7 @@ local function list_sessions()
   fzf.fzf_exec(
     vim.tbl_map(function(s) return s.name end, sessions),
     dropdown({
-      winopts = { title = format_title('Sessions', ''), height = 0.33, row = 0.5 },
+      winopts = { title = format_title('Sessions', '󰆔'), height = 0.33, row = 0.5 },
       previewer = false,
       actions = {
         ['default'] = function(selected)
@@ -174,7 +174,7 @@ return {
         },
         helptags = {
           prompt = prompt,
-          winopts = { title = format_title('Help', '') },
+          winopts = { title = format_title('Help', '󰋖') },
         },
         oldfiles = dropdown({
           cwd_only = true,
@@ -184,7 +184,7 @@ return {
           winopts = { title = format_title('Files', '') },
         }),
         buffers = dropdown({
-          winopts = { title = format_title('Buffers', '﬘') },
+          winopts = { title = format_title('Buffers', '󰈙') },
         }),
         keymaps = dropdown({
           winopts = { title = format_title('Keymaps', ''), width = 0.7 },
@@ -194,7 +194,7 @@ return {
         }),
         grep = {
           prompt = ' ',
-          winopts = { title = format_title('Grep', '') },
+          winopts = { title = format_title('Grep', '󰈭') },
           fzf_opts = {
             ['--keep-right'] = '',
           },
@@ -207,7 +207,7 @@ return {
             symbol_hl = function(s) return lsp_hls[s] end,
           },
           code_actions = cursor_dropdown({
-            winopts = { title = format_title('Code Actions', '', '@type') },
+            winopts = { title = format_title('Code Actions', '󰌵', '@type') },
           }),
         },
         jumps = dropdown({
