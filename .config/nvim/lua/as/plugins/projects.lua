@@ -89,12 +89,6 @@ return {
         ['*.ts'] = {
           alternate = { '{}.svelte' },
           type = 'client',
-          template = {
-            "import type { PageClientLoad } from './$types';",
-            '',
-            'export const load: PageClientLoad = async ({ page }) => {',
-            '}',
-          },
         },
       },
       ['lib/*.dart'] = {
