@@ -505,7 +505,10 @@ end
 local LSP_COMPONENT_ID = 2000
 local MAX_LSP_SERVER_COUNT = 3
 
-function as.ui.statusline.lsp_client_click() state.lsp_clients_visible = not state.lsp_clients_visible end
+function as.ui.statusline.lsp_client_click()
+  state.lsp_clients_visible = not state.lsp_clients_visible
+  vim.cmd('redrawstatus')
+end
 
 ---Return a sorted list of lsp client names and their priorities
 ---@param ctx StatuslineContext
@@ -701,12 +704,12 @@ function as.ui.statusline.render()
         { space },
         { '', hls.metadata_prefix },
       },
-      id = LSP_COMPONENT_ID, -- the unique id of the component
-      click = 'v:lua.as.ui.statusline.lsp_client_click',
       priority = client.priority,
     }
   end, stl_lsp_clients(ctx))
   table.insert(lsp_clients[1][1], 1, { ' LSP(s): ', hls.metadata })
+  lsp_clients[1].id = LSP_COMPONENT_ID -- the unique id of the component
+  lsp_clients[1].click = 'v:lua.as.ui.statusline.lsp_client_click'
   -----------------------------------------------------------------------------//
   -- Left section
   -----------------------------------------------------------------------------//
@@ -875,7 +878,7 @@ as.augroup('CustomStatusline', {
   event = 'LspAttach',
   command = function(args)
     local clients = vim.lsp.get_active_clients({ bufnr = args.buf })
-    if #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
+    if vim.o.columns < 200 and #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
   end,
 }, {
   event = 'User',
