@@ -38,7 +38,7 @@ local function prepare_rename(data)
     }
     ---@diagnostic disable-next-line: invisible
     local resp = client.request_sync('workspace/willRenameFiles', params, 1000)
-    vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding)
+    if resp then vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding) end
   end
 end
 
@@ -167,6 +167,23 @@ local function setup_autocommands(client, buf)
       buffer = buf,
       -- call via vimscript so that errors are silenced
       command = 'silent! lua vim.lsp.codelens.refresh()',
+    })
+  end
+
+  if client.supports_method('textDocument/inlayHint', { bufnr = buf }) then
+    vim.lsp.inlay_hint(buf, true)
+    -- TODO: temporarily disable inlay hints in insert mode due to
+    -- https://github.com/neovim/neovim/issues/24075
+    augroup(('LspInlayHints%d'):format(buf), {
+      event = 'InsertEnter',
+      buffer = buf,
+      desc = 'LSP: Inlay Hints (insert disable)',
+      command = function() vim.lsp.inlay_hint(buf, false) end,
+    }, {
+      event = 'InsertLeave',
+      buffer = buf,
+      desc = 'LSP: Inlay Hints (insert enable)',
+      command = function() vim.lsp.inlay_hint(buf, true) end,
     })
   end
 

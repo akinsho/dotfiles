@@ -53,12 +53,12 @@ local servers = {
           tidy = true,
         },
         hints = {
-          assignVariableTypes = true,
+          assignVariableTypes = false,
           compositeLiteralFields = true,
           constantValues = true,
-          functionTypeParameters = true,
           parameterNames = true,
-          rangeVariableTypes = true,
+          functionTypeParameters = false,
+          rangeVariableTypes = false,
         },
         analyses = {
           unusedparams = true,
