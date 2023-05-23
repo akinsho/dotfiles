@@ -38,6 +38,7 @@ settings({
       softtabstop = 0,
       tabstop = 4,
       shiftwidth = 4,
+      textwidth = 120,
     },
     opt = { spell = true },
     mappings = {
@@ -142,7 +143,8 @@ settings({
       end,
     },
   },
-  javascript = {
+  [{ 'javascript', 'javascriptreact' }] = {
+    bo = { textwidth = 100 },
     opt = { spell = true },
   },
   startuptime = {

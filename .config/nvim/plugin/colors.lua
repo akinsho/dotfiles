@@ -45,8 +45,8 @@ local function general_overrides()
     -- { DiffChange = { bg = '#273842', fg = 'NONE', underline = false } },
     -- { DiffText = { bg = '#314753', fg = 'NONE' } },
     -- these highlights are syntax groups that are set in diff.vim
-    { diffAdded = { link = 'DiffAdd' } },
-    { diffChanged = { link = 'DiffChange' } },
+    { diffAdded = { inherit = 'DiffAdd' } },
+    { diffChanged = { inherit = 'DiffChange' } },
     { diffRemoved = { link = 'DiffDelete' } },
     { diffBDiffer = { link = 'WarningMsg' } },
     { diffCommon = { link = 'WarningMsg' } },
