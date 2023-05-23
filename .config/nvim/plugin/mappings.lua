@@ -126,10 +126,7 @@ nnoremap('<localleader>;', modify_line_end_delimiter(';'), { desc = "add ';' to 
 -----------------------------------------------------------------------------//
 nnoremap('<leader>E', '<Cmd>Inspect<CR>', { desc = 'Inspect the cursor position' })
 -----------------------------------------------------------------------------//
---  Smooth scrolling
-------------------------------------------------------------------------------------------------------------------------
-nmap('<c-d>', '2<c-e>')
-nmap('<c-u>', '2<c-y>')
+
 if as.falsy(fn.mapcheck('<ScrollWheelDown>')) then nmap('<ScrollWheelDown>', '<c-d>') end
 if as.falsy(fn.mapcheck('<ScrollWheelUp>')) then nmap('<ScrollWheelUp>', '<c-u>') end
 ------------------------------------------------------------------------------

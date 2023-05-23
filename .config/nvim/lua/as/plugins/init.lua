@@ -363,6 +363,11 @@ return {
     end,
   },
   {
+    'karb94/neoscroll.nvim', -- NOTE: alternative: 'declancm/cinnamon.nvim'
+    event = 'VeryLazy',
+    opts = { hide_cursor = true, mappings = { '<C-d>', '<C-u>', 'zt', 'zz', 'zb' } },
+  },
+  {
     'itchyny/vim-highlighturl',
     event = 'ColorScheme',
     config = function() vim.g.highlighturl_guifg = highlight.get('@keyword', 'fg') end,

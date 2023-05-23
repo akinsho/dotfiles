@@ -24,7 +24,6 @@ o.ttimeoutlen = 10
 -----------------------------------------------------------------------------//
 -- Window splitting and buffers {{{1
 -----------------------------------------------------------------------------//
-o.smoothscroll = true
 o.splitkeep = 'screen'
 o.splitbelow = true
 o.splitright = true
