@@ -28,6 +28,10 @@ local servers = {
   tsserver = {
     settings = {
       typescript = {
+        completions = {
+          completeFunctionCalls = true,
+        },
+        -- https://github.com/typescript-language-server/typescript-language-server#workspacedidchangeconfiguration
         inlayHints = {
           includeInlayParameterNameHints = 'all',
           includeInlayParameterNameHintsWhenArgumentMatchesName = false,
