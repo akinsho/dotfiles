@@ -451,7 +451,6 @@ return {
       require('crates').setup(opts)
     end,
   },
-  { 'yioneko/nvim-vtsls', enabled = false }, -- TODO: doesn't work with svelte typescript plugins
   { 'dmmulroy/tsc.nvim', cmd = 'TSC', config = true, ft = { 'typescript', 'typescriptreact' } },
   {
     'jose-elias-alvarez/typescript.nvim',
