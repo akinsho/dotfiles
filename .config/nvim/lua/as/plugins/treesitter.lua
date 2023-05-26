@@ -10,7 +10,6 @@ return {
       local ok, orgmode = pcall(require, 'orgmode')
       if ok then orgmode.setup_ts_grammar() end
 
-      require('nvim-treesitter.install').compilers = { 'gcc-12' }
       require('nvim-treesitter.configs').setup({
         -- stylua: ignore
         ensure_installed = {
