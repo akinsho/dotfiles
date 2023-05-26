@@ -41,7 +41,7 @@ return {
             { NeoTreeTabActive = { link = 'VisibleTab' } },
             { NeoTreeTabSeparatorActive = { link = 'VisibleTab' } },
             { NeoTreeTabInactive = { inherit = 'Comment', italic = false } },
-            { NeoTreeTabSeparatorInactive = { link = 'WinSeparator' } },
+            { NeoTreeTabSeparatorInactive = { bg = 'bg', fg = 'bg' } },
           },
         },
       })
