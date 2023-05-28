@@ -127,7 +127,7 @@
   prompt = "\n%D %c(%b%#)%w ➜"
 
 [rerere]
-  enabled = true
+  enabled = false
 
 [help]
   # Automatically correct and execute mistyped commands.
