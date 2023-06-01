@@ -30,7 +30,7 @@ g.maplocalleader = ' ' -- Local leader is <Space>
 
 local namespace = {
   ui = {
-    winbar = { enable = true },
+    winbar = { enable = false },
     statuscolumn = { enable = true },
     statusline = { enable = true },
   },
