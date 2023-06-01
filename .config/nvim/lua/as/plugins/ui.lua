@@ -3,7 +3,37 @@ local strwidth = api.nvim_strwidth
 local highlight, ui, falsy, augroup = as.highlight, as.ui, as.falsy, as.augroup
 local icons, border, rect = ui.icons.lsp, ui.current.border, ui.border.rectangle
 
+local lspkind = require('lspkind')
+
 return {
+  {
+    'Bekaboo/dropbar.nvim',
+    event = 'VeryLazy',
+    keys = { { '<leader>wp', function() require('dropbar.api').pick() end, desc = 'winbar: pick' } },
+    config = {
+      general = {
+        enable = function(buf, win)
+          local b, w = vim.bo[buf], vim.wo[win]
+          local decor = ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
+          return decor.ft ~= false
+            and b.bt == ''
+            and not w.diff
+            and not api.nvim_win_get_config(win).zindex
+            and api.nvim_buf_get_name(buf) ~= ''
+        end,
+      },
+      icons = {
+        ui = { bar = { separator = ' ' .. ui.icons.misc.arrow_right .. ' ' } },
+        kinds = { symbols = vim.tbl_map(function(value) return value .. ' ' end, lspkind.symbol_map) },
+      },
+      menu = {
+        win_configs = {
+          border = 'shadow',
+          col = function(menu) return menu.parent_menu and menu.parent_menu._win_configs.width + 1 or 0 end,
+        },
+      },
+    },
+  },
   {
     'lukas-reineke/virt-column.nvim',
     event = 'VimEnter',
