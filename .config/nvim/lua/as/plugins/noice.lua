@@ -155,6 +155,7 @@ return {
       { NoicePopupInfoBaseGroup = { inherit = 'NormalFloat', fg = { from = 'Conditional' } } },
       { NoiceCmdlinePopup = { bg = { from = 'NormalFloat' } } },
       { NoiceCmdlinePopupBorder = { link = 'FloatBorder' } },
+      { NoiceCmdlinePopupTitle = { link = 'FloatTitle' } },
       { NoiceCmdlinePopupBorderCmdline = { link = 'NoicePopupBaseGroup' } },
       { NoiceCmdlinePopupBorderSearch = { link = 'NoicePopupWarnBaseGroup' } },
       { NoiceCmdlinePopupBorderFilter = { link = 'NoicePopupWarnBaseGroup' } },
