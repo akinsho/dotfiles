@@ -20,6 +20,7 @@ local function general_overrides()
     ---------------------------------------------//
     -- Popup menu
     ---------------------------------------------//
+    { DefaultPmenu = { inherit = 'Pmenu' } },
     { Pmenu = { bg = { from = 'Normal', alter = -0.15 } } },
     -----------------------------------------------------------------------------//
     -- Created highlights
