@@ -16,6 +16,7 @@ return {
           local b, w = vim.bo[buf], vim.wo[win]
           local decor = ui.decorations.get({ ft = b.ft, bt = b.bt, setting = 'winbar' })
           return decor.ft ~= false
+            and decor.bt ~= false
             and b.bt == ''
             and not w.diff
             and not api.nvim_win_get_config(win).zindex
@@ -28,8 +29,8 @@ return {
       },
       menu = {
         win_configs = {
-          border = 'shadow',
-          col = function(menu) return menu.parent_menu and menu.parent_menu._win_configs.width + 1 or 0 end,
+          border = border,
+          col = function(menu) return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0 end,
         },
       },
     },
