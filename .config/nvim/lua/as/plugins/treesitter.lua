@@ -101,14 +101,14 @@ return {
     event = 'VeryLazy',
     init = function()
       highlight.plugin('treesitter-context', {
-        { ContextBorder = { link = 'Dim' } },
+        { TreesitterContextSeparator = { link = 'Dim' } },
         { TreesitterContext = { inherit = 'Normal' } },
         { TreesitterContextLineNumber = { inherit = 'LineNr' } },
       })
     end,
     opts = {
       multiline_threshold = 4,
-      separator = { '─', 'ContextBorder' }, -- alternatives: ▁ ─ ▄
+      separator = '─', -- alternatives: ▁ ─ ▄
       mode = 'cursor',
     },
   },

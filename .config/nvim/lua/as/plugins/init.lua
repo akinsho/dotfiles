@@ -1,5 +1,5 @@
 local opt, api, fn, cmd, fmt = vim.opt, vim.api, vim.fn, vim.cmd, string.format
-local ui, border, highlight = as.ui, as.ui.current.border, as.highlight
+local border, highlight = as.ui.current.border, as.highlight
 
 return {
   -----------------------------------------------------------------------------//
