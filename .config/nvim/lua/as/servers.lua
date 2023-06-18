@@ -88,6 +88,7 @@ local servers = {
         analyses = {
           unusedparams = true,
         },
+        semanticTokens = true,
         usePlaceholders = true,
         completeUnimported = true,
         staticcheck = true,
