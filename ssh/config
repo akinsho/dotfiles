@@ -8,7 +8,7 @@ Host github.com
 Host github-work
   HostName github.com
   AddKeysToAgent yes
-  IdentityFile ~/.ssh/id_ed25519_work
+  IdentityFile ~/.ssh/id_ed25519_kolaposho.pub
   IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
   UseKeychain yes
 # vim: ft=sshconfig
