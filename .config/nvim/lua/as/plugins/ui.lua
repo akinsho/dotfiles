@@ -10,6 +10,12 @@ return {
     'Bekaboo/dropbar.nvim',
     event = 'VeryLazy',
     keys = { { '<leader>wp', function() require('dropbar.api').pick() end, desc = 'winbar: pick' } },
+    init = function()
+      highlight.plugin('DropBar', {
+        { DropBarIconUISeparator = { link = 'Delimiter' } },
+        { DropBarMenuNormalFloat = { link = 'DefaultPmenu' } },
+      })
+    end,
     config = {
       general = {
         enable = function(buf, win)
@@ -171,37 +177,6 @@ return {
         desc = 'dismiss notifications',
       })
     end,
-  },
-  {
-    'levouh/tint.nvim',
-    event = 'UIEnter',
-    enabled = true,
-    opts = {
-      tint = -15,
-      highlight_ignore_patterns = {
-        'WinSeparator',
-        'St.*',
-        'Comment',
-        'Panel.*',
-        'Telescope.*',
-        'IndentBlankline.*',
-        'Bqf.*',
-        'VirtColumn',
-        'Headline.*',
-        'NeoTree.*',
-        'LineNr',
-        'NeoTree.*',
-        'Telescope.*',
-        'VisibleTab',
-      },
-      window_ignore_function = function(win_id)
-        local win, buf = vim.wo[win_id], vim.bo[vim.api.nvim_win_get_buf(win_id)]
-        if win.diff or not falsy(fn.win_gettype(win_id)) then return true end
-        local ignore_bt = as.p_table({ terminal = true, prompt = true, nofile = false })
-        local ignore_ft = as.p_table({ ['Neogit.*'] = true, ['flutterTools.*'] = true, ['qf'] = true })
-        return ignore_bt[buf.buftype] or ignore_ft[buf.filetype]
-      end,
-    },
   },
   {
     'kevinhwang91/nvim-ufo',
