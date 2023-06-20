@@ -37,6 +37,7 @@ local function prepare_rename(data)
     local params = {
       files = { { newUri = 'file://' .. data.new_name, oldUri = 'file://' .. data.old_name } },
     }
+    ---@diagnostic disable-next-line: invisible
     local resp = client.request_sync('workspace/willRenameFiles', params, 1000)
     vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding)
   end
