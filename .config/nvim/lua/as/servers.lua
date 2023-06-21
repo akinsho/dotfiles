@@ -24,7 +24,13 @@ local servers = {
   pyright = {},
   bufls = {},
   prosemd_lsp = {},
-  docker_compose_language_service = {},
+  docker_compose_language_service = function()
+    local lspconfig = require('lspconfig')
+    return {
+      root_dir = lspconfig.util.root_pattern('docker-compose.yml'),
+      filetypes = { 'yaml', 'dockerfile' },
+    }
+  end,
   tsserver = {
     settings = {
       typescript = {
