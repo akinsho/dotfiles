@@ -99,8 +99,6 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
-    { LspCodeLens = { inherit = 'Comment', bold = true, italic = false } },
-    { LspCodeLensSeparator = { bold = false, italic = false } },
     { LspReferenceText = { bg = 'NONE', underline = true, sp = { from = 'Comment', attr = 'fg' } } },
     { LspReferenceRead = { link = 'LspReferenceText' } },
     { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, italic = true, underline = true } },
