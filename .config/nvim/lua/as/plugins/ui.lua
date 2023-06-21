@@ -13,7 +13,7 @@ return {
     init = function()
       highlight.plugin('DropBar', {
         { DropBarIconUISeparator = { link = 'Delimiter' } },
-        { DropBarMenuNormalFloat = { link = 'DefaultPmenu' } },
+        { DropBarMenuNormalFloat = { inherit = 'DefaultPmenu' } },
       })
     end,
     config = {
@@ -35,7 +35,7 @@ return {
       },
       menu = {
         win_configs = {
-          border = border,
+          border = 'shadow',
           col = function(menu) return menu.prev_menu and menu.prev_menu._win_configs.width + 1 or 0 end,
         },
       },
