@@ -461,18 +461,20 @@ return {
   { 'dmmulroy/tsc.nvim', cmd = 'TSC', opts = {}, ft = { 'typescript', 'typescriptreact' } },
   {
     'pmizio/typescript-tools.nvim',
-    ft = { 'typescript', 'typescriptreact' },
+    lazy = false,
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     opts = {
-      tsserver_file_preferences = {
-        includeInlayParameterNameHints = 'literal',
-        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-        includeInlayFunctionParameterTypeHints = true,
-        includeInlayVariableTypeHints = true,
-        includeInlayFunctionLikeReturnTypeHints = false,
-        includeInlayPropertyDeclarationTypeHints = true,
-        includeInlayEnumMemberValueHints = true,
+      settings = {
+        tsserver_file_preferences = {
+          includeInlayParameterNameHints = 'literal',
+          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+          includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = false,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
       },
     },
   },
