@@ -199,6 +199,27 @@ return {
     end,
   },
   {
+    'folke/flash.nvim',
+    event = 'VeryLazy',
+    opts = {
+      search = {
+        mode = 'fuzzy',
+      },
+    },
+    keys = {
+      {
+        's',
+        mode = { 'n', 'x', 'o' },
+        function() require('flash').jump() end,
+      },
+      {
+        'S',
+        mode = { 'o', 'x' },
+        function() require('flash').treesitter() end,
+      },
+    },
+  },
+  {
     'chaoren/vim-wordmotion',
     lazy = false,
     init = function() vim.g.wordmotion_spaces = { '-', '_', '\\/', '\\.' } end,
