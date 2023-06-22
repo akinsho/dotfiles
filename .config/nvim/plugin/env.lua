@@ -16,14 +16,10 @@ api.nvim_create_user_command('DotEnv', function()
     path = fn.expand('%:p:h'),
   })
   if vim.tbl_isempty(files) then return end
-  local filename = files[1]
-  local lines = {}
+  local filename, lines = files[1], {}
   read_file(filename, function(line)
     if #line > 0 then table.insert(lines, line) end
-    if not vim.startswith(line, '#') then
-      local name, value = unpack(vim.split(line, '='))
-      fn.setenv(name, value)
-    end
+    if not vim.startswith(line, '#') then fn.setenv(unpack(vim.split(line, '='))) end
   end)
   local markdown = table.concat(vim.tbl_flatten({ '', '```sh', lines, '```', '' }), '\n')
   vim.notify(fmt('Read **%s**\n', filename) .. markdown, 'info', {
@@ -31,7 +27,7 @@ api.nvim_create_user_command('DotEnv', function()
     on_open = function(win)
       local buf = api.nvim_win_get_buf(win)
       if not api.nvim_buf_is_valid(buf) then return end
-      api.nvim_buf_set_option(buf, 'filetype', 'markdown')
+      vim.bo[buf].filetype = 'markdown'
     end,
   })
 end, {})
