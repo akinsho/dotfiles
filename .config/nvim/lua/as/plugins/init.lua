@@ -200,23 +200,24 @@ return {
   },
   {
     'folke/flash.nvim',
-    event = 'VeryLazy',
+    init = function()
+      highlight.plugin('flash', {
+        { FlashLabel = { fg = { from = 'Keyword' }, bold = true, italic = true } },
+        { FlashCurrent = { fg = { from = 'Function' }, italic = false, underline = true } },
+        { FlashMatch = { fg = { from = 'Function' }, italic = false } },
+        { FlashBackdrop = { fg = { from = 'Comment' } } },
+      })
+    end,
     opts = {
-      search = {
-        mode = 'fuzzy',
+      modes = {
+        search = {
+          search = { trigger = ';' },
+        },
       },
     },
     keys = {
-      {
-        's',
-        mode = { 'n', 'x', 'o' },
-        function() require('flash').jump() end,
-      },
-      {
-        'S',
-        mode = { 'o', 'x' },
-        function() require('flash').treesitter() end,
-      },
+      { 's', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end },
+      { 'S', mode = { 'o', 'x' }, function() require('flash').treesitter() end },
     },
   },
   {
