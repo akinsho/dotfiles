@@ -31,38 +31,6 @@ local servers = {
       filetypes = { 'yaml', 'dockerfile' },
     }
   end,
-  tsserver = {
-    settings = {
-      typescript = {
-        completions = {
-          completeFunctionCalls = true,
-        },
-        -- https://github.com/typescript-language-server/typescript-language-server#workspacedidchangeconfiguration
-        inlayHints = {
-          includeInlayParameterNameHints = 'all',
-          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-          includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-          includeInlayFunctionParameterTypeHints = true,
-          includeInlayVariableTypeHints = false,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true,
-          includeInlayEnumMemberValueHints = true,
-        },
-      },
-      javascript = {
-        inlayHints = {
-          includeInlayParameterNameHints = 'all',
-          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-          includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-          includeInlayFunctionParameterTypeHints = true,
-          includeInlayVariableTypeHints = false,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true,
-          includeInlayEnumMemberValueHints = true,
-        },
-      },
-    },
-  },
   graphql = {
     on_attach = function(client)
       -- Disable workspaceSymbolProvider because this prevents

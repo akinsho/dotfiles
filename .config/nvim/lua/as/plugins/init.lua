@@ -460,15 +460,21 @@ return {
   },
   { 'dmmulroy/tsc.nvim', cmd = 'TSC', opts = {}, ft = { 'typescript', 'typescriptreact' } },
   {
-    'jose-elias-alvarez/typescript.nvim',
+    'pmizio/typescript-tools.nvim',
     ft = { 'typescript', 'typescriptreact' },
-    dependencies = { 'jose-elias-alvarez/null-ls.nvim' },
-    config = function()
-      require('typescript').setup({ server = require('as.servers')('tsserver') })
-      require('null-ls').register({
-        sources = { require('typescript.extensions.null-ls.code-actions') },
-      })
-    end,
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+    opts = {
+      tsserver_file_preferences = {
+        includeInlayParameterNameHints = 'literal',
+        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = false,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+      },
+    },
   },
   { 'fladson/vim-kitty', lazy = false },
   { 'mtdl9/vim-log-highlighting', lazy = false },
