@@ -28,7 +28,7 @@ return {
   },
   {
     'mrjones2014/smart-splits.nvim',
-    config = true,
+    opts = {},
     build = './kitty/install-kittens.bash',
     keys = {
       { '<A-h>', function() require('smart-splits').resize_left() end },
@@ -251,7 +251,7 @@ return {
   },
   {
     'jghauser/fold-cycle.nvim',
-    config = true,
+    opts = {},
     keys = {
       { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
     },
@@ -315,7 +315,7 @@ return {
       vim.g.undotree_SetFocusWhenToggle = 1
     end,
   },
-  { 'nacro90/numb.nvim', event = 'CmdlineEnter', config = true },
+  { 'nacro90/numb.nvim', event = 'CmdlineEnter', opts = {} },
   {
     'willothy/flatten.nvim',
     lazy = false,
@@ -431,7 +431,7 @@ return {
     'vuki656/package-info.nvim',
     event = 'BufRead package.json',
     requires = 'MunifTanjim/nui.nvim',
-    config = true,
+    opts = {},
     init = function()
       highlight.plugin('packageInfo', {
         { PackageInfoOutdatedVersion = { fg = '#d19a66' } },
@@ -457,7 +457,7 @@ return {
       require('crates').setup(opts)
     end,
   },
-  { 'dmmulroy/tsc.nvim', cmd = 'TSC', config = true, ft = { 'typescript', 'typescriptreact' } },
+  { 'dmmulroy/tsc.nvim', cmd = 'TSC', opts = {}, ft = { 'typescript', 'typescriptreact' } },
   {
     'jose-elias-alvarez/typescript.nvim',
     ft = { 'typescript', 'typescriptreact' },
@@ -558,7 +558,7 @@ return {
     ft = { 'dart' },
     event = 'BufEnter pubspec.yaml',
     dev = true,
-    config = true,
+    opts = {},
   },
   {
     'akinsho/git-conflict.nvim',
