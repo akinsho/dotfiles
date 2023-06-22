@@ -2,10 +2,11 @@ if not as then return end
 local settings, highlight = as.filetype_settings, as.highlight
 local cmd, fn = vim.cmd, vim.fn
 
+vim.treesitter.language.register('bash', 'sh')
+vim.treesitter.language.register('markdown', 'chatgpt')
+vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
+
 settings({
-  chatgpt = {
-    function() vim.treesitter.language.register('markdown', 'chatgpt') end,
-  },
   checkhealth = {
     opt = { spell = false },
   },
@@ -72,7 +73,6 @@ settings({
         -- Schedule this call as highlights are not set correctly if there is not a delay
         highlight.set_winhl('gitcommit', 0, { { VirtColumn = { fg = { from = 'Variable' } } } })
       end)
-      vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
     end,
   },
   netrw = {
