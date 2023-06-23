@@ -23,7 +23,7 @@
   "doom-one.nvim": { "branch": "main", "commit": "a43528cbd7908ccec7af4587ec8e18be149095bd" },
   "dressing.nvim": { "branch": "master", "commit": "5fb5cce0cbfcedeadbcee43e5674e8c9a9f28d4a" },
   "dropbar.nvim": { "branch": "master", "commit": "b00ede8cbde4129249ce2476fed657fe3293edb7" },
-  "flash.nvim": { "branch": "main", "commit": "465bbcea02d79092c916530225daccc5f6f34e16" },
+  "flash.nvim": { "branch": "main", "commit": "f0697f62099d5ba1ad3f3d6dfeacbd9c2f152c41" },
   "flatten.nvim": { "branch": "main", "commit": "d92c93959e9ac52a00002d6fd64c2d2ca5dd7192" },
   "flutter-riverpod-snippets": { "branch": "master", "commit": "ee10f52d4e2f75bf3ac3fa67d441b493e5770fbc" },
   "fold-cycle.nvim": { "branch": "main", "commit": "18c6fbb9882a1baf16a81cf1f96bcd02d2688df5" },
