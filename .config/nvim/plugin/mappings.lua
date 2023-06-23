@@ -415,6 +415,10 @@ inoremap('<s-tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 -- Commands
 -----------------------------------------------------------------------------//
 command('ToggleBackground', function() vim.o.background = vim.o.background == 'dark' and 'light' or 'dark' end)
+nnoremap('<leader>Ow', function()
+  vim.wo.wrap = not vim.wo.wrap
+  vim.notify('wrap ' .. (vim.o.wrap and 'on' or 'off'))
+end, { desc = 'toggle wrap' })
 ------------------------------------------------------------------------------
 command('Todo', [[noautocmd silent! grep! 'TODO\|FIXME\|BUG\|HACK' | copen]])
 command('ReloadModule', function(tbl) require('plenary.reload').reload_module(tbl.args) end, {
