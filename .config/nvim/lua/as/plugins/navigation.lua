@@ -151,7 +151,7 @@ return {
         version = '*',
         config = function()
           require('window-picker').setup({
-            use_winbar = 'smart',
+            hint = 'floating-big-letter',
             autoselect_one = true,
             include_current = false,
             other_win_hl_color = highlight.get('Visual', 'bg'),
