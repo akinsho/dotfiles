@@ -50,14 +50,17 @@ return {
         api.nvim_feedkeys(k('<Tab>'), 'n', false)
       end
 
-      local window_opts = {
-        border = border,
-        winhighlight = 'FloatBorder:FloatBorder',
-      }
-
       cmp.setup({
         window = {
-          documentation = cmp.config.window.bordered(window_opts),
+          completion = cmp.config.window.bordered({
+            scrollbar = false,
+            border = 'shadow',
+            winhighlight = 'NormalFloat:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder',
+          }),
+          documentation = cmp.config.window.bordered({
+            border = border,
+            winhighlight = 'FloatBorder:FloatBorder',
+          }),
         },
         snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
         mapping = cmp.mapping.preset.insert({

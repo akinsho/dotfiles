@@ -11,17 +11,13 @@ local function general_overrides()
     { WinSeparator = { fg = { from = 'Comment' } } },
     { CursorLineNr = { bg = 'NONE' } },
     { iCursor = { bg = P.dark_blue } },
+    { PmenuSbar = { link = 'Normal' } },
     --------------------------------------------//
     -- Floats
     ---------------------------------------------//
     { NormalFloat = { bg = { from = 'Normal', alter = -0.15 } } },
     { FloatBorder = { bg = { from = 'NormalFloat' }, fg = { from = 'Comment' } } },
     { FloatTitle = { bold = true, fg = 'white', bg = { from = 'FloatBorder', attr = 'fg' } } },
-    ---------------------------------------------//
-    -- Popup menu
-    ---------------------------------------------//
-    { DefaultPmenu = { inherit = 'Pmenu' } },
-    { Pmenu = { bg = { from = 'Normal', alter = -0.15 } } },
     -----------------------------------------------------------------------------//
     -- Created highlights
     -----------------------------------------------------------------------------//
