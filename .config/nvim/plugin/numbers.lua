@@ -8,15 +8,13 @@ local ui = as.ui
 local api, fn = vim.api, vim.fn
 local M = {}
 
-local number_buftype_ignored = { 'quickfix' }
-
 local function is_floating_win() return fn.win_gettype() == 'popup' end
 
 local is_enabled = true
 
 ---Determines whether or not a window should be ignored by this plugin
 ---@return boolean
-local function is_ignored() return vim.tbl_contains(number_buftype_ignored, vim.bo.buftype) or is_floating_win() end
+local function is_ignored() return is_floating_win() end
 
 -- block list certain plugins and buffer types
 local function is_blocked()
