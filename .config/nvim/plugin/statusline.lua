@@ -508,7 +508,7 @@ end
 ---@param task function
 local function run_task_on_interval(interval, task)
   local pending_job
-  local timer = vim.loop.new_timer()
+  local timer = vim.uv.new_timer()
   if not timer then return end
   local function callback()
     if pending_job then fn.jobstop(pending_job) end
@@ -524,7 +524,7 @@ end
 ---@return boolean
 local function is_git_repo(win_id)
   win_id = win_id or api.nvim_get_current_win()
-  return vim.loop.fs_stat(fmt('%s/.git', fn.getcwd(win_id)))
+  return vim.uv.fs_stat(fmt('%s/.git', fn.getcwd(win_id)))
 end
 
 -- Use git and the native job API to first get the head of the repo

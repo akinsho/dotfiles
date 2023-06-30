@@ -7,7 +7,7 @@
 ----------------------------------------------------------------------------------------------------
 if vim.g.vscode then return end -- if someone has forced me to use vscode don't load my config
 
-local g, fn, opt, loop, env, cmd = vim.g, vim.fn, vim.opt, vim.loop, vim.env, vim.cmd
+local g, fn, opt, loop, env, cmd = vim.g, vim.fn, vim.opt, vim.uv, vim.env, vim.cmd
 local data = fn.stdpath('data')
 
 -- solves the issue of missing luarocks when running neovim

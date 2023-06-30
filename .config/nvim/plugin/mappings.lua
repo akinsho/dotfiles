@@ -1,6 +1,6 @@
 if not as or not as.mappings.enable then return end
 
-local fn, api, uv, cmd, command, fmt = vim.fn, vim.api, vim.loop, vim.cmd, as.command, string.format
+local fn, api, uv, cmd, command, fmt = vim.fn, vim.api, vim.uv, vim.cmd, as.command, string.format
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}

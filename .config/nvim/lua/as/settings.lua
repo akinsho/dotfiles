@@ -184,7 +184,7 @@ opt.cursorlineopt = { 'both' }
 -----------------------------------------------------------------------------//
 function as.modified_icon() return vim.bo.modified and icons.misc.circle or '' end
 o.titlestring = '%{fnamemodify(getcwd(), ":t")}%( %{v:lua.as.modified_icon()}%)'
-o.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
+o.titleold = fn.fnamemodify(vim.uv.os_getenv('SHELL'), ':t')
 o.title = true
 o.titlelen = 70
 -----------------------------------------------------------------------------//
