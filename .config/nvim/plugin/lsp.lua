@@ -12,13 +12,13 @@ if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 
 ---@enum
 local provider = {
-  HOVER = 'hoverProvider',
-  RENAME = 'renameProvider',
-  CODELENS = 'codeLensProvider',
-  CODEACTIONS = 'codeActionProvider',
-  FORMATTING = 'documentFormattingProvider',
-  REFERENCES = 'documentHighlightProvider',
-  DEFINITION = 'definitionProvider',
+  HOVER = 'textDocument/hover',
+  RENAME = 'textDocument/rename',
+  CODELENS = 'textDocument/codeLens',
+  CODEACTIONS = 'textDocument/codeAction',
+  FORMATTING = 'textDocument/formatting',
+  REFERENCES = 'textDocument/documentHighlight',
+  DEFINITION = 'textDocument/definition',
 }
 
 ----------------------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ local function setup_mappings(client, bufnr)
   vim.iter(mappings):each(function(m)
     if
       (not m.exclude or not vim.tbl_contains(m.exclude, vim.bo[bufnr].ft))
-      and (not m.capability or client.server_capabilities[m.capability])
+      and (not m.capability or client.supports_method(m.capability))
     then
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
     end
@@ -160,7 +160,7 @@ end
 ---@param client lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
-  if client.server_capabilities[provider.CODELENS] then
+  if client.supports_method(M.textDocument_codeLens) then
     augroup(('LspCodeLens%d'):format(buf), {
       event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
       desc = 'LSP: Code Lens',
@@ -187,7 +187,7 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.server_capabilities[provider.REFERENCES] then
+  if client.supports_method(provider.REFERENCES) then
     augroup(('LspReferences%d'):format(buf), {
       event = { 'CursorHold', 'CursorHoldI' },
       buffer = buf,
