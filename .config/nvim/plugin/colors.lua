@@ -95,8 +95,6 @@ local function general_overrides()
     -----------------------------------------------------------------------------//
     -- LSP
     -----------------------------------------------------------------------------//
-    { LspReferenceText = { bg = 'NONE', underline = true, sp = { from = 'Comment', attr = 'fg' } } },
-    { LspReferenceRead = { link = 'LspReferenceText' } },
     { LspReferenceWrite = { inherit = 'LspReferenceText', bold = true, italic = true, underline = true } },
     { LspSignatureActiveParameter = { link = 'Visual' } },
     -- Sign column line
