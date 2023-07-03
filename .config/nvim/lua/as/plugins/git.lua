@@ -10,7 +10,7 @@ local function browser_open() return { action_callback = require('gitlinker.acti
 
 return {
   {
-    'TimUntersberger/neogit',
+    'NeogitOrg/neogit',
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim' },
     keys = {
