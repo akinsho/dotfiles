@@ -57,18 +57,6 @@ return {
             goto_previous_start = { ['[m'] = '@function.outer', ['[M'] = '@class.outer' },
           },
         },
-        rainbow = {
-          enable = true,
-          query = {
-            --- @ref: https://github.com/HiPhish/nvim-ts-rainbow2/issues/18#issuecomment-1498400902
-            'rainbow-parens',
-            html = 'rainbow-tags',
-            svelte = 'rainbow-tags',
-          },
-          strategy = {
-            dart = require('ts-rainbow.strategy.global'),
-          },
-        },
         autopairs = { enable = true },
         context_commentstring = { enable = true },
         playground = { persist_queries = true },
@@ -81,7 +69,6 @@ return {
     end,
     dependencies = {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'HiPhish/nvim-ts-rainbow2' },
     },
   },
   { 'JoosepAlviste/nvim-ts-context-commentstring' },
