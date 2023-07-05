@@ -149,11 +149,11 @@ return {
           ['gutter'] = { 'bg', 'Normal' },
           ['separator'] = { 'fg', 'Comment' },
         },
-        border = ui.border.rectangle,
         previewers = {
           builtin = { toggle_behavior = 'extend' },
         },
         winopts = {
+        border = ui.border.rectangle,
           hl = { border = 'PickerBorder', preview_border = 'PickerBorder' },
         },
         keymap = {
