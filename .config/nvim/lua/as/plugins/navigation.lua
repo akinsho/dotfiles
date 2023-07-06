@@ -85,7 +85,7 @@ return {
           hijack_netrw_behavior = 'open_current',
           use_libuv_file_watcher = true,
           group_empty_dirs = false,
-          follow_current_file = false,
+          follow_current_file = true,
           filtered_items = {
             visible = true,
             hide_dotfiles = false,
@@ -133,7 +133,7 @@ return {
         window = {
           mappings = {
             ['o'] = 'toggle_node',
-            ['<CR>'] = 'open',
+            ['<CR>'] = 'open_with_window_picker',
             ['<c-s>'] = 'split_with_window_picker',
             ['<c-v>'] = 'vsplit_with_window_picker',
             ['<esc>'] = 'revert_preview',
