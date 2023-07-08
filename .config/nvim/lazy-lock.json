@@ -67,7 +67,8 @@
   "nvim-dap-ui": { "branch": "master", "commit": "c020f660b02772f9f3d11f599fefad3268628a9e" },
   "nvim-dap-virtual-text": { "branch": "master", "commit": "57f1dbd0458dd84a286b27768c142e1567f3ce3b" },
   "nvim-dap-vscode-js": { "branch": "main", "commit": "03bd29672d7fab5e515fc8469b7d07cc5994bbf6" },
-  "nvim-lspconfig": { "branch": "master", "commit": "deade69789089c3da15237697156334fb3e943f0" },
+  "nvim-lspconfig": { "branch": "master", "commit": "2187f222c37cb5fd7cf96f242e5c8a4a340f2596" },
+  "nvim-lightbulb": { "branch": "master", "commit": "27efc96616b29f6cd4b6e8ec8805ce25f0a23352" },
   "nvim-luapad": { "branch": "master", "commit": "a5b3d6aa1fe5fe75e6124927392a9d3a60a0ecce" },
   "nvim-notify": { "branch": "master", "commit": "ea9c8ce7a37f2238f934e087c255758659948e0f" },
   "nvim-pqf": { "branch": "main", "commit": "d15582d3d0c09280f371fa5f21537cf4530ed330" },
@@ -119,4 +120,3 @@
   "vim-wordmotion": { "branch": "master", "commit": "81d9bd298376ab0dc465c85d55afa4cb8d5f47a1" },
   "virt-column.nvim": { "branch": "master", "commit": "93b40ea038f676f5a72d7d1f2336fe7b051fc0ce" },
   "which-key.nvim": { "branch": "main", "commit": "d871f2b664afd5aed3dc1d1573bef2fb24ce0484" }
-}

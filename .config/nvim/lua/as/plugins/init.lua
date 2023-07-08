@@ -1,5 +1,5 @@
 local opt, api, fn, cmd, fmt = vim.opt, vim.api, vim.fn, vim.cmd, string.format
-local border, highlight = as.ui.current.border, as.highlight
+local border, highlight, icons = as.ui.current.border, as.highlight, as.ui.icons
 
 return {
   -----------------------------------------------------------------------------//
@@ -51,6 +51,15 @@ return {
   -----------------------------------------------------------------------------//
   'onsails/lspkind.nvim',
   'b0o/schemastore.nvim',
+  {
+    'kosayoda/nvim-lightbulb',
+    event = 'LspAttach',
+    opts = {
+      autocmd = { enabled = true },
+      sign = { enabled = false },
+      float = { text = icons.misc.lightbulb, enabled = true, win_opts = { border = 'none' } },
+    },
+  },
   {
     {
       'williamboman/mason.nvim',
