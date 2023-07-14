@@ -259,6 +259,7 @@ return {
       { '<leader>dC', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
     },
   },
+  { 'lewis6991/whatthejump.nvim', keys = { '<C-I>', '<C-O>' } },
   {
     'jghauser/fold-cycle.nvim',
     opts = {},
