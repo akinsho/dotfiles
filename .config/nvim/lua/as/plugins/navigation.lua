@@ -6,7 +6,6 @@ local autocmd = api.nvim_create_autocmd
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
-    branch = 'v2.x',
     cmd = { 'Neotree' },
     keys = { { '<C-N>', '<Cmd>Neotree toggle reveal<CR>', desc = 'NeoTree' } },
     init = function()
