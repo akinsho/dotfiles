@@ -6,6 +6,7 @@ local autocmd = api.nvim_create_autocmd
 return {
   {
     'nvim-neo-tree/neo-tree.nvim',
+    branch = 'v3.x',
     cmd = { 'Neotree' },
     keys = { { '<C-N>', '<Cmd>Neotree toggle reveal<CR>', desc = 'NeoTree' } },
     init = function()
@@ -45,8 +46,6 @@ return {
         },
       })
 
-      vim.g.neo_tree_remove_legacy_commands = 1
-
       local symbols = require('lspkind').symbol_map
       local lsp_kinds = as.ui.lsp.highlights
 
@@ -62,6 +61,7 @@ return {
           },
         },
         enable_git_status = true,
+        enable_normal_mode_for_inputs = true,
         git_status_async = true,
         nesting_rules = {
           ['dart'] = { 'freezed.dart', 'g.dart' },
@@ -72,8 +72,16 @@ return {
             handler = function() highlight.set('Cursor', { blend = 100 }) end,
           },
           {
+            event = 'neo_tree_popup_buffer_enter',
+            handler = function() highlight.set('Cursor', { blend = 0 }) end,
+          },
+          {
             event = 'neo_tree_buffer_leave',
             handler = function() highlight.set('Cursor', { blend = 0 }) end,
+          },
+          {
+            event = 'neo_tree_popup_buffer_leave',
+            handler = function() highlight.set('Cursor', { blend = 100 }) end,
           },
           {
             event = 'neo_tree_window_after_close',
@@ -84,7 +92,10 @@ return {
           hijack_netrw_behavior = 'open_current',
           use_libuv_file_watcher = true,
           group_empty_dirs = false,
-          follow_current_file = true,
+          follow_current_file = {
+            enabled = true,
+            leave_dirs_open = true,
+          },
           filtered_items = {
             visible = true,
             hide_dotfiles = false,
@@ -99,12 +110,8 @@ return {
           },
         },
         default_component_configs = {
-          icon = {
-            folder_empty = icons.documents.open_folder,
-          },
-          name = {
-            highlight_opened_files = true,
-          },
+          icon = { folder_empty = icons.documents.open_folder },
+          name = { highlight_opened_files = true },
           document_symbols = {
             follow_cursor = true,
             kinds = as.fold(function(acc, v, k)
@@ -112,9 +119,7 @@ return {
               return acc
             end, symbols),
           },
-          modified = {
-            symbol = icons.misc.circle .. ' ',
-          },
+          modified = { symbol = icons.misc.circle .. ' ' },
           git_status = {
             symbols = {
               added = icons.git.add,
