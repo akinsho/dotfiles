@@ -49,6 +49,9 @@ settings({
       { 'n', '<leader>gie', '<Cmd>GoIfErr<CR>', desc = 'if err' },
     },
   },
+  ['Neogit*'] = {
+    wo = { winbar = '' },
+  },
   NeogitCommitMessage = {
     opt = {
       spell = true,
