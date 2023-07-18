@@ -492,7 +492,7 @@ end
 ---@param ctx StatuslineContext
 ---@return table[]
 local function stl_lsp_clients(ctx)
-  local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
+  local clients = vim.lsp.get_clients({ bufnr = ctx.bufnum })
   if not state.lsp_clients_visible then return { { name = fmt('%d attached', #clients), priority = 7 } } end
   if falsy(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
   table.sort(clients, function(a, b) return a.name < b.name end)
@@ -839,7 +839,7 @@ as.augroup('CustomStatusline', {
 }, {
   event = 'LspAttach',
   command = function(args)
-    local clients = vim.lsp.get_active_clients({ bufnr = args.buf })
+    local clients = vim.lsp.get_clients({ bufnr = args.buf })
     if vim.o.columns < 200 and #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
   end,
 }, {

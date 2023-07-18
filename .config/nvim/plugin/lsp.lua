@@ -28,7 +28,7 @@ local provider = {
 ---@param data { old_name: string, new_name: string }
 local function prepare_rename(data)
   local bufnr = fn.bufnr(data.old_name)
-  for _, client in pairs(lsp.get_active_clients({ bufnr = bufnr })) do
+  for _, client in pairs(lsp.get_clients({ bufnr = bufnr })) do
     local rename_path = { 'server_capabilities', 'workspace', 'fileOperations', 'willRename' }
     if not vim.tbl_get(client, rename_path) then
       return vim.notify(fmt('%s does not LSP file rename', client.name), 'info', { title = 'LSP' })
