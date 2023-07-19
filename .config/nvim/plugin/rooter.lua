@@ -44,7 +44,7 @@ local function set_root(args)
 
     root = fs.dirname(root_file) or get_lsp_root(args.buf, ignored)
   end
-  if not root then return end
+  if not root or not path then return end
   root_cache[path] = root
   if root == fn.getcwd() then return end
 
