@@ -7,6 +7,16 @@ local lspkind = require('lspkind')
 
 return {
   {
+    'folke/zen-mode.nvim',
+    cmd = 'ZenMode',
+    opts = {
+      plugins = {
+        kitty = { enabled = true, font = '+2' },
+        tmux = { enabled = true },
+      },
+    },
+  },
+  {
     'Bekaboo/dropbar.nvim',
     event = 'VeryLazy',
     keys = { { '<leader>wp', function() require('dropbar.api').pick() end, desc = 'winbar: pick' } },
