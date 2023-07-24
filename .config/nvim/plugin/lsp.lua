@@ -171,19 +171,6 @@ local function setup_autocommands(client, buf)
 
   if client.supports_method('textDocument/inlayHint', { bufnr = buf }) then
     vim.lsp.inlay_hint(buf, true)
-    -- TODO: temporarily disable inlay hints in insert mode due to
-    -- https://github.com/neovim/neovim/issues/24075
-    augroup(('LspInlayHints%d'):format(buf), {
-      event = 'InsertEnter',
-      buffer = buf,
-      desc = 'LSP: Inlay Hints (insert disable)',
-      command = function() vim.lsp.inlay_hint(buf, false) end,
-    }, {
-      event = 'InsertLeave',
-      buffer = buf,
-      desc = 'LSP: Inlay Hints (insert enable)',
-      command = function() vim.lsp.inlay_hint(buf, true) end,
-    })
   end
 
   if client.supports_method(provider.REFERENCES) then
