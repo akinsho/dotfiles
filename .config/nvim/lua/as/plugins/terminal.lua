@@ -49,6 +49,14 @@ return {
       on_open = float_handler,
     })
 
+    local lazydocker = Terminal:new({
+      cmd = 'lazydocker',
+      dir = 'git_dir',
+      hidden = true,
+      direction = 'float',
+      on_open = float_handler,
+    })
+
     local btop = Terminal:new({
       cmd = 'btop',
       hidden = true,
@@ -71,11 +79,14 @@ return {
       },
     })
 
-    map('n', '<leader>ld', function() gh_dash:toggle() end, {
+    map('n', '<leader>lh', function() gh_dash:toggle() end, {
       desc = 'toggleterm: toggle github dashboard',
     })
     map('n', '<leader>lg', function() lazygit:toggle() end, {
       desc = 'toggleterm: toggle lazygit',
+    })
+    map('n', '<leader>ld', function() lazydocker:toggle() end, {
+      desc = 'toggleterm: toggle lazydocker',
     })
     as.command('Btop', function() btop:toggle() end)
   end,
