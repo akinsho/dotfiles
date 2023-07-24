@@ -7,7 +7,7 @@ gui:
     mouseEvents: true
     skipDiscardChangeWarning: false
     skipStashWarning: true
-    showIcons: true
+    nerdFontsVersion: "3"
     sidePanelWidth: 0.3333
     theme:
         lightTheme: false
