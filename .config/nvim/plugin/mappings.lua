@@ -375,27 +375,6 @@ end, { expr = true, desc = 'grep operator' })
 xnoremap('<leader>g', ':call v:lua.as.mappings.grep_operator(visualmode())<CR>')
 -----------------------------------------------------------------------------//
 
--- TODO: add override vim.env.open so it handles short urls
-
--- local function open(path)
---   fn.jobstart({ vim.g.open_command, path }, { detach = true })
---   vim.notify(fmt('Opening %s', path))
--- end
--- -----------------------------------------------------------------------------//
--- -- GX - replicate netrw functionality
--- -----------------------------------------------------------------------------//
--- nnoremap('gx', function()
---   local file = fn.expand('<cfile>')
---   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
---
---   if file:match('http[s]?://') then return open(file) end
---
---   -- consider anything that looks like string/string a github link
---   local link = file:match('[%a%d%-%.%_]*%/[%a%d%-%.%_]*')
---   if link then return open(fmt('https://www.github.com/%s', link)) end
--- end)
------------------------------------------------------------------------------//
-
 nnoremap('gf', '<Cmd>e <cfile><CR>')
 
 -----------------------------------------------------------------------------//
