@@ -459,6 +459,13 @@ command('Exrc', function()
   if not ok then vim.notify(err, 'error', { title = 'Exrc Opener' }) end
 end)
 
+command('ClearRegisters', function()
+  local regs = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-'
+  for r in regs:gmatch('.') do
+    fn.setreg(r, {})
+  end
+end)
+
 -----------------------------------------------------------------------------//
 -- References
 -----------------------------------------------------------------------------//
