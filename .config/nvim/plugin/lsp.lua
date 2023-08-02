@@ -3,23 +3,13 @@ if not as then return end
 local lsp, fs, fn, api, fmt = vim.lsp, vim.fs, vim.fn, vim.api, string.format
 local diagnostic = vim.diagnostic
 local L, S = vim.lsp.log_levels, vim.diagnostic.severity
+local M = vim.lsp.protocol.Methods
 
 local icons = as.ui.icons.lsp
 local border = as.ui.current.border
 local augroup = as.augroup
 
 if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
-
----@enum
-local provider = {
-  HOVER = 'textDocument/hover',
-  RENAME = 'textDocument/rename',
-  CODELENS = 'textDocument/codeLens',
-  CODEACTIONS = 'textDocument/codeAction',
-  FORMATTING = 'textDocument/formatting',
-  REFERENCES = 'textDocument/documentHighlight',
-  DEFINITION = 'textDocument/definition',
-}
 
 ----------------------------------------------------------------------------------------------------
 --  LSP file Rename
@@ -76,9 +66,9 @@ local function show_related_locations(diag)
   return diag
 end
 
-local handler = lsp.handlers['textDocument/publishDiagnostics']
+local handler = lsp.handlers[M.textDocument_publishDiagnostics]
 ---@diagnostic disable-next-line: duplicate-set-field
-lsp.handlers['textDocument/publishDiagnostics'] = function(err, result, ctx, config)
+lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
   result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
   handler(err, result, ctx, config)
 end
@@ -95,15 +85,17 @@ local function setup_mappings(client, bufnr)
   local mappings = {
     { 'n', ']c', prev_diagnostic(), desc = 'go to prev diagnostic' },
     { 'n', '[c', next_diagnostic(), desc = 'go to next diagnostic' },
-    { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = provider.CODEACTIONS },
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = ts },
-    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
-    { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls' }, -- TODO: what provider is this?
-    { 'n', 'gi', lsp.buf.implementation, desc = 'implementation' }, -- TODO: what provider is this?
-    { 'n', '<leader>gd', lsp.buf.type_definition, desc = 'go to type definition', capability = provider.DEFINITION },
-    { 'n', '<leader>cl', lsp.codelens.run, desc = 'run code lens', capability = provider.CODELENS },
-    { 'n', '<leader>ri', lsp.buf.rename, desc = 'rename', capability = provider.RENAME },
-    { 'n', '<leader>rm', rename_file, desc = 'rename file', capability = provider.RENAME },
+    { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = M.textDocument_codeAction },
+    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = M.textDocument_definition, exclude = ts },
+    { 'n', 'gr', lsp.buf.references, desc = 'references', capability = M.textDocument_references },
+    { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = M.textDocument_prepareCallHierarchy },
+    { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = M.textDocument_implementation },
+    -- stylua: ignore start
+    { 'n', '<leader>gd', lsp.buf.type_definition, desc = 'go to type definition', capability = M.textDocument_definition },
+    -- stylua: ignore end
+    { 'n', '<leader>cl', lsp.codelens.run, desc = 'run code lens', capability = M.textDocument_codeLens },
+    { 'n', '<leader>ri', lsp.buf.rename, desc = 'rename', capability = M.textDocument_rename },
+    { 'n', '<leader>rm', rename_file, desc = 'rename file', capability = M.textDocument_rename },
   }
 
   vim.iter(mappings):each(function(m)
@@ -169,11 +161,9 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.supports_method('textDocument/inlayHint', { bufnr = buf }) then
-    vim.lsp.inlay_hint(buf, true)
-  end
+  if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then vim.lsp.inlay_hint(buf, true) end
 
-  if client.supports_method(provider.REFERENCES) then
+  if client.supports_method(M.textDocument_documentHighlight) then
     augroup(('LspReferences%d'):format(buf), {
       event = { 'CursorHold', 'CursorHoldI' },
       buffer = buf,
