@@ -80,7 +80,6 @@
   "nvim-ts-context-commentstring": { "branch": "main", "commit": "e9062e2dfb9854e6a927370f2d720de354c88524" },
   "nvim-ufo": { "branch": "main", "commit": "5be5b800b4f3512bca128f345e9c98574b5637c0" },
   "nvim-web-devicons": { "branch": "master", "commit": "eb8f80f30fd5e9a6176dee5c46661ebd7437ac46" },
-  "nvim-window-picker": { "branch": "main", "commit": "fd5d3348b3e254ca3134f97793b4a8c702c4ad1d" },
   "orgmode": { "branch": "master", "commit": "6b6eb8eabbed4d95568fd1f5374a3dff7ed51a3b" },
   "package-info.nvim": { "branch": "master", "commit": "4d98c8cc90d970d87c472c04bf7ca712336cc753" },
   "persisted.nvim": { "branch": "main", "commit": "c1c4bbff8a4e9b9f66812b2daa9d3338916e8da2" },
@@ -120,5 +119,6 @@
   "vim-wordmotion": { "branch": "master", "commit": "81d9bd298376ab0dc465c85d55afa4cb8d5f47a1" },
   "virt-column.nvim": { "branch": "master", "commit": "1917bfb519729dea7b4f5d13aa9c810c9579b0ea" },
   "which-key.nvim": { "branch": "main", "commit": "7ccf476ebe0445a741b64e36c78a682c1c6118b7" },
+  "window-picker": { "branch": "main", "commit": "2fe9e4001beeeee9562ddb21b0ad46ab2463bc5b" },
   "zen-mode.nvim": { "branch": "main", "commit": "68f554702de63f4b7b6b6d4bcb10178f41a0acc7" }
 }
