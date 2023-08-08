@@ -259,15 +259,12 @@ return {
       { '<leader>dC', '<Cmd>DeleteDebugPrints<CR>', desc = 'debugprint: clear all' },
     },
   },
-  { 'lewis6991/whatthejump.nvim', keys = { '<C-I>', '<C-O>' } },
   {
-    'jghauser/fold-cycle.nvim',
+    'chrisgrieser/nvim-origami',
+    event = 'BufReadPost',
+    keys = { { '<BS>', function() require('origami').h() end, desc = 'toggle fold' } },
     opts = {},
-    keys = {
-      { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
-    },
   },
-  -- Diff arbitrary blocks of text with each other
   { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
   {
     'rainbowhxch/beacon.nvim',
