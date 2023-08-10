@@ -193,19 +193,21 @@ return {
   --------------------------------------------------------------------------------
   { 'famiu/bufdelete.nvim', keys = { { '<leader>qq', '<Cmd>Bdelete<CR>', desc = 'buffer delete' } } },
   {
-    'mg979/vim-visual-multi',
-    lazy = false,
-    init = function()
-      vim.g.VM_highlight_matches = 'underline'
-      vim.g.VM_theme = 'codedark'
-      vim.g.VM_maps = {
-        ['Find Word'] = '<M-e>',
-        ['Find Under'] = '<M-e>',
-        ['Find Subword Under'] = '<M-e>',
-        ['Select Cursor Down'] = '\\j',
-        ['Select Cursor Up'] = '\\k',
-      }
-    end,
+    'smoka7/multicursors.nvim',
+    event = 'VeryLazy',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
+    opts = {
+      hint_config = { border = border },
+    },
+    cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+    keys = {
+      {
+        '<M-e>',
+        '<cmd>MCstart<cr>',
+        mode = { 'v', 'n' },
+        desc = 'Create a selection for selected text or word under the cursor',
+      },
+    },
   },
   {
     'folke/flash.nvim',
