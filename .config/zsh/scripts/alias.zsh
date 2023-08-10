@@ -34,6 +34,10 @@ alias kitty-icon="$DOTFILES/macos/kitty-icon.zsh"
 (( $+commands[lazygit] )) && alias lg='lazygit'
 (( $+commands[fuck] )) && alias fuckit='export THEFUCK_REQUIRE_CONFIRMATION=False; fuck; export THEFUCK_REQUIRE_CONFIRMATION=True'
 (( $+commands[kitty] )) && alias icat="kitty +kitten icat"
+if [[ $+commands[docker] ]]; then
+  alias dcd="docker compose down"
+  alias dcu="docker compose up -d --build"
+fi
 #-------------------------------------------------------------------------------
 #  NEOVIM
 #-------------------------------------------------------------------------------
