@@ -284,13 +284,13 @@ end
 ---@field data any
 
 ---@class Autocommand
----@field desc string
----@field event  string | string[] list of autocommand events
----@field pattern string | string[] list of autocommand patterns
+---@field desc string?
+---@field event  (string | string[])? list of autocommand events
+---@field pattern (string | string[])? list of autocommand patterns
 ---@field command string | fun(args: AutocmdArgs): boolean?
----@field nested  boolean
----@field once    boolean
----@field buffer  number
+---@field nested  boolean?
+---@field once    boolean?
+---@field buffer  number?
 
 ---Create an autocommand
 ---returns the group ID so that it can be cleared or manipulated.
