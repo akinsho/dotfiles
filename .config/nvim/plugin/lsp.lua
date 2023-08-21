@@ -86,12 +86,6 @@ end
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
-local function prev_diagnostic(lvl)
-  return function() diagnostic.goto_prev({ float = true, severity = { min = lvl } }) end
-end
-local function next_diagnostic(lvl)
-  return function() diagnostic.goto_next({ float = true, severity = { min = lvl } }) end
-end
 
 ---Setup mapping when an lsp attaches to a buffer
 ---@param client lsp.Client
