@@ -153,7 +153,7 @@ return {
           builtin = { toggle_behavior = 'extend' },
         },
         winopts = {
-        border = ui.border.rectangle,
+          border = ui.border.rectangle,
           hl = { border = 'PickerBorder', preview_border = 'PickerBorder' },
         },
         keymap = {
@@ -166,6 +166,7 @@ return {
           },
           fzf = {
             ['esc'] = 'abort',
+            ['ctrl-q'] = 'select-all+accept',
           },
         },
         highlights = {
