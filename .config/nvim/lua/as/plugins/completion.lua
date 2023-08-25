@@ -47,6 +47,9 @@ return {
       local function copilot() api.nvim_feedkeys(fn['copilot#Accept'](k('<Tab>')), 'n', true) end
 
       cmp.setup({
+        completion = {
+          completeopt = 'menu,menuone,noinsert',
+        },
         window = {
           completion = cmp.config.window.bordered({
             scrollbar = false,
