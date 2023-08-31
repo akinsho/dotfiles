@@ -133,6 +133,9 @@ return {
               conflict = icons.git.conflict,
             },
           },
+          file_size = {
+            required_width = 50,
+          },
         },
         window = {
           mappings = {
@@ -157,7 +160,8 @@ return {
           local picker = require('window-picker')
           picker.setup()
           picker.pick_window = function()
-            return picker.select({ hl = 'WindowPicker', prompt = 'Pick window: ' },
+            return picker.select(
+              { hl = 'WindowPicker', prompt = 'Pick window: ' },
               function(winid) return winid or nil end
             )
           end
