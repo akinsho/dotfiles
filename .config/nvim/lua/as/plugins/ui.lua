@@ -69,24 +69,41 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
+    branch = 'v3',
     event = 'UIEnter',
     opts = {
-      char = '│', -- ┆ ┊ 
-      show_foldtext = false,
-      context_char = '▎',
-      char_priority = 12,
-      show_current_context = true,
-      show_current_context_start = true,
-      show_current_context_start_on_current_line = false,
-      show_first_indent_level = true,
-      -- stylua: ignore
-      filetype_exclude = {
-        'dbout', 'neo-tree-popup', 'log', 'gitcommit',
-        'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
-        'undotree', 'markdown', 'norg', 'org', 'orgagenda',
-        '', -- for all buffers without a file type
+      exclude = {
+        -- stylua: ignore
+        filetypes = {
+          'dbout', 'neo-tree-popup', 'log', 'gitcommit',
+          'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
+          'undotree', 'markdown', 'norg', 'org', 'orgagenda',
+        },
       },
+      indent = {
+        char = '│', -- ▏┆ ┊ 
+        tab_char = '│',
+      },
+      scope = {
+        char = '▎',
+        highlight = {
+          'RainbowDelimiterRed',
+          'RainbowDelimiterYellow',
+          'RainbowDelimiterBlue',
+          'RainbowDelimiterOrange',
+          'RainbowDelimiterGreen',
+          'RainbowDelimiterViolet',
+          'RainbowDelimiterCyan',
+        },
+      },
+      show_first_indent_level = true,
     },
+    config = function(_, opts)
+      require('ibl').setup(opts)
+      local hooks = require('ibl.hooks')
+      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+    end,
   },
   {
     'stevearc/dressing.nvim',
