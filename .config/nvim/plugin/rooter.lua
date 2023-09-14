@@ -6,7 +6,6 @@ local fn, fs, api = vim.fn, vim.fs, vim.api
 ----------------------------------------------------------------------------------------------------
 
 local root_names = { '.git', 'Makefile', 'go.mod', 'go.sum' }
-local ignored = { 'null-ls' }
 
 -- Cache to use for speed up (at cost of possibly outdated results)
 local root_cache = {}

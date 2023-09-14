@@ -1,35 +1,28 @@
 return {
   {
-    'jose-elias-alvarez/null-ls.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-  },
-  {
-    'jay-babu/mason-null-ls.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = { 'mason.nvim', 'null-ls.nvim' },
-    config = function()
-      local null_ls = require('null-ls')
-      require('mason-null-ls').setup({
-        automatic_setup = true,
-        automatic_installation = true,
-        ensure_installed = { 'buf', 'goimports', 'golangci_lint', 'stylua', 'prettier' },
-        handlers = {
-          sql_formatter = function()
-            null_ls.register(null_ls.builtins.formatting.sql_formatter.with({
-              extra_filetypes = { 'pgsql' },
-              args = function(params)
-                local config_path = params.cwd .. '/.sql-formatter.json'
-                if vim.loop.fs_stat(config_path) then return { '--config', config_path } end
-                return { '--language', 'postgresql' }
-              end,
-            }))
-          end,
-          eslint = function()
-            null_ls.register(null_ls.builtins.diagnostics.eslint.with({ extra_filetypes = { 'svelte' } }))
-          end,
-        },
-      })
-      null_ls.setup()
+    'stevearc/conform.nvim',
+    event = 'BufReadPre',
+    opts = {
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        javascript = { 'prettier' },
+        markdown = { 'prettier' },
+        go = { 'goimports', 'gofumpt' },
+        pgsql = { 'sql_formatter' },
+        sql = { 'sql_formatter' },
+      },
+      format_on_save = function(buf)
+        if vim.g.formatting_disabled or vim.b[buf].formatting_disabled then return end
+        return { timeout_ms = 500, lsp_fallback = true }
+      end,
+    },
+    config = function(_, opts)
+      require('conform').setup(opts)
+      require('conform.formatters.sql_formatter').args = function(ctx)
+        local config_path = ctx.dirname .. '/.sql-formatter.json'
+        if vim.uv.fs_stat(config_path) then return { '--config', config_path } end
+        return { '--language', 'postgresql' }
+      end
     end,
   },
 }

@@ -7,7 +7,6 @@ local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 local icons = as.ui.icons.lsp
 local border = as.ui.current.border
 local augroup = as.augroup
-local command = as.command
 
 if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
 
@@ -103,7 +102,6 @@ local function setup_mappings(client, bufnr)
     { 'n', ']c', prev_diagnostic(), desc = 'go to prev diagnostic' },
     { 'n', '[c', next_diagnostic(), desc = 'go to next diagnostic' },
     { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = provider.CODEACTIONS },
-    { 'n', '<leader>rf', lsp.buf.format, desc = 'format buffer', capability = provider.FORMATTING, exclude = ts },
     { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = provider.DEFINITION, exclude = ts },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = provider.REFERENCES },
     { 'n', 'K', lsp.buf.hover, desc = 'hover', capability = provider.HOVER },
@@ -168,23 +166,6 @@ end
 ---@param client lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
-  if not client.server_capabilities[provider.FORMATTING] then
-    augroup(('LspFormatting%d'):format(buf), {
-      event = 'BufWritePre',
-      buffer = buf,
-      desc = 'LSP: Format on save',
-      command = function(args)
-        if not vim.g.formatting_disabled and not vim.b[buf].formatting_disabled then
-          local clients = vim.tbl_filter(
-            function(c) return c.server_capabilities[provider.FORMATTING] end,
-            lsp.get_active_clients({ buffer = buf })
-          )
-          lsp.buf.format({ bufnr = args.buf, async = #clients == 1 })
-        end
-      end,
-    })
-  end
-
   if client.server_capabilities[provider.CODELENS] then
     augroup(('LspCodeLens%d'):format(buf), {
       event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
@@ -240,12 +221,6 @@ augroup('LspSetupCommands', {
     if #args.data.diagnostics == 0 then vim.cmd('silent! lclose') end
   end,
 })
------------------------------------------------------------------------------//
--- Commands
------------------------------------------------------------------------------//
-
-command('LspFormat', function() lsp.buf.format({ bufnr = 0, async = false }) end)
-
 -----------------------------------------------------------------------------//
 -- Signs
 -----------------------------------------------------------------------------//

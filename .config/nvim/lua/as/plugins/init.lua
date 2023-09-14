@@ -456,7 +456,6 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = {
       popup = { border = border },
-      null_ls = { enabled = true },
     },
     config = function(_, opts)
       as.augroup('CmpSourceCargo', {

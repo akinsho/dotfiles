@@ -517,20 +517,9 @@ local function stl_lsp_clients(ctx)
   local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
   if not state.lsp_clients_visible then return { { name = fmt('%d attached', #clients), priority = 7 } } end
   if falsy(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
-  table.sort(clients, function(a, b)
-    if a.name == 'null-ls' then return false end
-    if b.name == 'null-ls' then return true end
-    return a.name < b.name
-  end)
+  table.sort(clients, function(a, b) return a.name < b.name end)
 
-  return vim.tbl_map(function(client)
-    if client.name:match('null') then
-      local sources = require('null-ls.sources').get_available(vim.bo[ctx.bufnum].filetype)
-      local source_names = vim.tbl_map(function(s) return s.name end, sources)
-      return { name = '␀ ' .. table.concat(source_names, ', '), priority = 7 }
-    end
-    return { name = client.name, priority = 4 }
-  end, clients)
+  return vim.tbl_map(function(client) return { name = client.name, priority = 4 } end, clients)
 end
 
 ----------------------------------------------------------------------------------------------------
