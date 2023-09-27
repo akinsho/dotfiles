@@ -296,10 +296,11 @@ return {
     },
   },
   {
-    'chrisgrieser/nvim-origami',
-    event = 'BufReadPost',
-    keys = { { '<BS>', function() require('origami').h() end, desc = 'toggle fold' } },
+    'jghauser/fold-cycle.nvim',
     opts = {},
+    keys = {
+      { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
+    },
   },
   { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
   {
