@@ -8,7 +8,6 @@ opt.shortmess = {
   o = true, -- file-read message overwrites previous
   O = true, -- file-read message overwrites previous
   T = true, -- truncate non-file messages in middle
-  f = true, -- (file x of x) instead of just (x of x
   F = true, -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
   s = true,
   c = true,
