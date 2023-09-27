@@ -80,7 +80,9 @@ opt.formatoptions = {
 -- at X then it will auto fold anything at that level, all good so far. If you then
 -- try to edit the content of your fold and the foldmethod=manual then it will
 -- recompute the fold which when using nvim-ufo means it will be closed again...
-o.foldlevelstart = 999
+opt.foldlevelstart = 3
+opt.foldmethod = 'expr'
+opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
