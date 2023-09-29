@@ -69,7 +69,7 @@ return {
   },
   {
     'lukas-reineke/indent-blankline.nvim',
-    branch = 'v3',
+    main = 'ibl',
     event = 'UIEnter',
     opts = {
       exclude = {
