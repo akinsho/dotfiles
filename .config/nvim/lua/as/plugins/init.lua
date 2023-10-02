@@ -7,6 +7,7 @@ return {
   -----------------------------------------------------------------------------//
   'nvim-lua/plenary.nvim', -- THE LIBRARY
   'nvim-tree/nvim-web-devicons',
+  { '3rd/image.nvim', ft = { 'markdown', 'neorg' }, opts = {} },
   {
     'olimorris/persisted.nvim',
     lazy = false,
