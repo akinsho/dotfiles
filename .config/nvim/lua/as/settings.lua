@@ -1,4 +1,4 @@
-local o, opt, fn, icons = vim.o, vim.opt, vim.fn, as.ui.icons
+local o, opt, v, fn, icons = vim.o, vim.opt, vim.v, vim.fn, as.ui.icons
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -75,13 +75,16 @@ opt.formatoptions = {
 -----------------------------------------------------------------------------//
 -- Folds {{{1
 -----------------------------------------------------------------------------//
--- unfortunately folding in (n)vim is a mess, if you set the fold level to start
--- at X then it will auto fold anything at that level, all good so far. If you then
--- try to edit the content of your fold and the foldmethod=manual then it will
--- recompute the fold which when using nvim-ufo means it will be closed again...
 opt.foldlevelstart = 3
 opt.foldmethod = 'expr'
 opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+function as.ui.foldtext()
+  local fold = vim.treesitter.foldtext() --[=[@as string[][]]=]
+  local c = v.foldend - v.foldstart + 1
+  fold[#fold + 1] = { (' ⋯ [%d Lines]'):format(c), 'Operator' }
+  return fold
+end
+opt.foldtext = 'v:lua.as.ui.foldtext()'
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
@@ -204,6 +207,7 @@ opt.sessionoptions = {
   'help',
   'tabpages',
   'terminal',
+  'folds',
 }
 opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
 o.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode

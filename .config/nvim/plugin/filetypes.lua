@@ -121,7 +121,6 @@ settings({
       signcolumn = 'yes',
     },
     plugins = {
-      ufo = function(ufo) ufo.detach() end,
       cmp = function(cmp)
         cmp.setup.filetype('org', {
           sources = {
