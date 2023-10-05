@@ -366,6 +366,11 @@ return {
     ft = 'qf',
     config = function() highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } }) end,
   },
+  {
+    'kevinhwang91/nvim-fundo',
+    requires = 'kevinhwang91/promise-async',
+    run = function() require('fundo').install() end,
+  },
   -- }}}
   --------------------------------------------------------------------------------
   -- Profiling & Startup {{{1
