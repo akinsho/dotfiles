@@ -11,18 +11,15 @@ local root_names = { '.git', 'Makefile', 'go.mod', 'go.sum' }
 local root_cache = {}
 
 ---@param buf number
----@param ignore string[]
 ---@return string?
 ---@return string?
-local function get_lsp_root(buf, ignore)
-  local clients = vim.lsp.get_active_clients({ bufnr = buf })
+local function get_lsp_root(buf)
+  local clients = vim.lsp.get_clients({ bufnr = buf })
   if not next(clients) then return end
 
   for _, client in pairs(clients) do
     local filetypes = client.config.filetypes
-    if filetypes and vim.tbl_contains(filetypes, vim.bo[buf].ft) then
-      if not vim.tbl_contains(ignore, client.name) then return client.config.root_dir, client.name end
-    end
+    if filetypes and vim.tbl_contains(filetypes, vim.bo[buf].ft) then return client.config.root_dir, client.name end
   end
 end
 
@@ -41,7 +38,7 @@ local function set_root(args)
       upward = true,
     })[1]
 
-    root = fs.dirname(root_file) or get_lsp_root(args.buf, ignored)
+    root = fs.dirname(root_file) or get_lsp_root(args.buf)
   end
   if not root or not path then return end
   root_cache[path] = root
