@@ -65,6 +65,15 @@ return {
         git_status_async = true,
         nesting_rules = {
           ['dart'] = { 'freezed.dart', 'g.dart' },
+          ['go'] = {
+            pattern = '(.*)%.go$',
+            files = { '%1_test.go' },
+          },
+          ['docker'] = {
+            pattern = '^dockerfile$',
+            ignore_case = true,
+            files = { '.dockerignore', 'docker-compose.*', 'dockerfile*' },
+          },
         },
         event_handlers = {
           {
