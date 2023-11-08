@@ -1,5 +1,10 @@
 return {
-  { 'akinsho/horizon.nvim', dev = true, lazy = false, priority = 1000 },
+  {
+    'akinsho/horizon.nvim',
+    dev = true,
+    lazy = false,
+    priority = 1000,
+  },
   { 'igorgue/danger', lazy = false },
   {
     'NTBBloodbath/doom-one.nvim',
@@ -8,5 +13,10 @@ return {
       vim.g.doom_one_pumblend_enable = true
       vim.g.doom_one_pumblend_transparency = 3
     end,
+  },
+  {
+    'oxfist/night-owl.nvim',
+    lazy = false,
+    priority = 1000,
   },
 }
