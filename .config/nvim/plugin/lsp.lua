@@ -94,7 +94,16 @@ local function setup_mappings(client, bufnr)
     { 'n', '<leader>gd', lsp.buf.type_definition, desc = 'go to type definition', capability = M.textDocument_definition },
     -- stylua: ignore end
     { 'n', '<leader>cl', lsp.codelens.run, desc = 'run code lens', capability = M.textDocument_codeLens },
-    { 'n', '<leader>ci', function() lsp.inlay_hint(0) end, desc = 'inlay hints toggle', M.textDocument_inlayHint },
+    {
+      'n',
+      '<leader>ci',
+      function()
+        local enabled = lsp.inlay_hint.is_enabled(0)
+        lsp.inlay_hint.enable(0, not enabled)
+      end,
+      desc = 'inlay hints toggle',
+      M.textDocument_inlayHint,
+    },
     { 'n', '<leader>ri', lsp.buf.rename, desc = 'rename', capability = M.textDocument_rename },
     { 'n', '<leader>rm', rename_file, desc = 'rename file', capability = M.textDocument_rename },
   }
@@ -162,7 +171,7 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then vim.lsp.inlay_hint(buf, true) end
+  if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then vim.lsp.inlay_hint.enable(buf, true) end
 
   if client.supports_method(M.textDocument_documentHighlight) then
     augroup(('LspReferences%d'):format(buf), {
