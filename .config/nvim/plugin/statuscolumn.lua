@@ -37,23 +37,10 @@ end
 ---@param k string the key to format
 ---@return T?
 local function format_text(t, k)
-  local txt = t[k] and t[k]:gsub('%s', '') or ''
+  local txt = (t and t[k]) and t[k]:gsub('%s', '') or ''
   if #txt < 1 then return end
   t[k] = txt
   return t
-end
-
----@param curbuf integer
----@param lnum integer
----@return StringComponent[] sgns non-git signs
-local function signplaced_signs(curbuf, lnum)
-  return vim
-    .iter(fn.sign_getplaced(curbuf, { group = '*', lnum = lnum })[1].signs)
-    :map(function(s)
-      local sign = format_text(fn.sign_getdefined(s.name)[1], 'text')
-      return { { { sign.text, sign.texthl } }, after = '' }
-    end)
-    :totable()
 end
 
 ---@param curbuf integer
@@ -86,9 +73,7 @@ function ui.statuscolumn.render()
   local buf = api.nvim_win_get_buf(win)
   local line_count = api.nvim_buf_line_count(buf)
 
-  local gitsign, other_sns = extmark_signs(buf, lnum)
-  local sns = signplaced_signs(buf, lnum)
-  vim.list_extend(sns, other_sns)
+  local gitsign, sns = extmark_signs(buf, lnum)
   while #sns < MIN_SIGN_WIDTH do
     table.insert(sns, spacer(1))
   end
