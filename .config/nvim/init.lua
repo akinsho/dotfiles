@@ -10,6 +10,9 @@ if vim.g.vscode then return end -- if someone has forced me to use vscode don't 
 local g, fn, opt, loop, env, cmd = vim.g, vim.fn, vim.opt, vim.loop, vim.env, vim.cmd
 local data = fn.stdpath('data')
 
+-- solves the issue of missing luarocks when running neovim
+vim.env.DYLD_LIBRARY_PATH = '$BREW_PREFIX/lib/'
+
 local home = env.HOME
 package.path = package.path .. ';' .. home .. '/.luarocks/share/lua/5.1/?/init.lua;'
 package.path = package.path .. ';' .. home .. '/.luarocks/share/lua/5.1/?.lua;'
