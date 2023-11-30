@@ -22,7 +22,10 @@
     ~/.config/tmux: .config/tmux
     ~/.config/zsh: .config/zsh
     ~/.config/nvim: .config/nvim
-    ~/.config/ideavim/: .config/ideavim
+    ~/.config/ideavim: .config/ideavim
+    ~/.config/amethyst:
+      if: "[ `uname` = Darwin ]"
+      path: .config/amethyst
     ~/.config/kitty:
       force: true
       path: .config/kitty
