@@ -61,15 +61,6 @@ case `uname` in
   Darwin)
     export ANDROID_SDK_ROOT=${HOME}/Library/Android/sdk/
   ;;
-  Linux)
-  # Java -----------------------------------------------------------------------
-  # Use Java 8 because -> https://stackoverflow.com/a/49759126
-  # ------------------------------------------------------------------------
-  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-  path+=(
-    ${JAVA_HOME}/bin(N-/)
-  )
-  ;;
 esac
 
 export MANPATH="/usr/local/man:$MANPATH"
