@@ -14,6 +14,7 @@ return {
         ['core.defaults'] = {},
         ['core.completion'] = { config = { engine = 'nvim-cmp' } },
         ['core.concealer'] = {},
+        ['core.export'] = {},
         ['core.dirman'] = {
           config = {
             workspaces = {
