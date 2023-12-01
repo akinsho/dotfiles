@@ -190,7 +190,7 @@ select-fullscreen-layout:
 # Select column layout
 select-column-layout:
   mod: mod1
-  key: f
+  key: <NONE>
 
 # Move the currently focused window to the space to the left.
 throw-space-left:
@@ -258,7 +258,17 @@ window-minimum-height: 0
 window-minimum-width: 0
 
 # List of bundle identifiers for applications to either be automatically floating or automatically tiled based on floating-is-blacklist (default []).
-floating: []
+floating:
+  [
+    # com.google.android.studio
+    com.tdesktop.Telegram,
+    com.apple.iCal,
+    com.apple.Preview,
+    com.1password.1password,
+    com.apple.finder,
+    com.apple.FontBook,
+    com.docker.docker
+  ]
 
 # Boolean flag determining behavior of the floating list. true if the applications should be floating and all others tiled. false if the applications should be tiled and all others floating (default true).
 floating-is-blacklist: true
@@ -273,7 +283,7 @@ float-small-windows: true
 mouse-follows-focus: false
 
 # true if the windows underneath the mouse should become focused as the mouse moves (default false). Note that this is largely incompatible with mouse-follows-focus
-focus-follows-mouse: true
+focus-follows-mouse: false
 
 # true if dragging and dropping windows on to each other should swap their positions (default false).
 mouse-swaps-windows: true
@@ -291,7 +301,7 @@ enables-layout-hud-on-space-change: true
 use-canary-build: false
 
 # true to insert new windows into the first position and false to insert new windows into the last position (default false).
-new-windows-to-main: false
+new-windows-to-main: true
 
 # true to automatically move to a space when throwing a window to it (default true).
 follow-space-thrown-windows: true
@@ -300,16 +310,16 @@ follow-space-thrown-windows: true
 window-resize-step: 5
 
 # Padding to apply between windows and the left edge of the screen (in px, default 0).
-screen-padding-left: 5
+screen-padding-left: 10
 
 # Padding to apply between windows and the right edge of the screen (in px, default 0).
-screen-padding-right: 5
+screen-padding-right: 10
 
 # Padding to apply between windows and the top edge of the screen (in px, default 0).
-screen-padding-top: 5
+screen-padding-top: 10
 
 # Padding to apply between windows and the bottom edge of the screen (in px, default 0).
-screen-padding-bottom: 5
+screen-padding-bottom: 10
 
 # true to maintain layout state across application executions (default true).
 restore-layouts-on-launch: true
