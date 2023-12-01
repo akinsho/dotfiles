@@ -58,7 +58,6 @@ return {
           },
         },
         autopairs = { enable = true },
-        context_commentstring = { enable = true },
         playground = { persist_queries = true },
         query_linter = {
           enable = true,
