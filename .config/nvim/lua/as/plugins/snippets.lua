@@ -3,6 +3,7 @@ return {
   -- causes formatting bugs on save when update events are TextChanged{I}
   {
     'L3MON4D3/LuaSnip',
+    version = 'v2.*',
     event = 'InsertEnter',
     build = 'make install_jsregexp',
     dependencies = { 'rafamadriz/friendly-snippets' },
