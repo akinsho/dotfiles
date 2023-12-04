@@ -28,7 +28,6 @@ return {
       ['<leader>'] = {
         a = { name = '+projectionist' },
         c = { name = '+code-action' },
-        d = { name = '+debug/database', h = 'dap hydra' },
         f = { name = '+picker' },
         h = { name = '+git-action' },
         n = { name = '+new' },

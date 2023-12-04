@@ -65,11 +65,6 @@ local hls = {
   mode_replace = 'StModeReplace',
   mode_command = 'StModeCommand',
   mode_select = 'StModeSelect',
-  hydra_red = 'HydraRedSt',
-  hydra_blue = 'HydraBlueSt',
-  hydra_amaranth = 'HydraAmaranthSt',
-  hydra_teal = 'HydraTealSt',
-  hydra_pink = 'HydraPinkSt',
 }
 
 ---@param hl string
@@ -136,11 +131,6 @@ local function colors()
     { [hls.mode_replace] = { bg = bg_color, fg = P.dark_red, bold = true } },
     { [hls.mode_command] = { bg = bg_color, fg = P.light_yellow, bold = true } },
     { [hls.mode_select] = { bg = bg_color, fg = P.teal, bold = true } },
-    { [hls.hydra_red] = { inherit = 'HydraRed', reverse = true } },
-    { [hls.hydra_blue] = { inherit = 'HydraBlue', reverse = true } },
-    { [hls.hydra_amaranth] = { inherit = 'HydraAmaranth', reverse = true } },
-    { [hls.hydra_teal] = { inherit = 'HydraTeal', reverse = true } },
-    { [hls.hydra_pink] = { inherit = 'HydraPink', reverse = true } },
   })
 end
 
@@ -405,18 +395,6 @@ end
 
 local function debugger() return not package.loaded.dap and '' or require('dap').status() end
 
----@return boolean, {name: string, hint: string, color: string}
-local function stl_hydra()
-  local ok, hydra = pcall(require, 'hydra.statusline')
-  if not ok then return false, { name = '', color = '' } end
-  local data = {
-    name = hydra.get_name() or 'UNKNOWN',
-    hint = hydra.get_hint(),
-    color = hls[fmt('hydra_%s', hydra.get_color())],
-  }
-  return hydra.is_active(), data
-end
-
 -----------------------------------------------------------------------------//
 -- Last search count
 -----------------------------------------------------------------------------//
@@ -672,8 +650,6 @@ function as.ui.statusline.render()
   local behind = updates.behind and tonumber(updates.behind) or 0
 
   -----------------------------------------------------------------------------//
-  local hydra_active, hydra = stl_hydra()
-  -----------------------------------------------------------------------------//
   local ok, noice = pcall(require, 'noice')
   local noice_mode = ok and noice.api.status.mode.get() or ''
   local has_noice_mode = ok and noice.api.status.mode.has() or false
@@ -743,10 +719,6 @@ function as.ui.statusline.render()
     cond = has_noice_mode,
     before = ' ',
     priority = 1,
-  }, {
-    { { '🐙 ' .. hydra.name:upper(), hydra.color } },
-    cond = hydra_active,
-    priority = 5,
   })
   -----------------------------------------------------------------------------//
   -- Right section
