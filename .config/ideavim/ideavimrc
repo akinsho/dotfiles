@@ -77,6 +77,8 @@ set ideajoin
 inoremap jk <Esc>
 nnoremap <Leader><Tab> :tabnext<CR>
 nnoremap <S-Tab> :tabprev<CR>\
+nnoremap [<Space> :<CR>mzo<Esc>`z:<CR>
+nnoremap ]<Space> :<CR>mzO<Esc>`z:<CR>
 
 sethandler <c-j> a:vim
 sethandler <c-k> a:vim
