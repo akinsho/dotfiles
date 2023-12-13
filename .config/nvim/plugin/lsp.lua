@@ -222,23 +222,6 @@ augroup('LspSetupCommands', {
   end,
 })
 -----------------------------------------------------------------------------//
--- Signs
------------------------------------------------------------------------------//
-
----@param opts {highlight: string, icon: string}
-local function sign(opts)
-  fn.sign_define(opts.highlight, {
-    text = opts.icon,
-    texthl = opts.highlight,
-    linehl = opts.highlight .. 'Line',
-  })
-end
-
-sign({ highlight = 'DiagnosticSignError', icon = icons.error })
-sign({ highlight = 'DiagnosticSignWarn', icon = icons.warn })
-sign({ highlight = 'DiagnosticSignInfo', icon = icons.info })
-sign({ highlight = 'DiagnosticSignHint', icon = icons.hint })
------------------------------------------------------------------------------//
 -- Handler Overrides
 -----------------------------------------------------------------------------//
 -- This section overrides the default diagnostic handlers for signs and virtual text so that only
@@ -274,12 +257,27 @@ diagnostic.handlers.signs = vim.tbl_extend('force', signs_handler, {
 local max_width = math.min(math.floor(vim.o.columns * 0.7), 100)
 local max_height = math.min(math.floor(vim.o.lines * 0.3), 30)
 
+-----------------------------------------------------------------------------//
+-- Signs
+-----------------------------------------------------------------------------//
 diagnostic.config({
   underline = true,
   update_in_insert = false,
   severity_sort = true,
   signs = {
     severity = { min = S.WARN },
+    text = {
+      [S.WARN] = icons.warn,
+      [S.INFO] = icons.info,
+      [S.HINT] = icons.hint,
+      [S.ERROR] = icons.error,
+    },
+    linehl = {
+      [S.WARN] = 'DiagnosticSignWarnLine',
+      [S.INFO] = 'DiagnosticSignInfoLine',
+      [S.HINT] = 'DiagnosticSignHintLine',
+      [S.ERROR] = 'DiagnosticSignErrorLine',
+    },
   },
   virtual_text = false and {
     severity = { min = S.WARN },
