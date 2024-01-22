@@ -29,7 +29,10 @@ return {
           position = { row = 2 },
         },
       },
-      hover = { enabled = true },
+      hover = {
+        enabled = true,
+        silent = true,
+      },
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         ['vim.lsp.util.stylize_markdown'] = true,
@@ -72,8 +75,6 @@ return {
             { event = 'msg_show', find = '%d+ change' },
             { event = 'msg_show', find = '%d+ line' },
             { event = 'msg_show', find = '%d+ more line' },
-            -- TODO: investigate the source of this LSP message and disable it happens in typescript files
-            { event = 'notify', find = 'No information available' },
           },
         },
       },
