@@ -260,7 +260,7 @@ window-minimum-width: 0
 # List of bundle identifiers for applications to either be automatically floating or automatically tiled based on floating-is-blacklist (default []).
 floating:
   [
-    # com.google.android.studio
+    com.google.android.studio,
     com.tdesktop.Telegram,
     com.apple.iCal,
     com.apple.Preview,
