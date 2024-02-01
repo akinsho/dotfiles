@@ -78,13 +78,7 @@ opt.formatoptions = {
 opt.foldlevelstart = 3
 opt.foldmethod = 'expr'
 opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-function as.ui.foldtext()
-  local fold = vim.treesitter.foldtext() --[=[@as string[][]]=]
-  local c = v.foldend - v.foldstart + 1
-  fold[#fold + 1] = { (' ⋯ [%d Lines]'):format(c), 'Operator' }
-  return fold
-end
-opt.foldtext = 'v:lua.as.ui.foldtext()'
+opt.foldtext = ''
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
