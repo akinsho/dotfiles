@@ -1,4 +1,4 @@
-local o, opt, fn, icons = vim.o, vim.opt, vim.fn, as.ui.icons
+local o, opt, v, fn, icons = vim.o, vim.opt, vim.v, vim.fn, as.ui.icons
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
@@ -8,7 +8,6 @@ opt.shortmess = {
   o = true, -- file-read message overwrites previous
   O = true, -- file-read message overwrites previous
   T = true, -- truncate non-file messages in middle
-  f = true, -- (file x of x) instead of just (x of x
   F = true, -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
   s = true,
   c = true,
@@ -76,11 +75,10 @@ opt.formatoptions = {
 -----------------------------------------------------------------------------//
 -- Folds {{{1
 -----------------------------------------------------------------------------//
--- unfortunately folding in (n)vim is a mess, if you set the fold level to start
--- at X then it will auto fold anything at that level, all good so far. If you then
--- try to edit the content of your fold and the foldmethod=manual then it will
--- recompute the fold which when using nvim-ufo means it will be closed again...
-o.foldlevelstart = 999
+opt.foldlevelstart = 3
+opt.foldmethod = 'expr'
+opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+opt.foldtext = ''
 -----------------------------------------------------------------------------//
 -- Grepprg {{{1
 -----------------------------------------------------------------------------//
@@ -184,7 +182,7 @@ opt.cursorlineopt = { 'both' }
 -----------------------------------------------------------------------------//
 function as.modified_icon() return vim.bo.modified and icons.misc.circle or '' end
 o.titlestring = '%{fnamemodify(getcwd(), ":t")}%( %{v:lua.as.modified_icon()}%)'
-o.titleold = fn.fnamemodify(vim.loop.os_getenv('SHELL'), ':t')
+o.titleold = fn.fnamemodify(vim.uv.os_getenv('SHELL'), ':t') or ''
 o.title = true
 o.titlelen = 70
 -----------------------------------------------------------------------------//
@@ -203,6 +201,7 @@ opt.sessionoptions = {
   'help',
   'tabpages',
   'terminal',
+  'folds',
 }
 opt.viewoptions = { 'cursor', 'folds' } -- save/restore just these (with `:{mk,load}view`)
 o.virtualedit = 'block' -- allow cursor to move where there is no text in visual block mode

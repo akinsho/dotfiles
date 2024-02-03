@@ -37,20 +37,10 @@ end
 ---@param k string the key to format
 ---@return T?
 local function format_text(t, k)
-  local txt = t[k] and t[k]:gsub('%s', '') or ''
+  local txt = (t and t[k]) and t[k]:gsub('%s', '') or ''
   if #txt < 1 then return end
   t[k] = txt
   return t
-end
-
----@param curbuf integer
----@param lnum integer
----@return StringComponent[] sgns non-git signs
-local function signplaced_signs(curbuf, lnum)
-  return vim.tbl_map(function(s)
-    local sign = format_text(fn.sign_getdefined(s.name)[1], 'text')
-    return { { { sign.text, sign.texthl } }, after = '' }
-  end, fn.sign_getplaced(curbuf, { group = '*', lnum = lnum })[1].signs)
 end
 
 ---@param curbuf integer
@@ -59,14 +49,16 @@ local function extmark_signs(curbuf, lnum)
   lnum = lnum - 1
   ---@type ExtmarkSign[]
   local signs = api.nvim_buf_get_extmarks(curbuf, -1, { lnum, 0 }, { lnum, -1 }, { details = true, type = 'sign' })
-  local sns = as.fold(function(acc, item)
-    item = format_text(item[4], 'sign_text')
-    local txt, hl = item.sign_text, item.sign_hl_group
-    local is_git = hl:match('^Git')
-    local target = is_git and acc.git or acc.other
-    table.insert(target, { { { txt, hl } }, after = '' })
-    return acc
-  end, signs, { git = {}, other = {} })
+  local sns = vim
+    .iter(signs)
+    :map(function(item) return format_text(item[4], 'sign_text') end)
+    :fold({ git = {}, other = {} }, function(acc, item)
+      local txt, hl = item.sign_text, item.sign_hl_group
+      local is_git = hl:match('^Git')
+      local target = is_git and acc.git or acc.other
+      table.insert(target, { { { txt, hl } }, after = '' })
+      return acc
+    end)
   if #sns.git == 0 then sns.git = { str.spacer(1) } end
   return sns.git, sns.other
 end
@@ -81,9 +73,7 @@ function ui.statuscolumn.render()
   local buf = api.nvim_win_get_buf(win)
   local line_count = api.nvim_buf_line_count(buf)
 
-  local gitsign, other_sns = extmark_signs(buf, lnum)
-  local sns = signplaced_signs(buf, lnum)
-  vim.list_extend(sns, other_sns)
+  local gitsign, sns = extmark_signs(buf, lnum)
   while #sns < MIN_SIGN_WIDTH do
     table.insert(sns, spacer(1))
   end

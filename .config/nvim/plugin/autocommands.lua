@@ -20,7 +20,7 @@ map({ 'n', 'v', 'o', 'i', 'c' }, '<Plug>(StopHL)', 'execute("nohlsearch")[-1]', 
 
 local function stop_hl()
   if v.hlsearch == 0 or api.nvim_get_mode().mode ~= 'n' then return end
-  api.nvim_feedkeys(as.replace_termcodes('<Plug>(StopHL)'), 'm', false)
+  api.nvim_feedkeys(vim.keycode('<Plug>(StopHL)'), 'm', false)
 end
 
 local function hl_search()
@@ -210,12 +210,12 @@ as.augroup('Utilities', {
   event = { 'BufEnter' },
   command = function(args)
     local paths = vim.split(vim.o.runtimepath, ',')
-    local match = as.find(function(dir)
+    local match = vim.iter(paths):find(function(dir)
       local path = api.nvim_buf_get_name(args.buf)
       if vim.startswith(path, env.PERSONAL_PROJECTS_DIR) then return false end
       if vim.startswith(path, env.VIMRUNTIME) then return true end
       return vim.startswith(path, dir)
-    end, paths)
+    end)
     vim.b[args.buf].formatting_disabled = match ~= nil
   end,
 }, {
@@ -236,6 +236,18 @@ as.augroup('Utilities', {
         filetype detect
         call v:lua.vim.notify('Filetype set to ' . &ft, "info", {})
       ]])
+    end
+  end,
+}, {
+  event = { 'DirChanged', 'VimEnter' },
+  command = function()
+    if fn.getcwd() == env.DOTFILES then
+      vim.keymap.set('n', 'gx', function()
+        local file = fn.expand('<cfile>')
+        local link = file:match('[%a%d%-%.%_]*%/[%a%d%-%.%_]*')
+        if link then return vim.ui.open(string.format('https://www.github.com/%s', link)) end
+        return vim.ui.open(file)
+      end)
     end
   end,
 })

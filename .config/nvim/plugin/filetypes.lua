@@ -2,8 +2,6 @@ if not as then return end
 local settings, highlight = as.filetype_settings, as.highlight
 local cmd, fn = vim.cmd, vim.fn
 
-vim.treesitter.language.register('bash', 'sh')
-vim.treesitter.language.register('markdown', 'chatgpt')
 vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
 
 settings({
@@ -123,7 +121,6 @@ settings({
       signcolumn = 'yes',
     },
     plugins = {
-      ufo = function(ufo) ufo.detach() end,
       cmp = function(cmp)
         cmp.setup.filetype('org', {
           sources = {

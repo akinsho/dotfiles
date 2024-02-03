@@ -1,6 +1,6 @@
 if not as or not as.mappings.enable then return end
 
-local fn, api, uv, cmd, command, fmt = vim.fn, vim.api, vim.loop, vim.cmd, as.command, string.format
+local fn, api, uv, cmd, command, fmt = vim.fn, vim.api, vim.uv, vim.cmd, as.command, string.format
 
 local recursive_map = function(mode, lhs, rhs, opts)
   opts = opts or {}
@@ -334,7 +334,7 @@ nnoremap('cN', '*``cgN')
 -- 4. Hit Enter to repeat the macro over search matches.
 function as.mappings.setup_map() nnoremap('M', [[:nnoremap M n@z<CR>q:<C-u>let @z=strpart(@z,0,strlen(@z)-1)<CR>n@z]]) end
 
-vim.g.mc = as.replace_termcodes([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
+vim.g.mc = vim.keycode([[y/\V<C-r>=escape(@", '/')<CR><CR>]])
 xnoremap('cn', [[g:mc . "``cgn"]], { expr = true, silent = true })
 xnoremap('cN', [[g:mc . "``cgN"]], { expr = true, silent = true })
 nnoremap('cq', [[:\<C-u>call v:lua.as.mappings.setup_map()<CR>*``qz]])
@@ -373,27 +373,6 @@ nnoremap('<leader>g', function()
   return 'g@'
 end, { expr = true, desc = 'grep operator' })
 xnoremap('<leader>g', ':call v:lua.as.mappings.grep_operator(visualmode())<CR>')
------------------------------------------------------------------------------//
-
--- TODO: add override vim.env.open so it handles short urls
-
--- local function open(path)
---   fn.jobstart({ vim.g.open_command, path }, { detach = true })
---   vim.notify(fmt('Opening %s', path))
--- end
--- -----------------------------------------------------------------------------//
--- -- GX - replicate netrw functionality
--- -----------------------------------------------------------------------------//
--- nnoremap('gx', function()
---   local file = fn.expand('<cfile>')
---   if not file or fn.isdirectory(file) > 0 then return vim.cmd.edit(file) end
---
---   if file:match('http[s]?://') then return open(file) end
---
---   -- consider anything that looks like string/string a github link
---   local link = file:match('[%a%d%-%.%_]*%/[%a%d%-%.%_]*')
---   if link then return open(fmt('https://www.github.com/%s', link)) end
--- end)
 -----------------------------------------------------------------------------//
 
 nnoremap('gf', '<Cmd>e <cfile><CR>')

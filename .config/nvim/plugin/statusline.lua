@@ -386,11 +386,11 @@ local function diagnostic_info(context)
     hint = { count = 0, icon = lsp_icons.hint },
   }
   if vim.tbl_isempty(diagnostics) then return result end
-  return as.fold(function(accum, item)
+  return vim.iter(diagnostics):fold(result, function(accum, item)
     local severity = severities[item.severity]:lower()
     accum[severity].count = accum[severity].count + 1
     return accum
-  end, diagnostics, result)
+  end)
 end
 
 local function debugger() return not package.loaded.dap and '' or require('dap').status() end
@@ -492,7 +492,7 @@ end
 ---@param ctx StatuslineContext
 ---@return table[]
 local function stl_lsp_clients(ctx)
-  local clients = vim.lsp.get_active_clients({ bufnr = ctx.bufnum })
+  local clients = vim.lsp.get_clients({ bufnr = ctx.bufnum })
   if not state.lsp_clients_visible then return { { name = fmt('%d attached', #clients), priority = 7 } } end
   if falsy(clients) then return { { name = 'No LSP clients available', priority = 7 } } end
   table.sort(clients, function(a, b) return a.name < b.name end)
@@ -508,7 +508,7 @@ end
 ---@param task function
 local function run_task_on_interval(interval, task)
   local pending_job
-  local timer = vim.loop.new_timer()
+  local timer = vim.uv.new_timer()
   if not timer then return end
   local function callback()
     if pending_job then fn.jobstop(pending_job) end
@@ -524,7 +524,7 @@ end
 ---@return boolean
 local function is_git_repo(win_id)
   win_id = win_id or api.nvim_get_current_win()
-  return vim.loop.fs_stat(fmt('%s/.git', fn.getcwd(win_id)))
+  return vim.uv.fs_stat(fmt('%s/.git', fn.getcwd(win_id)))
 end
 
 -- Use git and the native job API to first get the head of the repo
@@ -662,16 +662,17 @@ function as.ui.statusline.render()
   -----------------------------------------------------------------------------//
   local flutter = vim.g.flutter_tools_decorations or {}
   local diagnostics = diagnostic_info(ctx)
-  local lsp_clients = as.map(function(client)
-    return {
-      {
-        { client.name, hls.client },
-        { space },
-        { '', hls.metadata_prefix },
-      },
-      priority = client.priority,
-    }
-  end, stl_lsp_clients(ctx))
+  local lsp_clients = vim
+    .iter(ipairs(stl_lsp_clients(ctx)))
+    :map(
+      function(_, client)
+        return {
+          { { client.name, hls.client }, { space }, { '', hls.metadata_prefix } },
+          priority = client.priority,
+        }
+      end
+    )
+    :totable()
   table.insert(lsp_clients[1][1], 1, { ' LSP(s): ', hls.metadata })
   lsp_clients[1].id = LSP_COMPONENT_ID -- the unique id of the component
   lsp_clients[1].click = 'v:lua.as.ui.statusline.lsp_client_click'
@@ -838,7 +839,7 @@ as.augroup('CustomStatusline', {
 }, {
   event = 'LspAttach',
   command = function(args)
-    local clients = vim.lsp.get_active_clients({ bufnr = args.buf })
+    local clients = vim.lsp.get_clients({ bufnr = args.buf })
     if vim.o.columns < 200 and #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
   end,
 }, {

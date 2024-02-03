@@ -131,28 +131,6 @@ return {
       },
     },
   },
-  {
-    'lvimuser/lsp-inlayhints.nvim',
-    init = function()
-      as.augroup('InlayHintsSetup', {
-        event = 'LspAttach',
-        command = function(args)
-          local id = vim.tbl_get(args, 'data', 'client_id') --[[@as lsp.Client]]
-          if not id then return end
-          local client = vim.lsp.get_client_by_id(id)
-          require('lsp-inlayhints').on_attach(client, args.buf)
-        end,
-      })
-    end,
-    opts = {
-      inlay_hints = {
-        highlight = 'Comment',
-        labels_separator = ' ⏐ ',
-        parameter_hints = { prefix = '󰊕' },
-        type_hints = { prefix = '=> ', remove_colon_start = true },
-      },
-    },
-  },
   { 'simrat39/rust-tools.nvim', dependencies = { 'nvim-lspconfig' } },
   -- }}}
   -----------------------------------------------------------------------------//
@@ -318,10 +296,11 @@ return {
     },
   },
   {
-    'chrisgrieser/nvim-origami',
-    event = 'BufReadPost',
-    keys = { { '<BS>', function() require('origami').h() end, desc = 'toggle fold' } },
+    'jghauser/fold-cycle.nvim',
     opts = {},
+    keys = {
+      { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
+    },
   },
   { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
   {

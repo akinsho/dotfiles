@@ -40,7 +40,11 @@ return {
       ui = {
         menu = {
           handler = function(data)
-            local items = vim.tbl_filter(function(i) return i.key and i.label:lower() ~= 'quit' end, data.items)
+            local items = vim
+              .iter(data.items)
+              :map(function(i) return (i.key and not i.label:lower():match('quit')) and i or nil end)
+              :totable()
+
             ui.select(items, {
               prompt = fmt(' %s ', data.prompt),
               kind = 'orgmode',

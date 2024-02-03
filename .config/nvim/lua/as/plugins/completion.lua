@@ -1,4 +1,4 @@
-local highlight, ui, k = as.highlight, as.ui, as.replace_termcodes
+local highlight, ui, k = as.highlight, as.ui, vim.keycode
 local api, fn = vim.api, vim.fn
 local border = ui.current.border
 
