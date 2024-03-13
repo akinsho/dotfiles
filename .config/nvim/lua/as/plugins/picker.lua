@@ -17,20 +17,6 @@ end
 
 local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
 
-local function git_files_cwd_aware(opts)
-  opts = opts or {}
-  local fzf = require('fzf-lua')
-  -- git_root() will warn us if we're not inside a git repo
-  -- so we don't have to add another warning here, if
-  -- you want to avoid the error message change it to:
-  -- local git_root = fzf_lua.path.git_root(opts, true)
-  local git_root = fzf.path.git_root(opts)
-  if not git_root then return fzf.files(opts) end
-  local relative = fzf.path.relative(vim.uv.cwd(), git_root)
-  opts.fzf_opts = { ['--query'] = git_root ~= relative and relative or nil }
-  return fzf.git_files(opts)
-end
-
 local function dropdown(opts)
   opts = opts or { winopts = {} }
   local title = vim.tbl_get(opts, 'winopts', 'title') ---@type string?
@@ -97,7 +83,7 @@ return {
     cmd = 'FzfLua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     keys = {
-      { '<c-p>', git_files_cwd_aware, desc = 'find files' },
+      { '<c-p>', fzf_lua.git_files, desc = 'find files' },
       { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
       { '<leader>ff', file_picker, desc = 'find files' },
       { '<leader>fb', fzf_lua.grep_curbuf, desc = 'current buffer fuzzy find' },
@@ -185,7 +171,7 @@ return {
           winopts = { title = format_title('Files', '') },
         }),
         buffers = dropdown({
-          fzf_opts = { ['--delimiter'] = "' '", ['--with-nth'] = '-1..' },
+          fzf_opts = { ['--delimiter'] = ' ', ['--with-nth'] = '-1..' },
           winopts = { title = format_title('Buffers', '󰈙') },
         }),
         keymaps = dropdown({
