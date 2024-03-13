@@ -78,7 +78,7 @@ end
 -----------------------------------------------------------------------------//
 
 ---Setup mapping when an lsp attaches to a buffer
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
   local ts = { 'typescript', 'typescriptreact' }
@@ -122,7 +122,7 @@ end
 -- LSP SETUP/TEARDOWN
 -----------------------------------------------------------------------------//
 
----@alias ClientOverrides {on_attach: fun(client: lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: lsp.Client, token: table)}
+---@alias ClientOverrides {on_attach: fun(client: vim.lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: vim.lsp.Client, token: table)}
 
 --- A set of custom overrides for specific lsp clients
 --- This is a way of adding functionality for specific lsps
@@ -142,7 +142,7 @@ local client_overrides = {
 -- Semantic Tokens
 -----------------------------------------------------------------------------//
 
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param bufnr number
 local function setup_semantic_tokens(client, bufnr)
   local overrides = client_overrides[client.name]
@@ -158,7 +158,7 @@ end
 -- Autocommands
 -----------------------------------------------------------------------------//
 
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
   if client.supports_method(M.textDocument_codeLens) then
@@ -191,7 +191,7 @@ end
 -- Add buffer local mappings, autocommands etc for attaching servers
 -- this runs for each client because they have different capabilities so each time one
 -- attaches it might enable autocommands or mappings that the previous client did not support
----@param client lsp.Client the lsp client
+---@param client vim.lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
   setup_autocommands(client, bufnr)

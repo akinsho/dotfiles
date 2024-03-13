@@ -14,6 +14,8 @@ api.nvim_create_user_command('DotEnv', function()
     upward = true,
     stop = fn.fnamemodify(fn.getcwd(), ':p:h:h'),
     path = fn.expand('%:p:h'),
+    type = 'file',
+    limit = 1,
   })
   if vim.tbl_isempty(files) then return end
   local filename, lines = files[1], {}
