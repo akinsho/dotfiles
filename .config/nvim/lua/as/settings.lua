@@ -1,4 +1,4 @@
-local o, opt, v, fn, icons = vim.o, vim.opt, vim.v, vim.fn, as.ui.icons
+local o, opt, fn, icons = vim.o, vim.opt, vim.fn, as.ui.icons
 -----------------------------------------------------------------------------//
 -- Message output on vim actions {{{1
 -----------------------------------------------------------------------------//
