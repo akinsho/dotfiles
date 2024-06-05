@@ -1,14 +1,20 @@
+Host *
+  IdentityAgent "~/.1password/agent.sock"
+
 # personal
 Host github.com
   HostName github.com
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_ed25519.pub
+  IdentitiesOnly yes
+
+Host gitlab.com
+  HostName gitlab.com
+  IdentityFile ~/.ssh/id_ed25519_gitlab.pub
+  IdentitiesOnly yes
 
 # work
 Host github-work
   HostName github.com
-  AddKeysToAgent yes
   IdentityFile ~/.ssh/id_ed25519_work.pub
-  IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-  UseKeychain yes
+  IdentitiesOnly yes
 # vim: ft=sshconfig
