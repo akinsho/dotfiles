@@ -53,8 +53,8 @@ return {
         window = {
           completion = cmp.config.window.bordered({
             scrollbar = false,
-            border = 'shadow',
-            winhighlight = 'NormalFloat:Pmenu,CursorLine:PmenuSel,FloatBorder:FloatBorder',
+            border = border,
+            winhighlight = 'CursorLine:PmenuSel',
           }),
           documentation = cmp.config.window.bordered({
             border = border,
