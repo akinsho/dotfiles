@@ -145,7 +145,7 @@ as.augroup('WindowBehaviours', {
 }, {
   event = { 'BufWinEnter' },
   command = function(args)
-    if vim.wo.diff then vim.diagnostic.disable(args.buf) end
+    if vim.wo.diff then vim.diagnostic.enable(false, args.buf) end
   end,
 }, {
   event = { 'BufWinLeave' },

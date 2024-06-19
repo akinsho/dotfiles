@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 local function neotest() return require('neotest') end
 local function open() neotest().output.open({ enter = true, short = false }) end
 local function run_file() neotest().run.run(vim.fn.expand('%')) end
@@ -26,7 +27,8 @@ return {
       vim.diagnostic.config({
         virtual_text = {
           format = function(diagnostic)
-            return diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
+            local value = diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
+            return value
           end,
         },
       }, namespace)

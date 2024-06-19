@@ -76,7 +76,7 @@ end
 --- 1. https://stackoverflow.com/q/5560248
 --- 2. https://stackoverflow.com/a/37797380
 ---@param color string A hex color
----@param percent float a negative number darkens and a positive one brightens
+---@param percent number a negative number darkens and a positive one brightens
 ---@return string
 local function tint(color, percent)
   assert(color and percent, 'cannot alter a color without specifying a color and percentage')

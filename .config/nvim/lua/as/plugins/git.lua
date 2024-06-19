@@ -132,11 +132,6 @@ return {
         changedelete = { text = icons.right_block },
         untracked = { text = icons.light_shade_block },
       },
-      -- Experimental ------------------------------------------------------------------------------
-      _inline2 = false,
-      _extmark_signs = true,
-      _signs_staged_enable = false,
-      ----------------------------------------------------------------------------------------------
       current_line_blame = not cwd():match('dotfiles'),
       current_line_blame_formatter = ' <author>, <author_time> · <summary>',
       preview_config = { border = border },

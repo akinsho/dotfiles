@@ -122,7 +122,7 @@ function as.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 ---@field g table<string, any>
 ---@field bo vim.bo
 ---@field wo vim.wo
----@field opt vim.opt
+---@field opt vim.Option
 ---@field plugins {[string]: fun(module: table)}
 
 ---@param args {[1]: string, [2]: string, [3]: string, [string]: boolean | integer}[]
