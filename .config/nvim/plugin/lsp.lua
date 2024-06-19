@@ -83,6 +83,8 @@ end
 local function setup_mappings(client, bufnr)
   local ts = { 'typescript', 'typescriptreact' }
   local mappings = {
+    { 'n', ']c', function() diagnostic.goto_prev({ float = true }) end, desc = 'go to prev diagnostic' },
+    { 'n', '[c', function() diagnostic.goto_next({ float = true }) end, desc = 'go to next diagnostic' },
     { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = M.textDocument_codeAction },
     { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = M.textDocument_definition, exclude = ts },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = M.textDocument_references },
