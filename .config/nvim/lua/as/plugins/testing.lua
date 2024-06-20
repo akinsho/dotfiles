@@ -42,20 +42,16 @@ return {
           require('neotest-plenary'),
           require('neotest-dart')({ command = 'flutter' }),
           require('neotest-go'),
-          require('neotest-rust')({
-            args = { '--verbose' },
-          }),
-          require('neotest-jest')({
-            jestCommand = 'npm test --',
-            jestConfigFile = 'jest.config.js',
-          }),
+          require('neotest-rust')({ args = { '--verbose' } }),
+          require('neotest-jest')({ jestCommand = 'npm test --', jestConfigFile = 'jest.config.js' }),
         },
       })
     end,
     dependencies = {
-      { 'sidlatau/neotest-dart' },
-      { 'rouge8/neotest-rust' },
-      { 'haydenmeade/neotest-jest' },
+      'nvim-neotest/nvim-nio',
+      'sidlatau/neotest-dart',
+      'rouge8/neotest-rust',
+      'haydenmeade/neotest-jest',
       { 'neotest/neotest-go', dev = true },
       { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
     },

@@ -21,6 +21,7 @@ return {
       })
     end,
     opts = {
+      silent = true,
       autoload = true,
       use_git_branch = true,
       allowed_dirs = { vim.g.dotfiles, vim.g.work_dir, vim.g.projects_dir .. '/personal' },
@@ -150,13 +151,9 @@ return {
     opts = function()
       local ccc = require('ccc')
       local p = ccc.picker
-      p.hex.pattern = {
-        [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)>]=],
-        [=[\v%(^|[^[:keyword:]])\zs#(\x\x)(\x\x)(\x\x)(\x\x)>]=],
-      }
       ccc.setup({
         win_opts = { border = border },
-        pickers = { p.hex, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
+        pickers = { p.hex_long, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
         highlighter = {
           auto_enable = true,
           excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
@@ -309,7 +306,6 @@ return {
       { '<BS>', function() require('fold-cycle').open() end, desc = 'fold-cycle: toggle' },
     },
   },
-  { 'AndrewRadev/linediff.vim', cmd = 'Linediff' },
   {
     'rainbowhxch/beacon.nvim',
     event = 'VeryLazy',
@@ -621,7 +617,6 @@ return {
   ---------------------------------------------------------------------------------
   -- Dev plugins  {{{1
   ---------------------------------------------------------------------------------
-  { 'tweekmonster/helpful.vim', cmd = 'HelpfulVersion', ft = 'help' },
   { 'rafcamlet/nvim-luapad', cmd = 'Luapad' },
   -- }}}
   ---------------------------------------------------------------------------------
