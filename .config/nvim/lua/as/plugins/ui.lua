@@ -1,20 +1,11 @@
+---@diagnostic disable: missing-fields
 local api, fn = vim.api, vim.fn
-local highlight, ui, falsy, augroup = as.highlight, as.ui, as.falsy, as.augroup
-local icons, border, rect = ui.icons.lsp, ui.current.border, ui.border.rectangle
+local highlight, ui, augroup = as.highlight, as.ui, as.augroup
+local icons, border = ui.icons.lsp, ui.current.border
 
 local lspkind = require('lspkind')
 
 return {
-  {
-    'folke/zen-mode.nvim',
-    cmd = 'ZenMode',
-    opts = {
-      plugins = {
-        kitty = { enabled = true, font = '+2' },
-        tmux = { enabled = true },
-      },
-    },
-  },
   {
     'Bekaboo/dropbar.nvim',
     event = 'VeryLazy',
@@ -133,16 +124,6 @@ return {
               }),
             }
           end
-          if opts.kind == 'orgmode' then
-            return {
-              backend = 'nui',
-              nui = {
-                position = '97%',
-                border = { style = rect },
-                min_width = vim.o.columns - 2,
-              },
-            }
-          end
           return {
             backend = 'fzf_lua',
             fzf_lua = as.fzf.dropdown({
@@ -167,36 +148,13 @@ return {
   {
     'rcarriga/nvim-notify',
     config = function()
-      highlight.plugin('notify', {
-        { NotifyERRORBorder = { bg = { from = 'NormalFloat' } } },
-        { NotifyWARNBorder = { bg = { from = 'NormalFloat' } } },
-        { NotifyINFOBorder = { bg = { from = 'NormalFloat' } } },
-        { NotifyDEBUGBorder = { bg = { from = 'NormalFloat' } } },
-        { NotifyTRACEBorder = { bg = { from = 'NormalFloat' } } },
-        { NotifyERRORBody = { link = 'NormalFloat' } },
-        { NotifyWARNBody = { link = 'NormalFloat' } },
-        { NotifyINFOBody = { link = 'NormalFloat' } },
-        { NotifyDEBUGBody = { link = 'NormalFloat' } },
-        { NotifyTRACEBody = { link = 'NormalFloat' } },
-      })
-
       local notify = require('notify')
-
       notify.setup({
-        timeout = 5000,
-        stages = 'fade_in_slide_out',
         top_down = false,
-        background_colour = 'NormalFloat',
-        max_width = function() return math.floor(vim.o.columns * 0.6) end,
-        max_height = function() return math.floor(vim.o.lines * 0.8) end,
+        render = 'wrapped-compact',
+        stages = 'fade_in_slide_out',
         on_open = function(win)
-          if not api.nvim_win_is_valid(win) then return end
-          api.nvim_win_set_config(win, { border = border })
-        end,
-        render = function(...)
-          local notification = select(2, ...)
-          local style = falsy(notification.title[1]) and 'minimal' or 'default'
-          require('notify.render')[style](...)
+          if api.nvim_win_is_valid(win) then api.nvim_win_set_config(win, { border = 'single' }) end
         end,
       })
       map('n', '<leader>nd', function() notify.dismiss({ silent = true, pending = true }) end, {

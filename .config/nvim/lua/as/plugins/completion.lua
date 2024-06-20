@@ -1,6 +1,5 @@
 local highlight, ui, k = as.highlight, as.ui, vim.keycode
 local api, fn = vim.api, vim.fn
-local border = ui.current.border
 
 return {
   { 'f3fora/cmp-spell', ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' } },
@@ -52,13 +51,12 @@ return {
         },
         window = {
           completion = cmp.config.window.bordered({
-            scrollbar = false,
-            border = border,
-            winhighlight = 'CursorLine:PmenuSel',
+            border = 'single',
+            winhighlight = 'NormalFloat:Normal,CursorLine:PmenuSel,FloatBorder:PickerBorder',
           }),
           documentation = cmp.config.window.bordered({
-            border = border,
-            winhighlight = 'FloatBorder:FloatBorder',
+            border = 'single',
+            winhighlight = 'NormalFloat:Normal,FloatBorder:PickerBorder',
           }),
         },
         snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
