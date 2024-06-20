@@ -7,7 +7,7 @@ return {
   -----------------------------------------------------------------------------//
   'nvim-lua/plenary.nvim', -- THE LIBRARY
   'nvim-tree/nvim-web-devicons',
-  { '3rd/image.nvim', enabled = false, ft = { 'markdown', 'neorg' }, opts = {} }, -- BUG: Cannot find the imagemagick rock
+  { '3rd/image.nvim', ft = { 'markdown', 'neorg', 'org' }, opts = {} },
   {
     'olimorris/persisted.nvim',
     lazy = false,
