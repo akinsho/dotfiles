@@ -5,32 +5,19 @@
 --  _/    _/  _/  _/
 -- _/    _/  _/    _/
 ----------------------------------------------------------------------------------------------------
-if vim.g.vscode then return end -- if someone has forced me to use vscode don't load my config
 
 local g, fn, opt, loop, env, cmd = vim.g, vim.fn, vim.opt, vim.uv, vim.env, vim.cmd
-local data = fn.stdpath('data')
 
--- solves the issue of missing luarocks when running neovim
-vim.env.DYLD_LIBRARY_PATH = '$BREW_PREFIX/lib/'
-
-local home = env.HOME
-package.path = package.path .. ';' .. home .. '/.luarocks/share/lua/5.1/?/init.lua;'
-package.path = package.path .. ';' .. home .. '/.luarocks/share/lua/5.1/?.lua;'
-
-if vim.loader then vim.loader.enable() end
-
-g.os = loop.os_uname().sysname
-g.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
-
-g.dotfiles = env.DOTFILES or fn.expand('~/.dotfiles')
-g.vim_dir = g.dotfiles .. '/.config/nvim'
-g.projects_dir = env.PROJECTS_DIR or fn.expand('~/projects')
-g.work_dir = g.projects_dir .. '/work'
 ----------------------------------------------------------------------------------------------------
 -- Leader bindings
 ----------------------------------------------------------------------------------------------------
 g.mapleader = ',' -- Remap leader key
 g.maplocalleader = ' ' -- Local leader is <Space>
+_G.map = vim.keymap.set
+----------------------------------------------------------------------------------------------------
+-- VSCODE
+----------------------------------------------------------------------------------------------------
+if vim.g.vscode then return require('as.vscode') end
 ----------------------------------------------------------------------------------------------------
 -- Global namespace
 ----------------------------------------------------------------------------------------------------
@@ -49,8 +36,20 @@ local namespace = {
 -- This table is a globally accessible store to facilitating accessing
 -- helper functions and variables throughout my config
 _G.as = as or namespace
-_G.map = vim.keymap.set
 _G.P = vim.print
+----------------------------------------------------------------------------------------------------
+
+local data = fn.stdpath('data')
+
+if vim.loader then vim.loader.enable() end
+
+g.os = loop.os_uname().sysname
+g.open_command = g.os == 'Darwin' and 'open' or 'xdg-open'
+
+g.dotfiles = env.DOTFILES or fn.expand('~/.dotfiles')
+g.vim_dir = g.dotfiles .. '/.config/nvim'
+g.projects_dir = env.PROJECTS_DIR or fn.expand('~/projects')
+g.work_dir = g.projects_dir .. '/work'
 
 ----------------------------------------------------------------------------------------------------
 -- Settings
