@@ -79,7 +79,7 @@ function ui.statuscolumn.render()
   end
 
   local r1 = section:new(spacer(1), { { { nr(win, lnum, relnum, virtnum, line_count) } } }, unpack(gitsign))
-  local r2 = section:new({ { { separator, 'LineNr' } }, after = '' }, { { { fdm(lnum) } } })
+  local r2 = section:new({ { { separator, 'StatusColSep' } }, after = '' }, { { { fdm(lnum) } } })
 
   return display({ sns, r1 + r2 })
 end

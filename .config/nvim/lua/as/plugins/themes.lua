@@ -6,17 +6,6 @@ return {
     priority = 1000,
   },
   { 'igorgue/danger', lazy = false },
-  {
-    'NTBBloodbath/doom-one.nvim',
-    lazy = false,
-    config = function()
-      vim.g.doom_one_pumblend_enable = true
-      vim.g.doom_one_pumblend_transparency = 3
-    end,
-  },
-  {
-    'oxfist/night-owl.nvim',
-    lazy = false,
-    priority = 1000,
-  },
+  { 'projekt0n/github-nvim-theme', lazy = false, priority = 1000 },
+  { 'oxfist/night-owl.nvim', lazy = false, priority = 1000 },
 }
