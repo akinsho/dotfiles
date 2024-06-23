@@ -216,10 +216,7 @@ local function adopt_window_highlights()
     local name = part.hl(api.nvim_get_current_win())
     local hl = highlight.get(name)
     if not falsy(hl) then return end
-    highlight.set(name, {
-      inherit = part.fallback,
-      bg = { from = curr_winhl.StatusLine, attr = 'bg' },
-    })
+    highlight.set(name, { inherit = part.fallback, bg = { from = curr_winhl.StatusLine, attr = 'bg' } })
   end
 end
 
@@ -271,7 +268,6 @@ end
 ---@param path string
 ---@return string
 local function with_sep(path) return (not falsy(path) and path:sub(-1) ~= sep) and path .. sep or path end
-local SYNC_DIR = fn.resolve(vim.env.SYNC_DIR)
 
 --- Replace the directory path with an identifier if it matches a commonly visited
 --- directory of mine such as my projects directory or my work directory
@@ -289,7 +285,6 @@ local function dir_env(directory)
     [vim.g.work_dir] = '$WORK',
     [vim.g.projects_dir] = '$PROJECTS',
     [vim.env.VIMRUNTIME] = '$VIMRUNTIME',
-    [SYNC_DIR] = '$SYNC',
   }
   local result, env, prev_match = directory, '', ''
   for dir, alias in pairs(paths) do

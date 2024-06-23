@@ -26,7 +26,7 @@ api.nvim_create_user_command('DotEnv', function()
       fn.setenv(name, value)
     end
   end)
-  local markdown = table.concat(vim.tbl_flatten({ '', '```sh', lines, '```', '' }), '\n')
+  local markdown = table.concat(vim.iter({ '', '```sh', lines, '```', '' }):flatten():totable(), '\n')
   vim.notify(fmt('Read **%s**\n', filename) .. markdown, 'info', {
     title = 'Nvim Env',
     on_open = function(win)

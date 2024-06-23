@@ -4,7 +4,8 @@
         "missing-parameter",
         "return-type-mismatch",
         "param-type-mismatch",
-        "cast-local-type"
+        "cast-local-type",
+        "missing-fields"
     ],
     "Lua.workspace.checkThirdParty": false,
     "diagnostics.globals": [
