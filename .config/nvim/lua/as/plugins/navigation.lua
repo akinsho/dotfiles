@@ -22,28 +22,20 @@ return {
     end,
     config = function()
       highlight.plugin('NeoTree', {
-        theme = {
-          ['*'] = {
-            { NeoTreeNormal = { link = 'PanelBackground' } },
-            { NeoTreeNormalNC = { link = 'PanelBackground' } },
-            { NeoTreeCursorLine = { link = 'Visual' } },
-            { NeoTreeRootName = { underline = true } },
-            { NeoTreeStatusLine = { link = 'PanelSt' } },
-            { NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true } },
-            { NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground', alter = 0.15 }, fg = { from = 'Comment' } } },
-            { NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } } },
-            -- stylua: ignore
-            { NeoTreeTabSeparatorInactive = { inherit = 'NeoTreeTabInactive', fg = { from = 'PanelDarkBackground', attr = 'bg' } } },
-          },
-          -- NOTE: panel background colours don't get ignored by tint.nvim so avoid using them for now
-          horizon = {
-            { NeoTreeWinSeparator = { link = 'WinSeparator' } },
-            { NeoTreeTabActive = { link = 'VisibleTab' } },
-            { NeoTreeTabSeparatorActive = { link = 'VisibleTab' } },
-            { NeoTreeTabInactive = { inherit = 'Comment', italic = false } },
-            { NeoTreeTabSeparatorInactive = { bg = 'bg', fg = 'bg' } },
-          },
-        },
+        { NeoTreeWinSeparator = { fg = { from = 'Normal', attr = 'bg' } } },
+        { NeoTreeNormal = { link = 'PanelBackground' } },
+        { NeoTreeNormalNC = { link = 'PanelBackground' } },
+        { NeoTreeCursorLine = { link = 'Visual' } },
+        { NeoTreeRootName = { underline = true } },
+        { NeoTreeStatusLine = { link = 'PanelSt' } },
+        { NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true } },
+        { NeoTreeTabInactive = { bg = { from = 'PanelDarkBackground', alter = 0.15 }, fg = { from = 'Comment' } } },
+        { NeoTreeTabSeparatorActive = { inherit = 'PanelBackground', fg = { from = 'Comment' } } },
+        { NeoTreeDirectoryIcon = { link = 'WarningMsg' } },
+        { NeoTreeTabActive = { bg = { from = 'PanelHeading', alter = 0.6 }, italic = true, bold = true } },
+        { NeoTreeTabInactive = { bg = { from = 'PanelHeading', alter = 0.3 }, fg = { from = 'Comment' } } },
+        { NeoTreeTabSeparatorActive = { inherit = 'PanelHeading', fg = { from = 'Comment' } } },
+        { NeoTreeTabSeparatorInactive = { inherit = 'NeoTreeTabInactive', fg = { from = 'Dim' } } },
       })
 
       local symbols = require('lspkind').symbol_map
@@ -57,7 +49,6 @@ return {
           sources = {
             { source = 'filesystem' },
             { source = 'git_status' },
-            { source = 'document_symbols' },
           },
         },
         enable_git_status = true,

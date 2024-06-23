@@ -115,4 +115,5 @@ cmd.packadd('cfilter')
 ------------------------------------------------------------------------------------------------------
 -- Colour Scheme {{{1
 ------------------------------------------------------------------------------------------------------
-as.pcall('theme failed to load because', cmd.colorscheme, 'horizon') -- night-owl
+vim.g.high_contrast_theme = true -- set to true for themes like github_dark or night-owl
+as.pcall('theme failed to load because', cmd.colorscheme, 'github_dark_default')
