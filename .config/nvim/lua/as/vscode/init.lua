@@ -1,5 +1,7 @@
-local vscode = require('vscode-neovim')
+local vscode = require('vscode')
 local map = vim.keymap.set
+
+vim.notify = vscode.notify
 
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.undofile = true
@@ -15,13 +17,17 @@ map('n', '<leader>qq', '<Cmd>Tabclose<CR>')
 map('n', ']<space>', "<Cmd>put =repeat(nr2char(10), v:count1) <Bar> '[-1<CR>")
 map('n', '[<space>', "<Cmd>put! =repeat(nr2char(10), v:count1) <Bar> ']+1<CR>")
 
-map({ 'n', 'x' }, '<C-h>', function() vscode.call('workbench.action.navigateLeft') end, { silent = true })
-map({ 'n', 'x' }, '<C-j>', function() vscode.call('workbench.action.navigateDown') end, { silent = true })
-map({ 'n', 'x' }, '<C-k>', function() vscode.call('workbench.action.navigateUp') end, { silent = true })
-map({ 'n', 'x' }, '<C-l>', function() vscode.call('workbench.action.navigateRight') end, { silent = true })
+map({ 'n', 'x' }, '<C-h>', function() vscode.action('workbench.action.navigateLeft') end, { silent = true })
+map({ 'n', 'x' }, '<C-j>', function() vscode.action('workbench.action.navigateDown') end, { silent = true })
+map({ 'n', 'x' }, '<C-k>', function() vscode.action('workbench.action.navigateUp') end, { silent = true })
+map({ 'n', 'x' }, '<C-l>', function() vscode.action('workbench.action.navigateRight') end, { silent = true })
+
 -- better up/down
 map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+map('n', '<leader>nf', function() vscode.call('workbench.action.files.newUntitledFile') end, {
+  desc = 'New file',
+})
 
 map('n', '<leader>ff', function() vscode.call('workbench.action.quickOpen') end, {
   desc = 'Open file finder',
