@@ -3,7 +3,8 @@ local P = as.ui.palette
 local highlight = as.highlight
 
 local function general_overrides()
-  local dim_factor = vim.g.high_contrast_theme and 0.75 or 0.25
+  local is_dark = vim.g.high_contrast_theme
+  local dim_factor = is_dark and 0.75 or 0.25
   highlight.all({
     -----------------------------------------------------------------------------//
     -- Native
@@ -14,7 +15,7 @@ local function general_overrides()
     { CursorLineNr = { bg = 'NONE' } },
     { iCursor = { bg = P.dark_blue } },
     { PmenuSbar = { link = 'Normal' } },
-    { Folded = { bg = { from = 'Normal', alter = 0.1 } } },
+    { Folded = { fg = { from = 'Normal' }, bg = { from = 'Normal', alter = is_dark and 0.3 or 0.1 } } },
     --------------------------------------------//
     -- Floats
     ---------------------------------------------//
