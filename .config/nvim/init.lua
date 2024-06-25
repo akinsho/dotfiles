@@ -20,9 +20,6 @@ g.dotfiles = env.DOTFILES or fn.expand('~/.dotfiles')
 g.vim_dir = g.dotfiles .. '/.config/nvim'
 g.projects_dir = env.PROJECTS_DIR or fn.expand('~/projects')
 g.work_dir = g.projects_dir .. '/work'
-
-----------------------------------------------------------------------------------------------------
-g.border = 'single'
 ----------------------------------------------------------------------------------------------------
 if vim.loader then vim.loader.enable() end
 
@@ -32,8 +29,6 @@ if vim.g.vscode then
   ----------------------------------------------------------------------------------------------------
   require('as.vscode')
 else
-  g.border = as.ui.current.border
-
   ----------------------------------------------------------------------------------------------------
   -- Global namespace
   ----------------------------------------------------------------------------------------------------
@@ -62,6 +57,9 @@ else
   require('as.ui')
   require('as.settings')
 end
+
+----------------------------------------------------------------------------------------------------
+g.border = vim.g.vscode and as.ui.current.border or 'single'
 ------------------------------------------------------------------------------------------------------
 -- Plugins
 ------------------------------------------------------------------------------------------------------
@@ -83,7 +81,6 @@ opt.runtimepath:prepend(lazypath)
 --  $NVIM
 ----------------------------------------------------------------------------------------------------
 -- NOTE: this must happen after the lazy path is setup
-
 -- If opening from inside neovim terminal then do not load other plugins
 if env.NVIM then return require('lazy').setup({ { 'willothy/flatten.nvim', config = true } }) end
 ------------------------------------------------------------------------------------------------------

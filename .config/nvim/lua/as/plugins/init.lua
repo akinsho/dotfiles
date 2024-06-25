@@ -1,6 +1,18 @@
 local opt, api, fn, cmd, fmt = vim.opt, vim.api, vim.fn, vim.cmd, string.format
 local border, highlight, icons = as.ui.current.border, as.highlight, as.ui.icons
 
+vim.g.rainbow_delimiters = {
+  highlight = {
+    'RainbowDelimiterRed',
+    'RainbowDelimiterYellow',
+    'RainbowDelimiterBlue',
+    'RainbowDelimiterOrange',
+    'RainbowDelimiterGreen',
+    'RainbowDelimiterViolet',
+    'RainbowDelimiterCyan',
+  },
+}
+
 return {
   -----------------------------------------------------------------------------//
   -- Core {{{3
@@ -573,15 +585,8 @@ return {
     event = 'VeryLazy',
     config = function()
       local rainbow_delimiters = require('rainbow-delimiters')
-
-      vim.g.rainbow_delimiters = {
-        strategy = {
-          [''] = rainbow_delimiters.strategy['global'],
-        },
-        query = {
-          [''] = 'rainbow-delimiters',
-        },
-      }
+      vim.g.rainbow_delimiters.strategy = { [''] = rainbow_delimiters.strategy['global'] }
+      vim.g.rainbow_delimiters.query = { [''] = 'rainbow-delimiters' }
     end,
   },
   {

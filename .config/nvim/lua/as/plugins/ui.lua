@@ -77,20 +77,21 @@ return {
       },
       scope = {
         char = '▎',
-        highlight = {
-          'RainbowDelimiterRed',
-          'RainbowDelimiterYellow',
-          'RainbowDelimiterBlue',
-          'RainbowDelimiterOrange',
-          'RainbowDelimiterGreen',
-          'RainbowDelimiterViolet',
-          'RainbowDelimiterCyan',
-        },
+        highlight = vim.g.rainbow_delimiters.highlight,
       },
     },
     config = function(_, opts)
-      require('ibl').setup(opts)
       local hooks = require('ibl.hooks')
+      hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+        api.nvim_set_hl(0, 'RainbowDelimiterRed', { fg = '#E06C75' })
+        api.nvim_set_hl(0, 'RainbowDelimiterYellow', { fg = '#E5C07B' })
+        api.nvim_set_hl(0, 'RainbowDelimiterBlue', { fg = '#61AFEF' })
+        api.nvim_set_hl(0, 'RainbowDelimiterOrange', { fg = '#D19A66' })
+        api.nvim_set_hl(0, 'RainbowDelimiterGreen', { fg = '#98C379' })
+        api.nvim_set_hl(0, 'RainbowDelimiterViolet', { fg = '#C678DD' })
+        api.nvim_set_hl(0, 'RainbowDelimiterCyan', { fg = '#56B6C2' })
+      end)
+      require('ibl').setup(opts)
       hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
       hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
     end,
