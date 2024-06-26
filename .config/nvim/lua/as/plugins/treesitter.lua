@@ -70,17 +70,11 @@ return {
       { 'nvim-treesitter/nvim-treesitter-textobjects' },
     },
   },
-  { 'JoosepAlviste/nvim-ts-context-commentstring' },
   {
     'windwp/nvim-ts-autotag',
     ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue', 'svelte' },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = true,
-  },
-  {
-    'nvim-treesitter/playground',
-    cmd = { 'TSPlaygroundToggle' },
-    dependencies = { 'nvim-treesitter' },
   },
   {
     'nvim-treesitter/nvim-treesitter-context',
