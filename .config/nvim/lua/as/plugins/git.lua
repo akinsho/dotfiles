@@ -13,6 +13,7 @@ return {
     'NeogitOrg/neogit',
     cmd = 'Neogit',
     dependencies = { 'nvim-lua/plenary.nvim' },
+    enabled = false,
     keys = {
       { '<localleader>gs', function() neogit.open() end, desc = 'open status buffer' },
       { '<localleader>gc', function() neogit.open({ 'commit' }) end, desc = 'open commit buffer' },
@@ -22,7 +23,7 @@ return {
     opts = {
       disable_signs = false,
       disable_hint = true,
-      disable_commit_confirmation = true,
+      disable_commit_confirmation = false,
       disable_builtin_notifications = true,
       disable_insert_on_commit = false,
       signs = {
@@ -30,9 +31,7 @@ return {
         item = { '▸', '▾' },
         hunk = { '󰐕', '󰍴' },
       },
-      integrations = {
-        diffview = true,
-      },
+      integrations = { diffview = true },
     },
   },
   {
