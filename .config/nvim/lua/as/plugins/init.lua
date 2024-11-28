@@ -319,23 +319,6 @@ return {
     },
   },
   {
-    'rainbowhxch/beacon.nvim',
-    event = 'VeryLazy',
-    opts = {
-      minimal_jump = 20,
-      ignore_buffers = { 'terminal', 'nofile', 'neorg://Quick Actions' },
-      ignore_filetypes = {
-        'qf',
-        'dap_watches',
-        'dap_scopes',
-        'neo-tree',
-        'NeogitCommitMessage',
-        'NeogitPopup',
-        'NeogitStatus',
-      },
-    },
-  },
-  {
     'windwp/nvim-autopairs',
     event = 'InsertEnter',
     dependencies = { 'hrsh7th/nvim-cmp' },
@@ -362,11 +345,6 @@ return {
     opts = { hide_cursor = true, mappings = { '<C-d>', '<C-u>', 'zt', 'zz', 'zb' } },
   },
   {
-    'itchyny/vim-highlighturl',
-    event = 'ColorScheme',
-    config = function() vim.g.highlighturl_guifg = highlight.get('@keyword', 'fg') end,
-  },
-  {
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
     keys = { { '<leader>u', '<Cmd>UndotreeToggle<CR>', desc = 'undotree: toggle' } },
@@ -375,7 +353,6 @@ return {
       vim.g.undotree_SetFocusWhenToggle = 1
     end,
   },
-  { 'nacro90/numb.nvim', event = 'CmdlineEnter', opts = {} },
   {
     'willothy/flatten.nvim',
     lazy = false,
@@ -414,11 +391,6 @@ return {
     'kevinhwang91/nvim-bqf',
     ft = 'qf',
     config = function() highlight.plugin('bqf', { { BqfPreviewBorder = { fg = { from = 'Comment' } } } }) end,
-  },
-  {
-    'kevinhwang91/nvim-fundo',
-    requires = 'kevinhwang91/promise-async',
-    run = function() require('fundo').install() end,
   },
   -- }}}
   --------------------------------------------------------------------------------
@@ -504,46 +476,7 @@ return {
       })
     end,
   },
-  {
-    'saecki/crates.nvim',
-    version = '*',
-    event = 'BufRead Cargo.toml',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    opts = {
-      popup = { border = border },
-    },
-    config = function(_, opts)
-      as.augroup('CmpSourceCargo', {
-        event = 'BufRead',
-        pattern = 'Cargo.toml',
-        command = function() require('cmp').setup.buffer({ sources = { { name = 'crates' } } }) end,
-      })
-      require('crates').setup(opts)
-    end,
-  },
-  { 'dmmulroy/tsc.nvim', cmd = 'TSC', opts = {}, ft = { 'typescript', 'typescriptreact' } },
-  {
-    'pmizio/typescript-tools.nvim',
-    lazy = false,
-    ft = { 'typescript', 'typescriptreact' },
-    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-    opts = {
-      settings = {
-        tsserver_file_preferences = {
-          includeInlayParameterNameHints = 'literal',
-          includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-          includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-          includeInlayFunctionParameterTypeHints = true,
-          includeInlayVariableTypeHints = true,
-          includeInlayFunctionLikeReturnTypeHints = false,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayEnumMemberValueHints = true,
-        },
-      },
-    },
-  },
   { 'fladson/vim-kitty', lazy = false },
-  { 'mtdl9/vim-log-highlighting', lazy = false },
   -- }}}
   --------------------------------------------------------------------------------
   -- Syntax {{{1
@@ -627,13 +560,6 @@ return {
   ---------------------------------------------------------------------------------
   -- Personal plugins {{{1
   ---------------------------------------------------------------------------------
-  {
-    'akinsho/pubspec-assist.nvim',
-    ft = { 'dart' },
-    event = 'BufEnter pubspec.yaml',
-    dev = true,
-    opts = {},
-  },
   {
     'akinsho/git-conflict.nvim',
     event = 'VeryLazy',

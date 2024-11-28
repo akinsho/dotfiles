@@ -71,12 +71,6 @@ return {
     },
   },
   {
-    'windwp/nvim-ts-autotag',
-    ft = { 'typescriptreact', 'javascript', 'javascriptreact', 'html', 'vue', 'svelte' },
-    dependencies = { 'nvim-treesitter/nvim-treesitter' },
-    config = true,
-  },
-  {
     'nvim-treesitter/nvim-treesitter-context',
     event = 'VeryLazy',
     init = function()

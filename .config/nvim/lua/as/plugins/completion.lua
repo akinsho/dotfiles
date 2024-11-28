@@ -3,7 +3,6 @@ local api, fn = vim.api, vim.fn
 
 return {
   { 'f3fora/cmp-spell', ft = { 'gitcommit', 'NeogitCommitMessage', 'markdown', 'norg', 'org' } },
-  { 'rcarriga/cmp-dap' },
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
