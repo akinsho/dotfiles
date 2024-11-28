@@ -75,26 +75,34 @@ return {
     end,
   },
   {
-    'jackMort/ChatGPT.nvim',
-    cmd = { 'ChatGPT', 'ChatGPTActAs', 'ChatGPTEditWithInstructions' },
-    config = function()
-      local border = { style = as.ui.border.rectangle, highlight = 'PickerBorder' }
-      require('chatgpt').setup({
-        popup_window = { border = border },
-        popup_input = { border = border, submit = '<C-s>' },
-        settings_window = { border = border },
-        chat = {
-          keymaps = {
-            close = {
-              '<C-c>',--[[ , '<Esc>' ]]
-            },
+    'yetone/avante.nvim',
+    event = 'VeryLazy',
+    lazy = false,
+    opts = {},
+    build = 'make',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'stevearc/dressing.nvim',
+      'nvim-lua/plenary.nvim',
+      'MunifTanjim/nui.nvim',
+      'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
+      {
+        'HakonHarnes/img-clip.nvim', -- support for image pasting
+        event = 'VeryLazy',
+        opts = {
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = { insert_mode = true },
           },
         },
-      })
-    end,
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'nvim-lua/plenary.nvim',
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = { file_types = { 'markdown', 'Avante' } },
+        ft = { 'markdown', 'Avante' },
+      },
     },
   },
 }
