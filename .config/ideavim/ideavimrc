@@ -133,11 +133,23 @@ nmap <space>te <Action>(ActivateAndroidEmulatorToolWindow)
 nmap <M-p> <Action>(JumpToLastWindow)
 nmap <M-x> <Action>(HideAllWindows)
 
+map <leader>oi <Action>(OptimizeImports)
 nmap <leader>rn <Action>(RenameElement)
 nmap <leader>rf <Action>(ReformatCode)
 nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
+nmap S <Action>(SurroundWith)
 " Alternatively: (ForceRefresh)
 nmap <leader>rr <Action>(Android.Designer.ForceRefreshPreview)
+
+" built-in navigation to navigated items works better
+nmap <c-o> <Action>(Back)
+nmap <c-i> <Action>(Forward)
+
+" but preserve ideavim defaults
+nmap g<c-o> <c-o>
+nmap g<c-i> <c-i>
+
+nmap <leader>tw <Action>(ActivateProjectToolWindow)
 
 " File Explorer
 nmap <C-N> :NERDTreeToggle<CR>
