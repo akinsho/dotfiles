@@ -78,7 +78,14 @@ return {
     'yetone/avante.nvim',
     event = 'VeryLazy',
     lazy = false,
-    opts = {},
+    opts = {
+      windows = {
+        input = {
+          prefix = '▷',
+        },
+        width = 40,
+      },
+    },
     build = 'make',
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
