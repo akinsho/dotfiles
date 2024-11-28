@@ -125,6 +125,8 @@ end
 
 local sidebar_fts = {
   'flutterToolsOutline',
+  'Avante',
+  'AvanteInput',
   'undotree',
   'Outline',
   'dbui',
