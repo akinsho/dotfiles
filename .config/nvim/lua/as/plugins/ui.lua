@@ -17,7 +17,7 @@ return {
       })
     end,
     config = {
-      general = {
+      bar = {
         update_interval = 100,
         enable = function(buf, win)
           local b, w = vim.bo[buf], vim.wo[win]
