@@ -139,7 +139,7 @@ return {
           builtin = { toggle_behavior = 'extend' },
         },
         winopts = {
-          border = ui.border.rectangle,
+          border = ui.current.border,
           hl = { border = 'PickerBorder', preview_border = 'PickerBorder' },
         },
         keymap = {
