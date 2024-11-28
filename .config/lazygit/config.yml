@@ -10,7 +10,6 @@ gui:
     nerdFontsVersion: "3"
     sidePanelWidth: 0.3333
     theme:
-        lightTheme: false
         activeBorderColor:
             - green
             - bold
@@ -18,8 +17,6 @@ gui:
             - white
         optionsTextColor:
             - blue
-        selectedLineBgColor:
-            - black
         selectedRangeBgColor:
             - blue
     commitLength:
@@ -38,9 +35,6 @@ git:
 update:
     method: prompt # can be: prompt | background | never
     days: 14 # how often a update is checked for
-reporting: "off"
-startuppopupversion: 1
-splashUpdatesIndex: 0
 confirmOnQuit: false
 keybinding:
     universal:
