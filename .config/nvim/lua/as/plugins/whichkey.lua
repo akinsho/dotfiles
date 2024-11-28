@@ -15,7 +15,7 @@ return {
     wk.setup({
       plugins = { spelling = { enabled = true } },
       win = { border = as.ui.current.border },
-      layout = { align = 'center' },
+      preset = 'modern',
     })
 
     wk.add({
@@ -25,6 +25,8 @@ return {
       { 'gb', group = 'bufferline' },
       { '<leader>a', group = 'projectionist' },
       { '<leader>c', group = 'code-action' },
+      { '<leader>d', group = 'debugprint' },
+      { '<leader>m', group = 'marks' },
       { '<leader>f', group = 'picker' },
       { '<leader>h', group = 'git-action' },
       { '<leader>n', group = 'new' },
