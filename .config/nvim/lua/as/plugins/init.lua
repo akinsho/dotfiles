@@ -237,21 +237,20 @@ return {
   --------------------------------------------------------------------------------
   { 'famiu/bufdelete.nvim', keys = { { '<leader>qq', '<Cmd>Bdelete<CR>', desc = 'buffer delete' } } },
   {
-    'smoka7/multicursors.nvim',
+    'jake-stewart/multicursor.nvim',
     event = 'VeryLazy',
-    dependencies = { 'nvim-treesitter/nvim-treesitter', 'smoka7/hydra.nvim' },
-    opts = {
-      hint_config = { border = border },
-    },
-    cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
-    keys = {
-      {
-        '<M-e>',
-        '<cmd>MCstart<cr>',
-        mode = { 'v', 'n' },
-        desc = 'Create a selection for selected text or word under the cursor',
-      },
-    },
+    config = function()
+      local mc = require('multicursor-nvim')
+      mc.setup()
+      map({ 'n', 'v' }, '<M-e>', function() mc.matchAddCursor(1) end)
+      map({ 'n', 'v' }, '<M-f>', function() mc.matchSkipCursor(1) end)
+      map('n', '<esc>', function()
+        if mc.cursorsEnabled() then mc.clearCursors() end
+      end)
+      highlight.plugin('multicursor', {
+        { MultiCursorCursor = { link = 'Substitute' } },
+      })
+    end,
   },
   {
     'folke/flash.nvim',
