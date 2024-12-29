@@ -107,10 +107,6 @@ return function(name)
   local config = name and servers[name] or {}
   if not config then return end
   if type(config) == 'function' then config = config() end
-  local ok, cmp_nvim_lsp = as.pcall(require, 'cmp_nvim_lsp')
-  if ok then config.capabilities = cmp_nvim_lsp.default_capabilities() end
-  config.capabilities = vim.tbl_deep_extend('keep', config.capabilities or {}, {
-    textDocument = { foldingRange = { dynamicRegistration = false, lineFoldingOnly = true } },
-  })
+  config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
   return config
 end

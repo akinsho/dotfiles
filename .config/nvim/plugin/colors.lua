@@ -168,7 +168,6 @@ local function colorscheme_overrides()
     },
     ['github_dark_default'] = {
       { TabLineSel = { link = 'Todo' } },
-      { Folded = { link = 'CursorLine' } },
       { WinSeparator = { link = 'WhiteSpace' } },
       { PanelHeading = { bg = { from = 'Normal', alter = 0.8 } } },
     },
