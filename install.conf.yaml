@@ -23,27 +23,17 @@
     ~/.config/zsh: .config/zsh
     ~/.config/nvim: .config/nvim
     ~/.config/ideavim: .config/ideavim
-    ~/.config/amethyst:
-      if: "[ `uname` = Darwin ]"
-      path: .config/amethyst
-    ~/.config/kitty:
-      force: true
-      path: .config/kitty
-    ~/.config/alacritty/alacritty.yml:
-      force: true
-      path: .config/alacritty/alacritty.yml
-    ~/.config/lazygit/config.yml:
-      force: true
-      path: .config/lazygit/config.yml
+    ~/.config/ghostty: .config/ghostty
+    ~/.config/alacritty: .config/alacritty
+    ~/.config/kitty: .config/kitty
+    ~/.config/lazygit: .config/lazygit
+    ~/.config/karabiner: .config/karabiner
     ~/.Brewfile:
       if: "[ `uname` = Darwin ]"
       path: macos/Brewfile
     ~/Library/Application Support/lazygit/config.yml:
       if: "[ `uname` = Darwin ]"
       path: .config/lazygit/config.yml
-    ~/.config/karabiner:
-      force: true
-      path: .config/karabiner
 
 - shell:
     - [
