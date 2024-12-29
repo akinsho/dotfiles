@@ -17,8 +17,10 @@ gui:
             - white
         optionsTextColor:
             - blue
-        selectedRangeBgColor:
-            - blue
+        # selectedLineBgColor:
+        #     - black
+        # selectedRangeBgColor:
+        #     - blue
     commitLength:
         show: true
 services:
