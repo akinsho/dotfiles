@@ -92,7 +92,7 @@ return {
       'stevearc/dressing.nvim',
       'nvim-lua/plenary.nvim',
       'MunifTanjim/nui.nvim',
-      'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
+      'nvim-tree/nvim-web-devicons',
       {
         'HakonHarnes/img-clip.nvim', -- support for image pasting
         event = 'VeryLazy',

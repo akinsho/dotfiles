@@ -6,10 +6,7 @@ return {
     event = 'VeryLazy',
     build = ':TSUpdate',
     config = function()
-      -- @see: https://github.com/nvim-orgmode/orgmode/issues/481
-      local ok, orgmode = pcall(require, 'orgmode')
-      if ok then orgmode.setup_ts_grammar() end
-
+      ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup({
         -- stylua: ignore
         ensure_installed = {
@@ -66,9 +63,7 @@ return {
         },
       })
     end,
-    dependencies = {
-      { 'nvim-treesitter/nvim-treesitter-textobjects' },
-    },
+    dependencies = { { 'nvim-treesitter/nvim-treesitter-textobjects' } },
   },
   {
     'nvim-treesitter/nvim-treesitter-context',

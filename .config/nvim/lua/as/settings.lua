@@ -127,7 +127,7 @@ o.linebreak = true -- lines wrap at words rather than random characters
 o.signcolumn = 'yes:1'
 o.ruler = false
 o.cmdheight = 0
-o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
+o.showbreak = [[↳ ]] -- Options include -> '…', '↳ ', '→','↪ '
 -----------------------------------------------------------------------------//
 -- List chars {{{1
 -----------------------------------------------------------------------------//

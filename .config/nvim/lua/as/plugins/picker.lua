@@ -1,5 +1,6 @@
 local fn, env, ui, reqcall = vim.fn, vim.env, as.ui, as.reqcall
 local icons, lsp_hls = ui.icons, ui.lsp.highlights
+local highlight = as.highlight
 local prompt = icons.misc.telescope .. '  '
 
 local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
@@ -107,6 +108,11 @@ return {
       { '<leader>fO', function() file_picker(env.SYNC_DIR .. '/notes/org') end, desc = 'org files' },
       { '<leader>fN', function() file_picker(env.SYNC_DIR .. '/notes/neorg') end, desc = 'norg files' },
     },
+    init = function()
+      highlight.plugin('fzf_lua', {
+        { FzfLuaTitle = { inherit = 'FloatBorder', reverse = true } },
+      })
+    end,
     config = function()
       local lsp_kind = require('lspkind')
       local fzf = require('fzf-lua')
@@ -246,7 +252,6 @@ return {
           },
         },
       })
-
       as.command('SessionList', list_sessions)
     end,
   },

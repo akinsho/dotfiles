@@ -89,17 +89,6 @@ return {
         {
           'neovim/nvim-lspconfig',
           dependencies = {
-            {
-              'folke/lazydev.nvim',
-              ft = 'lua', -- only load on lua files
-              opts = {
-                library = {
-                  -- See the configuration section for more details
-                  -- Load luvit types when the `vim.uv` word is found
-                  { path = 'luvit-meta/library', words = { 'vim%.uv' } },
-                },
-              },
-            },
             { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
             {
               'folke/neoconf.nvim',
@@ -126,10 +115,22 @@ return {
     },
   },
   {
+    'folke/lazydev.nvim',
+    ft = 'lua', -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+      },
+    },
+  },
+
+  {
     'DNLHC/glance.nvim',
     opts = {
-      preview_win_opts = { relativenumber = false },
-      theme = { enable = true, mode = 'darken' },
+      border = { enable = true, top_char = '▁', bottom_char = '▔' },
+      theme = { enable = false },
     },
     keys = {
       { 'gD', '<Cmd>Glance definitions<CR>', desc = 'lsp: glance definitions' },
@@ -158,9 +159,9 @@ return {
   -----------------------------------------------------------------------------//
   {
     'uga-rosa/ccc.nvim',
-    ft = { 'vim', 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
+    ft = { 'typescript', 'typescriptreact', 'javascriptreact', 'svelte' },
     cmd = { 'CccHighlighterToggle' },
-    opts = function()
+    config = function()
       local ccc = require('ccc')
       local p = ccc.picker
       ccc.setup({
