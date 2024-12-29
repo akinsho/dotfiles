@@ -1,0 +1,7 @@
+font-family = "Cartograph CF"
+theme = "Github Dark"
+adjust-underline-position = 6
+adjust-underline-thickness = 2
+
+# Mouse
+mouse-hide-while-typing = true
