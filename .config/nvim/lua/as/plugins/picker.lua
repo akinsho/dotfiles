@@ -146,7 +146,7 @@ return {
         },
         winopts = {
           border = ui.current.border,
-          hl = { border = 'PickerBorder', preview_border = 'PickerBorder' },
+          hls = { border = 'PickerBorder', preview_border = 'PickerBorder' },
         },
         keymap = {
           builtin = {
