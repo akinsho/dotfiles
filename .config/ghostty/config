@@ -1,15 +1,21 @@
 #----------------------------------
 # DISPLAY
 #----------------------------------
-theme = "Github Dark"
 adjust-underline-position = 6
 adjust-underline-thickness = 2
+bold-is-bright = true
+
+#----------------------------------
+# Theme
+#----------------------------------
+theme = "Github Dark"
 
 #----------------------------------
 # FONTS
 #----------------------------------
 font-family = "Cartograph CF"
 font-size = 13.5
+font-thicken = true
 
 #----------------------------------
 # MOUSE
@@ -17,8 +23,15 @@ font-size = 13.5
 mouse-hide-while-typing = true
 
 #----------------------------------
+# WINDOW
+#----------------------------------
+macos-titlebar-style = tabs
+window-save-state = always
+
+#----------------------------------
 # KEYBINDINGS
 #----------------------------------
+macos-option-as-alt = left
 # RESET ALL
 keybind = clear
 #----------------------------------
@@ -33,10 +46,10 @@ keybind = super+minus=decrease_font_size:1
 #----------------------------------
 # SPLITS
 #----------------------------------
-keybind = ctrl+h=goto_split:left
-keybind = ctrl+j=goto_split:bottom
-keybind = ctrl+k=goto_split:top
-keybind = ctrl+l=goto_split:right
+keybind = unconsumed:ctrl+h=goto_split:left
+keybind = unconsumed:ctrl+j=goto_split:bottom
+keybind = unconsumed:ctrl+k=goto_split:top
+keybind = unconsumed:ctrl+l=goto_split:right
 keybind = super+shift+enter=new_split:auto
 #----------------------------------
 # TABS
