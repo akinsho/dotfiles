@@ -5,12 +5,6 @@ opt.wrap = false
 opt.spell = true
 opt.textwidth = 78
 
-as.ftplugin_conf({
-  ['virt-column'] = function(col)
-    if vim.bo.modifiable then col.setup_buffer({ virtcolumn = '+1' }) end
-  end,
-})
-
 local opts = { buffer = 0 }
 
 -- if this a vim help file create mappings to make navigation easier otherwise enable preferred editing settings

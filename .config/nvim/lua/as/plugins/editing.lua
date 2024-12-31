@@ -77,7 +77,6 @@ return {
   {
     'yetone/avante.nvim',
     event = 'VeryLazy',
-    lazy = false,
     opts = {
       windows = {
         input = {
@@ -105,8 +104,9 @@ return {
         },
       },
       {
-        -- Make sure to set this up properly if you have lazy=true
         'MeanderingProgrammer/render-markdown.nvim',
+        ---@module 'render-markdown'
+        ---@type render.md.UserConfig
         opts = { file_types = { 'markdown', 'Avante' } },
         ft = { 'markdown', 'Avante' },
       },

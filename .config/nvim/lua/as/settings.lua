@@ -94,7 +94,8 @@ end
 -- Wild and file globbing stuff in command mode {{{1
 -----------------------------------------------------------------------------//
 o.wildcharm = ('\t'):byte()
-o.wildmode = 'list:full' -- Shows a menu bar as opposed to an enormous list
+o.wildmenu = false -- Turn (on/)off the native commandline completion menu
+o.wildmode = 'full' -- 'list:full' -- Shows a menu bar as opposed to an enormous list
 o.wildignorecase = true -- Ignore case when completing file names and directories
 opt.wildignore = {
   '*.o',

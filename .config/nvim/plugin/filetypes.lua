@@ -56,19 +56,6 @@ settings({
       spelllang = 'en_gb',
       list = false,
     },
-    plugins = {
-      cmp = function(cmp)
-        cmp.setup.filetype('NeogitCommitMessage', {
-          sources = {
-            { name = 'git', group_index = 1 },
-            { name = 'luasnip', group_index = 1 },
-            { name = 'dictionary', group_index = 1 },
-            { name = 'spell', group_index = 1 },
-            { name = 'buffer', group_index = 2 },
-          },
-        })
-      end,
-    },
     function()
       vim.schedule(function()
         -- Schedule this call as highlights are not set correctly if there is not a delay
@@ -95,17 +82,6 @@ settings({
   },
   norg = {
     plugins = {
-      cmp = function(cmp)
-        cmp.setup.filetype('norg', {
-          sources = {
-            { name = 'neorg', group_index = 1 },
-            { name = 'dictionary', group_index = 1 },
-            { name = 'spell', group_index = 1 },
-            { name = 'emoji', group_index = 1 },
-            { name = 'buffer', group_index = 2 },
-          },
-        })
-      end,
       ['nvim-surround'] = function(surround)
         surround.buffer_setup({
           surrounds = {
@@ -121,17 +97,6 @@ settings({
       signcolumn = 'yes',
     },
     plugins = {
-      cmp = function(cmp)
-        cmp.setup.filetype('org', {
-          sources = {
-            { name = 'orgmode', group_index = 1 },
-            { name = 'dictionary', group_index = 1 },
-            { name = 'spell', group_index = 1 },
-            { name = 'emoji', group_index = 1 },
-            { name = 'buffer', group_index = 2 },
-          },
-        })
-      end,
       ['nvim-surround'] = function(surround)
         surround.buffer_setup({
           surrounds = {

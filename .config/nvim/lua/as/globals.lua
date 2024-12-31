@@ -178,6 +178,7 @@ function as.filetype_settings(map)
           if key == 'opt' then key = 'opt_local' end
           if key == 'mappings' then return apply_ft_mappings(value, args.buf) end
           if key == 'plugins' then return as.ftplugin_conf(value) end
+          ---@diagnostic disable-next-line: redundant-return-value
           if type(key) == 'function' then return as.pcall(key, args) end
           vim.iter(value):each(function(option, setting) vim[key][option] = setting end)
         end)

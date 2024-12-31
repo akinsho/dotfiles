@@ -7,22 +7,6 @@ local lspkind = require('lspkind')
 
 return {
   {
-    'lukas-reineke/virt-column.nvim',
-    event = 'VimEnter',
-    opts = { char = '▕' },
-    init = function()
-      augroup('VirtCol', {
-        event = { 'VimEnter', 'BufEnter', 'WinEnter' },
-        command = function(args)
-          ui.decorations.set_colorcolumn(
-            args.buf,
-            function(virtcolumn) require('virt-column').setup_buffer({ virtcolumn = virtcolumn }) end
-          )
-        end,
-      })
-    end,
-  },
-  {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
     event = 'UIEnter',

@@ -19,7 +19,16 @@ return {
     opts = {
       keymap = { preset = 'enter' },
       appearance = { nerd_font_variant = 'mono', use_nvim_cmp_as_default = true },
-      sources = { default = { 'lsp', 'path', 'snippets', 'buffer' } },
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        providers = {
+          markdown = {
+            name = 'RenderMarkdown',
+            module = 'render-markdown.integ.blink',
+            fallbacks = { 'lsp' },
+          },
+        },
+      },
       signature = { window = { border = border } },
       completion = {
         menu = { border = border },
@@ -28,6 +37,9 @@ return {
           auto_show_delay_ms = 500,
           window = { border = border },
         },
+        list = {
+          selection = function(ctx) return ctx.mode == 'cmdline' and 'auto_insert' or 'preselect' end,
+        },
       },
     },
     opts_extend = { 'sources.default' },
@@ -35,7 +47,6 @@ return {
   {
     'github/copilot.vim',
     event = 'InsertEnter',
-    dependencies = { 'nvim-cmp' },
     init = function() vim.g.copilot_no_tab_map = true end,
     config = function()
       local function accept_word()

@@ -18,25 +18,25 @@ return {
     },
     lsp = {
       documentation = {
+        enabled = false,
         opts = {
           border = { style = border },
           position = { row = 2 },
         },
       },
       signature = {
-        enabled = true,
+        enabled = false,
         opts = {
           position = { row = 2 },
         },
       },
       hover = {
-        enabled = true,
+        enabled = false,
         silent = true,
       },
       override = {
         ['vim.lsp.util.convert_input_to_markdown_lines'] = false,
         ['vim.lsp.util.stylize_markdown'] = false,
-        ['cmp.entry.get_documentation'] = true,
       },
     },
     views = {
