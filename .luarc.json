@@ -1,0 +1,6 @@
+{
+    "diagnostics.disable": [
+        "missing-parameter",
+        "missing-fields"
+    ]
+}
