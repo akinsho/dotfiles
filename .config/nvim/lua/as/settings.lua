@@ -122,6 +122,7 @@ o.pumblend = 0 -- Make popup window translucent
 -----------------------------------------------------------------------------//
 -- Display {{{1
 -----------------------------------------------------------------------------//
+o.colorcolumn = '+1'
 o.conceallevel = 2
 o.breakindentopt = 'sbr'
 o.linebreak = true -- lines wrap at words rather than random characters
