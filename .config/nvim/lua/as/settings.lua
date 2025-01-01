@@ -34,7 +34,7 @@ opt.fillchars = {
   eob = ' ', -- suppress ~ at EndOfBuffer
   diff = '╱', -- alternatives = ⣿ ░ ─
   msgsep = ' ', -- alternatives: ‾ ─
-  fold = ' ',
+  fold = '─',
   foldopen = '▽', -- '▼'
   foldclose = '▷', -- '▶'
   foldsep = ' ',
