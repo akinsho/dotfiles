@@ -289,7 +289,7 @@ diagnostic.config({
   float = {
     max_width = max_width,
     max_height = max_height,
-    border = border,
+    border = border, --[[@diagnostic disable-line: assign-type-mismatch]]
     title = { { '  ', 'DiagnosticFloatTitleIcon' }, { 'Problems  ', 'DiagnosticFloatTitle' } },
     focusable = true,
     scope = 'cursor',
