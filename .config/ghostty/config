@@ -14,7 +14,7 @@ theme = "Github Dark"
 # FONTS
 #----------------------------------
 font-family = "Cartograph CF"
-font-size = 13.5
+font-size = 14
 font-thicken = true
 
 #----------------------------------
