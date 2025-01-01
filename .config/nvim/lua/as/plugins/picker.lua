@@ -1,6 +1,5 @@
 local fn, env, ui, reqcall = vim.fn, vim.env, as.ui, as.reqcall
 local icons, lsp_hls = ui.icons, ui.lsp.highlights
-local highlight = as.highlight
 local prompt = icons.misc.telescope .. '  '
 
 local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
@@ -27,12 +26,7 @@ end
 
 local function cursor_dropdown(opts)
   return dropdown(vim.tbl_deep_extend('force', {
-    winopts = {
-      row = 1,
-      relative = 'cursor',
-      height = 0.33,
-      width = 0.25,
-    },
+    winopts = { row = 1, relative = 'cursor', height = 0.33, width = 0.25 },
   }, opts))
 end
 
@@ -103,6 +97,7 @@ return {
       local fzf = require('fzf-lua')
 
       fzf.setup({
+        prompt = prompt,
         fzf_opts = {
           ['--info'] = 'default', -- hidden OR inline:⏐
           ['--reverse'] = false,
@@ -135,6 +130,8 @@ return {
         winopts = { border = ui.current.border },
         keymap = {
           builtin = {
+            true,
+            ['<Esc>'] = 'hide',
             ['<c-/>'] = 'toggle-help',
             ['<c-e>'] = 'toggle-preview',
             ['<c-=>'] = 'toggle-fullscreen',
@@ -142,18 +139,11 @@ return {
             ['<c-b>'] = 'preview-page-up',
           },
           fzf = {
-            ['esc'] = 'abort',
             ['ctrl-q'] = 'select-all+accept',
           },
         },
-        highlights = {
-          prompt = prompt,
-          winopts = { title = ' Highlights ' },
-        },
-        helptags = {
-          prompt = prompt,
-          winopts = { title = ' 󰋖 Help ' },
-        },
+        highlights = { winopts = { title = ' Highlights ' } },
+        helptags = { winopts = { title = ' 󰋖 Help ' } },
         oldfiles = dropdown({
           cwd_only = true,
           winopts = { title = '   History ' },
