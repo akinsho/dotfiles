@@ -452,10 +452,7 @@ return {
       opts = {
         use_default_keymaps = true,
         highlight_node_at_cursor = true,
-        keymaps = {
-          [']w'] = 'swap_with_left',
-          ['[w'] = 'swap_with_right',
-        },
+        keymaps = { [']w'] = 'swap_with_left', ['[w'] = 'swap_with_right' },
       },
     },
     {
