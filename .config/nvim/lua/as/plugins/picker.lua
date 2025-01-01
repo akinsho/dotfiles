@@ -7,25 +7,15 @@ local fzf_lua = reqcall('fzf-lua') ---@module 'fzf-lua'
 ------------------------------------------------------------------------------------------------------------------------
 -- FZF-LUA HELPERS
 ------------------------------------------------------------------------------------------------------------------------
-local function format_title(str, icon, icon_hl)
-  return {
-    { ' ' },
-    { (icon and icon .. ' ' or ''), icon_hl or 'DevIconDefault' },
-    { str, 'Bold' },
-    { ' ' },
-  }
-end
-
 local file_picker = function(cwd) fzf_lua.files({ cwd = cwd }) end
 
 local function dropdown(opts)
   opts = opts or { winopts = {} }
-  local title = vim.tbl_get(opts, 'winopts', 'title') ---@type string?
-  if title and type(title) == 'string' then opts.winopts.title = format_title(title) end
   return vim.tbl_deep_extend('force', {
     prompt = prompt,
     fzf_opts = { ['--layout'] = 'reverse' },
     winopts = {
+      title = opts.winopts.title,
       title_pos = opts.winopts.title and 'center' or nil,
       height = 0.70,
       width = 0.45,
@@ -54,7 +44,7 @@ local function list_sessions()
   fzf.fzf_exec(
     vim.tbl_map(function(s) return s.name end, sessions),
     dropdown({
-      winopts = { title = format_title('Sessions', '󰆔'), height = 0.33, row = 0.5 },
+      winopts = { title = '󰆔 Sessions', height = 0.33, row = 0.5 },
       previewer = false,
       actions = {
         ['default'] = function(selected)
@@ -108,11 +98,6 @@ return {
       { '<leader>fO', function() file_picker(env.SYNC_DIR .. '/notes/org') end, desc = 'org files' },
       { '<leader>fN', function() file_picker(env.SYNC_DIR .. '/notes/neorg') end, desc = 'norg files' },
     },
-    init = function()
-      highlight.plugin('fzf_lua', {
-        { FzfLuaTitle = { inherit = 'FloatBorder', reverse = true } },
-      })
-    end,
     config = function()
       local lsp_kind = require('lspkind')
       local fzf = require('fzf-lua')
@@ -141,13 +126,13 @@ return {
           ['gutter'] = { 'bg', 'Normal' },
           ['separator'] = { 'fg', 'Comment' },
         },
-        previewers = {
-          builtin = { toggle_behavior = 'extend' },
+        previewers = { builtin = { toggle_behavior = 'extend' } },
+        hls = {
+          title = 'PickerTitle',
+          border = 'PickerBorder',
+          preview_border = 'PickerBorder',
         },
-        winopts = {
-          border = ui.current.border,
-          hls = { border = 'PickerBorder', preview_border = 'PickerBorder' },
-        },
+        winopts = { border = ui.current.border },
         keymap = {
           builtin = {
             ['<c-/>'] = 'toggle-help',
@@ -163,32 +148,32 @@ return {
         },
         highlights = {
           prompt = prompt,
-          winopts = { title = format_title('Highlights') },
+          winopts = { title = ' Highlights ' },
         },
         helptags = {
           prompt = prompt,
-          winopts = { title = format_title('Help', '󰋖') },
+          winopts = { title = ' 󰋖 Help ' },
         },
         oldfiles = dropdown({
           cwd_only = true,
-          winopts = { title = format_title('History', '') },
+          winopts = { title = '   History ' },
         }),
         files = dropdown({
-          winopts = { title = format_title('Files', '') },
+          winopts = { title = '  Files ' },
         }),
         buffers = dropdown({
           fzf_opts = { ['--delimiter'] = ' ', ['--with-nth'] = '-1..' },
-          winopts = { title = format_title('Buffers', '󰈙') },
+          winopts = { title = ' 󰈙 Buffers ' },
         }),
         keymaps = dropdown({
-          winopts = { title = format_title('Keymaps', ''), width = 0.7 },
+          winopts = { title = '   Keymaps ', width = 0.7 },
         }),
         registers = cursor_dropdown({
-          winopts = { title = format_title('Registers', ''), width = 0.6 },
+          winopts = { title = '  Registers ', width = 0.6 },
         }),
         grep = {
           prompt = ' ',
-          winopts = { title = format_title('Grep', '󰈭') },
+          winopts = { title = ' 󰈭 Grep ' },
           -- See: https://github.com/ibhagwan/fzf-lua/discussions/1288#discussioncomment-9844613
           -- RIPGREP_CONFIG_PATH = vim.env.RIPGREP_CONFIG_PATH
           rg_opts = '--column --hidden --line-number --no-heading --color=always --smart-case --max-columns=4096 -e',
@@ -204,42 +189,42 @@ return {
             symbol_hl = function(s) return lsp_hls[s] end,
           },
           code_actions = cursor_dropdown({
-            winopts = { title = format_title('Code Actions', '󰌵', '@type') },
+            winopts = { title = ' 󰌵 Code Actions ', '@type' },
           }),
         },
         jumps = dropdown({
-          winopts = { title = format_title('Jumps', ''), preview = { hidden = 'nohidden' } },
+          winopts = { title = '  Jumps ', preview = { hidden = 'nohidden' } },
         }),
         changes = dropdown({
           prompt = '',
-          winopts = { title = format_title('Changes', '⟳'), preview = { hidden = 'nohidden' } },
+          winopts = { title = ' ⟳ Changes ', preview = { hidden = 'nohidden' } },
         }),
         diagnostics = dropdown({
-          winopts = { title = format_title('Diagnostics', '', 'DiagnosticError') },
+          winopts = { title = '  Diagnostics ', 'DiagnosticError' },
         }),
         git = {
           files = dropdown({
             path_shorten = false, -- this doesn't use any clever strategy unlike telescope so is somewhat useless
             cmd = 'git ls-files --others --cached --exclude-standard',
-            winopts = { title = format_title('Git Files', '') },
+            winopts = { title = '  Git Files ' },
           }),
           branches = dropdown({
-            winopts = { title = format_title('Branches', ''), height = 0.3, row = 0.4 },
+            winopts = { title = '  Branches ', height = 0.3, row = 0.4 },
           }),
           status = {
             prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
-            winopts = { title = format_title('Git Status', '') },
+            winopts = { title = '  Git Status ' },
           },
           bcommits = {
             prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
-            winopts = { title = format_title('', 'Buffer Commits') },
+            winopts = { title = '  Buffer Commits ' },
           },
           commits = {
             prompt = '',
             preview_pager = 'delta --width=$FZF_PREVIEW_COLUMNS',
-            winopts = { title = format_title('', 'Commits') },
+            winopts = { title = ' Commits' },
           },
           icons = {
             ['M'] = { icon = icons.git.mod, color = 'yellow' },

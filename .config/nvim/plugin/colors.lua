@@ -21,12 +21,13 @@ local function general_overrides()
     ---------------------------------------------//
     { NormalFloat = { bg = { from = 'Normal', alter = -0.15 } } },
     { FloatBorder = { bg = { from = 'NormalFloat' }, fg = { from = 'Comment' } } },
-    { FloatTitle = { bold = true, fg = 'white', bg = { from = 'FloatBorder', attr = 'fg' } } },
+    { FloatTitle = { bold = true, fg = 'white', bg = { from = 'Comment', attr = 'fg' } } },
     -----------------------------------------------------------------------------//
     -- Created highlights
     -----------------------------------------------------------------------------//
     { Dim = { fg = { from = 'Normal', attr = 'bg', alter = dim_factor } } },
     { PickerBorder = { fg = P.grey, bg = 'bg' } },
+    { PickerTitle = { fg = 'white', bg = P.grey, bold = true } },
     { UnderlinedTitle = { bold = true, underline = true } },
     { StatusColSep = { link = 'Dim' } },
     -----------------------------------------------------------------------------//
