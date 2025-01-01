@@ -129,7 +129,7 @@ end
 
 ---@param hl string | HLAttrs
 ---@param attr string
----@return HLData
+---@return HLData | string
 local function resolve_from_attribute(hl, attr)
   if type(hl) ~= 'table' or not hl.from then return hl end
   local colour = get(hl.from, hl.attr or attr)

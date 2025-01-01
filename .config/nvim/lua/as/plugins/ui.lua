@@ -3,8 +3,6 @@ local api, fn = vim.api, vim.fn
 local ui, augroup = as.ui, as.augroup
 local icons, border = ui.icons.lsp, ui.current.border
 
-local lspkind = require('lspkind')
-
 return {
   {
     'lukas-reineke/indent-blankline.nvim',
