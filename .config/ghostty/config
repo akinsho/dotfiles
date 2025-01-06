@@ -4,7 +4,7 @@
 adjust-underline-position = 6
 adjust-underline-thickness = 2
 bold-is-bright = true
-
+confirm-close-surface = false
 #----------------------------------
 # Theme
 #----------------------------------
