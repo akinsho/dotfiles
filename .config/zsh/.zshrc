@@ -564,3 +564,5 @@ bindkey -M vicmd v edit-command-line
 zsh_add_plugin  "zsh-users/zsh-syntax-highlighting"
 
 bindkey '^U' autosuggest-accept
+
+[ -f $HOME/.local.zshrc ] && source ~/.local.zshrc
