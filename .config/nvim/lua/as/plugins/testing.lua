@@ -46,7 +46,7 @@ return {
     end,
     dependencies = {
       'nvim-neotest/nvim-nio',
-      { 'neotest/neotest-go', dev = true },
+      { 'neotest/neotest-go', enabled = false },
       { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
     },
   },
