@@ -12,19 +12,17 @@
 
 - link:
     ~/.dotfiles: ""
-    ~/.ssh/config: ssh/config
+    # ~/.ssh/config: ssh/config # TODO: HOME ONLY
+    # ~/.config/stylua: .config/stylua # TODO: HOME ONLY
     ~/.gitignore: git/.gitignore
     ~/.gitconfig: git/.gitconfig
     ~/.gitmessage: git/.gitmessage
-    ~/.hammerspoon: hammerspoon
     ~/.zshenv: .config/zsh/.zshenv
-    ~/.config/stylua: .config/stylua
     ~/.config/tmux: .config/tmux
     ~/.config/zsh: .config/zsh
     ~/.config/nvim: .config/nvim
     ~/.config/ideavim: .config/ideavim
     ~/.config/ghostty: .config/ghostty
-    ~/.config/alacritty: .config/alacritty
     ~/.config/kitty: .config/kitty
     ~/.config/lazygit: .config/lazygit
     ~/.config/karabiner: .config/karabiner
@@ -34,6 +32,9 @@
     ~/Library/Application Support/lazygit/config.yml:
       if: "[ `uname` = Darwin ]"
       path: .config/lazygit/config.yml
+    ~/Library/Application Support/com.mitchellh.ghostty/:
+      if: "[ `uname` = Darwin ]"
+      path: .config/ghostty/config
 
 - shell:
     - [
