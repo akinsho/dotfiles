@@ -25,6 +25,8 @@ map('n', '[d', function() vscode.action('editor.action.marker.prev') end, { sile
 map('n', ']d', function() vscode.action('editor.action.marker.next') end, { silent = true })
 map('n', '<leader>ff', function() vscode.action('workbench.action.quickOpen') end, { silent = true })
 map('n', '<leader>ca', function() vscode.action('editor.action.quickFix') end, { silent = true })
+map('n', '<leader>gr', function() vscode.action('editor.action.rename') end, { silent = true })
+map('n', 'gr', function() vscode.action('editor.action.goToReferences') end, { silent = true })
 
 -- better up/down
 map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -34,7 +36,7 @@ map('n', '<leader>nf', function() vscode.call('workbench.action.files.newUntitle
 
 map('n', '<leader>ff', function() vscode.call('workbench.action.quickOpen') end, { desc = 'Open file finder' })
 
-map('n', '<leader>fs', function() vscode.call('workbench.action.findInFiles') end, { desc = 'Search in files', })
+map('n', '<leader>fs', function() vscode.call('workbench.action.findInFiles') end, { desc = 'Search in files' })
 
 map('n', '[h', function() vscode.call('workbench.action.editor.previousChange') end, { desc = 'Previous change' })
 map('n', ']h', function() vscode.call('workbench.action.editor.nextChange') end, { desc = 'Next change' })
