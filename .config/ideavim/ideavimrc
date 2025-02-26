@@ -79,7 +79,6 @@ nnoremap <Leader><Tab> :tabnext<CR>
 nnoremap <S-Tab> :tabprev<CR>\
 nnoremap [<Space> :<CR>mzo<Esc>`z:<CR>
 nnoremap ]<Space> :<CR>mzO<Esc>`z:<CR>
-
 sethandler <c-j> a:vim
 sethandler <c-k> a:vim
 nnoremap <C-h> <C-w>h
@@ -130,8 +129,11 @@ nmap gr <Action>(FindUsages)
 " Tool windows
 nmap <space>te <Action>(ActivateAndroidEmulatorToolWindow)
 
+""" Distraction Free Mode
+nmap <c-z> <Action>(ToggleDistractionFreeMode)
+nmap gh <Action>(ShowErrorDescription)
 nmap <M-p> <Action>(JumpToLastWindow)
-nmap <M-x> <Action>(HideAllWindows)
+nmap <c-w>o <Action>(HideAllWindows)
 nmap <leader>oi <Action>(OptimizeImports)
 nmap <leader>rn <Action>(RenameElement)
 nmap <leader>rf <Action>(ReformatCode)
