@@ -89,15 +89,20 @@ nnoremap <C-j> <C-w>j
 " Switch between alternate buffers
 nnoremap <leader><leader> :b#<CR>
 
-nmap <leader>sv :source ~/.config/ideavim/ideavimrc<CR>
+nmap <leader>sv <Action>(IdeaVim.ReloadVimRc.reload)
 nnoremap <leader>ev :e ~/.config/ideavim/ideavimrc<CR>
 nnoremap <space>l    :nohlsearch<CR>
 
 nmap <Leader>q <Action>(CloseContent)
 nmap <Leader>qa <Action>(CloseAllEditors)
 
+nmap <c-p> <Action>(GotoAction)
+
 " Distraction Free Mode
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
+
+" Swap casing
+vmap crs <Action>(me.laria.code.idea_caseconv.ScreamingSnakeCaseAction)
 
 " Terminal
 nmap <c-\> <Action>(ActivateTerminalToolWindow)
@@ -126,34 +131,34 @@ xmap <leader>mv <Action>(Move)
 
 nmap gr <Action>(FindUsages)
 
-" Tool windows
-nmap <space>te <Action>(ActivateAndroidEmulatorToolWindow)
-
 """ Distraction Free Mode
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
 nmap gh <Action>(ShowErrorDescription)
 nmap <M-p> <Action>(JumpToLastWindow)
 nmap <c-w>o <Action>(HideAllWindows)
+nmap <c-\> <Action>(HideAllWindows)
 nmap <leader>oi <Action>(OptimizeImports)
 nmap <leader>rn <Action>(RenameElement)
 nmap <leader>rf <Action>(ReformatCode)
 nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
 nmap S <Action>(SurroundWith)
-
-" Alternatively: (ForceRefresh)
-nmap <leader>rr <Action>(Android.Designer.ForceRefreshPreview)
-
-nmap <Leader>A :action GotoTest<CR>
-
+nmap <Leader>A <Action>(GotoTest)
 " built-in navigation to navigated items works better
 nmap <c-o> <Action>(Back)
 nmap <c-i> <Action>(Forward)
+nmap <c-=> <Action>Unsplit<CR>
+"-------------------------------------------------------------
+" Android Studio Specific
+"-------------------------------------------------------------
+" Tool windows
+nmap <space>te <Action>(ActivateAndroidEmulatorToolWindow)
+" Alternatively: (ForceRefresh)
+nmap <leader>rr <Action>(Android.Designer.ForceRefreshPreview)
+"-------------------------------------------------------------
 
 " but preserve ideavim defaults
 nmap g<c-o> <c-o>
 nmap g<c-i> <c-i>
-
-nmap <leader>tw <Action>(ActivateProjectToolWindow)
 
 " File Explorer
 nmap <C-N> :NERDTreeToggle<CR>
