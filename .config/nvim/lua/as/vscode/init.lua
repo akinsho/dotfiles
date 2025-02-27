@@ -40,3 +40,20 @@ map('n', '<leader>fs', function() vscode.call('workbench.action.findInFiles') en
 
 map('n', '[h', function() vscode.call('workbench.action.editor.previousChange') end, { desc = 'Previous change' })
 map('n', ']h', function() vscode.call('workbench.action.editor.nextChange') end, { desc = 'Next change' })
+
+local manageEditorSize = function(...)
+  local count = select(1, ...)
+  local to = select(2, ...)
+  for i = 1, (count and count > 0 and count or 1) do
+    vscode.call(to == 'increase' and 'workbench.action.increaseViewSize' or 'workbench.action.decreaseViewSize')
+  end
+end
+
+map('n', '<C-w>>', function() manageEditorSize(vim.v.count, 'increase') end, { noremap = true, silent = true })
+map('x', '<C-w>>', function() manageEditorSize(vim.v.count, 'increase') end, { noremap = true, silent = true })
+map('n', '<C-w>+', function() manageEditorSize(vim.v.count, 'increase') end, { noremap = true, silent = true })
+map('x', '<C-w>+', function() manageEditorSize(vim.v.count, 'increase') end, { noremap = true, silent = true })
+map('n', '<C-w><', function() manageEditorSize(vim.v.count, 'decrease') end, { noremap = true, silent = true })
+map('x', '<C-w><', function() manageEditorSize(vim.v.count, 'decrease') end, { noremap = true, silent = true })
+map('n', '<C-w>-', function() manageEditorSize(vim.v.count, 'decrease') end, { noremap = true, silent = true })
+map('x', '<C-w>-', function() manageEditorSize(vim.v.count, 'decrease') end, { noremap = true, silent = true })
