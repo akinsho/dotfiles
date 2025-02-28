@@ -15,6 +15,7 @@ map('n', '<leader>qq', '<Cmd>Tabclose<CR>')
 -- add space line
 map('n', ']<space>', "<Cmd>put =repeat(nr2char(10), v:count1) <Bar> '[-1<CR>")
 map('n', '[<space>', "<Cmd>put! =repeat(nr2char(10), v:count1) <Bar> ']+1<CR>")
+map('n', '<localleader>l', "<Cmd>nohlsearch<CR>")
 
 map('n', '<tab>', function() vscode.action('workbench.action.nextEditor') end, { silent = true })
 map('n', '<S-tab>', function() vscode.action('workbench.action.previousEditor') end, { silent = true })
@@ -59,6 +60,10 @@ local manageEditorSize = function(...)
     vscode.call(to == 'increase' and 'workbench.action.increaseViewSize' or 'workbench.action.decreaseViewSize')
   end
 end
+
+-- These keys represent alt left and right
+map('n', '¬', function() manageEditorSize(vim.v.count, 'increase') end, { noremap = true, silent = true })
+map('n', '˙', function() manageEditorSize(vim.v.count, 'decrease') end, { noremap = true, silent = true })
 
 map('n', '<C-w>>', function() manageEditorSize(vim.v.count, 'increase') end, { noremap = true, silent = true })
 map('x', '<C-w>>', function() manageEditorSize(vim.v.count, 'increase') end, { noremap = true, silent = true })
