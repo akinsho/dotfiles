@@ -15,6 +15,13 @@ set notimeout
 let mapleader = ","
 let maplocalleader = " "
 
+"==========================
+" Plugins need to install "
+"==========================
+" - [x] ideavim
+" - [x] String Manipulation
+" - [x] Which-Key
+
 " Plugins
 set surround
 set multiple-cursors
@@ -27,10 +34,13 @@ set argtextobj
 set exchange
 
 " TODO: which-key plugins does not recognise , as leader !?
-let g:WhichKey_ShowVimActions = "false"
+let g:WhichKey_FontSize = 15
+let g:WhichKey_PrefixStyle = "bold"
+let g:WhichKey_KeyStyle = "italic"
+let g:WhichKey_ShowVimActions = "true"
 let g:WhichKey_SortOrder = "by_key_prefix_first"
 let g:WhichKeyDesc_redraw = "<Space>l Redraw screen"
-let g:WhickKeyDesc_test = ",A Go to Test File"
+let g:WhickKeyDesc_test = "<leader>A Go to Test File"
 
 let g:WhichKeyDesc_git = '<Space>g Git'
 let g:WhichKeyDesc_git_commit = "<Space>gc Git commit"
@@ -70,29 +80,42 @@ nmap <C-q> <Plug>SkipOccurrence
 xmap <C-q> <plug>SkipOccurrence
 nmap <C-x> <Plug>RemoveOccurrence
 xmap <C-x> <Plug>RemoveOccurrence
+
 " IDEAVIM config options
 set ideajoin
+" set ideastatusicon=gray
 
 " Mappings
+sethandler <c-j> a:vim
+sethandler <c-k> a:vim
+
 inoremap jk <Esc>
+nmap Q gq
 nnoremap <Leader><Tab> :tabnext<CR>
 nnoremap <S-Tab> :tabprev<CR>\
 nnoremap [<Space> :<CR>mzo<Esc>`z:<CR>
 nnoremap ]<Space> :<CR>mzO<Esc>`z:<CR>
-sethandler <c-j> a:vim
-sethandler <c-k> a:vim
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 nnoremap <C-k> <C-w>k
 nnoremap <C-j> <C-w>j
+nnoremap j gj
+nnoremap gj j
+nnoremap k gk
+nnoremap gk k
+nnoremap Y y$
+nnoremap n nzz
+nnoremap N Nzz
+xnoremap < <gv
+xnoremap > >gv
 
 " Switch between alternate buffers
 nnoremap <leader><leader> :b#<CR>
 
 nmap <leader>sv <Action>(IdeaVim.ReloadVimRc.reload)
 nnoremap <leader>ev :e ~/.config/ideavim/ideavimrc<CR>
-nnoremap <space>l    :nohlsearch<CR>
 
+nnoremap <space>l    :nohlsearch<CR>
 nmap <Leader>q <Action>(CloseContent)
 nmap <Leader>qa <Action>(CloseAllEditors)
 
@@ -101,8 +124,24 @@ nmap <c-p> <Action>(GotoAction)
 " Distraction Free Mode
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
 
-" Swap casing
-vmap crs <Action>(me.laria.code.idea_caseconv.ScreamingSnakeCaseAction)
+" {{{ String manipulation
+" Plugin: String Manipulation
+" Settigns: Do not add selection
+map crc <Action>(StringManipulation.ToCamelCase)
+map crp <Action>(StringManipulation.ToPascalCase)
+map crk <Action>(StringManipulation.ToKebabCase)
+map crs <Action>(StringManipulation.ToSnakeCase)
+map crS <Action>(StringManipulation.ToCapitalizedSnakeCase)
+" }}}
+
+" {{{ Git
+map <space>gg <Action>(VcsGroups)
+map <space>gl <Action>(Git.Pull)
+map <space>gp <Action>(Vcs.Push)
+map <space>gb <Action>(Git.Branches)
+map <space>gc <Action>(CheckinProject)
+map <space>gs <Action>(Git.Stash)
+" }}}
 
 " Terminal
 nmap <c-\> <Action>(ActivateTerminalToolWindow)
@@ -124,25 +163,40 @@ nmap ]d <Action>(GotoPreviousError)
 
 nmap <leader>ff <Action>(GotoFile)
 nmap <leader>fo <Action>(RecentFiles)
-nmap <leader>fs <Action>(FindInPath)
+nmap <leader>fs <Action>(TextSearchAction)
+nmap <leader>fp <Action>(FindInPath)
 nmap <leader>A <Action>(GotoTest)
 nmap <leader>mv <Action>(Move)
 xmap <leader>mv <Action>(Move)
-
 nmap gr <Action>(FindUsages)
-
-""" Distraction Free Mode
+nmap gd <Action>(GotoDeclaration)
+nmap gD <Action>(QuickImplementations)
+nmap gp <Action>(QuickImplementations)
+nmap gy <Action>(GotoTypeDeclaration)
+nmap gi <Action>(GotoImplementation)
+nmap <leader>oi <Action>(OptimizeImports)
+nmap <leader>rn <Action>(RenameElement)
+nmap <leader>rf <Action>(ReformatCode)
+nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
+nmap <leader>a  <Action>(ShowIntentionActions)
+xmap <leader>a  <Action>(ShowIntentionActions)
+nmap gS   <Action>(EditorSplitLine)
+nmap gJ   <Action>(EditorJoinLines)
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
 nmap gh <Action>(ShowErrorDescription)
 nmap <M-p> <Action>(JumpToLastWindow)
 nmap <c-w>o <Action>(HideAllWindows)
 nmap <c-\> <Action>(HideAllWindows)
-nmap <leader>oi <Action>(OptimizeImports)
-nmap <leader>rn <Action>(RenameElement)
-nmap <leader>rf <Action>(ReformatCode)
-nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
 nmap S <Action>(SurroundWith)
+map  <C-s>      <Action>(SaveAll)
+imap <C-s>      <Action>(SaveAll)
+nmap <leader>s  <Action>(SaveAll)
+nmap K  <Action>(ShowHoverInfo)
 nmap <Leader>A <Action>(GotoTest)
+map  <A-j> <Action>(MoveLineDown)
+imap <A-j> <Action>(MoveLineDown)
+map  <A-k> <Action>(MoveLineUp)
+imap <A-k> <Action>(MoveLineUp)
 " built-in navigation to navigated items works better
 nmap <c-o> <Action>(Back)
 nmap <c-i> <Action>(Forward)
@@ -150,10 +204,12 @@ nmap <c-=> <Action>Unsplit<CR>
 "-------------------------------------------------------------
 " Android Studio Specific
 "-------------------------------------------------------------
-" Tool windows
-nmap <space>te <Action>(ActivateAndroidEmulatorToolWindow)
-" Alternatively: (ForceRefresh)
-nmap <leader>rr <Action>(Android.Designer.ForceRefreshPreview)
+if &ide =~? 'Android Studio'
+    " Tool windows
+    nmap <space>te <Action>(ActivateAndroidEmulatorToolWindow)
+    " Alternatively: (ForceRefresh)
+    nmap <leader>rr <Action>(Android.Designer.ForceRefreshPreview)
+endif
 "-------------------------------------------------------------
 
 " but preserve ideavim defaults
@@ -170,3 +226,5 @@ nmap <space>gs <Action>(ActivateVersionControlToolWindow)
 nmap <space>gb <Action>(Git.Branches)
 nmap [h <Action>(VcsShowNextChangeMarker)
 nmap ]h <Action>(VcsShowPrevChangeMarker)
+map <leader>hr  <Action>(Vcs.RollbackChangedLines)
+map <leader>hb  <Action>(GitToolBox.BlameDetails)
