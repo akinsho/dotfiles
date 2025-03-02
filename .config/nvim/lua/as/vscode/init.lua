@@ -1,38 +1,49 @@
----@diagnostic disable: undefined-global
 local vscode = require('vscode')
-local map = vim.keymap.set
+local map = function (...)
+   vim.keymap.set(...)
+end
 
 vim.notify = vscode.notify
+vim.g.clipboard = vim.g.vscode_clipboard
 
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.undofile = true
 vim.opt.undolevels = 1000
+vim.opt.undolevels = 10000
 vim.opt.virtualedit = 'block'
 vim.opt.wildmode = 'longest:full,full'
 
-map('n', '<leader>qq', '<Cmd>Tabclose<CR>')
+local function vscode_action(cmd)
+  return function() vscode.action(cmd) end
+end
 
--- add space line
+map('n', '<leader>qq', '<Cmd>Tabclose<CR>')
 map('n', ']<space>', "<Cmd>put =repeat(nr2char(10), v:count1) <Bar> '[-1<CR>")
 map('n', '[<space>', "<Cmd>put! =repeat(nr2char(10), v:count1) <Bar> ']+1<CR>")
-map('n', '<localleader>l', "<Cmd>nohlsearch<CR>")
-
-map('n', '<tab>', function() vscode.action('workbench.action.nextEditor') end, { silent = true })
-map('n', '<S-tab>', function() vscode.action('workbench.action.previousEditor') end, { silent = true })
-map({ 'n', 'x' }, '<C-h>', function() vscode.action('workbench.action.navigateLeft') end, { silent = true })
-map({ 'n', 'x' }, '<C-j>', function() vscode.action('workbench.action.navigateDown') end, { silent = true })
-map({ 'n', 'x' }, '<C-k>', function() vscode.action('workbench.action.navigateUp') end, { silent = true })
-map({ 'n', 'x' }, '<C-l>', function() vscode.action('workbench.action.navigateRight') end, { silent = true })
-map('n', '[d', function() vscode.action('editor.action.marker.prev') end, { silent = true })
-map('n', ']d', function() vscode.action('editor.action.marker.next') end, { silent = true })
-map('n', '<leader>ff', function() vscode.action('workbench.action.quickOpen') end, { silent = true })
-map('n', '<leader>ca', function() vscode.action('editor.action.quickFix') end, { silent = true })
-map('n', '<leader>gr', function() vscode.action('editor.action.rename') end, { silent = true })
-map('n', '<leader>rf', function() vscode.action('editor.action.formatDocument') end, { silent = true })
-map('v', '<leader>rf', function() vscode.action('editor.action.formatSelection') end, { silent = true })
-map('n', 'gr', function() vscode.action('editor.action.goToReferences') end, { silent = true })
-map('n', '<localleader>gs', function() vscode.action('magit.status') end, { silent = true })
-
+map('n', '<localleader>l', '<Cmd>nohlsearch<CR>')
+map('n', '<tab>', vscode_action('workbench.action.nextEditor'))
+map('n', '<S-tab>', vscode_action('workbench.action.previousEditor'))
+map({ 'n', 'x' }, '<C-h>', vscode_action('workbench.action.navigateLeft'))
+map({ 'n', 'x' }, '<C-j>', vscode_action('workbench.action.navigateDown'))
+map({ 'n', 'x' }, '<C-k>', vscode_action('workbench.action.navigateUp'))
+map({ 'n', 'x' }, '<C-l>', vscode_action('workbench.action.navigateRight'))
+map('n', '[d', vscode_action('editor.action.marker.prev'))
+map('n', ']d', vscode_action('editor.action.marker.next'))
+map('n', '<leader>ff', vscode_action('workbench.action.quickOpen'))
+map('n', '<leader>ca', vscode_action('editor.action.quickFix'))
+map('n', '<leader>gr', vscode_action('editor.action.rename'))
+map('n', '<leader>rf', vscode_action('editor.action.formatDocument'))
+map('v', '<leader>rf', vscode_action('editor.action.formatSelection'))
+map('n', 'gr', vscode_action('editor.action.goToReferences'))
+--------------------------------------------------------------------------------
+-- PLUGINS
+--------------------------------------------------------------------------------
+map('n', '<localleader>gs', vscode_action('magit.status'))
+--------------------------------------------------------------------------------
+map({ 'n' }, 'm;', vscode_action('bookmarks.toggle'), { desc = 'Toogle Bookmark' })
+map({ 'n' }, 'm:', vscode_action('bookmarks.toggleLabeled'), { desc = 'Toogle Bookmark Label' })
+map({ 'n' }, 'm/', vscode_action('bookmarks.listFromAllFiles'), { desc = 'List All Bookmarks' })
+--------------------------------------------------------------------------------
 map('n', '<leader>sv', function()
   vscode.action('vscode-neovim.restart')
   vim.notify('Restarting Neovim', vim.log.levels.INFO, { title = 'vscode' })
@@ -42,16 +53,17 @@ map('n', '<leader>ev', function()
   vim.cmd('edit $HOME/.config/nvim/init.lua')
   vim.notify('Opening NVIM config file', vim.log.levels.INFO, { title = 'vscode' })
 end, { silent = true })
-
+--------------------------------------------------------------------------------
 -- better up/down
+--------------------------------------------------------------------------------
 map({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-
-map('n', '<leader>nf', function() vscode.call('workbench.action.files.newUntitledFile') end, { desc = 'New file' })
-map('n', '<leader>ff', function() vscode.call('workbench.action.quickOpen') end, { desc = 'Open file finder' })
-map('n', '<leader>fs', function() vscode.call('workbench.action.findInFiles') end, { desc = 'Search in files' })
-map('n', '[h', function() vscode.call('workbench.action.editor.previousChange') end, { desc = 'Previous change' })
-map('n', ']h', function() vscode.call('workbench.action.editor.nextChange') end, { desc = 'Next change' })
+--------------------------------------------------------------------------------
+map('n', '<leader>nf', vscode_action('workbench.action.files.newUntitledFile'), { desc = 'New file' })
+map('n', '<leader>ff', vscode_action('workbench.action.quickOpen'), { desc = 'Open file finder' })
+map('n', '<leader>fs', vscode_action('workbench.action.findInFiles'), { desc = 'Search in files' })
+map('n', '[h', vscode_action('workbench.action.editor.previousChange'), { desc = 'Previous change' })
+map('n', ']h', vscode_action('workbench.action.editor.nextChange'), { desc = 'Next change' })
 
 local manageEditorSize = function(...)
   local count = select(1, ...)
