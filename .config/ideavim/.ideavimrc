@@ -12,8 +12,8 @@ set notimeout
 " set timeoutlen=5000
 
 " Leader key
-let mapleader = ","
-let maplocalleader = " "
+let mapleader = ','
+let maplocalleader = '<space>'
 
 "==========================
 " Plugins need to install "
@@ -33,44 +33,11 @@ set commentary
 set argtextobj
 set exchange
 
-" TODO: which-key plugins does not recognise , as leader !?
 let g:WhichKey_FontSize = 15
 let g:WhichKey_PrefixStyle = "bold"
 let g:WhichKey_KeyStyle = "italic"
-let g:WhichKey_ShowVimActions = "true"
+let g:WhichKey_ShowVimActions = "false"
 let g:WhichKey_SortOrder = "by_key_prefix_first"
-let g:WhichKeyDesc_redraw = "<Space>l Redraw screen"
-let g:WhickKeyDesc_test = "<leader>A Go to Test File"
-
-let g:WhichKeyDesc_git = '<Space>g Git'
-let g:WhichKeyDesc_git_commit = "<Space>gc Git commit"
-let g:WhichKeyDesc_git_status = "<Space>gs Git status"
-let g:WhichKeyDesc_git_branches = "<Space>gb Git branches"
-
-let g:WhichKeyDesc_refactors = ",r Refactors"
-let g:WhichKeyDesc_refactors_rename = ",rn Rename element"
-let g:WhichKeyDesc_refactors_reformat_code = ",rf Reformat code"
-
-let g:WhichKeyDesc_actions = ",c Actions"
-let g:WhichKeyDesc_actions_code_actions = ",ca Code actions"
-
-let g:WhichKeyDesc_tools = "<Space>t Tools"
-let g:WhichKeyDesc_tools_emulator_open = "<Space>te Emulator"
-
-let g:WhichKeyDesc_go = 'g Go to'
-let g:WhichKeyDesc_go_find_usages = "gr Find usages"
-
-let g:WhickKeyDesc_move = ",m Move"
-let g:WhichKeyDesc_move = ",mv Move"
-
-let g:WhichKeyDesc_find = ",f Goto"
-let g:WhichKeyDesc_find_go_to_file = ",ff Go to file"
-let g:WhichKeyDesc_find_in_path = ",fs Find in path"
-
-let g:WhichKeyDesc_alternate_file = ",, Alternate file"
-
-let g:WhichKeyDesc_source_vimrc = ",sv Source vimrc"
-let g:WhichKeyDesc_edit_vimrc = ",ev Edit vimrc"
 
 nmap <S-C-n> <Plug>NextWholeOccurrence
 xmap <S-C-n> <Plug>NextWholeOccurrence
@@ -83,14 +50,13 @@ xmap <C-x> <Plug>RemoveOccurrence
 
 " IDEAVIM config options
 set ideajoin
-" set ideastatusicon=gray
 
 " Mappings
 sethandler <c-j> a:vim
 sethandler <c-k> a:vim
 
 inoremap jk <Esc>
-nmap Q gq
+nmap Q <nop>
 nnoremap <Leader><Tab> :tabnext<CR>
 nnoremap <S-Tab> :tabprev<CR>\
 nnoremap [<Space> :<CR>mzo<Esc>`z:<CR>
@@ -111,15 +77,9 @@ xnoremap > >gv
 
 " Switch between alternate buffers
 nnoremap <leader><leader> :b#<CR>
-
 nmap <leader>sv <Action>(IdeaVim.ReloadVimRc.reload)
-nnoremap <leader>ev :e ~/.config/ideavim/ideavimrc<CR>
-
+nnoremap <leader>ev :e ~/.ideavimrc<CR>
 nnoremap <space>l    :nohlsearch<CR>
-nmap <Leader>q <Action>(CloseContent)
-nmap <Leader>qa <Action>(CloseAllEditors)
-
-nmap <c-p> <Action>(GotoAction)
 
 " Distraction Free Mode
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
@@ -145,7 +105,7 @@ map <space>gs <Action>(Git.Stash)
 
 " Terminal
 nmap <c-\> <Action>(ActivateTerminalToolWindow)
-nmap <leader>t :action Terminal.OpenInTerminal<CR>
+nmap <leader>t <Action>(Terminal.OpenInTerminal)
 
 " Jump around with easymotion
 nmap s <Plug>(easymotion-s)
@@ -158,9 +118,9 @@ nmap <leader>zc <Action>(CollapseAllRegions)
 nmap <leader>zo <Action>(ExpandAllRegions)
 
 " Actions
-nmap [d <Action>(GotoNextError)
-nmap ]d <Action>(GotoPreviousError)
-
+nmap <c-p> <Action>(GotoAction)
+nmap <Leader>q <Action>(CloseContent)
+nmap <Leader>qa <Action>(CloseAllEditors)
 nmap <leader>ff <Action>(GotoFile)
 nmap <leader>fo <Action>(RecentFiles)
 nmap <leader>fs <Action>(TextSearchAction)
@@ -182,6 +142,8 @@ nmap <leader>a  <Action>(ShowIntentionActions)
 xmap <leader>a  <Action>(ShowIntentionActions)
 nmap gS   <Action>(EditorSplitLine)
 nmap gJ   <Action>(EditorJoinLines)
+nmap [d <Action>(GotoNextError)
+nmap ]d <Action>(GotoPreviousError)
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
 nmap gh <Action>(ShowErrorDescription)
 nmap <M-p> <Action>(JumpToLastWindow)
@@ -205,10 +167,10 @@ nmap <c-=> <Action>Unsplit<CR>
 " Android Studio Specific
 "-------------------------------------------------------------
 if &ide =~? 'Android Studio'
-    " Tool windows
     nmap <space>te <Action>(ActivateAndroidEmulatorToolWindow)
-    " Alternatively: (ForceRefresh)
     nmap <leader>rr <Action>(Android.Designer.ForceRefreshPreview)
+    let g:WhichKeyDesc_tools = "<Space>t Tools"
+    let g:WhichKeyDesc_tools_emulator = "<Space>te Emulator"
 endif
 "-------------------------------------------------------------
 
@@ -228,3 +190,87 @@ nmap [h <Action>(VcsShowNextChangeMarker)
 nmap ]h <Action>(VcsShowPrevChangeMarker)
 map <leader>hr  <Action>(Vcs.RollbackChangedLines)
 map <leader>hb  <Action>(GitToolBox.BlameDetails)
+
+" WhichKey configuration
+let g:WhichKey_FontSize = 15
+let g:WhichKey_PrefixStyle = "bold"
+let g:WhichKey_KeyStyle = "italic"
+let g:WhichKey_ShowVimActions = "false"
+let g:WhichKey_SortOrder = "by_key_prefix_first"
+let g:WhichKey_DefaultDelay = 600
+
+" Leader prefix menu
+let g:WhichKeyDesc_leader = "<leader> Leader menu"
+
+" Leader mappings
+let g:WhichKeyDesc_alternate_file = "<leader><leader> Alternate file"
+let g:WhichKeyDesc_tab_next = "<leader><Tab> Next tab"
+let g:WhichKeyDesc_quit = "<leader>q Close content"
+let g:WhichKeyDesc_quit_all = "<leader>qa Close all editors"
+let g:WhichKeyDesc_save_all = "<leader>s Save all"
+let g:WhichKeyDesc_source_vimrc = "<leader>sv Source vimrc"
+let g:WhichKeyDesc_edit_vimrc = "<leader>ev Edit vimrc"
+let g:WhichKeyDesc_test = "<leader>A Go to test file"
+
+" Find/Search submenu
+let g:WhichKeyDesc_find = "<leader>f Find menu"
+let g:WhichKeyDesc_find_go_to_file = "<leader>ff Go to file"
+let g:WhichKeyDesc_find_recent = "<leader>fo Recent files"
+let g:WhichKeyDesc_find_search = "<leader>fs Text search"
+let g:WhichKeyDesc_find_in_path = "<leader>fp Find in path"
+
+" Code mappings
+let g:WhichKeyDesc_optimize_imports = "<leader>oi Optimize imports"
+
+" Refactor submenu
+let g:WhichKeyDesc_refactors = "<leader>r Refactors menu"
+let g:WhichKeyDesc_refactors_rename = "<leader>rn Rename element"
+let g:WhichKeyDesc_refactors_reformat_code = "<leader>rf Reformat code"
+
+" Actions
+let g:WhichKeyDesc_actions = "<leader>a Show intentions"
+let g:WhichKeyDesc_code_actions = "<leader>ca Code actions"
+let g:WhichKeyDesc_terminal = "<leader>t Open terminal"
+
+" Move mapping
+let g:WhichKeyDesc_move = "<leader>mv Move"
+
+" Folding submenu
+let g:WhichKeyDesc_fold = "<leader>z Folding menu"
+let g:WhichKeyDesc_fold_collapse = "<leader>zc Collapse all regions"
+let g:WhichKeyDesc_fold_expand = "<leader>zo Expand all regions"
+
+" Space prefix menu
+let g:WhichKeyDesc_space = "<Space> Space menu"
+
+" Space key mappings
+let g:WhichKeyDesc_redraw = "<Space>l Clear search highlights"
+
+" Git submenu
+let g:WhichKeyDesc_git = "<Space>g Git menu"
+let g:WhichKeyDesc_git_groups = "<Space>gg VCS groups"
+let g:WhichKeyDesc_git_pull = "<Space>gl Git pull"
+let g:WhichKeyDesc_git_push = "<Space>gp Git push"
+let g:WhichKeyDesc_git_branches = "<Space>gb Git branches"
+let g:WhichKeyDesc_git_commit = "<Space>gc Git commit"
+let g:WhichKeyDesc_git_status = "<Space>gs Git status/stash"
+
+" Git history submenu (leader based)
+let g:WhichKeyDesc_git_history = "<leader>h Git history menu"
+let g:WhichKeyDesc_git_rollback = "<leader>hr Rollback lines"
+let g:WhichKeyDesc_git_blame = "<leader>hb Git blame"
+
+" Tools submenu
+let g:WhichKeyDesc_tools = "<Space>t Tools menu"
+let g:WhichKeyDesc_tools_emulator = "<Space>te Emulator"
+
+" g prefix menu (only for sequential keypresses)
+let g:WhichKeyDesc_go = "g Go to menu"
+let g:WhichKeyDesc_go_declaration = "gd Go to declaration"
+let g:WhichKeyDesc_go_implementation = "gi Go to implementation"
+let g:WhichKeyDesc_go_type = "gy Go to type"
+let g:WhichKeyDesc_go_quick_impl = "gD Quick implementations"
+let g:WhichKeyDesc_go_preview = "gp Quick preview"
+let g:WhichKeyDesc_go_usages = "gr Find usages"
+let g:WhichKeyDesc_go_split = "gS Split line"
+let g:WhichKeyDesc_go_join = "gJ Join lines"
