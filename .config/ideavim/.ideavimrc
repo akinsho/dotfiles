@@ -75,6 +75,10 @@ nnoremap N Nzz
 xnoremap < <gv
 xnoremap > >gv
 
+" Escape
+inoremap <expr> <C-[> col('.') == 1 ? '<esc>' : '<esc>l'
+inoremap <expr> <esc> col('.') == 1 ? '<esc>' : '<esc>l'
+
 " Switch between alternate buffers
 nnoremap <leader><leader> :b#<CR>
 nmap <leader>sv <Action>(IdeaVim.ReloadVimRc.reload)
@@ -121,6 +125,7 @@ nmap <leader>zo <Action>(ExpandAllRegions)
 nmap <c-p> <Action>(GotoAction)
 nmap <Leader>q <Action>(CloseContent)
 nmap <Leader>qa <Action>(CloseAllEditors)
+nmap <leader>on <Action>(CloseAllEditorsButActive)
 nmap <leader>ff <Action>(GotoFile)
 nmap <leader>fo <Action>(RecentFiles)
 nmap <leader>fs <Action>(TextSearchAction)
@@ -148,7 +153,8 @@ nmap <c-z> <Action>(ToggleDistractionFreeMode)
 nmap gh <Action>(ShowErrorDescription)
 nmap <M-p> <Action>(JumpToLastWindow)
 nmap <c-w>o <Action>(HideAllWindows)
-nmap <c-\> <Action>(HideAllWindows)
+map <leader>ld <Action>(ActivateDebugToolWindow)
+map <leader>ls <Action>(ActivateProblemsViewToolWindow)
 nmap S <Action>(SurroundWith)
 map  <C-s>      <Action>(SaveAll)
 imap <C-s>      <Action>(SaveAll)
@@ -169,6 +175,7 @@ nmap <c-=> <Action>Unsplit<CR>
 if &ide =~? 'Android Studio'
     nmap <space>te <Action>(ActivateAndroidEmulatorToolWindow)
     nmap <leader>rr <Action>(Android.Designer.ForceRefreshPreview)
+    map <leader>ll <Action>(ActivateLogcatToolWindow)
     let g:WhichKeyDesc_tools = "<Space>t Tools"
     let g:WhichKeyDesc_tools_emulator = "<Space>te Emulator"
 endif
