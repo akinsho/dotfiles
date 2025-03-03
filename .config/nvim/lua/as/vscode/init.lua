@@ -1,7 +1,5 @@
 local vscode = require('vscode')
-local map = function (...)
-   vim.keymap.set(...)
-end
+local map = function(...) vim.keymap.set(...) end
 
 vim.notify = vscode.notify
 vim.g.clipboard = vim.g.vscode_clipboard
@@ -12,6 +10,7 @@ vim.opt.undolevels = 1000
 vim.opt.undolevels = 10000
 vim.opt.virtualedit = 'block'
 vim.opt.wildmode = 'longest:full,full'
+vim.opt.scrolloff = 5
 
 local function vscode_action(cmd)
   return function() vscode.action(cmd) end
@@ -29,12 +28,17 @@ map({ 'n', 'x' }, '<C-k>', vscode_action('workbench.action.navigateUp'))
 map({ 'n', 'x' }, '<C-l>', vscode_action('workbench.action.navigateRight'))
 map('n', '[d', vscode_action('editor.action.marker.prev'))
 map('n', ']d', vscode_action('editor.action.marker.next'))
+map('n', '<leader>fo', vscode_action('workbench.action.showAllEditors'))
 map('n', '<leader>ff', vscode_action('workbench.action.quickOpen'))
 map('n', '<leader>ca', vscode_action('editor.action.quickFix'))
-map('n', '<leader>gr', vscode_action('editor.action.rename'))
+map('n', '<leader>rn', vscode_action('editor.action.rename'))
 map('n', '<leader>rf', vscode_action('editor.action.formatDocument'))
 map('v', '<leader>rf', vscode_action('editor.action.formatSelection'))
 map('n', 'gr', vscode_action('editor.action.goToReferences'))
+map({ 'n', 'v' }, '<leader>nd', vscode_action('notifications.clearAll'))
+map({ 'n', 'x', 'i' }, '<D-d>', function()
+  vscode.with_insert(function() vscode.action('editor.action.addSelectionToNextFindMatch') end)
+end)
 --------------------------------------------------------------------------------
 -- PLUGINS
 --------------------------------------------------------------------------------
