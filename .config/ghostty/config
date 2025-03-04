@@ -8,7 +8,7 @@ confirm-close-surface = false
 #----------------------------------
 # Theme
 #----------------------------------
-theme = "Github Dark"
+theme = "github-dark-high-contrast"
 
 #----------------------------------
 # FONTS
