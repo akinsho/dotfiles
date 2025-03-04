@@ -9,6 +9,7 @@ set incsearch
 set hlsearch
 set wrapscan
 set notimeout
+set wrap
 " set timeoutlen=5000
 
 " Leader key
@@ -50,6 +51,8 @@ xmap <C-x> <Plug>RemoveOccurrence
 
 " IDEAVIM config options
 set ideajoin
+set ideamarks
+set ideastatusicon=gray
 
 " Mappings
 sethandler <c-j> a:vim
@@ -91,11 +94,11 @@ nmap <c-z> <Action>(ToggleDistractionFreeMode)
 " {{{ String manipulation
 " Plugin: String Manipulation
 " Settigns: Do not add selection
-map crc <Action>(StringManipulation.ToCamelCase)
-map crp <Action>(StringManipulation.ToPascalCase)
-map crk <Action>(StringManipulation.ToKebabCase)
-map crs <Action>(StringManipulation.ToSnakeCase)
-map crS <Action>(StringManipulation.ToCapitalizedSnakeCase)
+xmap crc <Action>(StringManipulation.ToCamelCase)
+xmap crp <Action>(StringManipulation.ToPascalCase)
+xmap crk <Action>(StringManipulation.ToKebabCase)
+xmap crs <Action>(StringManipulation.ToSnakeCase)
+xmap crS <Action>(StringManipulation.ToCapitalizedSnakeCase)
 " }}}
 
 " {{{ Git
@@ -152,9 +155,9 @@ nmap ]d <Action>(GotoPreviousError)
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
 nmap gh <Action>(ShowErrorDescription)
 nmap <M-p> <Action>(JumpToLastWindow)
+nmap <D-j> <Action>(HideActiveWindow)
 nmap <c-w>o <Action>(HideAllWindows)
-map <leader>ld <Action>(ActivateDebugToolWindow)
-map <leader>ls <Action>(ActivateProblemsViewToolWindow)
+nmap <leader>ls <Action>(ActivateProblemsViewToolWindow)
 nmap S <Action>(SurroundWith)
 map  <C-s>      <Action>(SaveAll)
 imap <C-s>      <Action>(SaveAll)
@@ -169,15 +172,18 @@ imap <A-k> <Action>(MoveLineUp)
 nmap <c-o> <Action>(Back)
 nmap <c-i> <Action>(Forward)
 nmap <c-=> <Action>Unsplit<CR>
+nmap ]b <Action>(GotoNextBookmark)
+nmap [b <Action>(GotoPreviousBookmark)
+nmap <leader>zf <Action>(MaximizeEditorInSplit)
+let g:WhichKeyDesc_zoom_file = "<leader>zf Zoom file"
 "-------------------------------------------------------------
 " Android Studio Specific
 "-------------------------------------------------------------
 if &ide =~? 'Android Studio'
-    nmap <space>te <Action>(ActivateAndroidEmulatorToolWindow)
-    nmap <leader>rr <Action>(Android.Designer.ForceRefreshPreview)
-    map <leader>ll <Action>(ActivateLogcatToolWindow)
-    let g:WhichKeyDesc_tools = "<Space>t Tools"
-    let g:WhichKeyDesc_tools_emulator = "<Space>te Emulator"
+    nmap <leader>ll <Action>(ActivateLogcatToolWindow)
+    nmap <leader>ld <Action>(ActivateRunningDevicesToolWindow)
+else
+    nmap <leader>ld <Action>(ActivateDebugToolWindow)
 endif
 "-------------------------------------------------------------
 
