@@ -149,9 +149,11 @@ nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
 nmap <leader>a  <Action>(ShowIntentionActions)
 xmap <leader>a  <Action>(ShowIntentionActions)
 nmap gS   <Action>(EditorSplitLine)
-nmap gJ   <Action>(EditorJoinLines)
-nmap [d <Action>(GotoNextError)
-nmap ]d <Action>(GotoPreviousError)
+nmap gJ   <Action>(EditorJoinLinesNext)
+nmap ]c <Action>(NextOccurence)
+nmap [c <Action>(PreviousOccurence)
+nmap ]d <Action>(GotoNextError)
+nmap [d <Action>(GotoPreviousError)
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
 nmap gh <Action>(ShowErrorDescription)
 nmap <M-p> <Action>(JumpToLastWindow)
@@ -174,6 +176,7 @@ nmap <c-i> <Action>(Forward)
 nmap <c-=> <Action>Unsplit<CR>
 nmap ]b <Action>(GotoNextBookmark)
 nmap [b <Action>(GotoPreviousBookmark)
+map U <C-R>
 nmap <leader>zf <Action>(MaximizeEditorInSplit)
 let g:WhichKeyDesc_zoom_file = "<leader>zf Zoom file"
 "-------------------------------------------------------------
@@ -203,6 +206,8 @@ nmap [h <Action>(VcsShowNextChangeMarker)
 nmap ]h <Action>(VcsShowPrevChangeMarker)
 map <leader>hr  <Action>(Vcs.RollbackChangedLines)
 map <leader>hb  <Action>(GitToolBox.BlameDetails)
+map <leader>hn <Action>(Diff.NextChange)
+map <leader>hp <Action>(Diff.PrevChange)
 
 " WhichKey configuration
 let g:WhichKey_FontSize = 15
