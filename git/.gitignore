@@ -70,4 +70,5 @@ _deps
 .gonvim/
 
 .ccls-cache/
+.project
 # vim:filetype=conf
