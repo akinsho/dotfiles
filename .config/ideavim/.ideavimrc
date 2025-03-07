@@ -9,7 +9,7 @@ set incsearch
 set hlsearch
 set wrapscan
 set notimeout
-set wrap
+set nowrap
 " set timeoutlen=5000
 
 " Leader key
@@ -156,7 +156,8 @@ nmap ]d <Action>(GotoNextError)
 nmap [d <Action>(GotoPreviousError)
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
 nmap gh <Action>(ShowErrorDescription)
-nmap <M-p> <Action>(JumpToLastWindow)
+nmap <D-p> <Action>(SearchEverywhere)
+nmap <C-w>w <Action>(JumpToLastWindow)
 nmap <D-j> <Action>(HideActiveWindow)
 nmap <c-w>o <Action>(HideAllWindows)
 nmap <leader>ls <Action>(ActivateProblemsViewToolWindow)
