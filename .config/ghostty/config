@@ -5,6 +5,7 @@ adjust-underline-position = 6
 adjust-underline-thickness = 2
 bold-is-bright = true
 confirm-close-surface = false
+config-file = "?local"
 #----------------------------------
 # Theme
 #----------------------------------
@@ -27,7 +28,6 @@ mouse-hide-while-typing = true
 #----------------------------------
 macos-titlebar-style = tabs
 window-save-state = always
-
 #----------------------------------
 # KEYBINDINGS
 #----------------------------------
