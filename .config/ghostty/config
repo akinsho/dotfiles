@@ -50,7 +50,7 @@ keybind = super+ctrl+h=goto_split:left
 keybind = super+ctrl+j=goto_split:bottom
 keybind = super+ctrl+k=goto_split:top
 keybind = super+ctrl+l=goto_split:right
-keybind = super+shift+s=new_split:auto
+keybind = super+shift+/=new_split:auto
 #----------------------------------
 # TABS
 #----------------------------------
