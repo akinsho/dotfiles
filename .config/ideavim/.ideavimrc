@@ -33,6 +33,7 @@ set nerdtree
 set commentary
 set argtextobj
 set exchange
+set functiontextobj
 
 let g:WhichKey_FontSize = 15
 let g:WhichKey_PrefixStyle = "bold"
@@ -117,6 +118,98 @@ map U <C-R>
 nmap g<c-o> <c-o>
 nmap g<c-i> <c-i>
 
+"-------------------------------------------------------------
+" Make Marks Great Again
+"-------------------------------------------------------------
+" Mark as a global mark/
+
+" TODO: when execute is supported turn these into functions
+" for char in range(97, 122)  " ASCII values for 'a' to 'z'
+"   let uppercase = nr2char(char - 32)  " Convert to uppercase (ASCII 'A' is 65, 'a' is 97)
+"   execute "nnoremap m" . nr2char(char) . " m" . uppercase
+" endfor
+"
+" for char in range(97, 120)  " ASCII values for 'a' to 'x'
+"   execute "nnoremap dm" . nr2char(char) . " :delmark " . nr2char(char) . "<CR>"
+" endfor
+nnoremap ma mA
+nnoremap mb mB
+nnoremap mc mC
+nnoremap md mD
+nnoremap me mE
+nnoremap mf mG
+nnoremap mh mH
+nnoremap mi mI
+nnoremap mj mJ
+nnoremap mk mK
+nnoremap ml mL
+nnoremap mm mM
+nnoremap mn mN
+nnoremap mo mO
+nnoremap mp mP
+nnoremap mq mQ
+nnoremap mr mR
+nnoremap ms mS
+nnoremap mt mT
+nnoremap mu mU
+nnoremap mv mV
+nnoremap mw mW
+nnoremap mx mX
+nnoremap my mY
+nnoremap mz mZ
+
+" Delete marks
+nnoremap dma :delmark A<CR>
+nnoremap dmb :delmark B<CR>
+nnoremap dmc :delmark C<CR>
+nnoremap dmd :delmark D<CR>
+nnoremap dme :delmark E<CR>
+nnoremap dmf :delmark F<CR>
+nnoremap dmg :delmark G<CR>
+nnoremap dmh :delmark H<CR>
+nnoremap dmi :delmark I<CR>
+nnoremap dmj :delmark J<CR>
+nnoremap dmk :delmark K<CR>
+nnoremap dml :delmark L<CR>
+nnoremap dmm :delmark M<CR>
+nnoremap dmn :delmark N<CR>
+nnoremap dmo :delmark O<CR>
+nnoremap dmp :delmark P<CR>
+nnoremap dmq :delmark Q<CR>
+nnoremap dmr :delmark R<CR>
+nnoremap dms :delmark S<CR>
+nnoremap dmt :delmark T<CR>
+nnoremap dmu :delmark U<CR>
+nnoremap dmv :delmark V<CR>
+nnoremap dmw :delmark W<CR>
+nnoremap dmx :delmark X<CR>
+
+" Go to global marks
+nnoremap 'a `A
+nnoremap 'b `B
+nnoremap 'c `C
+nnoremap 'd `D
+nnoremap 'e `E
+nnoremap 'f `G
+nnoremap 'h `H
+nnoremap 'i `I
+nnoremap 'j `J
+nnoremap 'k `K
+nnoremap 'l `L
+nnoremap 'm `M
+nnoremap 'n `N
+nnoremap 'o `O
+nnoremap 'p `P
+nnoremap 'q `Q
+nnoremap 'r `R
+nnoremap 's `S
+nnoremap 't `T
+nnoremap 'u `U
+nnoremap 'v `V
+nnoremap 'w `W
+nnoremap 'x `X
+"-------------------------------------------------------------
+
 " Switch between alternate buffers
 nnoremap <leader><leader> :b#<CR>
 let g:WhichKeyDesc_alternate_file = "<leader><leader> Alternate file"
@@ -128,7 +221,7 @@ nnoremap <leader>ev :e ~/.ideavimrc<CR>
 let g:WhichKeyDesc_edit_vimrc = "<leader>ev Edit vimrc"
 
 nnoremap <space>l    :nohlsearch<CR>
-let g:WhichKeyDesc_redraw = "<space>l Clear search highlights"
+let g:WhichKeyDesc_redraw = "<Space>l Clear search highlights"
 
 " Distraction Free Mode
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
@@ -250,6 +343,12 @@ let g:WhichKeyDesc_go_split = "gS Split line"
 nmap gJ   <Action>(EditorJoinLinesNext)
 let g:WhichKeyDesc_go_join = "gJ Join lines"
 
+nmap ]] <Action>(MethodDown)
+let g:WhichKeyDesc_next_method = "]] Next Method"
+
+nmap [[ <Action>(MethodUp)
+let g:WhichKeyDesc_prev_method = "[[ Previous Method"
+
 nmap ]c <Action>(NextOccurence)
 let g:WhichKeyDesc_next_occurence = "]c Next occurence"
 
@@ -265,8 +364,11 @@ let g:WhichKeyDesc_prev_error = "[d Previous error"
 nmap <leader>ls <Action>(ActivateProblemsViewToolWindow)
 let g:WhichKeyDesc_problem_window = "<leader>ls Open Problems"
 
+nmap <leader>lb <Action>(ActivateBuildToolWindow)
+let g:WhichKeyDesc_build_window = "<leader>ls Open Build"
+
 nmap <c-w>= <Action>(Unsplit)
-let g:WhichKeyDesc_only = "<c-w>= Show only the current window"
+let g:WhichKeyDesc_only = "<C-w>= Show only the current window"
 
 nmap ]b <Action>(GotoNextBookmark)
 let g:WhichKeyDesc_next_bookmark = "]b Next bookmark"
@@ -315,6 +417,15 @@ if &ide =~? 'Android Studio'
     nmap <leader>la <Action>(android.deploy.CodeSwap)
     let g:WhichKeyDesc_android_code_changes = "<leader>la Apply Code Changes"
 
+    nmap <leader>la <Action>(android.deploy.CodeSwap)
+    let g:WhichKeyDesc_android_code_changes = "<leader>la Apply Code Changes"
+
+    nmap <leader>li <Action>(ActivateAppInspectionToolWindow)
+    let g:WhichKeyDesc_app_inspection = "<leader>li Open App Inspections"
+
+    nmap <leader>lq <Action>(ActivateAppQualityInsightsToolWindow)
+    let g:WhichKeyDesc_app_quality = "<leader>lq Open App Quality Insights"
+
     nmap <leader>lA <Action>(android.deploy.ApplyChanges)
     let g:WhichKeyDesc_android_code_restart = "<leader>lA Apply Code Changes & Restart"
 else
@@ -345,7 +456,7 @@ let g:WhichKeyDesc_menu_actions = "<leader>m Move menu"
 " O mappings
 let g:WhichKeyDesc_open_close_actions = "<leader>o Open/Close menu"
 
-let g:WhichKeyDesc_window_motions = "<c-w> Window motions"
+let g:WhichKeyDesc_window_motions = "<C-W> Window motions"
 
 " Find/Search submenu
 let g:WhichKeyDesc_find = "<leader>f Find menu"
