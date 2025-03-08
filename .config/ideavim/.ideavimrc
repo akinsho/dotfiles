@@ -8,9 +8,9 @@ set smartcase
 set incsearch
 set hlsearch
 set wrapscan
-set notimeout
+" set notimeout
 set nowrap
-" set timeoutlen=5000
+set timeoutlen=5000
 
 " Leader key
 let mapleader = ','
