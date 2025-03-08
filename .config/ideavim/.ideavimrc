@@ -60,10 +60,18 @@ sethandler <c-k> a:vim
 
 inoremap jk <Esc>
 nmap Q <nop>
-nnoremap <Leader><Tab> :tabnext<CR>
-nnoremap <S-Tab> :tabprev<CR>\
+
+nmap <leader><Tab> :tabnext<CR>
+let g:WhichKeyDesc_tab_next = "<leader><tab> Next tab"
+
+nmap <S-Tab> :tabprev<CR>
+
 nnoremap [<Space> :<CR>mzo<Esc>`z:<CR>
+let g:WhichKeyDesc_new_line_below = "[<Space> New line below"
+
 nnoremap ]<Space> :<CR>mzO<Esc>`z:<CR>
+let g:WhichKeyDesc_new_line_above = "]<Space> New line above"
+
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 nnoremap <C-k> <C-w>k
@@ -82,89 +90,19 @@ xnoremap > >gv
 inoremap <expr> <C-[> col('.') == 1 ? '<esc>' : '<esc>l'
 inoremap <expr> <esc> col('.') == 1 ? '<esc>' : '<esc>l'
 
-" Switch between alternate buffers
-nnoremap <leader><leader> :b#<CR>
-nmap <leader>sv <Action>(IdeaVim.ReloadVimRc.reload)
-nnoremap <leader>ev :e ~/.ideavimrc<CR>
-nnoremap <space>l    :nohlsearch<CR>
-
-" Distraction Free Mode
-nmap <c-z> <Action>(ToggleDistractionFreeMode)
-
-" {{{ String manipulation
-" Plugin: String Manipulation
-" Settigns: Do not add selection
-xmap crc <Action>(StringManipulation.ToCamelCase)
-xmap crp <Action>(StringManipulation.ToPascalCase)
-xmap crk <Action>(StringManipulation.ToKebabCase)
-xmap crs <Action>(StringManipulation.ToSnakeCase)
-xmap crS <Action>(StringManipulation.ToCapitalizedSnakeCase)
-" }}}
-
-" {{{ Git
-map <space>gg <Action>(VcsGroups)
-map <space>gl <Action>(Git.Pull)
-map <space>gp <Action>(Vcs.Push)
-map <space>gb <Action>(Git.Branches)
-map <space>gc <Action>(CheckinProject)
-map <space>gs <Action>(Git.Stash)
-" }}}
-
-" Terminal
-nmap <c-\> <Action>(ActivateTerminalToolWindow)
-nmap <leader>t <Action>(Terminal.OpenInTerminal)
-
 " Jump around with easymotion
 nmap s <Plug>(easymotion-s)
-
 nmap <CR> <Action>(Tree-selectNextExtendSelection)
 nmap <S-CR> <Action>(Tree-selectPrevExtendSelection)
-
-" Folding
-nmap <leader>zc <Action>(CollapseAllRegions)
-nmap <leader>zo <Action>(ExpandAllRegions)
-
-" Actions
-nmap <c-p> <Action>(GotoAction)
-nmap <Leader>q <Action>(CloseContent)
-nmap <Leader>qa <Action>(CloseAllEditors)
-nmap <leader>on <Action>(CloseAllEditorsButActive)
-nmap <leader>ff <Action>(GotoFile)
-nmap <leader>fo <Action>(RecentFiles)
-nmap <leader>fs <Action>(TextSearchAction)
-nmap <leader>fp <Action>(FindInPath)
-nmap <leader>A <Action>(GotoTest)
-nmap <leader>mv <Action>(Move)
-xmap <leader>mv <Action>(Move)
-nmap gr <Action>(FindUsages)
-nmap gd <Action>(GotoDeclaration)
-nmap gD <Action>(QuickImplementations)
-nmap gp <Action>(QuickImplementations)
-nmap gy <Action>(GotoTypeDeclaration)
-nmap gi <Action>(GotoImplementation)
-nmap <leader>oi <Action>(OptimizeImports)
-nmap <leader>rn <Action>(RenameElement)
-nmap <leader>rf <Action>(ReformatCode)
-nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
-nmap <leader>a  <Action>(ShowIntentionActions)
-xmap <leader>a  <Action>(ShowIntentionActions)
-nmap gS   <Action>(EditorSplitLine)
-nmap gJ   <Action>(EditorJoinLinesNext)
-nmap ]c <Action>(NextOccurence)
-nmap [c <Action>(PreviousOccurence)
-nmap ]d <Action>(GotoNextError)
-nmap [d <Action>(GotoPreviousError)
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
-nmap gh <Action>(ShowErrorDescription)
 nmap <D-p> <Action>(SearchEverywhere)
-nmap <C-w>w <Action>(JumpToLastWindow)
+nmap <c-p> <Action>(SearchEverywhere)
 nmap <D-j> <Action>(HideActiveWindow)
+nmap <C-w>w <Action>(JumpToLastWindow)
 nmap <c-w>o <Action>(HideAllWindows)
-nmap <leader>ls <Action>(ActivateProblemsViewToolWindow)
 nmap S <Action>(SurroundWith)
 map  <C-s>      <Action>(SaveAll)
 imap <C-s>      <Action>(SaveAll)
-nmap <leader>s  <Action>(SaveAll)
 nmap K  <Action>(ShowHoverInfo)
 nmap <Leader>A <Action>(GotoTest)
 map  <A-j> <Action>(MoveLineDown)
@@ -174,41 +112,215 @@ imap <A-k> <Action>(MoveLineUp)
 " built-in navigation to navigated items works better
 nmap <c-o> <Action>(Back)
 nmap <c-i> <Action>(Forward)
-nmap <c-=> <Action>Unsplit<CR>
-nmap ]b <Action>(GotoNextBookmark)
-nmap [b <Action>(GotoPreviousBookmark)
 map U <C-R>
-nmap <leader>zf <Action>(MaximizeEditorInSplit)
-let g:WhichKeyDesc_zoom_file = "<leader>zf Zoom file"
-"-------------------------------------------------------------
-" Android Studio Specific
-"-------------------------------------------------------------
-if &ide =~? 'Android Studio'
-    nmap <leader>ll <Action>(ActivateLogcatToolWindow)
-    nmap <leader>ld <Action>(ActivateRunningDevicesToolWindow)
-else
-    nmap <leader>ld <Action>(ActivateDebugToolWindow)
-endif
-"-------------------------------------------------------------
-
 " but preserve ideavim defaults
 nmap g<c-o> <c-o>
 nmap g<c-i> <c-i>
+
+" Switch between alternate buffers
+nnoremap <leader><leader> :b#<CR>
+let g:WhichKeyDesc_alternate_file = "<leader><leader> Alternate file"
+
+nmap <leader>sv <Action>(IdeaVim.ReloadVimRc.reload)
+let g:WhichKeyDesc_source_vimrc = "<leader>sv Source vimrc"
+
+nnoremap <leader>ev :e ~/.ideavimrc<CR>
+let g:WhichKeyDesc_edit_vimrc = "<leader>ev Edit vimrc"
+
+nnoremap <space>l    :nohlsearch<CR>
+let g:WhichKeyDesc_redraw = "<space>l Clear search highlights"
+
+" Distraction Free Mode
+nmap <c-z> <Action>(ToggleDistractionFreeMode)
+
+" {{{ String manipulation
+" Plugin: String Manipulation
+" Settigns: Do not add selection
+vmap crc <Action>(StringManipulation.ToCamelCase)
+vmap crp <Action>(StringManipulation.ToPascalCase)
+vmap crk <Action>(StringManipulation.ToKebabCase)
+vmap crs <Action>(StringManipulation.ToSnakeCase)
+vmap crS <Action>(StringManipulation.ToCapitalizedSnakeCase)
+" }}}
+
+" {{{ Git
+let g:WhichKeyDesc_git_groups = "<Space>gg VCS groups"
+map <space>gg <Action>(VcsGroups)
+
+let g:WhichKeyDesc_git_pull = "<Space>gl Git pull"
+map <space>gl <Action>(Git.Pull)
+
+let g:WhichKeyDesc_git_push = "<Space>gp Git push"
+map <space>gp <Action>(Vcs.Push)
+
+let g:WhichKeyDesc_git_stash = "<Space>gl Git stash"
+map <space>gz <Action>(Git.Stash)
+
+nmap <space>gc <Action>(ActivateCommitToolWindow)
+let g:WhichKeyDesc_git_commit = "<Space>gc Git commit"
+
+nmap <space>gs <Action>(ActivateVersionControlToolWindow)
+let g:WhichKeyDesc_git_status = "<Space>gs Git status/stash"
+
+nmap <space>gb <Action>(Git.Branches)
+let g:WhichKeyDesc_git_branches = "<Space>gb Git branches"
+" }}}
+
+" Terminal
+nmap <c-\> <Action>(ActivateTerminalToolWindow)
+
+nmap <leader>t <Action>(Terminal.OpenInTerminal)
+let g:WhichKeyDesc_terminal = "<leader>t Open terminal"
+
+" Folding
+nmap <leader>zc <Action>(CollapseAllRegions)
+let g:WhichKeyDesc_fold_collapse = "<leader>zc Collapse all regions"
+
+nmap <leader>zo <Action>(ExpandAllRegions)
+let g:WhichKeyDesc_fold_expand = "<leader>zo Expand all regions"
+
+nmap <Leader>q <Action>(CloseContent)
+let g:WhichKeyDesc_quit = "<leader>q Close content"
+
+nmap <Leader>qa <Action>(CloseAllEditors)
+let g:WhichKeyDesc_quit_all = "<leader>qa Close all editors"
+
+nmap <leader>s  <Action>(SaveAll)
+let g:WhichKeyDesc_save_all = "<leader>s Save all"
+
+nmap <leader>on <Action>(CloseAllEditorsButActive)
+let g:WhichKeyDesc_close_all_but = "<leader>on close all but this"
+
+nmap <leader>ff <Action>(GotoFile)
+let g:WhichKeyDesc_find_go_to_file = "<leader>ff Go to file"
+
+nmap <leader>fo <Action>(RecentFiles)
+let g:WhichKeyDesc_find_recent = "<leader>fo Recent files"
+
+nmap <leader>fs <Action>(TextSearchAction)
+let g:WhichKeyDesc_find_search = "<leader>fs Text search"
+
+nmap <leader>fp <Action>(FindInPath)
+let g:WhichKeyDesc_find_in_path = "<leader>fp Find in path"
+
+nmap <leader>A <Action>(GotoTest)
+let g:WhichKeyDesc_test = "<leader>A Go to test file"
+
+nmap <leader>mv <Action>(Move)
+xmap <leader>mv <Action>(Move)
+let g:WhichKeyDesc_move = "<leader>mv Move"
+
+nmap gr <Action>(FindUsages)
+let g:WhichKeyDesc_go_usages = "gr Find usages"
+
+nmap gd <Action>(GotoDeclaration)
+let g:WhichKeyDesc_go_declaration = "gd Go to declaration"
+
+nmap gD <Action>(QuickImplementations)
+let g:WhichKeyDesc_go_quick_impl = "gD Quick implementations"
+
+nmap gy <Action>(GotoTypeDeclaration)
+let g:WhichKeyDesc_go_type = "gy Go to type"
+
+nmap gi <Action>(GotoImplementation)
+let g:WhichKeyDesc_go_implementation = "gi Go to implementation"
+
+nmap gh <Action>(ShowErrorDescription)
+let g:WhichKeyDesc_go_error_description = "gh Show error description"
+
+nmap <leader>oi <Action>(OptimizeImports)
+let g:WhichKeyDesc_go_implementation = "<leader>oi Optimise imports"
+
+nmap <leader>rn <Action>(RenameElement)
+let g:WhichKeyDesc_refactors_rename = "<leader>rn Rename element"
+
+nmap <leader>rf <Action>(ReformatCode)
+let g:WhichKeyDesc_refactors_reformat_code = "<leader>rf Reformat code"
+
+nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
+let g:WhichKeyDesc_code_actions = "<leader>ca Code actions"
+
+nmap <leader>a  <Action>(ShowIntentionActions)
+xmap <leader>a  <Action>(ShowIntentionActions)
+let g:WhichKeyDesc_actions = "<leader>a Show intentions"
+
+nmap gS   <Action>(EditorSplitLine)
+let g:WhichKeyDesc_go_split = "gS Split line"
+
+nmap gJ   <Action>(EditorJoinLinesNext)
+let g:WhichKeyDesc_go_join = "gJ Join lines"
+
+nmap ]c <Action>(NextOccurence)
+let g:WhichKeyDesc_next_occurence = "]c Next occurence"
+
+nmap [c <Action>(PreviousOccurence)
+let g:WhichKeyDesc_prev_occurence = "[c Previous occurence"
+
+nmap ]d <Action>(GotoNextError)
+let g:WhichKeyDesc_next_error = "]d Next error"
+
+nmap [d <Action>(GotoPreviousError)
+let g:WhichKeyDesc_prev_error = "[d Previous error"
+
+nmap <leader>ls <Action>(ActivateProblemsViewToolWindow)
+let g:WhichKeyDesc_problem_window = "<leader>ls Open Problems"
+
+nmap <c-w>= <Action>(Unsplit)
+let g:WhichKeyDesc_only = "<c-w>= Show only the current window"
+
+nmap ]b <Action>(GotoNextBookmark)
+let g:WhichKeyDesc_next_bookmark = "]b Next bookmark"
+
+nmap [b <Action>(GotoPreviousBookmark)
+let g:WhichKeyDesc_previous_bookmark = "[b Previous bookmark"
+
+nmap <leader>zf <Action>(MaximizeEditorInSplit)
+let g:WhichKeyDesc_zoom_file = "<leader>zf Zoom file"
 
 " File Explorer
 nmap <C-N> :NERDTreeToggle<CR>
 let g:NERDTreeMapQuit = '<C-N>'
 
 " Git
-nmap <space>gc <Action>(ActivateCommitToolWindow)
-nmap <space>gs <Action>(ActivateVersionControlToolWindow)
-nmap <space>gb <Action>(Git.Branches)
 nmap [h <Action>(VcsShowNextChangeMarker)
+let g:WhichKeyDesc_next_change = "[h Next change"
+
 nmap ]h <Action>(VcsShowPrevChangeMarker)
+let g:WhichKeyDesc_prev_change = "]h Previous change"
+
+let g:WhichKeyDesc_git_history = "<leader>h Git history menu"
+
 map <leader>hr  <Action>(Vcs.RollbackChangedLines)
+let g:WhichKeyDesc_git_rollback = "<leader>hr Rollback lines"
+
 map <leader>hb  <Action>(GitToolBox.BlameDetails)
+let g:WhichKeyDesc_git_blame = "<leader>hb Git blame"
+
 map <leader>hn <Action>(Diff.NextChange)
+let g:WhichKeyDesc_next_change_file = "<leader>hn Next change"
+
 map <leader>hp <Action>(Diff.PrevChange)
+let g:WhichKeyDesc_prev_change_file = "<leader>hp Previous change"
+
+"-------------------------------------------------------------
+" Android Studio Specific
+"-------------------------------------------------------------
+if &ide =~? 'Android Studio'
+    nmap <leader>ll <Action>(ActivateLogcatToolWindow)
+    let g:WhichKeyDesc_android_action = "<leader>ll Open Logcat"
+
+    nmap <leader>ld <Action>(ActivateRunningDevicesToolWindow)
+    let g:WhichKeyDesc_android_running_devices = "<leader>ld Open Running Devices"
+
+    nmap <leader>la <Action>(android.deploy.CodeSwap)
+    let g:WhichKeyDesc_android_code_changes = "<leader>la Apply Code Changes"
+
+    nmap <leader>lA <Action>(android.deploy.ApplyChanges)
+    let g:WhichKeyDesc_android_code_restart = "<leader>lA Apply Code Changes & Restart"
+else
+    nmap <leader>ld <Action>(ActivateDebugToolWindow)
+endif
+"-------------------------------------------------------------
 
 " WhichKey configuration
 let g:WhichKey_FontSize = 15
@@ -221,75 +333,37 @@ let g:WhichKey_DefaultDelay = 600
 " Leader prefix menu
 let g:WhichKeyDesc_leader = "<leader> Leader menu"
 
-" Leader mappings
-let g:WhichKeyDesc_alternate_file = "<leader><leader> Alternate file"
-let g:WhichKeyDesc_tab_next = "<leader><Tab> Next tab"
-let g:WhichKeyDesc_quit = "<leader>q Close content"
-let g:WhichKeyDesc_quit_all = "<leader>qa Close all editors"
-let g:WhichKeyDesc_save_all = "<leader>s Save all"
-let g:WhichKeyDesc_source_vimrc = "<leader>sv Source vimrc"
-let g:WhichKeyDesc_edit_vimrc = "<leader>ev Edit vimrc"
-let g:WhichKeyDesc_test = "<leader>A Go to test file"
+" Git menu
+let g:WhichKeyDesc_git = "<Space>g Git menu"
+
+" L mappings menu
+let g:WhichKeyDesc_list_actions = "<leader>l List menu"
+
+" M mappings
+let g:WhichKeyDesc_menu_actions = "<leader>m Move menu"
+
+" O mappings
+let g:WhichKeyDesc_open_close_actions = "<leader>o Open/Close menu"
+
+let g:WhichKeyDesc_window_motions = "<c-w> Window motions"
 
 " Find/Search submenu
 let g:WhichKeyDesc_find = "<leader>f Find menu"
-let g:WhichKeyDesc_find_go_to_file = "<leader>ff Go to file"
-let g:WhichKeyDesc_find_recent = "<leader>fo Recent files"
-let g:WhichKeyDesc_find_search = "<leader>fs Text search"
-let g:WhichKeyDesc_find_in_path = "<leader>fp Find in path"
-
-" Code mappings
-let g:WhichKeyDesc_optimize_imports = "<leader>oi Optimize imports"
 
 " Refactor submenu
 let g:WhichKeyDesc_refactors = "<leader>r Refactors menu"
-let g:WhichKeyDesc_refactors_rename = "<leader>rn Rename element"
-let g:WhichKeyDesc_refactors_reformat_code = "<leader>rf Reformat code"
 
-" Actions
-let g:WhichKeyDesc_actions = "<leader>a Show intentions"
-let g:WhichKeyDesc_code_actions = "<leader>ca Code actions"
-let g:WhichKeyDesc_terminal = "<leader>t Open terminal"
-
-" Move mapping
-let g:WhichKeyDesc_move = "<leader>mv Move"
+" Actions menu
+let g:WhichKeyDesc_code_menu = "<leader>c Code menu"
 
 " Folding submenu
 let g:WhichKeyDesc_fold = "<leader>z Folding menu"
-let g:WhichKeyDesc_fold_collapse = "<leader>zc Collapse all regions"
-let g:WhichKeyDesc_fold_expand = "<leader>zo Expand all regions"
 
 " Space prefix menu
 let g:WhichKeyDesc_space = "<Space> Space menu"
 
-" Space key mappings
-let g:WhichKeyDesc_redraw = "<Space>l Clear search highlights"
-
-" Git submenu
-let g:WhichKeyDesc_git = "<Space>g Git menu"
-let g:WhichKeyDesc_git_groups = "<Space>gg VCS groups"
-let g:WhichKeyDesc_git_pull = "<Space>gl Git pull"
-let g:WhichKeyDesc_git_push = "<Space>gp Git push"
-let g:WhichKeyDesc_git_branches = "<Space>gb Git branches"
-let g:WhichKeyDesc_git_commit = "<Space>gc Git commit"
-let g:WhichKeyDesc_git_status = "<Space>gs Git status/stash"
-
-" Git history submenu (leader based)
-let g:WhichKeyDesc_git_history = "<leader>h Git history menu"
-let g:WhichKeyDesc_git_rollback = "<leader>hr Rollback lines"
-let g:WhichKeyDesc_git_blame = "<leader>hb Git blame"
-
 " Tools submenu
 let g:WhichKeyDesc_tools = "<Space>t Tools menu"
-let g:WhichKeyDesc_tools_emulator = "<Space>te Emulator"
 
 " g prefix menu (only for sequential keypresses)
 let g:WhichKeyDesc_go = "g Go to menu"
-let g:WhichKeyDesc_go_declaration = "gd Go to declaration"
-let g:WhichKeyDesc_go_implementation = "gi Go to implementation"
-let g:WhichKeyDesc_go_type = "gy Go to type"
-let g:WhichKeyDesc_go_quick_impl = "gD Quick implementations"
-let g:WhichKeyDesc_go_preview = "gp Quick preview"
-let g:WhichKeyDesc_go_usages = "gr Find usages"
-let g:WhichKeyDesc_go_split = "gS Split line"
-let g:WhichKeyDesc_go_join = "gJ Join lines"
