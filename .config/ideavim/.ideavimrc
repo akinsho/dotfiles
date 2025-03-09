@@ -102,6 +102,7 @@ nmap <D-j> <Action>(HideActiveWindow)
 nmap <C-w>w <Action>(JumpToLastWindow)
 nmap <c-w>o <Action>(HideAllWindows)
 nmap S <Action>(SurroundWith)
+vmap S <Action>(SurroundWith)
 nmap dS <Action>(Unwrap)
 map  <C-s>      <Action>(SaveAll)
 imap <C-s>      <Action>(SaveAll)
@@ -111,6 +112,7 @@ map  <A-j> <Action>(MoveLineDown)
 imap <A-j> <Action>(MoveLineDown)
 map  <A-k> <Action>(MoveLineUp)
 imap <A-k> <Action>(MoveLineUp)
+imap <A-P> <Action>(ParameterInfo)
 " built-in navigation to navigated items works better
 nmap <c-o> <Action>(Back)
 nmap <c-i> <Action>(Forward)
@@ -307,6 +309,9 @@ let g:WhichKeyDesc_find_search = "<leader>fs Text search"
 nmap <leader>fp <Action>(FindInPath)
 let g:WhichKeyDesc_find_in_path = "<leader>fp Find in path"
 
+nmap <leader>fl <Action>(RecentLocations)
+let g:WhichKeyDesc_recent_locations = "<leader>fl recent locations"
+
 nmap <leader>A <Action>(GotoTest)
 let g:WhichKeyDesc_test = "<leader>A Go to test file"
 
@@ -338,6 +343,7 @@ let g:WhichKeyDesc_go_implementation = "<leader>oi Optimise imports"
 nmap <leader>rn <Action>(RenameElement)
 let g:WhichKeyDesc_refactors_rename = "<leader>rn Rename element"
 
+xmap <leader>rf <Action>(ReformatCode)
 nmap <leader>rf <Action>(ReformatCode)
 let g:WhichKeyDesc_refactors_reformat_code = "<leader>rf Reformat code"
 
@@ -385,6 +391,9 @@ let g:WhichKeyDesc_problem_window = "<leader>ls Open Problems"
 
 nmap <leader>lb <Action>(ActivateBuildToolWindow)
 let g:WhichKeyDesc_build_window = "<leader>ls Open Build"
+
+nmap <leader>lo <Action>(FileStructurePopup)
+let g:WhichKeyDesc_file_outline_window = "<leader>lo File Outline"
 
 nmap <c-w>= <Action>(Unsplit)
 let g:WhichKeyDesc_only = "<C-w>= Show only the current window"
