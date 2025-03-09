@@ -71,9 +71,7 @@ local servers = {
       },
     },
   },
-  sourcekit = {
-    filetypes = { 'swift', 'objective-c', 'objective-cpp' },
-  },
+  jdtls = {},
   yamlls = {
     settings = {
       yaml = {

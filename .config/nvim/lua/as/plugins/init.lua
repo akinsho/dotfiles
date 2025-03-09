@@ -81,6 +81,7 @@ return {
         {
           'neovim/nvim-lspconfig',
           dependencies = {
+            'nvim-java/nvim-java',
             { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
             {
               'folke/neoconf.nvim',
