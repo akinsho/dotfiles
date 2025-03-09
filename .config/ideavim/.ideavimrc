@@ -93,8 +93,8 @@ inoremap <expr> <esc> col('.') == 1 ? '<esc>' : '<esc>l'
 
 " Jump around with easymotion
 nmap s <Plug>(easymotion-s)
-nmap <CR> <Action>(Tree-selectNextExtendSelection)
-nmap <S-CR> <Action>(Tree-selectPrevExtendSelection)
+map <S-CR> <Action>(EditorSelectWord)
+" nmap <S-CR> <Action>(EditorUnSelectWord)
 nmap <c-z> <Action>(ToggleDistractionFreeMode)
 nmap <D-p> <Action>(SearchEverywhere)
 nmap <c-p> <Action>(SearchEverywhere)
@@ -122,6 +122,16 @@ nmap g<c-i> <c-i>
 " Make Marks Great Again
 "-------------------------------------------------------------
 " Mark as a global mark/
+let g:WhichKeyDesc_bookmark_menu = "<leader>b Bookmark menu"
+
+nmap <leader>bm <Action>(ToggleBookmark)
+let g:WhichKeyDesc_toggle_bookmark = "<leader>bm Toggle Bookmark"
+
+nmap ]b <Action>(GotoNextBookmark)
+let g:WhichKeyDesc_next_bookmark = "]b Next bookmark"
+
+nmap [b <Action>(GotoPreviousBookmark)
+let g:WhichKeyDesc_previous_bookmark = "[b Previous bookmark"
 
 " TODO: when execute is supported turn these into functions
 " for char in range(97, 122)  " ASCII values for 'a' to 'z'
@@ -369,12 +379,6 @@ let g:WhichKeyDesc_build_window = "<leader>ls Open Build"
 
 nmap <c-w>= <Action>(Unsplit)
 let g:WhichKeyDesc_only = "<C-w>= Show only the current window"
-
-nmap ]b <Action>(GotoNextBookmark)
-let g:WhichKeyDesc_next_bookmark = "]b Next bookmark"
-
-nmap [b <Action>(GotoPreviousBookmark)
-let g:WhichKeyDesc_previous_bookmark = "[b Previous bookmark"
 
 nmap <leader>zf <Action>(MaximizeEditorInSplit)
 let g:WhichKeyDesc_zoom_file = "<leader>zf Zoom file"
