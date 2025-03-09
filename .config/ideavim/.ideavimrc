@@ -102,6 +102,7 @@ nmap <D-j> <Action>(HideActiveWindow)
 nmap <C-w>w <Action>(JumpToLastWindow)
 nmap <c-w>o <Action>(HideAllWindows)
 nmap S <Action>(SurroundWith)
+nmap dS <Action>(Unwrap)
 map  <C-s>      <Action>(SaveAll)
 imap <C-s>      <Action>(SaveAll)
 nmap K  <Action>(ShowHoverInfo)
@@ -340,6 +341,14 @@ let g:WhichKeyDesc_refactors_rename = "<leader>rn Rename element"
 nmap <leader>rf <Action>(ReformatCode)
 let g:WhichKeyDesc_refactors_reformat_code = "<leader>rf Reformat code"
 
+nmap <leader>rv <Action>(IntroduceVariable)
+vmap <leader>rv <Action>(IntroduceVariable)
+let g:WhichKeyDesc_extract_variable = "<leader>rv Extract variable"
+
+nmap <leader>rm <Action>(ExtractFunction)
+let g:WhichKeyDesc_extract_timer = "<leader>rm Extract method"
+
+xmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
 nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
 let g:WhichKeyDesc_code_actions = "<leader>ca Code actions"
 
