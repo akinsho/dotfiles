@@ -390,7 +390,7 @@ nmap <leader>ls <Action>(ActivateProblemsViewToolWindow)
 let g:WhichKeyDesc_problem_window = "<leader>ls Open Problems"
 
 nmap <leader>lb <Action>(ActivateBuildToolWindow)
-let g:WhichKeyDesc_build_window = "<leader>ls Open Build"
+let g:WhichKeyDesc_build_window = "<leader>lb Open Build"
 
 nmap <leader>lo <Action>(FileStructurePopup)
 let g:WhichKeyDesc_file_outline_window = "<leader>lo File Outline"
@@ -450,6 +450,8 @@ if &ide =~? 'Android Studio'
 
     nmap <leader>lA <Action>(android.deploy.ApplyChanges)
     let g:WhichKeyDesc_android_code_restart = "<leader>lA Apply Code Changes & Restart"
+elseif &ide =~? 'IntelliJ IDEA'
+    nmap <leader>ld <Action>(ActivateCloudDesktopToolWindow)
 else
     nmap <leader>ld <Action>(ActivateDebugToolWindow)
 endif
