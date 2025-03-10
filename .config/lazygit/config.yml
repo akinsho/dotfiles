@@ -13,8 +13,8 @@ gui:
         activeBorderColor:
             - green
             - bold
-        inactiveBorderColor:
-            - white
+        # inactiveBorderColor:
+        #   - white
         optionsTextColor:
             - blue
         # selectedLineBgColor:
