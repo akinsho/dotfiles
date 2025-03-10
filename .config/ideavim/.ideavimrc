@@ -242,11 +242,11 @@ nmap <c-z> <Action>(ToggleDistractionFreeMode)
 " {{{ String manipulation
 " Plugin: String Manipulation
 " Settigns: Do not add selection
-vmap crc <Action>(StringManipulation.ToCamelCase)
-vmap crp <Action>(StringManipulation.ToPascalCase)
-vmap crk <Action>(StringManipulation.ToKebabCase)
-vmap crs <Action>(StringManipulation.ToSnakeCase)
-vmap crS <Action>(StringManipulation.ToCapitalizedSnakeCase)
+vmap zrc <Action>(StringManipulation.ToCamelCase)
+vmap zrp <Action>(StringManipulation.ToPascalCase)
+vmap zrk <Action>(StringManipulation.ToKebabCase)
+vmap zrs <Action>(StringManipulation.ToSnakeCase)
+vmap zrS <Action>(StringManipulation.ToCapitalizedSnakeCase)
 " }}}
 
 " {{{ Git
@@ -348,11 +348,12 @@ nmap <leader>rf <Action>(ReformatCode)
 let g:WhichKeyDesc_refactors_reformat_code = "<leader>rf Reformat code"
 
 nmap <leader>rv <Action>(IntroduceVariable)
-vmap <leader>rv <Action>(IntroduceVariable)
+xmap <leader>rv <Action>(IntroduceVariable)
 let g:WhichKeyDesc_extract_variable = "<leader>rv Extract variable"
 
 nmap <leader>rm <Action>(ExtractFunction)
-let g:WhichKeyDesc_extract_timer = "<leader>rm Extract method"
+xmap <leader>rm <Action>(ExtractFunction)
+let g:WhichKeyDesc_extract_function = "<leader>rm Extract method"
 
 xmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
 nmap <leader>ca <Action>(Refactorings.QuickListPopupAction)
