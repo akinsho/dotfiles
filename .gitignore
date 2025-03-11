@@ -15,3 +15,4 @@ automatic_backups/
 .chpwd-recent-dirs
 .zsh_sessions
 !.nvim.lua
+.config/ghostty/local
