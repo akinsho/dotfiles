@@ -53,6 +53,8 @@ _deps
 .classpath
 .factorypath
 .settings/
+*.iml
+bin/
 
 # Spell files (ignore all but those my personal dictionary)
 *.add
