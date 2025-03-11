@@ -319,11 +319,11 @@ nmap <leader>mv <Action>(Move)
 xmap <leader>mv <Action>(Move)
 let g:WhichKeyDesc_move = "<leader>mv Move"
 
-nmap gR <Action>(ShowUsages)
-let g:WhichKeyDesc_show_usages = "gR Show usages"
+nmap gr <Action>(ShowUsages)
+let g:WhichKeyDesc_show_usages = "gr Show usages"
 
-nmap gr <Action>(FindUsages)
-let g:WhichKeyDesc_go_usages = "gr Find usages"
+nmap gR <Action>(FindUsages)
+let g:WhichKeyDesc_go_usages = "gR Find usages"
 
 nmap gd <Action>(GotoDeclaration)
 let g:WhichKeyDesc_go_declaration = "gd Go to declaration"
