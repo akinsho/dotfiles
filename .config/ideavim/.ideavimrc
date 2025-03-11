@@ -319,6 +319,9 @@ nmap <leader>mv <Action>(Move)
 xmap <leader>mv <Action>(Move)
 let g:WhichKeyDesc_move = "<leader>mv Move"
 
+nmap gR <Action>(ShowUsages)
+let g:WhichKeyDesc_show_usages = "gR Show usages"
+
 nmap gr <Action>(FindUsages)
 let g:WhichKeyDesc_go_usages = "gr Find usages"
 
