@@ -1,5 +1,4 @@
-if not as then return end
-
+if vim.g.vscode or not as then return end
 local fn, opt = vim.fn, vim.opt_local
 local fmt = string.format
 

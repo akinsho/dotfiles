@@ -1,3 +1,4 @@
+if vim.g.vscode then return end
 local opt, fn = vim.opt_local, vim.fn
 opt.spell = true
 
