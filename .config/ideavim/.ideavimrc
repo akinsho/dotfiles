@@ -91,6 +91,19 @@ xnoremap > >gv
 inoremap <expr> <C-[> col('.') == 1 ? '<esc>' : '<esc>l'
 inoremap <expr> <esc> col('.') == 1 ? '<esc>' : '<esc>l'
 
+" By default in ideavim [w and [b go forward via camel humps i.e. [W]ords[N]ext[O]ne
+" the reverse go to the end respecting humps
+" https://youtrack.jetbrains.com/issue/VIM-874/Support-for-Smart-Keys-Use-CamelHumps-Words-in-IdeaVim-plugin
+nmap w [w
+vmap w [w
+nmap e ]w
+vmap e ]w
+nmap b [b
+vmap b [b
+nmap ge ]b
+vmap ge ]b
+
+
 " Jump around with easymotion
 nmap s <Plug>(easymotion-s)
 map <S-CR> <Action>(EditorSelectWord)
@@ -130,11 +143,11 @@ let g:WhichKeyDesc_bookmark_menu = "<leader>b Bookmark menu"
 nmap <leader>bm <Action>(ToggleBookmark)
 let g:WhichKeyDesc_toggle_bookmark = "<leader>bm Toggle Bookmark"
 
-nmap ]b <Action>(GotoNextBookmark)
-let g:WhichKeyDesc_next_bookmark = "]b Next bookmark"
+nmap ]m <Action>(GotoNextBookmark)
+let g:WhichKeyDesc_next_bookmark = "]m Next bookmark"
 
-nmap [b <Action>(GotoPreviousBookmark)
-let g:WhichKeyDesc_previous_bookmark = "[b Previous bookmark"
+nmap [m <Action>(GotoPreviousBookmark)
+let g:WhichKeyDesc_previous_bookmark = "[m Previous bookmark"
 
 " TODO: when execute is supported turn these into functions
 " for char in range(97, 122)  " ASCII values for 'a' to 'z'
