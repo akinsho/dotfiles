@@ -1,3 +1,4 @@
+if vim.g.vscode then return end
 local opt, fn, api = vim.opt_local, vim.fn, vim.api
 
 opt.list = false
