@@ -510,7 +510,9 @@ ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 last_working_dir
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if exists fzf; then
+  source <(fzf --zsh)
+fi
 
 # Advanced customization of fzf options via _fzf_comprun function
 # - The first argument to the function is the name of the command.
