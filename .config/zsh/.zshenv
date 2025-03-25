@@ -32,9 +32,6 @@ if which rg >/dev/null; then
 fi
 
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-
-# NOTE: for signing commits with GPG (for work)
-export GPG_TTY=$(tty)
 #-------------------------------------------------------------------------------
 # Go
 #-------------------------------------------------------------------------------
@@ -45,10 +42,6 @@ path+=(
   /usr/local/bin
   ${HOME}/.npm/bin(N-/)
   ${HOME}/.local/bin(N-/)
-  # Dart -----------------------------------------------------------------------
-  ${HOME}/flutter/.pub-cache/bin(N-/)
-  ${HOME}/flutter/bin(N-/)
-  ${HOME}/.pub-cache/bin(N-/)
   ${GOPATH}/bin(N-/)
   # Add local build of neovim to path for development
   ${HOME}/nvim/bin(N-/)
