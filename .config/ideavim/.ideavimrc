@@ -41,6 +41,9 @@ let g:WhichKey_KeyStyle = "italic"
 let g:WhichKey_ShowVimActions = "false"
 let g:WhichKey_SortOrder = "by_key_prefix_first"
 
+nmap X <Plug>(Exchange)
+nmap Xc <Plug>(ExchangeClear)
+
 nmap <S-C-n> <Plug>NextWholeOccurrence
 xmap <S-C-n> <Plug>NextWholeOccurrence
 nmap g<C-n> <Plug>NextOccurrence
