@@ -6,7 +6,7 @@ if [[ $+commands[gls] ]]; then
   alias ls="gls --color=auto --hyperlink=auto $@"
 fi
 if [[ $+commands[eza] ]]; then
-  alias l="eza --long --all --git --color=always --group-directories-first --icons $@"
+  alias l="eza --long --git-repos --all --git --color=always --group-directories-first --icons $@"
   alias lt="eza --icons --all --color=always -T $@"
 else
   alias l='ls -lFh'     # size,show type,human readable
