@@ -11,6 +11,13 @@ function gdmin() {
   git diff $branchname -- ":(exclude)"$ignore
 }
 
+# Used for ignoring changes to files tracked in git
+function ignore() {
+  git update-index --skip-worktree $1
+}
+function unignore() {
+  git update-index --no-skip-worktree $1
+}
 
 function colours() {
   for i in {0..255}; do
