@@ -73,4 +73,5 @@ bin/
 
 .ccls-cache/
 .project
+build/
 # vim:filetype=conf
