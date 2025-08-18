@@ -1,11 +1,12 @@
+#!/bin/zsh
 #------------------------------------------------------------------------------
 # ALIASES
 #------------------------------------------------------------------------------
 #-- gls is GNU ls
-if [[ $+commands[gls] ]]; then
+if (( $+commands[gls] )); then
   alias ls="gls --color=auto --hyperlink=auto $@"
 fi
-if [[ $+commands[eza] ]]; then
+if (( $+commands[eza] )); then
   alias l="eza --long --git-repos --all --git --color=always --group-directories-first --icons $@"
   alias lt="eza --icons --all --color=always -T $@"
 else
