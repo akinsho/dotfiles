@@ -22,7 +22,6 @@ font-thicken = true
 # MOUSE
 #----------------------------------
 mouse-hide-while-typing = true
-
 #----------------------------------
 # WINDOW
 #----------------------------------
@@ -33,24 +32,33 @@ window-save-state = always
 #----------------------------------
 macos-option-as-alt = left
 # RESET ALL
-keybind = clear
+# keybind = clear
 #----------------------------------
 # CORE
 #----------------------------------
-keybind = super+shift+r=reload_config
+keybind = ctrl+shift+r=reload_config
 keybind = super+c=copy_to_clipboard
 keybind = super+v=paste_from_clipboard
 keybind = super+plus=increase_font_size:1
 keybind = super+equal=increase_font_size:1
 keybind = super+minus=decrease_font_size:1
+# keybind = ctrl+shift+f=search
+# keybind = cmd+shift+space=toggle_command_palette
 #----------------------------------
 # SPLITS
 #----------------------------------
-keybind = super+ctrl+h=goto_split:left
-keybind = super+ctrl+j=goto_split:bottom
-keybind = super+ctrl+k=goto_split:top
-keybind = super+ctrl+l=goto_split:right
-keybind = super+shift+/=new_split:auto
+keybind = performable:ctrl+h=goto_split:left
+keybind = performable:ctrl+j=goto_split:bottom
+keybind = performable:ctrl+k=goto_split:top
+keybind = performable:ctrl+l=goto_split:right
+#----------------------------------
+# New split
+#----------------------------------
+keybind = performable:ctrl+shift+/=new_split:auto
+keybind = performable:ctrl+shift+l=new_split:right
+keybind = performable:ctrl+shift+h=new_split:left
+keybind = performable:ctrl+shift+j=new_split:down
+keybind = performable:ctrl+shift+k=new_split:down
 #----------------------------------
 # TABS
 #----------------------------------
@@ -64,3 +72,5 @@ keybind = ctrl+shift+space=toggle_split_zoom
 keybind = super+w=close_surface
 
 keybind = global:super+shift+]=toggle_quick_terminal
+
+shell-integration-features = ssh-env,ssh-terminfo

@@ -65,7 +65,8 @@ map({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true
 --------------------------------------------------------------------------------
 map('n', '<leader>nf', vscode_action('workbench.action.files.newUntitledFile'), { desc = 'New file' })
 map('n', '<leader>ff', vscode_action('workbench.action.quickOpen'), { desc = 'Open file finder' })
-map('n', '<leader>fs', vscode_action('workbench.action.findInFiles'), { desc = 'Search in files' })
+map('n', '<leader>fs', vscode_action('workbench.action.quickTextSearch'), { desc = 'Search in files' })
+map('n', '<leader>fS', vscode_action('workbench.action.findInFiles'), { desc = 'Search in files' })
 map('n', '[h', vscode_action('workbench.action.editor.previousChange'), { desc = 'Previous change' })
 map('n', ']h', vscode_action('workbench.action.editor.nextChange'), { desc = 'Next change' })
 
