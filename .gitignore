@@ -16,3 +16,4 @@ automatic_backups/
 .zsh_sessions
 !.nvim.lua
 .config/ghostty/local
+.zcompdump*
