@@ -20,7 +20,8 @@ settings({
     function(args)
       -- remove the default terminal mappings
       vim.keymap.del('t', '<esc>', { buffer = args.buf })
-      vim.keymap.del('t', 'jk', { buffer = args.buf })
+      -- TODO: figure out if  this is still needed then
+      -- vim.keymap.del('t', 'jk', { buffer = args.buf })
     end,
   },
   [{ 'gitcommit', 'gitrebase' }] = {
