@@ -302,6 +302,7 @@ diagnostic.config({
   },
 })
 
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-  border = border,
-})
+-- TODO: find an alternative to this
+-- vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+--   border = border,
+-- })
