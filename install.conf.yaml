@@ -26,6 +26,7 @@
     ~/.config/kitty: .config/kitty
     ~/.config/lazygit: .config/lazygit
     ~/.config/karabiner: .config/karabiner
+    ~/.config/aerospace: .config/aerospace
     ~/.Brewfile:
       if: "[ `uname` = Darwin ]"
       path: macos/Brewfile
