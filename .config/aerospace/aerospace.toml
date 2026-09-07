@@ -52,39 +52,7 @@ automatically-unhide-macos-hidden-apps = false
 # even when they are invisible.
 # This config option is only available since 'config-version = 2'
 # Fallback value (if you omit the key): persistent-workspaces = []
-persistent-workspaces = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "I",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-]
+persistent-workspaces = ['C', 'E', 'N', 'S', 'T', 'W']
 
 # Each rule fires once per window, when that window is first detected. Moving a
 # window by hand afterwards is therefore permanent: no rule re-runs to pull it
@@ -254,6 +222,16 @@ alt-shift-z = 'move-node-to-workspace Z'
 
 alt-shift-tab = 'focus-monitor --wrap-around prev'
 alt-tab = 'focus-monitor --wrap-around next'
+
+# Cycle workspaces belonging to the current monitor only.
+# Bare `workspace next` walks the global workspace list and ignores monitors, so
+# the candidate set is narrowed first: list-workspaces emits the workspaces on the
+# focused monitor and `workspace --stdin` steps within just those.
+# A binding value is already an aerospace-shell expression, so the pipe works here
+# directly. Wrapping it in `eval` is rejected: nested evals are forbidden.
+# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+alt-leftSquareBracket = 'list-workspaces --monitor focused --empty no | workspace --stdin --wrap-around prev'
+alt-rightSquareBracket = 'list-workspaces --monitor focused --empty no | workspace --stdin --wrap-around next'
 
 # Send the focused window to a specific screen, overriding the workspace its
 # on-window-detected rule chose. Permanent, since those rules do not re-run.
