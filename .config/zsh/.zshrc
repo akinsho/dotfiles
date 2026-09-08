@@ -505,7 +505,7 @@ done
 #-------------------------------------------------------------------------------
 #  PLUGINS
 #-------------------------------------------------------------------------------
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=241'
 ZSH_AUTOSUGGEST_USE_ASYNC=1
 
 last_working_dir
@@ -537,7 +537,7 @@ if exists zoxide; then
 fi
 
 if exists fnm; then
-  eval "$(fnm env --use-on-cd)"
+  eval "$(fnm env --use-on-cd --shell zsh)"
 fi
 
 # solution to the too many open jobs problem unfortunately this problem is
