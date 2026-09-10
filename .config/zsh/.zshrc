@@ -567,4 +567,35 @@ zsh_add_plugin  "zsh-users/zsh-syntax-highlighting"
 
 bindkey '^U' autosuggest-accept
 
+#-------------------------------------------------------------------------------
+#  Tmux session picker — sesh (https://github.com/joshmedeski/sesh)
+#-------------------------------------------------------------------------------
+# Ctrl-f opens the picker. Ctrl rather than Alt because a tiling window manager
+# will typically claim the Alt-letter space for workspace switching and grab
+# those chords before the terminal ever receives them.
+#
+# `sesh picker` connects to the chosen session itself, so there is nothing to
+# capture off stdout. The tmux binding runs the same command, which keeps a
+# single picker UI whether or not a session is already attached. Add -z to
+# include zoxide directories, which lets the picker create sessions as well as
+# attach to them.
+#
+# A ZLE widget's stdin and stdout are not the terminal, so they are reattached
+# before the picker draws.
+if (( $+commands[sesh] )); then
+  function sesh-sessions() {
+    {
+      exec </dev/tty
+      exec <&1
+      sesh picker -i
+      zle reset-prompt > /dev/null 2>&1 || true
+    }
+  }
+
+  zle     -N            sesh-sessions
+  bindkey -M emacs '^F' sesh-sessions
+  bindkey -M vicmd '^F' sesh-sessions
+  bindkey -M viins '^F' sesh-sessions
+fi
+
 [ -f $HOME/.local.zshrc ] && source ~/.local.zshrc
