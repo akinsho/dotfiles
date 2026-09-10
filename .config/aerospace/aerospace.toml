@@ -60,7 +60,14 @@ persistent-workspaces = ['C', 'E', 'N', 'S', 'T', 'W']
 on-window-detected = [
   {if.app-id = 'com.microsoft.Outlook', run = 'move-node-to-workspace W'}, # W ork comms
   {if.app-id = 'com.tinyspeck.slackmacgap', run = 'move-node-to-workspace S'},
-  {if.app-id = 'us.zoom.xos', run = 'move-node-to-workspace W'},
+  # Zoom's meeting window is the only one worth tiling. Everything else it opens
+  # (main window, share toolbars, notifications) places itself better floating.
+  # This pair must stay in this order: the first matching rule wins, so the
+  # specific meeting rule has to precede the catch-all.
+  # Caveat: some apps set a window title only after the window appears, so a
+  # title predicate can miss and the window falls through to the float rule.
+  {if = 'test %{app-bundle-id} = us.zoom.xos && test %{window-title} ~= "^Zoom Meeting"', run = ['layout tiling', 'move-node-to-workspace W']},
+  {if.app-id = 'us.zoom.xos', run = 'layout floating'},
   {if.app-id = 'com.google.Chrome', run = 'move-node-to-workspace C'}, # C hrome
   {if.app-id = 'md.obsidian', run = 'move-node-to-workspace N'}, # N otes
   {if.app-id = 'dev.zed.Zed', run = 'move-node-to-workspace E'}, # E ditor
