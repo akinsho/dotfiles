@@ -17,8 +17,12 @@ if [ -d "$ZDOTDIR/plugins/$PLUGIN_NAME" ]; then
   zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh" || \
   zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.zsh" || \
   zsh_add_file "plugins/$PLUGIN_NAME/$2.zsh"
-else
+elif [[ -n ${DOTS_ALLOW_PLUGIN_INSTALL-} ]]; then
+  # Opt-in because this clones over SSH, and on a host with no GitHub key it
+  # would stall every new shell until git gave up.
   cd $DOTFILES
   git submodule add "git@github.com:$1.git" "$ZSH_PLUGIN_DIR/$PLUGIN_NAME"
   cd -
+else
+  print -u2 "zsh_add_plugin: $PLUGIN_NAME is not installed; run 'git submodule update --init --recursive' in \$DOTFILES"
 fi

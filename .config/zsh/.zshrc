@@ -337,6 +337,47 @@ function +vi-git-remotebranch() {
     fi
 }
 #-------------------------------------------------------------------------------
+#               Session context (local vs SSH)
+#-------------------------------------------------------------------------------
+# On a remote shell the prompt grows a user@host segment; locally there is none.
+#
+# Checked in order: $DOTS_SSH_PROMPT (set it to 1 in ~/.local.zshrc on a box only
+# ever reached over SSH — tmux panes can inherit stale SSH_* vars, so a flag is
+# more reliable there), then the SSH_* vars, then sshd in the process ancestry.
+#
+# Computed once, not per render — the prompt redraws on every keystroke.
+__dots_in_ssh() {
+  if [[ -n ${DOTS_SSH_PROMPT-} ]]; then
+    [[ $DOTS_SSH_PROMPT == (1|true|yes|YES) ]]
+    return
+  fi
+
+  [[ -n ${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-} ]] && return 0
+
+  [[ -r /proc/self/stat ]] || return 1 # Linux only; elsewhere SSH_* is all we get
+
+  local pid=$PPID comm stat
+  local -i hops=0
+  while (( hops++ < 12 )) && [[ -n $pid && $pid != 0 && $pid != 1 ]]; do
+    [[ -r /proc/$pid/comm && -r /proc/$pid/stat ]] || break
+    comm=$(</proc/$pid/comm)
+    [[ $comm == sshd* ]] && return 0
+    # Field 2 of stat is "(command)" and can contain spaces, so trim through the
+    # last ")" before splitting; ppid is then the 2nd remaining field.
+    stat=$(</proc/$pid/stat)
+    stat=${stat##*\) }
+    pid=${${(z)stat}[2]}
+  done
+  return 1
+}
+
+if __dots_in_ssh; then
+  typeset -g __DOTS_IS_SSH=1
+else
+  typeset -g __DOTS_IS_SSH=0
+fi
+
+#-------------------------------------------------------------------------------
 #               Prompt
 #-------------------------------------------------------------------------------
 setopt PROMPT_SUBST
@@ -355,7 +396,14 @@ function __prompt_eval() {
   local dots_prompt_icon="%F{green}➜ %f"
   local dots_prompt_failure_icon="%F{red}✘ %f"
   local placeholder="(%F{blue}%{$__DOTS[ITALIC_ON]%}…%{$__DOTS[ITALIC_OFF]%}%f)"
-  local top="%B%F{magenta}%1~%f%b${_git_status_prompt:-$placeholder}"
+  # Read at render time so ~/.local.zshrc, sourced at the end of this file, can
+  # still override these. DOTS_HOST_LABEL exists because %m is unhelpfully long
+  # on hosts with generated names.
+  local ssh_segment=""
+  if (( __DOTS_IS_SSH )); then
+    ssh_segment="%F{yellow}${DOTS_SSH_ICON-}%n@${DOTS_HOST_LABEL:-%m}%f "
+  fi
+  local top="${ssh_segment}%B%F{magenta}%1~%f%b${_git_status_prompt:-$placeholder}"
   local character="%(1j.%F{cyan}%j✦%f .)%(?.${dots_prompt_icon}.${dots_prompt_failure_icon})"
   local bottom=$([[ -n "$vim_mode" ]] && echo "$vim_mode" || echo "$character")
   echo $top$'\n'$bottom
@@ -477,24 +525,27 @@ function TRAPWINCH () {
   zle && zle reset-prompt
 }
 
-add-zsh-hook precmd () {
+# NOTE: always name the function, then register it. Writing
+# `add-zsh-hook precmd () { ... }` instead redefines add-zsh-hook itself, because
+# `a b () { ... }` defines a function per word. The hooks below still fire either
+# way, which hides it, but every later add-zsh-hook call becomes a no-op — so
+# zoxide, mise and fnm silently stop tracking directory changes.
+__dots_precmd() {
   __timings_precmd
   __async_vcs_start # start async job to populate git info
 }
+add-zsh-hook precmd __dots_precmd
 
 autoload -Uz chpwd_recent_dirs cdr
-add-zsh-hook chpwd
 
-add-zsh-hook chpwd () {
+__dots_chpwd() {
   _git_status_prompt="" # clear current vcs_info
   chpwd_last_working_dir
   chpwd_recent_dirs
 }
+add-zsh-hook chpwd __dots_chpwd
 
-
-add-zsh-hook preexec () {
-  __timings_preexec
-}
+add-zsh-hook preexec __timings_preexec
 #-------------------------------------------------------------------------------
 #   LOCAL SCRIPTS
 #-------------------------------------------------------------------------------

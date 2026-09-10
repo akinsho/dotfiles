@@ -1,6 +1,11 @@
 #-------------------------------------------------------------------------------
 # Homebrew
 #-------------------------------------------------------------------------------
+# Everything below assumes macOS on Apple Silicon, so bail out anywhere else.
+if [[ "$(uname)" != Darwin || ! -x /opt/homebrew/bin/brew ]]; then
+  return 0
+fi
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 #-------------------------------------------------------------------------------
