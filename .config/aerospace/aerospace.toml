@@ -157,15 +157,6 @@ alt-equal = 'resize smart +50'
 alt-minus = 'resize smart -50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-alt-1 = 'workspace --auto-back-and-forth 1' 
-alt-2 = 'workspace --auto-back-and-forth 2' 
-alt-3 = 'workspace --auto-back-and-forth 3' 
-alt-4 = 'workspace --auto-back-and-forth 4' 
-alt-5 = 'workspace --auto-back-and-forth 5' 
-alt-6 = 'workspace --auto-back-and-forth 6' 
-alt-7 = 'workspace --auto-back-and-forth 7' 
-alt-8 = 'workspace --auto-back-and-forth 8' 
-alt-9 = 'workspace --auto-back-and-forth 9' 
 alt-a = 'workspace --auto-back-and-forth A' # In your config, you can drop workspace bindings that you don't need
 alt-b = 'workspace --auto-back-and-forth B' 
 alt-c = 'workspace --auto-back-and-forth C' 
@@ -190,15 +181,6 @@ alt-y = 'workspace --auto-back-and-forth Y'
 alt-z = 'workspace --auto-back-and-forth Z' 
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-5 = 'move-node-to-workspace 5'
-alt-shift-6 = 'move-node-to-workspace 6'
-alt-shift-7 = 'move-node-to-workspace 7'
-alt-shift-8 = 'move-node-to-workspace 8'
-alt-shift-9 = 'move-node-to-workspace 9'
 alt-shift-a = 'move-node-to-workspace A'
 alt-shift-b = 'move-node-to-workspace B'
 alt-shift-c = 'move-node-to-workspace C'
@@ -256,20 +238,20 @@ alt-shift-semicolon = 'mode service'
 # one table that suits every desk: the first match wins, and an unmatched name or
 # a missing ordinal simply falls through to the next entry.
 [workspace-to-monitor-force-assignment]
-C = 1
-E = ['studio display', 'built-in']
-N = 'built-in'
-S = 'built-in'
-T = ['studio display', 3, 'built-in']
-W = 'built-in'
+  C = 1
+  E = ['studio display', 'built-in']
+  N = 'built-in'
+  S = 'built-in'
+  T = ['studio display', 3, 'built-in']
+  W = 'built-in'
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
-backspace = ['close-all-windows-but-current', 'mode main']
-esc = ['reload-config', 'mode main']
-f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
+  backspace = ['close-all-windows-but-current', 'mode main']
+  esc = ['reload-config', 'mode main']
+  f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+  r = ['flatten-workspace-tree', 'mode main'] # reset layout
 
 # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 #s = ['layout sticky tiling', 'mode main']
