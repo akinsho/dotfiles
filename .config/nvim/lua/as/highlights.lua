@@ -156,7 +156,9 @@ local function set(ns, name, opts)
     opts, name, ns = name, ns, 0
   end
 
-  vim.validate({ opts = { opts, 'table' }, name = { name, 'string' }, ns = { ns, 'number' } })
+  vim.validate('opts', opts, 'table')
+  vim.validate('name', name, 'string')
+  vim.validate('ns', ns, 'number')
 
   local hl = opts.clear and {} or get_hl_as_hex({ name = opts.inherit or name })
   for attribute, hl_data in pairs(opts) do

@@ -21,7 +21,7 @@ g.vim_dir = g.dotfiles .. '/.config/nvim'
 g.projects_dir = env.PROJECTS_DIR or fn.expand('~/projects')
 g.work_dir = g.projects_dir .. '/work'
 ----------------------------------------------------------------------------------------------------
-if vim.loader then vim.loader.enable() end
+vim.loader.enable()
 
 if vim.g.vscode then
   ----------------------------------------------------------------------------------------------------
@@ -82,7 +82,7 @@ opt.runtimepath:prepend(lazypath)
 ----------------------------------------------------------------------------------------------------
 -- NOTE: this must happen after the lazy path is setup
 -- If opening from inside neovim terminal then do not load other plugins
-if env.NVIM then return require('lazy').setup({ { 'willothy/flatten.nvim', config = true } }) end
+if env.NVIM then return require('lazy').setup({ { 'willothy/flatten.nvim', opts = {} } }) end
 ------------------------------------------------------------------------------------------------------
 require('lazy').setup({
   { import = 'as.plugins', cond = function() return not vim.g.vscode end },

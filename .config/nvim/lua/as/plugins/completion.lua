@@ -76,7 +76,6 @@ return {
         ['*'] = true,
         gitcommit = false,
         NeogitCommitMessage = false,
-        DressingInput = false,
         TelescopePrompt = false,
         ['neo-tree-popup'] = false,
         ['dap-repl'] = false,

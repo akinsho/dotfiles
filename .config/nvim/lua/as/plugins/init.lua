@@ -68,13 +68,12 @@ return {
   'b0o/schemastore.nvim',
   {
     {
-      'williamboman/mason.nvim',
+      'mason-org/mason.nvim',
       cmd = 'Mason',
-      build = ':MasonUpdate',
       opts = { ui = { border = border, height = 0.8 } },
     },
     {
-      'williamboman/mason-lspconfig.nvim',
+      'mason-org/mason-lspconfig.nvim',
       event = { 'BufReadPre', 'BufNewFile' },
       dependencies = {
         'mason.nvim',
@@ -82,35 +81,25 @@ return {
           'neovim/nvim-lspconfig',
           dependencies = {
             'nvim-java/nvim-java',
-            { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
             {
               'folke/neoconf.nvim',
               cmd = { 'Neoconf' },
               opts = { local_settings = '.nvim.json', global_settings = 'nvim.json' },
             },
           },
-          config = function()
-            highlight.plugin('lspconfig', { { LspInfoBorder = { link = 'FloatBorder' } } })
-            require('lspconfig.ui.windows').default_options.border = border
-            require('lspconfig').ccls.setup(require('as.servers')('ccls'))
-          end,
+          -- nvim-lspconfig is used only for the server definitions it ships as
+          -- `lsp/<name>.lua`; the settings and enablement live in `as.servers`.
+          config = function() require('as.servers')() end,
         },
       },
-      opts = {
-        automatic_installation = true,
-        handlers = {
-          function(name)
-            local config = require('as.servers')(name)
-            if config then require('lspconfig')[name].setup(config) end
-          end,
-        },
-      },
+      -- `as.servers` decides which servers are enabled, so mason must not also
+      -- enable everything it happens to have installed.
+      opts = { automatic_installation = true, automatic_enable = false },
     },
   },
   {
     'folke/lazydev.nvim',
     ft = 'lua',
-    opts = { library = { { path = 'luvit-meta/library', words = { 'vim%.uv' } } } },
   },
 
   {
@@ -181,7 +170,7 @@ return {
         { SymbolUsageImpl = { fg = { from = 'Keyword' }, bg = { from = 'CursorLine' }, italic = true } },
       })
     end,
-    config = {
+    opts = {
       text_format = function(symbol)
         local res = {}
         local ins = table.insert
@@ -270,8 +259,19 @@ return {
     {
       'kylechui/nvim-surround',
       version = '*',
-      keys = { { 's', mode = 'v' }, '<C-g>s', '<C-g>S', 'ys', 'yss', 'yS', 'cs', 'ds' },
-      opts = { move_cursor = true, keymaps = { visual = 's' } },
+      keys = {
+        { 's', '<Plug>(nvim-surround-visual)', mode = 'x', remap = true, desc = 'surround selection' },
+        '<C-g>s',
+        '<C-g>S',
+        'ys',
+        'yss',
+        'yS',
+        'cs',
+        'ds',
+      },
+      -- As of v4 keymaps are <Plug> mappings rather than `setup` options, see
+      -- `:h nvim-surround.migrating.v3_to_v4`.
+      opts = { move_cursor = true },
     },
     {
       'andrewferrier/debugprint.nvim',
@@ -334,7 +334,7 @@ return {
       'willothy/flatten.nvim',
       lazy = false,
       priority = 1001,
-      config = {
+      opts = {
         window = { open = 'alternate' },
         hooks = {
           block_end = function() require('toggleterm').toggle() end,

@@ -130,6 +130,8 @@ o.signcolumn = 'yes:1'
 o.ruler = false
 o.cmdheight = 0
 o.showbreak = [[↳ ]] -- Options include -> '…', '↳ ', '→','↪ '
+-- Default border for every floating window, including LSP hover and signature help
+o.winborder = table.concat(as.ui.border.line, ',')
 -----------------------------------------------------------------------------//
 -- List chars {{{1
 -----------------------------------------------------------------------------//
@@ -241,5 +243,5 @@ o.mousemoveevent = true
 opt.mousescroll = { 'ver:1', 'hor:6' }
 -----------------------------------------------------------------------------//
 -- Allow project local vimrc files example, .nvim.lua or .nvimrc see :h exrc
-o.exrc = as.has('nvim-0.9')
+o.exrc = true
 -- vim:foldmethod=marker

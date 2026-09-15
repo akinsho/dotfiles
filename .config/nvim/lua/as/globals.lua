@@ -60,7 +60,11 @@ function as.list.qf.delete(buf)
   if mode:match('[vV]') then
     local first_line = fn.getpos("'<")[2]
     local last_line = fn.getpos("'>")[2]
-    list = vim.iter(ipairs(list)):filter(function(i) return i < first_line or i > last_line end)
+    list = vim
+      .iter(ipairs(list))
+      :filter(function(i) return i < first_line or i > last_line end)
+      :map(function(_, item) return item end)
+      :totable()
   else
     table.remove(list, line)
   end
@@ -110,9 +114,6 @@ function as.pcall(msg, func, ...)
     vim.schedule(function() vim.notify(msg, l.ERROR, { title = 'ERROR' }) end)
   end, unpack(args))
 end
-
-local LATEST_NIGHTLY_MINOR = 10
-function as.nightly() return vim.version().minor >= LATEST_NIGHTLY_MINOR end
 
 ----------------------------------------------------------------------------------------------------
 --  FILETYPE HELPERS
@@ -198,9 +199,12 @@ local autocmd_keys = { 'event', 'buffer', 'pattern', 'desc', 'command', 'group',
 ---@param name string
 ---@param command Autocommand
 local function validate_autocmd(name, command)
-  local incorrect = vim.iter(command):map(function(key, _)
-    if not vim.tbl_contains(autocmd_keys, key) then return key end
-  end)
+  local incorrect = vim
+    .iter(command)
+    :map(function(key, _)
+      if not vim.tbl_contains(autocmd_keys, key) then return key end
+    end)
+    :totable()
   if #incorrect > 0 then
     vim.schedule(function()
       local msg = ('Incorrect keys: %s'):format(table.concat(incorrect, ', '))

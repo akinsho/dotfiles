@@ -640,9 +640,14 @@ function as.ui.statusline.render()
   local behind = updates.behind and tonumber(updates.behind) or 0
 
   -----------------------------------------------------------------------------//
-  local ok, noice = pcall(require, 'noice')
-  local noice_mode = ok and noice.api.status.mode.get() or ''
-  local has_noice_mode = ok and noice.api.status.mode.has() or false
+  -- 'showmode' is off, so macro recording/replaying is surfaced here instead
+  local recording, executing = vim.fn.reg_recording(), vim.fn.reg_executing()
+  local macro_mode = ''
+  if recording ~= '' then
+    macro_mode = fmt('recording @%s', recording)
+  elseif executing ~= '' then
+    macro_mode = fmt('executing @%s', executing)
+  end
   -----------------------------------------------------------------------------//
   local lazy_ok, lazy = pcall(require, 'lazy.status')
   local pending_updates = lazy_ok and lazy.updates() or nil
@@ -706,8 +711,8 @@ function as.ui.statusline.render()
   -- middle of our statusline - https://neovim.io/doc/user/vim_diff.html#vim-differences
   -----------------------------------------------------------------------------//
   local m1 = section:new({
-    { { noice_mode, hls.title } },
-    cond = has_noice_mode,
+    { { macro_mode, hls.title } },
+    cond = macro_mode ~= '',
     before = ' ',
     priority = 1,
   })

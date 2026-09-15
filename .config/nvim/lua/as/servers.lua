@@ -1,23 +1,29 @@
----@diagnostic disable: missing-fields
 -----------------------------------------------------------------------------//
 -- Language servers
 -----------------------------------------------------------------------------//
+-- Each entry is merged over the server's default definition, which nvim-lspconfig
+-- ships as `lsp/<name>.lua` on the runtimepath. Only the deltas belong here.
+-- A `false` value means the server is defined but should not be enabled.
+-- A function value is called lazily, for config that must not run at require time.
+--
 -- svelte requires the additional installation of the typescript-svelte-plugin, per project
 -- https://github.com/sveltejs/language-tools/tree/master/packages/typescript-plugin#usage
 
----@type lspconfig.options
+---@type table<string, vim.lsp.Config | false | fun(): vim.lsp.Config>
 local servers = {
   sqlls = false,
   eslint = {},
   ccls = {},
-  jsonls = {
-    settings = {
-      json = {
-        schemas = require('schemastore').json.schemas(),
-        validate = { enable = true },
+  jsonls = function()
+    return {
+      settings = {
+        json = {
+          schemas = require('schemastore').json.schemas(),
+          validate = { enable = true },
+        },
       },
-    },
-  },
+    }
+  end,
   bashls = {},
   vimls = {},
   terraformls = {},
@@ -25,13 +31,10 @@ local servers = {
   pyright = {},
   buf_ls = {},
   prosemd_lsp = {},
-  docker_compose_language_service = function()
-    local lspconfig = require('lspconfig')
-    return {
-      root_dir = lspconfig.util.root_pattern('docker-compose.yml'),
-      filetypes = { 'yaml', 'dockerfile' },
-    }
-  end,
+  docker_compose_language_service = {
+    root_markers = { 'docker-compose.yml' },
+    filetypes = { 'yaml', 'dockerfile' },
+  },
   graphql = {
     on_attach = function(client)
       -- Disable workspaceSymbolProvider because this prevents
@@ -88,7 +91,7 @@ local servers = {
         hint = { enable = true, arrayIndex = 'Disable', setType = false, paramName = 'Disable', paramType = true },
         format = { enable = false },
         diagnostics = {
-          globals = { 'vim', 'P', 'describe', 'it', 'before_each', 'after_each', 'packer_plugins', 'pending' },
+          globals = { 'vim', 'P', 'describe', 'it', 'before_each', 'after_each', 'pending' },
         },
         completion = { keywordSnippet = 'Replace', callSnippet = 'Replace' },
         workspace = { checkThirdParty = false },
@@ -98,13 +101,21 @@ local servers = {
   },
 }
 
----Get the configuration for a specific language server
----@param name string?
----@return table<string, any>?
-return function(name)
-  local config = name and servers[name] or {}
-  if not config then return end
-  if type(config) == 'function' then config = config() end
-  config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-  return config
+--- Register every server's settings with `vim.lsp.config` and enable the ones
+--- that are not explicitly disabled.
+return function()
+  -- Applied to every server, so completion capabilities are declared in one place.
+  vim.lsp.config('*', {
+    capabilities = require('blink.cmp').get_lsp_capabilities(nil, true),
+  })
+
+  local enabled = {}
+  for name, config in pairs(servers) do
+    if config then
+      if type(config) == 'function' then config = config() end
+      vim.lsp.config(name, config)
+      table.insert(enabled, name)
+    end
+  end
+  vim.lsp.enable(enabled)
 end

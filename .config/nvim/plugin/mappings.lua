@@ -33,8 +33,8 @@ as.augroup('AddTerminalMappings', {
       tnoremap('<C-j>', '<Cmd>wincmd j<CR>', opts)
       tnoremap('<C-k>', '<Cmd>wincmd k<CR>', opts)
       tnoremap('<C-l>', '<Cmd>wincmd l<CR>', opts)
-      tnoremap(']t', '<Cmd>tablast<CR>')
-      tnoremap('[t', '<Cmd>tabnext<CR>')
+      tnoremap(']t', '<Cmd>tabnext<CR>')
+      tnoremap('[t', '<Cmd>tabprev<CR>')
       tnoremap('<S-Tab>', '<Cmd>bprev<CR>')
       tnoremap('<leader><Tab>', '<Cmd>close \\| :bnext<cr>')
     end
@@ -60,15 +60,6 @@ onoremap('al', '<cmd>normal val<CR>')
 --No Spaces or CR
 xnoremap('il', [[<Esc>^vg_]])
 onoremap('il', [[<cmd>normal! ^vg_<CR>]])
------------------------------------------------------------------------------//
--- Add Empty space above and below
------------------------------------------------------------------------------//
-nnoremap('[<space>', [[<cmd>put! =repeat(nr2char(10), v:count1)<cr>'[]], {
-  desc = 'add space above',
-})
-nnoremap(']<space>', [[<cmd>put =repeat(nr2char(10), v:count1)<cr>]], {
-  desc = 'add space below',
-})
 -----------------------------------------------------------------------------//
 -- Paste in visual mode multiple times
 xnoremap('p', 'pgvy')
@@ -271,8 +262,8 @@ nnoremap('<leader>tn', '<cmd>tabedit %<CR>')
 nnoremap('<leader>tc', '<cmd>tabclose<CR>')
 nnoremap('<leader>to', '<cmd>tabonly<cr>')
 nnoremap('<leader>tm', '<cmd>tabmove<Space>')
-nnoremap(']t', '<cmd>tabprev<CR>')
-nnoremap('[t', '<cmd>tabnext<CR>')
+nnoremap(']t', '<cmd>tabnext<CR>')
+nnoremap('[t', '<cmd>tabprev<CR>')
 -------------------------------------------------------------------------------
 -- ?ie | entire object
 -------------------------------------------------------------------------------

@@ -243,7 +243,11 @@ local filetypes = as.p_table({
   ['DiffviewFiles'] = presets.tool_panel,
   ['DiffviewFileHistory'] = presets.tool_panel,
   ['mail'] = presets.statusline_only,
-  ['noice'] = presets.statusline_only,
+  -- The message and cmdline windows created by the core UI, see `:h ui2`
+  ['cmd'] = presets.tool_panel:with({ statusline = false, winbar = 'ignore' }),
+  ['msg'] = presets.tool_panel:with({ statusline = false, winbar = 'ignore' }),
+  ['pager'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['dialog'] = presets.tool_panel:with({ statusline = false, winbar = 'ignore' }),
   ['diff'] = presets.statusline_only,
   ['qf'] = presets.statusline_only,
   ['alpha'] = presets.tool_panel:with({ statusline = false }),

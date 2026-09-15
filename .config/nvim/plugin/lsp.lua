@@ -9,7 +9,7 @@ local icons = as.ui.icons.lsp
 local border = as.ui.current.border
 local augroup = as.augroup
 
-if vim.env.DEVELOPING then vim.lsp.set_log_level(L.DEBUG) end
+if vim.env.DEVELOPING then vim.lsp.log.set_level(L.DEBUG) end
 
 ----------------------------------------------------------------------------------------------------
 --  LSP file Rename
@@ -42,40 +42,15 @@ local function rename_file()
   end)
 end
 
-----------------------------------------------------------------------------------------------------
---  Related Locations
-----------------------------------------------------------------------------------------------------
--- This relates to:
--- 1. https://github.com/neovim/neovim/issues/19649#issuecomment-1327287313
--- 2. https://github.com/neovim/neovim/issues/22744#issuecomment-1479366923
--- neovim does not currently correctly report the related locations for diagnostics.
--- TODO: once a PR for this is merged delete this workaround
-
-local function show_related_locations(diag)
-  local related_info = diag.relatedInformation
-  if not related_info or #related_info == 0 then return diag end
-  for _, info in ipairs(related_info) do
-    diag.message = ('%s\n%s(%d:%d)%s'):format(
-      diag.message,
-      fn.fnamemodify(vim.uri_to_fname(info.location.uri), ':p:.'),
-      info.location.range.start.line + 1,
-      info.location.range.start.character + 1,
-      not as.falsy(info.message) and (': %s'):format(info.message) or ''
-    )
-  end
-  return diag
-end
-
-local handler = lsp.handlers[M.textDocument_publishDiagnostics]
----@diagnostic disable-next-line: duplicate-set-field
-lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
-  result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
-  handler(err, result, ctx, config)
-end
-
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
+
+--- Open the diagnostic float after jumping, matching the behaviour of the
+--- built-in `]d`/`[d` when 'jump.on_jump' is configured.
+---@param _ vim.Diagnostic?
+---@param bufnr integer
+local function show_diagnostic(_, bufnr) diagnostic.open_float({ bufnr = bufnr }) end
 
 ---Setup mapping when an lsp attaches to a buffer
 ---@param client vim.lsp.Client
@@ -83,8 +58,8 @@ end
 local function setup_mappings(client, bufnr)
   local ts = { 'typescript', 'typescriptreact' }
   local mappings = {
-    { 'n', ']c', function() diagnostic.goto_prev({ float = true }) end, desc = 'go to prev diagnostic' },
-    { 'n', '[c', function() diagnostic.goto_next({ float = true }) end, desc = 'go to next diagnostic' },
+    { 'n', '[c', function() diagnostic.jump({ count = -1, on_jump = show_diagnostic }) end, desc = 'go to prev diagnostic' },
+    { 'n', ']c', function() diagnostic.jump({ count = 1, on_jump = show_diagnostic }) end, desc = 'go to next diagnostic' },
     { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = M.textDocument_codeAction },
     { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = M.textDocument_definition, exclude = ts },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = M.textDocument_references },
@@ -98,8 +73,8 @@ local function setup_mappings(client, bufnr)
       'n',
       '<leader>ci',
       function()
-        local enabled = lsp.inlay_hint.is_enabled(0)
-        lsp.inlay_hint.enable(0, not enabled)
+        local filter = { bufnr = bufnr }
+        lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled(filter), filter)
       end,
       desc = 'inlay hints toggle',
       M.textDocument_inlayHint,
@@ -111,7 +86,7 @@ local function setup_mappings(client, bufnr)
   vim.iter(mappings):each(function(m)
     if
       (not m.exclude or not vim.tbl_contains(m.exclude, vim.bo[bufnr].ft))
-      and (not m.capability or client.supports_method(m.capability))
+      and (not m.capability or client:supports_method(m.capability))
     then
       map(m[1], m[2], m[3], { buffer = bufnr, desc = fmt('lsp: %s', m.desc) })
     end
@@ -161,7 +136,7 @@ end
 ---@param client vim.lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
-  if client.supports_method(M.textDocument_codeLens) then
+  if client:supports_method(M.textDocument_codeLens) then
     augroup(('LspCodeLens%d'):format(buf), {
       event = { 'BufEnter', 'InsertLeave', 'BufWritePost' },
       desc = 'LSP: Code Lens',
@@ -171,11 +146,15 @@ local function setup_autocommands(client, buf)
     })
   end
 
-  if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
-    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+  if client:supports_method(M.textDocument_inlayHint, buf) then
+    lsp.inlay_hint.enable(true, { bufnr = buf })
   end
 
-  if client.supports_method(M.textDocument_documentHighlight) then
+  if client:supports_method(M.textDocument_documentColor, buf) then
+    lsp.document_color.enable(true, { bufnr = buf }, { style = 'background' })
+  end
+
+  if client:supports_method(M.textDocument_documentHighlight) then
     augroup(('LspReferences%d'):format(buf), {
       event = { 'CursorHold', 'CursorHoldI' },
       buffer = buf,
@@ -278,14 +257,10 @@ diagnostic.config({
       [S.ERROR] = 'DiagnosticSignErrorLine',
     },
   },
-  virtual_text = false and {
-    severity = { min = S.WARN },
-    spacing = 1,
-    prefix = function(d)
-      local level = diagnostic.severity[d.severity]
-      return icons[level:lower()]
-    end,
-  },
+  -- Diagnostics are surfaced through signs and the float, not inline text.
+  virtual_text = false,
+  -- Applies to the built-in `]d`/`[d` as well as the buffer-local `]c`/`[c`.
+  jump = { on_jump = show_diagnostic },
   float = {
     max_width = max_width,
     max_height = max_height,
@@ -301,8 +276,3 @@ diagnostic.config({
     end,
   },
 })
-
--- TODO: find an alternative to this
--- vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
---   border = border,
--- })

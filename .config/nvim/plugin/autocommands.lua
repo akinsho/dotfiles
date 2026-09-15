@@ -125,7 +125,7 @@ as.augroup('CheckOutsideTime', {
 as.augroup('TextYankHighlight', {
   -- don't execute silently in case of errors
   event = { 'TextYankPost' },
-  command = function() vim.highlight.on_yank({ timeout = 500, on_visual = false, higroup = 'Visual' }) end,
+  command = function() vim.hl.on_yank({ timeout = 500, on_visual = false, higroup = 'Visual' }) end,
 })
 
 as.augroup('UpdateVim', {

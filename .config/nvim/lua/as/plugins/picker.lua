@@ -67,6 +67,15 @@ return {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
+    init = function()
+      -- fzf-lua registers `vim.ui.select` during setup, so the first select has to
+      -- pull the plugin in before it can be serviced.
+      ---@diagnostic disable-next-line: duplicate-set-field
+      vim.ui.select = function(...)
+        require('lazy').load({ plugins = { 'fzf-lua' } })
+        return vim.ui.select(...)
+      end
+    end,
     keys = {
       { '<c-p>', fzf_lua.git_files, desc = 'find files' },
       { '<leader>fa', '<Cmd>FzfLua<CR>', desc = 'builtins' },
@@ -98,6 +107,13 @@ return {
 
       fzf.setup({
         prompt = prompt,
+        -- Route `vim.ui.select` through fzf-lua. Code actions are excluded because
+        -- fzf-lua applies its own `lsp.code_actions` options to those.
+        ui_select = function(ui_opts)
+          local title = ui_opts.prompt and ui_opts.prompt:gsub(':%s*$', '') or nil
+          if ui_opts.kind == 'codeaction' then return {} end
+          return dropdown({ winopts = { title = title, height = 0.33, row = 0.5 } })
+        end,
         fzf_opts = {
           ['--info'] = 'default', -- hidden OR inline:⏐
           ['--reverse'] = false,
