@@ -157,13 +157,12 @@ as.ui.lsp = {
 -- UI Settings
 ----------------------------------------------------------------------------------------------------
 ---@class Decorations {
----@field winbar 'ignore' | boolean
 ---@field number boolean
 ---@field statusline 'minimal' | boolean
 ---@field statuscolumn boolean
 ---@field colorcolumn boolean | string
 
----@alias DecorationType 'statuscolumn'|'winbar'|'statusline'|'number'|'colorcolumn'
+---@alias DecorationType 'statuscolumn'|'statusline'|'number'|'colorcolumn'
 
 ---@class Decorations
 local Preset = {}
@@ -182,28 +181,25 @@ function Preset:with(o) return vim.tbl_deep_extend('force', self, o) end
 local presets = {
   statusline_only = Preset:new({
     number = false,
-    winbar = false,
     colorcolumn = false,
     statusline = true,
     statuscolumn = false,
   }),
   minimal_editing = Preset:new({
     number = false,
-    winbar = true,
     colorcolumn = false,
     statusline = 'minimal',
     statuscolumn = false,
   }),
   tool_panel = Preset:new({
     number = false,
-    winbar = false,
     colorcolumn = false,
     statusline = 'minimal',
     statuscolumn = false,
   }),
 }
 
-local commit_buffer = presets.minimal_editing:with({ colorcolumn = '50,72', winbar = false })
+local commit_buffer = presets.minimal_editing:with({ colorcolumn = '50,72' })
 
 local buftypes = {
   ['quickfix'] = presets.tool_panel,
@@ -215,7 +211,7 @@ local buftypes = {
 
 --- When searching through the filetypes table if a match can't be found then search
 --- again but check if there is matching lua pattern. This is useful for filetypes for
---- plugins like Neogit which have a filetype of Neogit<something>.
+--- plugins like neotest which have a filetype of neotest<something>.
 local filetypes = as.p_table({
   ['Avante'] = presets.tool_panel,
   ['startuptime'] = presets.tool_panel,
@@ -223,44 +219,26 @@ local filetypes = as.p_table({
   ['log'] = presets.tool_panel,
   ['help'] = presets.tool_panel,
   ['^copilot.*'] = presets.tool_panel,
-  ['dbout'] = presets.tool_panel,
-  ['dbui'] = presets.tool_panel,
   ['dapui'] = presets.tool_panel,
-  ['minimap'] = presets.tool_panel,
-  ['Trouble'] = presets.tool_panel,
-  ['tsplayground'] = presets.tool_panel,
   ['list'] = presets.tool_panel,
-  ['netrw'] = presets.tool_panel,
-  ['flutter.*'] = presets.tool_panel,
-  ['NvimTree'] = presets.tool_panel,
   ['undotree'] = presets.tool_panel,
-  ['dap-repl'] = presets.tool_panel:with({ winbar = 'ignore' }),
-  ['neo-tree'] = presets.tool_panel:with({ winbar = 'ignore' }),
-  ['toggleterm'] = presets.tool_panel:with({ winbar = 'ignore' }),
+  ['dap-repl'] = presets.tool_panel,
+  ['neo-tree'] = presets.tool_panel,
+  ['toggleterm'] = presets.tool_panel,
   ['neotest.*'] = presets.tool_panel,
-  ['^Neogit.*'] = presets.tool_panel,
   ['query'] = presets.tool_panel,
   ['DiffviewFiles'] = presets.tool_panel,
   ['DiffviewFileHistory'] = presets.tool_panel,
-  ['mail'] = presets.statusline_only,
   -- The message and cmdline windows created by the core UI, see `:h ui2`
-  ['cmd'] = presets.tool_panel:with({ statusline = false, winbar = 'ignore' }),
-  ['msg'] = presets.tool_panel:with({ statusline = false, winbar = 'ignore' }),
-  ['pager'] = presets.tool_panel:with({ winbar = 'ignore' }),
-  ['dialog'] = presets.tool_panel:with({ statusline = false, winbar = 'ignore' }),
+  ['cmd'] = presets.tool_panel:with({ statusline = false }),
+  ['msg'] = presets.tool_panel:with({ statusline = false }),
+  ['pager'] = presets.tool_panel,
+  ['dialog'] = presets.tool_panel:with({ statusline = false }),
   ['diff'] = presets.statusline_only,
   ['qf'] = presets.statusline_only,
-  ['alpha'] = presets.tool_panel:with({ statusline = false }),
-  ['fugitive'] = presets.statusline_only,
-  ['startify'] = presets.statusline_only,
   ['man'] = presets.minimal_editing,
-  ['org'] = presets.minimal_editing:with({ winbar = false }),
-  ['norg'] = presets.minimal_editing:with({ winbar = false }),
-  ['orgagenda'] = presets.minimal_editing:with({ winbar = false }),
   ['markdown'] = presets.minimal_editing,
-  ['himalaya'] = presets.minimal_editing,
   ['gitcommit'] = commit_buffer,
-  ['NeogitCommitMessage'] = commit_buffer,
 })
 
 local filenames = as.p_table({

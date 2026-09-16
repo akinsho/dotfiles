@@ -47,21 +47,11 @@ return {
 
       as.command('LuaSnipEdit', function() require('luasnip.loaders.from_lua').edit_snippet_files() end)
 
-      -- <c-l> is selecting within a list of options.
+      -- Expanding and jumping are driven by blink.cmp's luasnip preset. Cycling
+      -- choice nodes has no blink equivalent, so it stays here.
       map({ 's', 'i' }, '<c-l>', function()
         if ls.choice_active() then ls.change_choice(1) end
       end)
-
-      map({ 's', 'i' }, '<c-j>', function()
-        if not ls.expand_or_jumpable() then return '<Tab>' end
-        ls.expand_or_jump()
-      end, { expr = true })
-
-      -- <C-K> is easier to hit but swallows the digraph key
-      map({ 's', 'i' }, '<c-b>', function()
-        if not ls.jumpable(-1) then return '<S-Tab>' end
-        ls.jump(-1)
-      end, { expr = true })
 
       require('luasnip.loaders.from_lua').lazy_load()
       -- NOTE: the loader is called twice so it picks up the defaults first then my custom textmate snippets.
@@ -70,8 +60,6 @@ return {
       require('luasnip.loaders.from_vscode').lazy_load({ paths = './snippets/textmate' })
 
       ls.filetype_extend('typescriptreact', { 'javascript', 'typescript' })
-      ls.filetype_extend('dart', { 'flutter' })
-      ls.filetype_extend('NeogitCommitMessage', { 'gitcommit' })
     end,
   },
 }

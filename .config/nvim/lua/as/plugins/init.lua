@@ -80,7 +80,6 @@ return {
         {
           'neovim/nvim-lspconfig',
           dependencies = {
-            'nvim-java/nvim-java',
             {
               'folke/neoconf.nvim',
               cmd = { 'Neoconf' },
@@ -144,7 +143,7 @@ return {
         pickers = { p.hex_long, p.css_rgb, p.css_hsl, p.css_hwb, p.css_lab, p.css_lch, p.css_oklab, p.css_oklch },
         highlighter = {
           auto_enable = true,
-          excludes = { 'dart', 'lazy', 'orgagenda', 'org', 'NeogitStatus', 'toggleterm' },
+          excludes = { 'lazy', 'toggleterm' },
         },
       })
     end,
@@ -357,8 +356,7 @@ return {
       config = function()
         highlight.plugin('pqf', {
           theme = {
-            ['doom-one'] = { { qfPosition = { link = 'Todo' } } },
-            ['horizon'] = { { qfPosition = { link = 'String' } } },
+            ['solarized'] = { { qfPosition = { link = 'String' } } },
           },
         })
         require('pqf').setup()

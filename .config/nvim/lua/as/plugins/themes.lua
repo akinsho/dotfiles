@@ -1,10 +1,19 @@
 return {
+  -- The active colorscheme, so it has to load before anything is drawn.
+  -- Light vs dark is chosen by 'background', which init.lua sets before this loads.
   {
-    'akinsho/horizon.nvim',
-    dev = true,
+    'maxmx03/solarized.nvim',
     lazy = false,
     priority = 1000,
+    ---@type solarized.config
+    opts = {
+      palette = 'solarized',
+      styles = {
+        comments = { italic = true },
+        types = { italic = true, bold = true },
+      },
+    },
   },
-  { 'projekt0n/github-nvim-theme', lazy = false, priority = 1000 },
-  { 'oxfist/night-owl.nvim', lazy = false, priority = 1000 },
+  -- Kept for `:colorscheme github_dark_default`; loaded on demand.
+  { 'projekt0n/github-nvim-theme', lazy = true },
 }

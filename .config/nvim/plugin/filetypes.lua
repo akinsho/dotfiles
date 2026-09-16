@@ -1,8 +1,6 @@
 if not as then return end
-local settings, highlight = as.filetype_settings, as.highlight
-local cmd, fn = vim.cmd, vim.fn
-
-vim.treesitter.language.register('gitcommit', 'NeogitCommitMessage')
+local settings = as.filetype_settings
+local cmd = vim.cmd
 
 settings({
   checkhealth = {
@@ -48,67 +46,6 @@ settings({
       { 'n', '<leader>gie', '<Cmd>GoIfErr<CR>', desc = 'if err' },
     },
   },
-  ['Neogit*'] = {
-    wo = { winbar = '' },
-  },
-  NeogitCommitMessage = {
-    opt = {
-      spell = true,
-      spelllang = 'en_gb',
-      list = false,
-    },
-    function()
-      vim.schedule(function()
-        -- Schedule this call as highlights are not set correctly if there is not a delay
-        highlight.set_winhl('gitcommit', 0, { { VirtColumn = { fg = { from = 'Variable' } } } })
-      end)
-    end,
-  },
-  netrw = {
-    g = {
-      netrw_liststyle = 3,
-      netrw_banner = 0,
-      netrw_browse_split = 0,
-      netrw_winsize = 25,
-      netrw_altv = 1,
-      netrw_fastbrowse = 0,
-    },
-    bo = { bufhidden = 'wipe' },
-    mappings = {
-      { 'n', 'q', '<Cmd>q<CR>' },
-      { 'n', 'l', '<CR>' },
-      { 'n', 'h', '<CR>' },
-      { 'n', 'o', '<CR>' },
-    },
-  },
-  norg = {
-    plugins = {
-      ['nvim-surround'] = function(surround)
-        surround.buffer_setup({
-          surrounds = {
-            l = { add = function() return { { '[' }, { ']{' .. vim.fn.getreg('*') .. '}' } } end },
-          },
-        })
-      end,
-    },
-  },
-  org = {
-    opt = {
-      spell = true,
-      signcolumn = 'yes',
-    },
-    plugins = {
-      ['nvim-surround'] = function(surround)
-        surround.buffer_setup({
-          surrounds = {
-            l = {
-              add = function() return { { ('[[%s]['):format(fn.getreg('*')) }, { ']]' } } end,
-            },
-          },
-        })
-      end,
-    },
-  },
   [{ 'javascript', 'javascriptreact' }] = {
     bo = { textwidth = 100 },
     opt = { spell = true },
@@ -119,9 +56,6 @@ settings({
   [{ 'typescript', 'typescriptreact' }] = {
     bo = { textwidth = 100 },
     opt = { spell = true },
-    mappings = {
-      { 'n', 'gd', '<Cmd>TypescriptGoToSourceDefinition<CR>', desc = 'typescript: go to source definition' },
-    },
   },
   [{ 'lua', 'python', 'rust' }] = { opt = { spell = true } },
 })

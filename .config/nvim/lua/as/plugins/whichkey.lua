@@ -7,7 +7,7 @@ return {
     highlight.plugin('whichkey', {
       theme = {
         ['*'] = { { WhichkeyFloat = { link = 'NormalFloat' } } },
-        horizon = { { WhichKeySeparator = { link = 'Todo' } } },
+        solarized = { { WhichKeySeparator = { link = 'Todo' } } },
       },
     })
 

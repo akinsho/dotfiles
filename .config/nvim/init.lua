@@ -34,7 +34,6 @@ else
   ----------------------------------------------------------------------------------------------------
   local namespace = {
     ui = {
-      winbar = { enable = false },
       statuscolumn = { enable = true },
       statusline = { enable = true },
     },
@@ -120,6 +119,8 @@ if not vim.g.vscode then
   ------------------------------------------------------------------------------------------------------
   -- Colour Scheme {{{1
   ------------------------------------------------------------------------------------------------------
-  vim.g.high_contrast_theme = true -- set to true for themes like github_dark or night-owl
-  as.pcall('theme failed to load because', cmd.colorscheme, 'github_dark_default')
+  -- Controls how far `CursorLine` and friends are dimmed from `Normal`, see plugin/colors.lua.
+  -- Set this for high contrast themes such as github_dark.
+  vim.g.high_contrast_theme = false
+  as.pcall('theme failed to load because', cmd.colorscheme, 'solarized')
 end

@@ -2,36 +2,68 @@ if not as then return end
 local P = as.ui.palette
 local highlight = as.highlight
 
+--- `alter` scales each colour channel, so the same factor is not symmetric across
+--- backgrounds: -0.8 barely shifts a near-black background but turns a near-white
+--- one almost black, and any positive factor clamps a light background to white.
+--- These magnitudes are therefore chosen per background. The light values aim at
+--- solarized's own base2 (#eee8d5) for recessed surfaces and base1 (#93a1a1) for
+--- de-emphasised text.
+---@return {cursorline: number, dim: number, float: number, panel: number, panel_dark: number, fold: number, code: number}
+local function shades()
+  if vim.o.background == 'light' then
+    return {
+      cursorline = -0.06,
+      dim = -0.15,
+      float = -0.08,
+      panel = -0.06,
+      panel_dark = -0.12,
+      -- Positive, because `fold` shifts a foreground and de-emphasising text means
+      -- moving it toward the background: lighter here, darker on a dark background.
+      fold = 0.45,
+      code = -0.06,
+    }
+  end
+  local contrast = vim.g.high_contrast_theme and 0.75 or 0.25
+  return {
+    cursorline = contrast,
+    dim = contrast,
+    float = -0.15,
+    panel = -0.8,
+    panel_dark = -0.42,
+    fold = -0.8,
+    code = 0.3,
+  }
+end
+
 local function general_overrides()
-  local is_dark = vim.g.high_contrast_theme
-  local dim_factor = is_dark and 0.75 or 0.25
+  local shade = shades()
   highlight.all({
     -----------------------------------------------------------------------------//
     -- Native
     -----------------------------------------------------------------------------//
     { VertSplit = { fg = { from = 'Comment' } } },
     { WinSeparator = { fg = { from = 'Comment' } } },
-    { CursorLine = { bg = { from = 'Normal', alter = dim_factor } } },
+    { CursorLine = { bg = { from = 'Normal', alter = shade.cursorline } } },
     { CursorLineNr = { bg = 'NONE' } },
     { iCursor = { bg = P.dark_blue } },
     { PmenuSbar = { link = 'Normal' } },
-    { Folded = { bg = 'NONE', fg = { from = 'Normal', alter = -0.80 } } },
+    { Folded = { bg = 'NONE', fg = { from = 'Normal', alter = shade.fold } } },
     --------------------------------------------//
     -- Floats
     ---------------------------------------------//
-    { NormalFloat = { bg = { from = 'Normal', alter = -0.15 } } },
+    { NormalFloat = { bg = { from = 'Normal', alter = shade.float } } },
     { FloatBorder = { bg = { from = 'NormalFloat' }, fg = { from = 'Comment' } } },
     { FloatTitle = { bold = true, fg = 'white', bg = { from = 'Comment', attr = 'fg' } } },
     -----------------------------------------------------------------------------//
     -- Created highlights
     -----------------------------------------------------------------------------//
-    { Dim = { fg = { from = 'Normal', attr = 'bg', alter = dim_factor } } },
+    { Dim = { fg = { from = 'Normal', attr = 'bg', alter = shade.dim } } },
     { PickerBorder = { fg = P.grey, bg = 'bg' } },
     { PickerTitle = { fg = 'white', bg = P.grey, bold = true } },
     { UnderlinedTitle = { bold = true, underline = true } },
     { StatusColSep = { link = 'Dim' } },
     -----------------------------------------------------------------------------//
-    { CodeBlock = { bg = { from = 'Normal', alter = 0.3 } } },
+    { CodeBlock = { bg = { from = 'Normal', alter = shade.code } } },
     { markdownCode = { link = 'CodeBlock' } },
     { markdownCodeBlock = { link = 'CodeBlock' } },
     -----------------------------------------------------------------------------//
@@ -65,11 +97,14 @@ local function general_overrides()
     { Type = { italic = true, bold = true } },
     { Include = { italic = true, bold = false } },
     { QuickFixLine = { inherit = 'CursorLine', fg = 'NONE', italic = true } },
-    -- Neither the sign column or end of buffer highlights require an explicit bg
-    -- they should both just use the bg that is in the window they are in.
-    -- if either are specified this can lead to issues when a winhighlight is set
+    -- None of the gutter or end of buffer highlights require an explicit bg,
+    -- they should all just use the bg that is in the window they are in.
+    -- If any are specified this can lead to issues when a winhighlight is set,
+    -- and a gutter bg that differs from Normal renders as a band down the side.
     { SignColumn = { bg = 'NONE' } },
     { EndOfBuffer = { bg = 'NONE' } },
+    { LineNr = { bg = 'NONE' } },
+    { FoldColumn = { bg = 'NONE' } },
     ------------------------------------------------------------------------------//
     --  Semantic tokens
     ------------------------------------------------------------------------------//
@@ -113,10 +148,11 @@ local function general_overrides()
 end
 
 local function set_sidebar_highlight()
+  local shade = shades()
   highlight.all({
-    { PanelDarkBackground = { bg = { from = 'Normal', alter = -0.42 } } },
+    { PanelDarkBackground = { bg = { from = 'Normal', alter = shade.panel_dark } } },
     { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
-    { PanelBackground = { bg = { from = 'Normal', alter = -0.8 } } },
+    { PanelBackground = { bg = { from = 'Normal', alter = shade.panel } } },
     { PanelHeading = { inherit = 'PanelBackground', bold = true } },
     { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
     { PanelStNC = { link = 'PanelWinSeparator' } },
@@ -125,12 +161,10 @@ local function set_sidebar_highlight()
 end
 
 local sidebar_fts = {
-  'flutterToolsOutline',
   'Avante',
   'AvanteInput',
   'undotree',
   'Outline',
-  'dbui',
   'neotest-summary',
 }
 
@@ -148,24 +182,14 @@ end
 
 local function colorscheme_overrides()
   local overrides = {
-    ['horizon'] = {
+    ['solarized'] = {
       { Constant = { bold = true } },
       { NonText = { fg = { from = 'Comment' } } },
       { TabLineSel = { fg = { from = 'SpecialKey' } } },
-      { ['@variable'] = { fg = { from = 'Normal' } } },
-      { ['@constant.comment'] = { inherit = 'Constant', bold = true } },
-      { ['@constructor.lua'] = { inherit = 'Type', italic = false, bold = false } },
-      { ['@lsp.type.parameter'] = { fg = { from = 'Normal' } } },
-      { ['@lsp.type.variable'] = { clear = true } },
-      { ['@lsp.typemod.variable.readonly.typescriptreact'] = { clear = true } },
-      { ['@lsp.typemod.variable.readonly.typescript'] = { clear = true } },
-      { ['@lsp.type.type.lua'] = { clear = true } },
-      { VisibleTab = { bg = { from = 'Normal', alter = 0.4 }, bold = true } },
-      { PanelBackground = { link = 'Normal' } },
+      -- Solarized leans on background tints rather than many distinct hues, so
+      -- headings need an explicit border to read as separate surfaces.
+      { PanelHeading = { inherit = 'PanelBackground', bold = true, underline = true } },
       { PanelWinSeparator = { inherit = 'PanelBackground', fg = { from = 'WinSeparator' } } },
-      { PanelHeading = { bg = 'bg', bold = true, fg = { from = 'Normal', alter = -0.3 } } },
-      { PanelDarkBackground = { bg = { from = 'Normal', alter = -0.25 } } },
-      { PanelDarkHeading = { inherit = 'PanelDarkBackground', bold = true } },
     },
     ['github_dark_default'] = {
       { TabLineSel = { link = 'Todo' } },

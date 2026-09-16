@@ -6,15 +6,12 @@ local ui = as.ui
 -- 2. numbers.vim - https://github.com/myusuf3/numbers.vim/blob/master/plugin/numbers.vim
 
 local api, fn = vim.api, vim.fn
-local M = {}
-
-local function is_floating_win() return fn.win_gettype() == 'popup' end
 
 local is_enabled = true
 
----Determines whether or not a window should be ignored by this plugin
+--- Floating windows manage their own 'number' settings.
 ---@return boolean
-local function is_ignored() return is_floating_win() end
+local function is_ignored() return fn.win_gettype() == 'popup' end
 
 -- block list certain plugins and buffer types
 local function is_blocked()
@@ -54,5 +51,3 @@ as.augroup('ToggleRelativeLineNumbers', {
   event = { 'FocusLost', 'BufLeave', 'InsertEnter', 'TermOpen' },
   command = disable_relative_number,
 })
-
-return M

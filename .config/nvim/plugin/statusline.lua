@@ -98,7 +98,15 @@ local function colors()
   local number_fg = highlight.get('Number', 'fg')
   local normal_bg = highlight.get('Normal', 'bg')
 
-  local bg_color = highlight.tint(normal_bg, -0.25)
+  --- The bar sits just off the editor background. A light background needs a much
+  --- smaller shift than a dark one, because tinting is multiplicative.
+  local is_light = vim.o.background == 'light'
+  local bg_color = highlight.tint(normal_bg, is_light and -0.12 or -0.25)
+
+  --- Named greys only read correctly against a dark bar, so on a light one the
+  --- text colours are derived from the editor foreground instead.
+  local strong_fg = is_light and normal_fg or 'LightGray'
+  local muted_fg = is_light and highlight.tint(normal_fg, 0.2) or 'Gray'
 
   -- stylua: ignore
   highlight.all({
@@ -113,17 +121,17 @@ local function colors()
     { [hls.count] = { fg = 'bg', bg = indicator_color, bold = true } },
     { [hls.client] = { bg = bg_color, fg = normal_fg, bold = true } },
     { [hls.env] = { bg = bg_color, fg = error_color, italic = true, bold = true } },
-    { [hls.directory] = { bg = bg_color, fg = 'Gray', italic = true } },
+    { [hls.directory] = { bg = bg_color, fg = muted_fg, italic = true } },
     { [hls.directory_inactive] = { bg = bg_color, italic = true, fg = { from = 'Normal', alter = 0.4 } } },
     { [hls.parent_directory] = { bg = bg_color, fg = string_fg, bold = true } },
-    { [hls.title] = { bg = bg_color, fg = 'LightGray', bold = true } },
+    { [hls.title] = { bg = bg_color, fg = strong_fg, bold = true } },
     { [hls.comment] = { bg = bg_color, inherit = 'Comment' } },
     { [hls.statusline] = { bg = bg_color } },
     { [hls.statusline_nc] = { link = 'VertSplit' } },
     { [hls.info] = { fg = info_color, bg = bg_color, bold = true } },
     { [hls.warn] = { fg = warning_fg, bg = bg_color } },
     { [hls.error] = { fg = error_color, bg = bg_color } },
-    { [hls.filename] = { bg = bg_color, fg = 'LightGray', bold = true } },
+    { [hls.filename] = { bg = bg_color, fg = strong_fg, bold = true } },
     { [hls.filename_inactive] = { inherit = 'Comment', bg = bg_color, bold = true } },
     { [hls.mode_normal] = { bg = bg_color, fg = P.light_gray, bold = true } },
     { [hls.mode_insert] = { bg = bg_color, fg = P.dark_blue, bold = true } },
@@ -142,19 +150,9 @@ local identifiers = {
   filetypes = as.p_table({
     ['fzf'] = '',
     ['log'] = '',
-    ['org'] = '',
-    ['orgagenda'] = '',
-    ['mail'] = '',
-    ['dbui'] = '',
     ['DiffviewFiles'] = '',
-    ['tsplayground'] = '󰔱',
-    ['Trouble'] = '',
-    ['NeogitStatus'] = '', -- '',
-    ['norg'] = '',
     ['help'] = '',
-    ['octo'] = '',
     ['undotree'] = '󰔱',
-    ['NvimTree'] = '󰔱',
     ['neo-tree'] = '󰔱',
     ['neotest.*'] = '',
     ['dapui_.*'] = '',
@@ -163,17 +161,9 @@ local identifiers = {
   }),
   names = as.p_table({
     ['fzf'] = 'FZF',
-    ['orgagenda'] = 'Org',
-    ['mail'] = 'Mail',
-    ['dbui'] = 'Dadbod UI',
-    ['tsplayground'] = 'Treesitter',
-    ['NeogitStatus'] = 'Neogit Status',
-    ['Neogit.*'] = 'Neogit',
-    ['Trouble'] = 'Lsp Trouble',
     ['gitcommit'] = 'Git commit',
     ['help'] = 'help',
     ['undotree'] = 'UndoTree',
-    ['NvimTree'] = 'Nvim Tree',
     ['dap-repl'] = 'Debugger REPL',
     ['Diffview.*'] = 'Diff view',
     ['neotest.*'] = 'Testing',
@@ -409,62 +399,58 @@ end
 -- MODE
 ----------------------------------------------------------------------------------------------------
 
+-- Compiled once at load. These were previously rebuilt on every render, which
+-- means on every statusline redraw.
+local mode_patterns = {
+  { regex = vim.regex([[\(s\|S\|\)]]), hl = hls.mode_visual },
+  { regex = vim.regex([[\(v\|V\|\)]]), hl = hls.mode_select },
+  { regex = vim.regex([[\(Rc\|R\|Rv\|Rx\)]]), hl = hls.mode_replace },
+  { regex = vim.regex([[\(c\|cv\|ce\)]]), hl = hls.mode_command },
+}
+
 local function mode_highlight(mode)
-  local visual_regex = vim.regex([[\(s\|S\|\)]])
-  local select_regex = vim.regex([[\(v\|V\|\)]])
-  local command_regex = vim.regex([[\(c\|cv\|ce\)]])
-  local replace_regex = vim.regex([[\(Rc\|R\|Rv\|Rx\)]])
-  if mode == 'i' then
-    return hls.mode_insert
-  elseif visual_regex and visual_regex:match_str(mode) then
-    return hls.mode_visual
-  elseif select_regex and select_regex:match_str(mode) then
-    return hls.mode_select
-  elseif replace_regex and replace_regex:match_str(mode) then
-    return hls.mode_replace
-  elseif command_regex and command_regex:match_str(mode) then
-    return hls.mode_command
-  else
-    return hls.mode_normal
+  if mode == 'i' then return hls.mode_insert end
+  for _, pattern in ipairs(mode_patterns) do
+    if pattern.regex:match_str(mode) then return pattern.hl end
   end
+  return hls.mode_normal
 end
+
+local mode_map = {
+  ['n'] = 'NORMAL',
+  ['no'] = 'N·OPERATOR PENDING',
+  ['nov'] = 'N·OPERATOR BLOCK',
+  ['noV'] = 'N·OPERATOR LINE',
+  ['niI'] = 'N·INSERT',
+  ['niR'] = 'N·REPLACE',
+  ['niV'] = 'N·VISUAL',
+  ['v'] = 'VISUAL',
+  ['V'] = 'V·LINE',
+  [''] = 'V·BLOCK',
+  ['s'] = 'SELECT',
+  ['S'] = 'S·LINE',
+  [''] = 'S·BLOCK',
+  ['i'] = 'INSERT',
+  ['R'] = 'REPLACE',
+  ['Rv'] = 'V·REPLACE',
+  ['Rx'] = 'C·REPLACE',
+  ['Rc'] = 'C·REPLACE',
+  ['c'] = 'COMMAND',
+  ['cv'] = 'VIM EX',
+  ['ce'] = 'EX',
+  ['r'] = 'PROMPT',
+  ['rm'] = 'MORE',
+  ['r?'] = 'CONFIRM',
+  ['!'] = 'SHELL',
+  ['t'] = 'TERMINAL',
+  ['nt'] = 'TERMINAL',
+  ['null'] = 'NONE',
+}
 
 -- FIXME: operator pending mode doesn't show up
 local function stl_mode()
   local current_mode = api.nvim_get_mode().mode
-  local hl = mode_highlight(current_mode)
-
-  local mode_map = {
-    ['n'] = 'NORMAL',
-    ['no'] = 'N·OPERATOR PENDING',
-    ['nov'] = 'N·OPERATOR BLOCK',
-    ['noV'] = 'N·OPERATOR LINE',
-    ['niI'] = 'N·INSERT',
-    ['niR'] = 'N·REPLACE',
-    ['niV'] = 'N·VISUAL',
-    ['v'] = 'VISUAL',
-    ['V'] = 'V·LINE',
-    [''] = 'V·BLOCK',
-    ['s'] = 'SELECT',
-    ['S'] = 'S·LINE',
-    [''] = 'S·BLOCK',
-    ['i'] = 'INSERT',
-    ['R'] = 'REPLACE',
-    ['Rv'] = 'V·REPLACE',
-    ['Rx'] = 'C·REPLACE',
-    ['Rc'] = 'C·REPLACE',
-    ['c'] = 'COMMAND',
-    ['cv'] = 'VIM EX',
-    ['ce'] = 'EX',
-    ['r'] = 'PROMPT',
-    ['rm'] = 'MORE',
-    ['r?'] = 'CONFIRM',
-    ['!'] = 'SHELL',
-    ['t'] = 'TERMINAL',
-    ['nt'] = 'TERMINAL',
-    ['null'] = 'NONE',
-  }
-  return (mode_map[current_mode] or 'UNKNOWN'), hl
+  return (mode_map[current_mode] or 'UNKNOWN'), mode_highlight(current_mode)
 end
 
 ----------------------------------------------------------------------------------------------------
@@ -598,7 +584,6 @@ function as.ui.statusline.render()
 
   local plain = is_plain(ctx)
   local file_modified = is_modified(ctx, icons.misc.circle)
-  local focused = vim.g.vim_in_focus or true
   ----------------------------------------------------------------------------//
   -- Setup
   ----------------------------------------------------------------------------//
@@ -620,7 +605,7 @@ function as.ui.statusline.render()
   ----------------------------------------------------------------------------//
   -- show a minimal statusline with only the mode and file component
   ----------------------------------------------------------------------------//
-  if plain or not focused then
+  if plain then
     local l2 = section:new(readonly_component, path.env, path.dir, path.parent, path.file)
     return display({ l1 + l2 }, available_space)
   end
@@ -655,7 +640,6 @@ function as.ui.statusline.render()
   -----------------------------------------------------------------------------//
   -- LSP
   -----------------------------------------------------------------------------//
-  local flutter = vim.g.flutter_tools_decorations or {}
   local diagnostics = diagnostic_info(ctx)
   local lsp_clients = vim
     .iter(ipairs(stl_lsp_clients(ctx)))
@@ -725,8 +709,6 @@ function as.ui.statusline.render()
       priority = 3,
       cond = has_pending_updates,
     },
-    { { { flutter.app_version, hls.metadata } }, priority = 4 },
-    { { { flutter.device and flutter.device.name or '', hls.metadata } }, priority = 4 },
     -----------------------------------------------------------------------------//
     -- LSP Clients
     -----------------------------------------------------------------------------//
@@ -810,12 +792,6 @@ vim.g.qf_disable_statusline = 1
 vim.o.statusline = '%{%v:lua.as.ui.statusline.render()%}'
 
 as.augroup('CustomStatusline', {
-  event = 'FocusGained',
-  command = function() vim.g.vim_in_focus = true end,
-}, {
-  event = 'FocusLost',
-  command = function() vim.g.vim_in_focus = false end,
-}, {
   event = 'ColorScheme',
   command = function()
     colors()
@@ -837,8 +813,4 @@ as.augroup('CustomStatusline', {
     local clients = vim.lsp.get_clients({ bufnr = args.buf })
     if vim.o.columns < 200 and #clients > MAX_LSP_SERVER_COUNT then state.lsp_clients_visible = false end
   end,
-}, {
-  event = 'User',
-  pattern = { 'NeogitPushComplete', 'NeogitCommitComplete', 'NeogitStatusRefresh' },
-  command = update_git_status,
 })

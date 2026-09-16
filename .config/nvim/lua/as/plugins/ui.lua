@@ -13,8 +13,7 @@ return {
         -- stylua: ignore
         filetypes = {
           'dbout', 'neo-tree-popup', 'log', 'gitcommit',
-          'txt', 'help', 'NvimTree', 'git', 'flutterToolsOutline',
-          'undotree', 'markdown', 'norg', 'org', 'orgagenda',
+          'txt', 'help', 'git', 'undotree', 'markdown',
         },
       },
       indent = {
@@ -93,20 +92,8 @@ return {
               separator = false,
             },
             {
-              text = ' FLUTTER OUTLINE',
-              filetype = 'flutterToolsOutline',
-              highlight = 'PanelHeading',
-              separator = false,
-            },
-            {
               text = 'UNDOTREE',
               filetype = 'undotree',
-              highlight = 'PanelHeading',
-              separator = false,
-            },
-            {
-              text = '󰆼 DATABASE VIEWER',
-              filetype = 'dbui',
               highlight = 'PanelHeading',
               separator = false,
             },
@@ -163,8 +150,10 @@ return {
         },
       })
 
-      map('n', '[b', '<Cmd>BufferLineMoveNext<CR>', { desc = 'bufferline: move next' })
-      map('n', ']b', '<Cmd>BufferLineMovePrev<CR>', { desc = 'bufferline: move prev' })
+      -- Under the `gb` prefix rather than `[b`/`]b`, which are Neovim's own
+      -- buffer navigation mappings.
+      map('n', 'gb>', '<Cmd>BufferLineMoveNext<CR>', { desc = 'bufferline: move buffer right' })
+      map('n', 'gb<', '<Cmd>BufferLineMovePrev<CR>', { desc = 'bufferline: move buffer left' })
       map('n', 'gbb', '<Cmd>BufferLinePick<CR>', { desc = 'bufferline: pick buffer' })
       map('n', 'gbd', '<Cmd>BufferLinePickClose<CR>', { desc = 'bufferline: delete buffer' })
       map('n', '<S-tab>', '<Cmd>BufferLineCyclePrev<CR>', { desc = 'bufferline: prev' })

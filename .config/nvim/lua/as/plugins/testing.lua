@@ -40,13 +40,11 @@ return {
         quickfix = { enabled = false, open = true },
         adapters = {
           require('neotest-plenary'),
-          require('neotest-go'),
         },
       })
     end,
     dependencies = {
       'nvim-neotest/nvim-nio',
-      { 'neotest/neotest-go', enabled = false },
       { 'rcarriga/neotest-plenary', dependencies = { 'nvim-lua/plenary.nvim' } },
     },
   },

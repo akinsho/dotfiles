@@ -56,12 +56,11 @@ local function show_diagnostic(_, bufnr) diagnostic.open_float({ bufnr = bufnr }
 ---@param client vim.lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
-  local ts = { 'typescript', 'typescriptreact' }
   local mappings = {
     { 'n', '[c', function() diagnostic.jump({ count = -1, on_jump = show_diagnostic }) end, desc = 'go to prev diagnostic' },
     { 'n', ']c', function() diagnostic.jump({ count = 1, on_jump = show_diagnostic }) end, desc = 'go to next diagnostic' },
     { { 'n', 'x' }, '<leader>ca', lsp.buf.code_action, desc = 'code action', capability = M.textDocument_codeAction },
-    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = M.textDocument_definition, exclude = ts },
+    { 'n', 'gd', lsp.buf.definition, desc = 'definition', capability = M.textDocument_definition },
     { 'n', 'gr', lsp.buf.references, desc = 'references', capability = M.textDocument_references },
     { 'n', 'gI', lsp.buf.incoming_calls, desc = 'incoming calls', capability = M.textDocument_prepareCallHierarchy },
     { 'n', 'gi', lsp.buf.implementation, desc = 'implementation', capability = M.textDocument_implementation },
@@ -103,15 +102,7 @@ end
 --- This is a way of adding functionality for specific lsps
 --- without putting all this logic in the general on_attach function
 ---@type {[string]: ClientOverrides}
-local client_overrides = {
-  tsserver = {
-    semantic_tokens = function(bufnr, client, token)
-      if token.type == 'variable' and token.modifiers['local'] and not token.modifiers.readonly then
-        lsp.semantic_tokens.highlight_token(token, bufnr, client.id, '@danger')
-      end
-    end,
-  },
-}
+local client_overrides = {}
 
 -----------------------------------------------------------------------------//
 -- Semantic Tokens

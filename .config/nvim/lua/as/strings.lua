@@ -132,11 +132,10 @@ local function order_by_priority(components, available_space)
   ---@type {[1]: StringComponent[], [2]: integer}
   local ordered_tuples = vim.iter(ipairs(components)):map(function(idx, item) return { idx, item } end):totable()
 
+  -- `component()` always assigns a priority, so both are guaranteed present here.
+  -- Ties break on length so that, at equal priority, the shortest component wins.
   table.sort(ordered_tuples, function(a_item, b_item)
     local a, b = a_item[2], b_item[2]
-    if not a.priority then return a.priority < b.priority end
-    if not b.priority then return a.priority > b.priority end
-    if not a.priority and not b.priority then return 0 end
     if a.priority == b.priority then return a.length < b.length end
     return a.priority > b.priority
   end)

@@ -162,6 +162,10 @@ o.autowriteall = true -- automatically :write before running commands and changi
 opt.clipboard = { 'unnamedplus' }
 o.laststatus = 3
 o.termguicolors = true
+-- Chooses the light/dark variant of the colorscheme. Set here rather than next to
+-- the `:colorscheme` call because the theme reads it as it loads, and the plugin
+-- is loaded by lazy before that point.
+o.background = 'light'
 o.guifont = 'CartographCF Nerd Font Mono:h14,codicon'
 -----------------------------------------------------------------------------//
 -- Emoji {{{1

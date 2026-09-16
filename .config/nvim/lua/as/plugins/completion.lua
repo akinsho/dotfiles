@@ -5,7 +5,7 @@ local border = ui.current.border
 return {
   {
     'saghen/blink.cmp',
-    dependencies = 'rafamadriz/friendly-snippets',
+    dependencies = { 'rafamadriz/friendly-snippets', 'L3MON4D3/LuaSnip' },
     version = '*',
     init = function()
       highlight.plugin('blink', {
@@ -19,6 +19,9 @@ return {
     opts = {
       keymap = { preset = 'enter' },
       appearance = { nerd_font_variant = 'mono', use_nvim_cmp_as_default = true },
+      -- Without this blink uses its own engine and never sees the snippets in
+      -- `luasnippets/`, which are registered with LuaSnip.
+      snippets = { preset = 'luasnip' },
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
         providers = {
@@ -75,8 +78,6 @@ return {
       vim.g.copilot_filetypes = {
         ['*'] = true,
         gitcommit = false,
-        NeogitCommitMessage = false,
-        TelescopePrompt = false,
         ['neo-tree-popup'] = false,
         ['dap-repl'] = false,
       }

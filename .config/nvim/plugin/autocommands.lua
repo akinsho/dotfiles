@@ -58,14 +58,9 @@ local smart_close_filetypes = as.p_table({
   ['log'] = true,
   ['help'] = true,
   ['query'] = true,
-  ['dbui'] = true,
-  ['lspinfo'] = true,
   ['git.*'] = true,
-  ['Neogit.*'] = true,
   ['neotest.*'] = true,
-  ['fugitive.*'] = true,
   ['copilot.*'] = true,
-  ['tsplayground'] = true,
   ['startuptime'] = true,
 })
 
@@ -179,9 +174,7 @@ as.augroup('Cursorline', {
 local save_excluded = {
   'neo-tree',
   'neo-tree-popup',
-  'lua.luapad',
   'gitcommit',
-  'NeogitCommitMessage',
 }
 local function can_save()
   return as.falsy(fn.win_gettype())

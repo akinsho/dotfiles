@@ -3,37 +3,11 @@ local highlight = as.highlight
 local border = as.ui.current.border
 local icons = as.ui.icons.separators
 
-local neogit = as.reqidx('neogit')
 local gitlinker = as.reqidx('gitlinker')
 
 local function browser_open() return { action_callback = require('gitlinker.actions').open_in_browser } end
 
 return {
-  {
-    'NeogitOrg/neogit',
-    cmd = 'Neogit',
-    dependencies = { 'nvim-lua/plenary.nvim' },
-    enabled = false,
-    keys = {
-      { '<localleader>gs', function() neogit.open() end, desc = 'open status buffer' },
-      { '<localleader>gc', function() neogit.open({ 'commit' }) end, desc = 'open commit buffer' },
-      { '<localleader>gl', function() neogit.popups.pull.create() end, desc = 'open pull popup' },
-      { '<localleader>gp', function() neogit.popups.push.create() end, desc = 'open push popup' },
-    },
-    opts = {
-      disable_signs = false,
-      disable_hint = true,
-      disable_commit_confirmation = false,
-      disable_builtin_notifications = true,
-      disable_insert_on_commit = false,
-      signs = {
-        section = { '', '󰘕' }, -- "󰁙", "󰁊"
-        item = { '▸', '▾' },
-        hunk = { '󰐕', '󰍴' },
-      },
-      integrations = { diffview = true },
-    },
-  },
   {
     'sindrets/diffview.nvim',
     cmd = { 'DiffviewOpen', 'DiffviewFileHistory' },
@@ -137,34 +111,29 @@ return {
       on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
 
+        --- Every mapping here belongs to the attached buffer. Using the global `map`
+        --- leaked them into buffers gitsigns was never attached to.
         local function bmap(mode, l, r, opts)
           opts = opts or {}
           opts.buffer = bufnr
           map(mode, l, r, opts)
         end
 
-        map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage' })
-        map('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview current hunk' })
-        map('n', '<leader>hb', gs.toggle_current_line_blame, { desc = 'toggle current line blame' })
-        map('n', '<leader>hd', gs.toggle_deleted, { desc = 'show deleted lines' })
-        map('n', '<leader>hw', gs.toggle_word_diff, { desc = 'toggle word diff' })
-        map('n', '<localleader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
-        map('n', '<localleader>gre', gs.reset_buffer, { desc = 'reset entire buffer' })
-        map('n', '<localleader>gbl', gs.blame_line, { desc = 'blame current line' })
-        map('n', '<leader>lm', function() gs.setqflist('all') end, { desc = 'list modified in quickfix' })
+        bmap('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage' })
+        bmap('n', '<leader>hp', gs.preview_hunk_inline, { desc = 'preview current hunk' })
+        bmap('n', '<leader>hb', gs.toggle_current_line_blame, { desc = 'toggle current line blame' })
+        bmap('n', '<leader>hd', gs.toggle_deleted, { desc = 'show deleted lines' })
+        bmap('n', '<leader>hw', gs.toggle_word_diff, { desc = 'toggle word diff' })
+        bmap('n', '<localleader>gw', gs.stage_buffer, { desc = 'stage entire buffer' })
+        bmap('n', '<localleader>gre', gs.reset_buffer, { desc = 'reset entire buffer' })
+        bmap('n', '<localleader>gbl', gs.blame_line, { desc = 'blame current line' })
+        bmap('n', '<leader>lm', function() gs.setqflist('all') end, { desc = 'list modified in quickfix' })
         bmap({ 'n', 'v' }, '<leader>hs', '<Cmd>Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
         bmap({ 'n', 'v' }, '<leader>hr', '<Cmd>Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
         bmap({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'select hunk' })
 
-        map('n', '[h', function()
-          vim.schedule(function() gs.next_hunk() end)
-          return '<Ignore>'
-        end, { expr = true, desc = 'go to next git hunk' })
-
-        map('n', ']h', function()
-          vim.schedule(function() gs.prev_hunk() end)
-          return '<Ignore>'
-        end, { expr = true, desc = 'go to previous git hunk' })
+        bmap('n', ']h', function() gs.nav_hunk('next') end, { desc = 'go to next git hunk' })
+        bmap('n', '[h', function() gs.nav_hunk('prev') end, { desc = 'go to previous git hunk' })
       end,
     },
   },
