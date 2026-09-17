@@ -467,7 +467,24 @@ return {
     {
       'echasnovski/mini.ai',
       event = 'VeryLazy',
-      config = function() require('mini.ai').setup({ mappings = { around_last = '', inside_last = '' } }) end,
+      config = function()
+        local ai = require('mini.ai')
+        --- Reads the `textobjects` queries shipped by nvim-treesitter-textobjects
+        --- through core treesitter, so it does not touch nvim-treesitter's own
+        --- query module. `f` and `c` are left as mini.ai's function call and
+        --- comment, so these use the shifted capitals.
+        local function ts(a, i) return ai.gen_spec.treesitter({ a = a, i = i }, { use_nvim_treesitter = false }) end
+        ai.setup({
+          mappings = { around_last = '', inside_last = '' },
+          custom_textobjects = {
+            F = ts('@function.outer', '@function.inner'),
+            C = ts('@class.outer', '@class.inner'),
+            o = ts('@conditional.outer', '@conditional.inner'),
+            L = ts('@assignment.lhs', '@assignment.lhs'),
+            R = ts('@assignment.rhs', '@assignment.rhs'),
+          },
+        })
+      end,
     },
     {
       'glts/vim-textobj-comment',

@@ -31,38 +31,15 @@ return {
           enable = true,
           disable = { 'yaml' },
         },
-        textobjects = {
-          lookahead = true,
-          select = {
-            enable = true,
-            include_surrounding_whitespace = true,
-            keymaps = {
-              ['af'] = { query = '@function.outer', desc = 'ts: all function' },
-              ['if'] = { query = '@function.inner', desc = 'ts: inner function' },
-              ['ac'] = { query = '@class.outer', desc = 'ts: all class' },
-              ['ic'] = { query = '@class.inner', desc = 'ts: inner class' },
-              ['aC'] = { query = '@conditional.outer', desc = 'ts: all conditional' },
-              ['iC'] = { query = '@conditional.inner', desc = 'ts: inner conditional' },
-              ['aL'] = { query = '@assignment.lhs', desc = 'ts: assignment lhs' },
-              ['aR'] = { query = '@assignment.rhs', desc = 'ts: assignment rhs' },
-            },
-          },
-          move = {
-            enable = true,
-            set_jumps = true,
-            goto_next_start = { [']m'] = '@function.outer', [']M'] = '@class.outer' },
-            goto_previous_start = { ['[m'] = '@function.outer', ['[M'] = '@class.outer' },
-          },
-        },
-        autopairs = { enable = true },
-        playground = { persist_queries = true },
-        query_linter = {
-          enable = true,
-          use_virtual_text = true,
-          lint_events = { 'BufWrite', 'CursorHold' },
-        },
+        -- NOTE: the `textobjects` module is deliberately absent. It resolves
+        -- captures through `nvim-treesitter.query`, which asks `iter_matches` for
+        -- the `all = false` behaviour Neovim removed in 0.11, so every capture
+        -- comes back as a list of nodes and errors with "attempt to call method
+        -- 'range' (a nil value)". Those textobjects live in mini.ai instead.
       })
     end,
+    -- Kept for the `textobjects` queries it ships, which mini.ai reads via
+    -- `vim.treesitter.query.get()`. Its lua modules are not used.
     dependencies = { { 'nvim-treesitter/nvim-treesitter-textobjects' } },
   },
   {
