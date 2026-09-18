@@ -8,6 +8,23 @@
 # https://unix.stackexchange.com/questions/33255/how-to-define-and-load-your-own-shell-function-in-zsh
 # Git prompt script: https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 
+# Some packaged builds of zsh bake in a module_path pointing at the directory
+# they were compiled in, which is long gone by the time the binary is installed,
+# so every zmodload below fails and anything depending on it (command timing via
+# $EPOCHREALTIME, -regex-match in plugins) breaks with obscure errors. The
+# modules do ship alongside the interpreter, so when the baked-in path is
+# missing, look for them relative to the binary that is actually running.
+if [[ ! -d ${module_path[1]} ]]; then
+  for __zsh_bin in /proc/self/exe ${commands[zsh]}; do
+    __zsh_modules=${${__zsh_bin:A}:h:h}/lib/zsh/$ZSH_VERSION
+    if [[ -d $__zsh_modules ]]; then
+      module_path=($__zsh_modules $module_path)
+      break
+    fi
+  done
+  unset __zsh_bin __zsh_modules
+fi
+
 zmodload zsh/datetime
 
 # Create a hash table for globally stashing variables without polluting main
