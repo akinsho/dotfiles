@@ -279,7 +279,9 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr "%F{green} ●%f"
 zstyle ':vcs_info:*' unstagedstr "%F{red} ●%f" # alternative: ✘
 zstyle ':vcs_info:*' use-simple true
-zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash git-compare git-remotebranch
+# git-truncate-branch runs last: the hooks before it need the real branch name
+# to resolve @{upstream}, so shortening has to happen after they are done.
+zstyle ':vcs_info:git+set-message:*' hooks git-untracked git-stash git-compare git-remotebranch git-truncate-branch
 zstyle ':vcs_info:git*:*' actionformats '(%B%F{red}%b|%a%c%u%%b%f) '
 zstyle ':vcs_info:git:*' formats "%F{249}(%f%F{blue}%{$__DOTS[ITALIC_ON]%}%b%{$__DOTS[ITALIC_OFF]%}%f%F{249})%f%c%u%m"
 
@@ -337,7 +339,10 @@ function +vi-git-compare() {
   hook_com[misc]+="${(j: :)gitstatus}"
 }
 
-## git: Show remote branch name for remote-tracking branches
+## git: Flag branches that track a differently-named upstream
+# Spelling the upstream out in full (`→[origin/mainline]`) doubles the length of
+# the segment for no new information most of the time, so this is only a glyph.
+# `git status -sb` or `git branch -vv` still have the details when they matter.
 function +vi-git-remotebranch() {
     local remote
 
@@ -345,13 +350,42 @@ function +vi-git-remotebranch() {
     remote=${$(git rev-parse --verify ${hook_com[branch]}@{upstream} \
         --symbolic-full-name 2>/dev/null)/refs\/remotes\/}
 
-    # The first test will show a tracking branch whenever there is one. The
-    # second test, however, will only show the remote branch's name if it
-    # differs from the local one.
-    # if [[ -n ${remote} ]] ; then
+    # The first test is true whenever there is a tracking branch at all; the
+    # second narrows it to upstreams whose name differs from the local branch.
+    # Lives in misc (%m) rather than in the branch so that git-truncate-branch
+    # measures and cuts the branch name alone.
     if [[ -n ${remote} && ${remote#*/} != ${hook_com[branch]} ]] ; then
-        hook_com[branch]="${hook_com[branch]}→[${remote}]"
+        hook_com[misc]+=" %F{240}%f"
     fi
+}
+
+## git: Keep deeply nested branch names from swamping the prompt
+# Some review tools create branches by prefixing the current one, so a name can
+# accumulate path segments until it is longer than the rest of the prompt put
+# together. The tail is the informative end, so drop leading path segments until
+# the name fits and mark the elision with an ellipsis.
+function +vi-git-truncate-branch() {
+  emulate -L zsh
+  local max=${DOTS_GIT_BRANCH_MAX_LEN:-30}
+  local branch=${hook_com[branch]}
+  (( ${#branch} <= max )) && return 0
+
+  local -a segments=( ${(s:/:)branch} )
+  local short=${segments[-1]} candidate i
+  # Rebuild from the tail, taking whole segments while they fit; the +2 budgets
+  # for the "…/" that replaces whatever is left behind.
+  for (( i = ${#segments} - 1; i > 0; i-- )); do
+    candidate="${segments[i]}/${short}"
+    (( ${#candidate} + 2 > max )) && break
+    short=$candidate
+  done
+
+  if (( ${#short} + 2 > max )); then
+    # A single segment over the cap has no separator to cut on, so cut mid-word
+    hook_com[branch]="${branch:0:$(( max - 1 ))}…"
+  else
+    hook_com[branch]="…/${short}"
+  fi
 }
 #-------------------------------------------------------------------------------
 #               Session context (local vs SSH)
