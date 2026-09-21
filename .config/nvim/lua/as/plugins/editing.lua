@@ -76,6 +76,7 @@ return {
   },
   {
     'yetone/avante.nvim',
+    enabled = false,
     event = 'VeryLazy',
     opts = {
       windows = {
