@@ -133,20 +133,32 @@ as.augroup('UpdateVim', {
   command = 'wincmd =', -- Make windows equal size when vim resizes
 })
 
+--- Diagnostics are noise in a diff, so they follow each window's 'diff' state.
+--- `DiffUpdated` is what catches diff mode being turned on, because `:diffthis`,
+--- `:diffsplit` and diffview all set it after the window has been entered, which is
+--- too late for `BufWinEnter` alone. It also fires in only one of the diff windows,
+--- hence sweeping every window rather than just the one the event arrived on.
+--- Writes only on an actual change, since `WinEnter` fires constantly.
+local function sync_diff_diagnostics()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    if vim.api.nvim_buf_is_valid(buf) then
+      local want = not vim.wo[win].diff
+      if vim.diagnostic.is_enabled({ bufnr = buf }) ~= want then
+        vim.diagnostic.enable(want, { bufnr = buf })
+      end
+    end
+  end
+end
+
 as.augroup('WindowBehaviours', {
   event = { 'CmdwinEnter' }, -- map q to close command window on quit
   pattern = { '*' },
   command = 'nnoremap <silent><buffer><nowait> q <C-W>c',
 }, {
-  event = { 'BufWinEnter' },
-  command = function(args)
-    if vim.wo.diff then vim.diagnostic.enable(false, args.buf) end
-  end,
-}, {
-  event = { 'BufWinLeave' },
-  command = function(args)
-    if vim.wo.diff then vim.diagnostic.enable(args.buf) end
-  end,
+  event = { 'DiffUpdated', 'BufWinEnter', 'WinEnter' },
+  desc = 'Suppress diagnostics while a window is in diff mode',
+  command = function() sync_diff_diagnostics() end,
 })
 
 local cursorline_exclude = { 'alpha', 'toggleterm' }
