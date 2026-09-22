@@ -1,6 +1,6 @@
 if not as then return end
 
-local fn, api, v, env, cmd, fmt = vim.fn, vim.api, vim.v, vim.env, vim.cmd, string.format
+local fn, api, v, env, cmd = vim.fn, vim.api, vim.v, vim.env, vim.cmd
 
 ----------------------------------------------------------------------------------------------------
 -- HLSEARCH
@@ -104,16 +104,9 @@ as.augroup('SmartClose', {
   end,
 })
 
-as.augroup('ExternalCommands', {
-  -- Open images in an image viewer (probably Preview)
-  event = { 'BufEnter' },
-  pattern = { '*.png', '*.jpg', '*.gif' },
-  command = function() cmd(fmt('silent! "%s | :bw"', vim.g.open_command .. ' ' .. fn.expand('%'))) end,
-})
-
 as.augroup('CheckOutsideTime', {
   -- automatically check for changed files outside vim
-  event = { 'WinEnter', 'BufWinEnter', 'BufWinLeave', 'BufRead', 'BufEnter', 'FocusGained' },
+  event = { 'FocusGained', 'BufEnter' },
   command = 'silent! checktime',
 })
 
@@ -121,16 +114,6 @@ as.augroup('TextYankHighlight', {
   -- don't execute silently in case of errors
   event = { 'TextYankPost' },
   command = function() vim.hl.on_yank({ timeout = 500, on_visual = false, higroup = 'Visual' }) end,
-})
-
-as.augroup('UpdateVim', {
-  event = { 'FocusLost' },
-  pattern = { '*' },
-  command = 'silent! wall',
-}, {
-  event = { 'VimResized' },
-  pattern = { '*' },
-  command = 'wincmd =', -- Make windows equal size when vim resizes
 })
 
 --- Diagnostics are noise in a diff, so they follow each window's 'diff' state.
@@ -173,12 +156,14 @@ local function should_show_cursorline(buf)
     and not vim.tbl_contains(cursorline_exclude, vim.bo[buf].filetype)
 end
 
+-- Window events rather than buffer ones: the cursorline marks the *focused*
+-- window, and BufEnter/BufLeave do not fire when moving between windows.
 as.augroup('Cursorline', {
-  event = { 'BufEnter' },
+  event = { 'WinEnter', 'BufWinEnter' },
   pattern = { '*' },
-  command = function(args) vim.wo.cursorline = should_show_cursorline(args.buf) end,
+  command = function() vim.wo.cursorline = should_show_cursorline(api.nvim_get_current_buf()) end,
 }, {
-  event = { 'BufLeave' },
+  event = { 'WinLeave' },
   pattern = { '*' },
   command = function() vim.wo.cursorline = false end,
 })
@@ -212,11 +197,14 @@ as.augroup('Utilities', {
   command = 'norm! iif not as then return end',
 }, {
   --- disable formatting in directories in third party repositories
-  event = { 'BufEnter' },
+  --- Whether a file is third party is a property of the file, so this is computed
+  --- once per buffer rather than on every BufEnter, which had it splitting the
+  --- runtimepath and walking it on each switch.
+  event = { 'BufReadPost', 'BufNewFile' },
   command = function(args)
+    local path = api.nvim_buf_get_name(args.buf)
     local paths = vim.split(vim.o.runtimepath, ',')
     local match = vim.iter(paths):find(function(dir)
-      local path = api.nvim_buf_get_name(args.buf)
       if vim.startswith(path, env.PERSONAL_PROJECTS_DIR) then return false end
       if vim.startswith(path, env.VIMRUNTIME) then return true end
       return vim.startswith(path, dir)
@@ -241,18 +229,6 @@ as.augroup('Utilities', {
         filetype detect
         call v:lua.vim.notify('Filetype set to ' . &ft, "info", {})
       ]])
-    end
-  end,
-}, {
-  event = { 'DirChanged', 'VimEnter' },
-  command = function()
-    if fn.getcwd() == env.DOTFILES then
-      vim.keymap.set('n', 'gx', function()
-        local file = fn.expand('<cfile>')
-        local link = file:match('[%a%d%-%.%_]*%/[%a%d%-%.%_]*')
-        if link then return vim.ui.open(string.format('https://www.github.com/%s', link)) end
-        return vim.ui.open(file)
-      end)
     end
   end,
 })

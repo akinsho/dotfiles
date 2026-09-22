@@ -368,6 +368,19 @@ xnoremap('<leader>g', ':call v:lua.as.mappings.grep_operator(visualmode())<CR>')
 
 nnoremap('gf', '<Cmd>e <cfile><CR>')
 
+-- Inside this repo an `owner/name` under the cursor is nearly always a plugin, so
+-- open it on GitHub. The repo check happens at call time; deciding it in a
+-- DirChanged autocommand instead left the mapping in place after cd'ing away, and
+-- there is no tearing it down without also removing Neovim's own `gx`.
+nnoremap('gx', function()
+  local file = fn.expand('<cfile>')
+  if fn.getcwd() == vim.env.DOTFILES then
+    local link = file:match('[%a%d%-%.%_]*%/[%a%d%-%.%_]*')
+    if link then return vim.ui.open(fmt('https://www.github.com/%s', link)) end
+  end
+  return vim.ui.open(file)
+end, { desc = 'open file or plugin repo under the cursor' })
+
 -----------------------------------------------------------------------------//
 nnoremap('<leader>ls', as.list.qf.toggle, { desc = 'toggle quickfix list' })
 nnoremap('<leader>ll', as.list.loc.toggle, { desc = 'toggle location list' })
