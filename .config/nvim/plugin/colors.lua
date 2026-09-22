@@ -185,7 +185,7 @@ local function colorscheme_overrides()
     ['solarized'] = {
       { Constant = { bold = true } },
       { NonText = { fg = { from = 'Comment' } } },
-      { TabLineSel = { fg = { from = 'SpecialKey' } } },
+      { TabLineSel = { link = "PmenuSel" } },
       -- Solarized leans on background tints rather than many distinct hues, so
       -- headings need an explicit border to read as separate surfaces.
       { PanelHeading = { inherit = 'PanelBackground', bold = true, underline = true } },
