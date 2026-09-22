@@ -68,14 +68,14 @@ return {
       bufferline.setup({
         options = {
           debug = { logging = true },
-          style_preset = { bufferline.style_preset.minimal },
+          -- style_preset = { bufferline.style_preset.minimal },
+          -- indicator = { style = 'underline' },
           mode = 'buffers',
           sort_by = 'insert_after_current',
           move_wraps_at_ends = true,
           right_mouse_command = 'vert sbuffer %d',
           show_close_icon = false,
           show_buffer_close_icons = true,
-          indicator = { style = 'underline' },
           diagnostics = 'nvim_lsp',
           diagnostics_indicator = function(count, level)
             level = level:match('warn') and 'warn' or level
