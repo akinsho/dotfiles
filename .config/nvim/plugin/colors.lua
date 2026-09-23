@@ -35,8 +35,80 @@ local function shades()
   }
 end
 
+--- Offsets the editor background from the terminal's, which shares this palette, so
+--- an nvim pane is distinguishable from a shell pane. Rotating the hue warmer while
+--- taking a little lightness out deepens the colour rather than greying it: the
+--- result is more yellow than the theme's own background, not less. Both are
+--- relative, so this holds for a dark colorscheme too. 0 on both disables it.
+local editor_hue_shift = -8
+local editor_lightness_shift = -0.025
+
+---@param colour string hex
+---@return number hue in degrees, number saturation, number lightness
+local function to_hsl(colour)
+  local r, g, b = tonumber(colour:sub(2, 3), 16), tonumber(colour:sub(4, 5), 16), tonumber(colour:sub(6, 7), 16)
+  r, g, b = r / 255, g / 255, b / 255
+  local max, min = math.max(r, g, b), math.min(r, g, b)
+  local lightness = (max + min) / 2
+  if max == min then return 0, 0, lightness end
+  local delta = max - min
+  local saturation = lightness > 0.5 and delta / (2 - max - min) or delta / (max + min)
+  local hue
+  if max == r then
+    hue = (g - b) / delta + (g < b and 6 or 0)
+  elseif max == g then
+    hue = (b - r) / delta + 2
+  else
+    hue = (r - g) / delta + 4
+  end
+  return hue * 60, saturation, lightness
+end
+
+---@return string hex
+local function from_hsl(hue, saturation, lightness)
+  hue = (hue % 360) / 360
+  local function component(p, q, t)
+    if t < 0 then t = t + 1 end
+    if t > 1 then t = t - 1 end
+    if t < 1 / 6 then return p + (q - p) * 6 * t end
+    if t < 1 / 2 then return q end
+    if t < 2 / 3 then return p + (q - p) * (2 / 3 - t) * 6 end
+    return p
+  end
+  local r, g, b = lightness, lightness, lightness
+  if saturation > 0 then
+    local q = lightness < 0.5 and lightness * (1 + saturation) or lightness + saturation - lightness * saturation
+    local p = 2 * lightness - q
+    r, g, b = component(p, q, hue + 1 / 3), component(p, q, hue), component(p, q, hue - 1 / 3)
+  end
+  local function byte(value) return math.floor(value * 255 + 0.5) end
+  return ('#%02x%02x%02x'):format(byte(r), byte(g), byte(b))
+end
+
+---@param colour string hex
+---@return string hex
+local function shift_colour(colour)
+  local hue, saturation, lightness = to_hsl(colour)
+  return from_hsl(hue + editor_hue_shift, saturation, lightness * (1 + editor_lightness_shift))
+end
+
+--- Runs before `general_overrides`, since every background there derives from
+--- `Normal` and `set` resolves `from` at call time. Rotates the theme's own value
+--- rather than the current one, so repeated ColorScheme events do not accumulate.
+local function shift_editor_background()
+  if editor_hue_shift == 0 and editor_lightness_shift == 0 then return end
+  local current = highlight.get('Normal', 'bg')
+  if type(current) ~= 'string' or not current:match('^#%x%x%x%x%x%x$') then return end
+  -- Only treat `current` as the theme's value when it is not our own output.
+  if current ~= vim.g.as_shifted_bg then vim.g.as_theme_bg = current end
+  local shifted = shift_colour(vim.g.as_theme_bg or current)
+  vim.g.as_shifted_bg = shifted
+  highlight.set('Normal', { bg = shifted })
+end
+
 local function general_overrides()
   local shade = shades()
+  shift_editor_background()
   highlight.all({
     -----------------------------------------------------------------------------//
     -- Native
