@@ -12,10 +12,6 @@ config-file = "?local"
 theme = "Iterm2 Solarized Light"
 # theme = "github-dark-high-contrast"
 
-# Held a touch warmer than the theme's own base3, which Neovim keeps, so an editor
-# pane is distinguishable from a shell pane. Matched for brightness, not darker.
-background = #fef5eb
-
 #----------------------------------
 # FONTS
 #----------------------------------
