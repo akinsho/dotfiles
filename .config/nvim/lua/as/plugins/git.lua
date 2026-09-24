@@ -39,8 +39,10 @@ return {
     },
     config = function(_, opts)
       highlight.plugin('diffview', {
-        { DiffAddedChar = { bg = 'NONE', fg = { from = 'diffAdded', attr = 'bg', alter = 0.3 } } },
-        { DiffChangedChar = { bg = 'NONE', fg = { from = 'diffChanged', attr = 'bg', alter = 0.3 } } },
+        -- Taken from the foreground, which is where a theme is guaranteed to put the
+        -- diff colour. Reading `bg` only works for themes that tint whole diff lines.
+        { DiffAddedChar = { bg = 'NONE', fg = { from = 'diffAdded' } } },
+        { DiffChangedChar = { bg = 'NONE', fg = { from = 'diffChanged' } } },
         { DiffviewStatusAdded = { link = 'DiffAddedChar' } },
         { DiffviewStatusModified = { link = 'DiffChangedChar' } },
         { DiffviewStatusRenamed = { link = 'DiffChangedChar' } },
