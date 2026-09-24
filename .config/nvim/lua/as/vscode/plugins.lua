@@ -12,8 +12,19 @@ return {
   {
     'kylechui/nvim-surround',
     version = '*',
-    keys = { { 's', mode = 'v' }, '<C-g>s', '<C-g>S', 'ys', 'yss', 'yS', 'cs', 'ds' },
-    opts = { move_cursor = true, keymaps = { visual = 's' } },
+    keys = {
+      { 's', '<Plug>(nvim-surround-visual)', mode = 'x', remap = true, desc = 'surround selection' },
+      '<C-g>s',
+      '<C-g>S',
+      'ys',
+      'yss',
+      'yS',
+      'cs',
+      'ds',
+    },
+    -- As of v4 keymaps are <Plug> mappings rather than `setup` options, see
+    -- `:h nvim-surround.migrating.v3_to_v4`.
+    opts = { move_cursor = true },
   },
   {
     'windwp/nvim-autopairs',
