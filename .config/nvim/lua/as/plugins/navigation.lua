@@ -25,7 +25,10 @@ return {
         { NeoTreeWinSeparator = { fg = { from = 'Normal', attr = 'bg' } } },
         { NeoTreeNormal = { link = 'PanelBackground' } },
         { NeoTreeNormalNC = { link = 'PanelBackground' } },
-        { NeoTreeCursorLine = { link = 'Visual' } },
+        -- Derived from the panel rather than linked to Visual, which some themes make
+        -- nearly indistinguishable from it. This is the only position indicator here,
+        -- since the block cursor is hidden by the handlers below.
+        { NeoTreeCursorLine = { bg = { from = 'PanelBackground', alter = -0.15 } } },
         { NeoTreeRootName = { underline = true } },
         { NeoTreeStatusLine = { link = 'PanelSt' } },
         { NeoTreeTabActive = { bg = { from = 'PanelBackground' }, bold = true } },
