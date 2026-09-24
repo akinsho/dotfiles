@@ -6,7 +6,6 @@ vim.g.clipboard = vim.g.vscode_clipboard
 
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.undofile = true
-vim.opt.undolevels = 1000
 vim.opt.undolevels = 10000
 vim.opt.virtualedit = 'block'
 vim.opt.wildmode = 'longest:full,full'
@@ -17,8 +16,6 @@ local function vscode_action(cmd)
 end
 
 map('n', '<leader>qq', '<Cmd>Tabclose<CR>')
-map('n', ']<space>', "<Cmd>put =repeat(nr2char(10), v:count1) <Bar> '[-1<CR>")
-map('n', '[<space>', "<Cmd>put! =repeat(nr2char(10), v:count1) <Bar> ']+1<CR>")
 map('n', '<localleader>l', '<Cmd>nohlsearch<CR>')
 map('n', '<tab>', vscode_action('workbench.action.nextEditor'))
 map('n', '<S-tab>', vscode_action('workbench.action.previousEditor'))
@@ -34,7 +31,8 @@ map('n', '<leader>ca', vscode_action('editor.action.quickFix'))
 map('n', '<leader>rn', vscode_action('editor.action.rename'))
 map('n', '<leader>rf', vscode_action('editor.action.formatDocument'))
 map('v', '<leader>rf', vscode_action('editor.action.formatSelection'))
-map('n', 'gr', vscode_action('editor.action.goToReferences'))
+-- `grr` rather than `gr`, which is the prefix Neovim's own grn/gra/gri/grt use.
+map('n', 'grr', vscode_action('editor.action.goToReferences'))
 map({ 'n', 'v' }, '<leader>nd', vscode_action('notifications.clearAll'))
 map({ 'n', 'x', 'i' }, '<D-d>', function()
   vscode.with_insert(function() vscode.action('editor.action.addSelectionToNextFindMatch') end)
