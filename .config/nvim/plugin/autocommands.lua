@@ -146,12 +146,17 @@ as.augroup('WindowBehaviours', {
 
 local cursorline_exclude = { 'alpha', 'toggleterm' }
 
+--- A window that sets its own 'winhighlight' is styling itself, and manages
+--- 'cursorline' too: neo-tree enables it deliberately and hides the block cursor,
+--- so forcing it off there leaves nothing marking the current line.
+---@return boolean
+local function styles_itself() return vim.wo.winhighlight ~= '' end
+
 ---@param buf number
 ---@return boolean
 local function should_show_cursorline(buf)
   return vim.bo[buf].buftype ~= 'terminal'
     and not vim.wo.previewwindow
-    and vim.wo.winhighlight == ''
     and vim.bo[buf].filetype ~= ''
     and not vim.tbl_contains(cursorline_exclude, vim.bo[buf].filetype)
 end
@@ -161,11 +166,16 @@ end
 as.augroup('Cursorline', {
   event = { 'WinEnter', 'BufWinEnter' },
   pattern = { '*' },
-  command = function() vim.wo.cursorline = should_show_cursorline(api.nvim_get_current_buf()) end,
+  command = function()
+    if styles_itself() then return end
+    vim.wo.cursorline = should_show_cursorline(api.nvim_get_current_buf())
+  end,
 }, {
   event = { 'WinLeave' },
   pattern = { '*' },
-  command = function() vim.wo.cursorline = false end,
+  command = function()
+    if not styles_itself() then vim.wo.cursorline = false end
+  end,
 })
 
 local save_excluded = {
