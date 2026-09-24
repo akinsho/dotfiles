@@ -63,7 +63,11 @@ g.border = not vim.g.vscode and as.ui.current.border or 'single'
 -- Plugins
 ------------------------------------------------------------------------------------------------------
 local data = fn.stdpath('data')
-local lazypath = data .. '/lazy/lazy.nvim'
+-- The two profiles install different plugin sets, so they get separate roots.
+-- Sharing one meant each launch found the other's plugins missing from its spec and
+-- offered to clean them, and whichever ran last rewrote the shared lockfile.
+local lazy_dir = vim.g.vscode and '/lazy-vscode' or '/lazy'
+local lazypath = data .. lazy_dir .. '/lazy.nvim'
 if not loop.fs_stat(lazypath) then
   fn.system({
     'git',
@@ -87,6 +91,9 @@ require('lazy').setup({
   { import = 'as.plugins', cond = function() return not vim.g.vscode end },
   { import = 'as.vscode.plugins', cond = function() return vim.g.vscode end },
 }, {
+  root = data .. lazy_dir,
+  lockfile = fn.stdpath('config') .. (vim.g.vscode and '/lazy-lock.vscode.json' or '/lazy-lock.json'),
+  state = fn.stdpath('state') .. lazy_dir .. '/state.json',
   ui = { border = g.border },
   defaults = { lazy = true },
   change_detection = { notify = false },
