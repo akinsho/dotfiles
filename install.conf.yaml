@@ -7,6 +7,9 @@
     - ~/.ssh
     - ~/.config
     - ~/projects
+    # Claude reads every .md here. Kept a real directory so machine-specific
+    # rules can sit alongside the linked ones.
+    - ~/.claude/rules
 
 - clean: [ "~" ]
 
@@ -27,6 +30,11 @@
     ~/.config/lazygit: .config/lazygit
     ~/.config/karabiner: .config/karabiner
     ~/.config/aerospace: .config/aerospace
+    # Linked file-by-file, not as a directory: Claude reads every .md in
+    # ~/.claude/rules and other rules are written there by tooling.
+    ~/.claude/rules/:
+      glob: true
+      path: .config/claude/rules/*.md
     ~/.Brewfile:
       if: "[ `uname` = Darwin ]"
       path: macos/Brewfile
