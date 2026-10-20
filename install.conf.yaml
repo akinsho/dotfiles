@@ -35,6 +35,9 @@
     ~/.claude/rules/:
       glob: true
       path: .config/claude/rules/*.md
+    ~/.claude/hooks/:
+      glob: true
+      path: .config/claude/hooks/*.sh
     ~/.Brewfile:
       if: "[ `uname` = Darwin ]"
       path: macos/Brewfile
