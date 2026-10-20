@@ -4,6 +4,24 @@ Comments MUST be timeless. Every comment you write — in code, config, or any
 committed file — is read by someone who has no idea what was true on the day it
 was written. Write for that reader.
 
+## Write almost none
+
+No comment is the default. Add one only when a competent reader of the code would
+otherwise get it wrong, and the comment is the only way to tell them.
+
+You MUST NOT write a comment that:
+
+- Says what the next line says, in prose
+- Labels a block (`# link rules`, `// set up state`) that is already named by the
+  function, key or variable beneath it
+- Explains a language or library feature the reader already knows
+- Pads an entry in a list or config to match the one above it that does have a
+  real comment
+
+Delete rather than reword. A file with two comments that each earn their place
+reads better than one where every section has a sentence over it, because the
+reader learns the comments are worth reading.
+
 ## Never encode a moment in time
 
 You MUST NOT put any of the following in a comment:
@@ -37,8 +55,9 @@ If something genuinely is temporary, it goes in your reply to the user, a commit
 message, a ticket, or a PR description — never in the file. A stale comment is
 worse than no comment, because it is trusted and then misleads.
 
-## Explaining *why* is still encouraged
+## What does earn a comment
 
-This rule bans time-bound facts, not commentary. Non-obvious reasoning, a
-surprising constraint of a library, or the reason an approach was rejected are all
-worth a comment — phrase them as durable statements.
+A surprising constraint of a library, a reason the obvious approach does not work,
+or a non-obvious consequence of a value — things the reader cannot recover from the
+code. Phrase them as durable statements. If you cannot name what the reader would
+get wrong without it, there is nothing to write.
