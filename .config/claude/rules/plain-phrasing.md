@@ -25,6 +25,23 @@ closing zingers read as artificial.
 | `we would have no signal and would find out from customers rather than from a dashboard` | `we would not know` |
 | `The more plausible quiet failure is the reverse of a breakage: … That is what this change exists to avoid.` | `The more likely problem is …` |
 
+## No jargon words
+
+You MUST NOT reach for a specialist word where an everyday one exists. This
+applies to single words, not just sentence shape. Terms from the code — tool
+names, weblab ids, config keys — are fine. Terms borrowed from linguistics,
+rhetoric, or spec documents are not.
+
+| Don't | Do |
+|---|---|
+| `the utterance in requirement #4` | `the wording requirement #4 asks for` |
+| `the postpositive reads oddly` | `the words are the wrong way round` |
+| `this is idempotent` | `running it twice changes nothing` |
+
+The test: would a product or QA colleague say this word out loud? Text written
+here gets forwarded to them, and a word that needs a dictionary makes the message
+useless to its real audience.
+
 ## No metaphors or figurative framing
 
 You MUST NOT dress up a mechanism in figurative language. Name the actual thing
