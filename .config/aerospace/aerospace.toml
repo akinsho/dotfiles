@@ -72,6 +72,8 @@ on-window-detected = [
   {if.app-id = 'md.obsidian', run = 'move-node-to-workspace N'}, # N otes
   {if.app-id = 'dev.zed.Zed', run = 'move-node-to-workspace E'}, # E ditor
   {if.app-id = 'com.microsoft.VSCode', run = 'move-node-to-workspace E'},
+  {if.app-id = 'com.google.android.studio', run = 'move-node-to-workspace E'},
+  {if.app-id = 'com.jetbrains.intellij', run = 'move-node-to-workspace E'},
   {if.app-id = 'com.mitchellh.ghostty', run = 'move-node-to-workspace T'}, # T erminal
   # Launchers and utility panels position themselves. Floating keeps them out of
   # the tiling tree so they open where the app intends.
