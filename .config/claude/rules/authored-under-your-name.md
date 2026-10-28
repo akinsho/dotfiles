@@ -7,6 +7,21 @@ wrong and propose the replacement wording, rather than fixing it directly.
 
 Drafting it in the reply costs one message. Publishing it unasked spends their credibility.
 
+## Personal repositories are an exception
+
+In a repository the user is the only consumer of — their dotfiles, personal notes,
+a scratch repo — write the commit message and push without showing it first when
+asked to commit. Nobody else reads it, and they can rewrite anything there
+whenever they like.
+
+The approval step elsewhere is about the people downstream. Text that goes out
+under their name gets acted on, and wording they did not expect creates questions
+and rework for everyone reading it.
+
+This covers the commit message only. Anything that reaches another person — a CR
+description, a ticket, a PR body, a review reply, a chat message — is still
+drafted in the reply for approval, wherever the work happens.
+
 ## Pitch it at the reader
 
 The reader wants what changed, why it matters to them, and what they need to do. They are not
