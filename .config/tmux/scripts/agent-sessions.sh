@@ -6,6 +6,7 @@
 #   <agent>_list            prints "pane_id<TAB>cwd<TAB>session_id" per live session
 #   <agent>_resumable <id>  succeeds if the session can be resumed
 #   <agent>_resume <id>     prints the command that resumes it
+#   <agent>_fork <id>       prints the command that resumes a copy of it
 set -euo pipefail
 
 agents=(claude)
@@ -36,6 +37,10 @@ claude_resume() {
 	printf 'claude --resume %s' "$1"
 }
 
+claude_fork() {
+	printf 'claude --resume %s --fork-session' "$1"
+}
+
 save() {
 	local agent pane cwd sid target tmp
 	tmp=$(mktemp "$state.XXXXXX")
@@ -64,11 +69,30 @@ restore() {
 	done <"$state"
 }
 
+# Opens the conversation running in <pane_id> as a copy in a split of <target>.
+fork() {
+	local source="$1" target="$2" agent pane cwd sid new
+	for agent in "${agents[@]}"; do
+		while IFS=$'\t' read -r pane cwd sid; do
+			[ "$pane" = "$source" ] || continue
+			if ! "${agent}_resumable" "$sid"; then
+				tmux display-message "No messages to fork yet"
+				return 0
+			fi
+			new=$(tmux split-window -h -t "$target" -c "$cwd" -P -F '#{pane_id}')
+			tmux send-keys -t "$new" "$("${agent}_fork" "$sid")" Enter
+			return 0
+		done < <("${agent}_list")
+	done
+	tmux display-message "No agent session in this pane"
+}
+
 case "${1:-}" in
 save) save ;;
 restore) restore ;;
+fork) fork "${2:?pane id required}" "${3:?target pane id required}" ;;
 *)
-	echo "usage: $0 save|restore" >&2
+	echo "usage: $0 save|restore|fork <pane_id> <target_pane_id>" >&2
 	exit 2
 	;;
 esac
