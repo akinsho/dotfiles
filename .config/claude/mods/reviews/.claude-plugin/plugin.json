@@ -1,0 +1,33 @@
+{
+  "name": "reviews",
+  "version": "0.1.0",
+  "description": "A pane of your open pull requests or code reviews, and the ones waiting on you",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "provider": {
+      "type": "string",
+      "title": "Review source",
+      "description": "auto picks crux when the cr CLI is installed, else github when gh is, else none; github reads pull requests through gh; crux reads Amazon code reviews through builder-mcp",
+      "default": "auto",
+      "options": [
+        "auto",
+        "github",
+        "crux",
+        "off"
+      ]
+    },
+    "user": {
+      "type": "string",
+      "title": "Login",
+      "description": "Whose reviews to list on crux; empty uses $USER",
+      "default": ""
+    },
+    "refreshMinutes": {
+      "type": "number",
+      "title": "Refresh interval (minutes)",
+      "default": 5,
+      "description": "How often the pane fetches again"
+    }
+  },
+  "license": "MIT"
+}

@@ -42,6 +42,9 @@
     ~/.claude/skills/:
       glob: true
       path: .config/claude/skills/*
+    # Claude Code loads a plugin folder in ~/.claude/skills as a mod.
+    ~/.claude/skills/reviews: .config/claude/mods/reviews
+    ~/.claude/skills/git-status: .config/claude/mods/git-status
     ~/.Brewfile:
       if: "[ `uname` = Darwin ]"
       path: macos/Brewfile
