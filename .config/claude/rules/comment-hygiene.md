@@ -61,3 +61,8 @@ A surprising constraint of a library, a reason the obvious approach does not wor
 or a non-obvious consequence of a value — things the reader cannot recover from the
 code. Phrase them as durable statements. If you cannot name what the reader would
 get wrong without it, there is nothing to write.
+
+## Copied comments are new claims
+
+A comment copied from nearby code says something about the new place too. Check
+it is true there before keeping it, and cut it if the reason does not carry over.
