@@ -1,7 +1,0 @@
-{
-  "name": "git-status",
-  "version": "0.1.0",
-  "description": "Repository, branch, worktree and uncommitted changes at the end of the hint line under the prompt",
-  "license": "MIT",
-  "types": "./types/index.d.ts"
-}
