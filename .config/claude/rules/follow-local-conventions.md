@@ -13,7 +13,8 @@ package and team do things, and do it their way.
   shape: file layout, where styles live, naming, how tests are set up and mocked.
   When there are several, copy the newest or most complete one, and check the
   one you copy against the others for anything it lacks, such as accessibility,
-  safe areas or rotation.
+  safe areas or rotation. Before leaving out something the example does, find
+  out why it is there.
 - **The team's docs.** Best-practice pages linked from the package or from the
   team's wiki and chat channels.
 - **History.** `git log` on the destination branch shows how commit subjects,

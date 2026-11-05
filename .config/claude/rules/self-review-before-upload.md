@@ -18,6 +18,12 @@ something the tests no longer exercise.
   lookup that finds no match, a loop that runs zero times.
 - **Check your new comments are true**, and describe the rule rather than what a
   list or setting happens to hold today. See [[comment-hygiene]].
+- **Check the claims behind your decisions.** List what each choice rests on —
+  "the framework already handles this", "nothing else calls it" — including
+  claims made earlier in the work, and confirm each in the code, source or docs.
+  Report any you could not confirm as unconfirmed.
+- **Check each new test fails without the change.** Run it against the code
+  before the change. A test that passes either way checks nothing.
 - **Run the tests, lint and type-check** for the area you touched. If something
   fails that also fails without your change, confirm that by checking the base,
   and say so.
