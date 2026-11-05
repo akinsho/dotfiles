@@ -15,6 +15,8 @@ package and team do things, and do it their way.
   one you copy against the others for anything it lacks, such as accessibility,
   safe areas or rotation. Before leaving out something the example does, find
   out why it is there.
+  Before writing or copying a helper, check whether the framework or a library
+  the package already uses provides one, and prefer the built-in.
 - **The team's docs.** Best-practice pages linked from the package or from the
   team's wiki and chat channels.
 - **History.** `git log` on the destination branch shows how commit subjects,
