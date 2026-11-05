@@ -10,11 +10,12 @@ const COLUMNS = 48
 const LOOK = { title: 'Reviews', backgroundColor: 'transparent' } as const
 
 // Each review takes four lines, each section a header of three and a gap, and
-// the frame two.
+// the frame two; the first section's header has no rule above it, the frame's
+// top edge standing in for it.
 function height(lists: Lists): number {
   const sections = [lists.waiting, lists.mine].filter(list => list.length > 0)
 
-  return sections.reduce((rows, list) => rows + 4 + list.length * 4, 3)
+  return sections.reduce((rows, list) => rows + 4 + list.length * 4, 2)
 }
 const reviews = atom({ plugin: 'reviews', key: 'reviews' } as const, null, {
   shape: 'reviews-1',
@@ -181,11 +182,13 @@ export const register: Register = (on, options) => {
       </Box>
     )
 
+    const waiting = state?.waiting ?? []
+    const mine = state?.mine ?? []
     const rule = '─'.repeat(Math.max(8, e.props.bodyColumns - 4))
-    const section = (title: string, list: Review[]) =>
+    const section = (title: string, list: Review[], isFirst: boolean) =>
       list.length > 0 && (
         <Box flexDirection="column" marginBottom={1}>
-          <Text color="claude">{rule}</Text>
+          {!isFirst && <Text color="claude">{rule}</Text>}
           <Text bold color="claude">
             {title.toUpperCase()} <Text dimColor>{list.length}</Text>
           </Text>
@@ -201,8 +204,8 @@ export const register: Register = (on, options) => {
             Last refresh failed: {state.error}
           </Text>
         )}
-        {section('Waiting on you', state?.waiting ?? [])}
-        {section('Yours', state?.mine ?? [])}
+        {section('Waiting on you', waiting, true)}
+        {section('Yours', mine, waiting.length === 0)}
         <Button key="refresh" label="refresh" hotkey="r" dimColor onPress={() => void refresh($, settings)} />
       </Box>
     )
