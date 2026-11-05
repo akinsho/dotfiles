@@ -27,8 +27,8 @@ Word rules so they hold in any job, team or stack. Name the general practice —
 tools, product names and team specifics out unless the rule is about that tool.
 
 Write the change once the user agrees. Rules live in the dotfiles repo, so they
-are changed in a worktree and landed per [[git-worktrees]], and new files need
-linking into `~/.claude/rules/`.
+are changed in a worktree, landed per [[git-worktrees]] and pushed, so they
+persist on every machine. New files need linking into `~/.claude/rules/`.
 
 ## Why
 
