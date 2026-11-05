@@ -26,6 +26,9 @@ Never include:
 - Notes on what you tried first, or what you considered and rejected
 - Attribution or co-authorship trailers
 
+Trailers the destination repo's history uses, such as a ticket link, are kept.
+Follow that repo's format.
+
 | Don't | Do |
 |---|---|
 | `refactor(nvim): tidy vscode mappings and options`<br><br>`- moved mappings into the vscode profile`<br>`- removed the unused options table`<br>`- renamed the helper for clarity` | `refactor(nvim): tidy vscode mappings and options` |
