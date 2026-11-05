@@ -98,16 +98,20 @@ export function parseCruxTable(markdown: string): Review[] {
 }
 
 // builder-mcp answers each input as its own JSON object, sometimes several in
-// one text block, each holding the page's markdown under `content.content`.
+// one text block, each holding the page's markdown under `content.content`, or
+// `content.error` when the page could not be read.
 export function cruxPages(text: string): string[] {
   const pages: string[] = []
   for (const chunk of text.split(/(?<=\})(?=\{"content")/)) {
+    let parsed: { content?: { content?: string; error?: string } } | undefined
     try {
-      const parsed = JSON.parse(chunk) as { content?: { content?: string } }
-      pages.push(parsed.content?.content ?? chunk)
+      parsed = JSON.parse(chunk)
     } catch {
       pages.push(chunk)
+      continue
     }
+    if (parsed?.content?.error) throw new Error(parsed.content.error)
+    pages.push(parsed?.content?.content ?? chunk)
   }
 
   return pages

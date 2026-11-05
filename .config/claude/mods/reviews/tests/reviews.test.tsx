@@ -44,6 +44,11 @@ test('a CRUX dashboard row reads as a review', async () => {
   expect(parseCruxTable(waiting)[0]?.approvedBy).toEqual([])
 })
 
+test('a page builder-mcp could not read fails the fetch', async () => {
+  const failed = JSON.stringify({ content: { input: 'x', error: 'Max retry attempts (2) exceeded' } })
+  expect(() => cruxPages(failed)).toThrow('Max retry attempts')
+})
+
 test('a GitHub search result reads as a review', async () => {
   const pr = {
     number: 7,
