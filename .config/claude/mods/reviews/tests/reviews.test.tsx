@@ -1,3 +1,4 @@
+import type { On } from 'claude-code'
 import { expect, mock, test } from 'claude-code/testing'
 
 import { cruxPages, parseCruxTable, parseGithub } from '../hooks/providers'
@@ -80,6 +81,9 @@ test('a GitHub search result reads as a review', async () => {
 test('the crux pane lists both sections', { options: { provider: 'crux', user: 'akinzo' } }, async ($, on) => {
   const clock = mock.clock(on)
   mock.env(on, {})
+  mock.store(on)
+  on('ui.status', () => ({ value: undefined }))
+  on('ui.toast', () => ({ value: undefined }))
   on('command.register', () => ({ value: { command: 'reviews' } }))
   on('ui.open', () => ({ value: { isPlaced: true } }))
   on('ui.close', () => ({ value: undefined }))
@@ -97,23 +101,98 @@ test('the crux pane lists both sections', { options: { provider: 'crux', user: '
   await ui.unmount()
 })
 
-test('an empty dashboard opens no pane', { options: { provider: 'crux', user: 'akinzo' } }, async ($, on) => {
-  const clock = mock.clock(on)
-  mock.env(on, {})
+const BAND = {
+  plugin: 'reviews',
+  component: 'AbovePrompt',
+  props: { hasSurvey: false, isWorking: false, maxRows: 10, bodyColumns: 80, scroll: { offset: 0, bodyRows: 10 }, view: {} },
+} as const
+
+function crux(on: On, text: string) {
   const opened: string[] = []
+  const toasts: string[] = []
+  const statuses: (string | undefined)[] = []
   on('command.register', () => ({ value: { command: 'reviews' } }))
   on('ui.open', (_, e) => {
     opened.push(e.id)
     return { value: { isPlaced: true } }
   })
   on('ui.close', () => ({ value: undefined }))
+  on('ui.toast', (_, e) => {
+    toasts.push(e.text)
+    return { value: undefined }
+  })
+  on('ui.status', (_, e) => {
+    statuses.push(e.text)
+    return { value: undefined }
+  })
   on('session.start', (_, e) => ({ cwd: e.cwd }))
-  on('mcp.call', () => ({ value: { content: [{ type: 'text', text: '' }], isError: false } }))
+  on('mcp.call', () => ({ value: { content: [{ type: 'text', text }], isError: false } }))
+
+  return { opened, toasts, statuses }
+}
+
+test('reviews show as a status and a band, and the pane waits for /reviews', { options: { provider: 'crux', user: 'akinzo' } }, async ($, on) => {
+  const clock = mock.clock(on)
+  mock.env(on, {})
+  mock.store(on)
+  const seen = crux(on, MCP_TEXT)
 
   await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
   await clock.settle()
 
-  expect(opened).toEqual([])
+  expect(seen.opened).toEqual([])
+  expect(seen.statuses.at(-1)).toBe('reviews: 1 waiting on you · 1 yours')
+  const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await band.find({ type: 'Text', text: /1 review waiting on you/ })).toBeTruthy()
+  await band.unmount()
+
+  await $.command.run({ command: 'reviews', args: '' })
+  expect(seen.opened).toEqual(['reviews'])
+})
+
+test('a review waiting on you is toasted once, whichever session saw it first', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 1 } }, async ($, on) => {
+  const clock = mock.clock(on)
+  mock.env(on, {})
+  mock.store(on, { toasted: [] })
+  const seen = crux(on, MCP_TEXT)
+
+  await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
+  await clock.settle()
+  await clock.advance(60_000)
+
+  expect(seen.toasts).toEqual(['Review waiting on you: fix: open links'])
+})
+
+test('a review another session already toasted is not toasted again', { options: { provider: 'crux', user: 'akinzo' } }, async ($, on) => {
+  const clock = mock.clock(on)
+  mock.env(on, {})
+  mock.store(on, { toasted: ['CR-319168028'] })
+  const seen = crux(on, MCP_TEXT)
+
+  await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
+  await clock.settle()
+
+  expect(seen.toasts).toEqual([])
+})
+
+test('an empty dashboard clears the status and draws no band', { options: { provider: 'crux', user: 'akinzo' } }, async ($, on) => {
+  const clock = mock.clock(on)
+  mock.env(on, {})
+  mock.store(on)
+  const seen = crux(on, '')
+  on('ui.render', ($, e) => {
+    const { Text } = $.ui.resolve(e)
+    return <Text>engine</Text>
+  })
+
+  await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
+  await clock.settle()
+
+  expect(seen.opened).toEqual([])
+  expect(seen.statuses.at(-1)).toBeUndefined()
+  const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
+  expect(await band.find({ type: 'Text', text: /waiting on you/ })).toBeFalsy()
+  await band.unmount()
 })
 
 test('failed fetches back off, then stop until a refresh by hand', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 1 } }, async ($, on) => {
@@ -151,6 +230,9 @@ test('failed fetches back off, then stop until a refresh by hand', { options: { 
 test('a successful fetch keeps the regular interval', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 1 } }, async ($, on) => {
   const clock = mock.clock(on)
   mock.env(on, {})
+  mock.store(on)
+  on('ui.status', () => ({ value: undefined }))
+  on('ui.toast', () => ({ value: undefined }))
   let calls = 0
   on('command.register', () => ({ value: { command: 'reviews' } }))
   on('ui.open', () => ({ value: { isPlaced: true } }))

@@ -26,14 +26,13 @@ type Settings = { provider: string; user: string; intervalMs: number }
 
 let source: Provider | undefined
 let isFetching = false
-let isDismissed = false
-let seen = new Set<string>()
 let failures = 0
 let pending: Timer | undefined
 
 // After a failed fetch the next one waits twice as long as the last, and after
 // MAX_FAILURES in a row the pane stops fetching until a refresh by hand.
 const MAX_FAILURES = 5
+const TOASTED = 'toasted'
 
 async function onPath($: EngineInterface, command: string): Promise<boolean> {
   const ran = await $.process
@@ -73,18 +72,30 @@ async function fetchCrux($: EngineInterface, user: string): Promise<Lists> {
   return { mine: parseCruxTable(mine), waiting: parseCruxTable(waiting) }
 }
 
-// Opens the pane when there is something to show and closes it when there is
-// not. A pane the person closed stays closed until a new review waits on them.
-async function place($: EngineInterface, lists: Lists) {
-  const waiting = lists.waiting.map(review => review.id)
-  if (waiting.some(id => !seen.has(id))) isDismissed = false
-  seen = new Set(waiting)
+// Every session shows the counts; the pane opens only on /reviews or the
+// band's button. The store is shared by all sessions, so a review that starts
+// waiting on the person is toasted once rather than once per session.
+async function announce($: EngineInterface, lists: Lists) {
+  const waiting = lists.waiting.length
+  const mine = lists.mine.length
+  const parts = [waiting > 0 && `${waiting} waiting on you`, mine > 0 && `${mine} yours`].filter(Boolean)
+  $.ui.status(parts.length > 0 ? `reviews: ${parts.join(' · ')}` : undefined)
 
-  if (lists.mine.length + lists.waiting.length === 0) {
-    await $.ui.close({ id: PANE })
-  } else if (!isDismissed) {
-    await $.ui.open({ id: PANE, ...LOOK, rows: height(lists), columns: COLUMNS })
+  if (waiting + mine === 0) await $.ui.close({ id: PANE })
+
+  const ids = lists.waiting.map(review => review.id)
+  const toasted = new Set((await $.store.get(TOASTED)) as string[] | undefined)
+  const fresh = lists.waiting.filter(review => !toasted.has(review.id))
+  if (fresh.length > 0) {
+    $.ui.toast(
+      fresh.length === 1 ? `Review waiting on you: ${fresh[0]!.title}` : `${fresh.length} new reviews waiting on you`,
+    )
   }
+  await $.store.set(TOASTED, ids)
+}
+
+function openPane($: EngineInterface, lists: Lists) {
+  return $.ui.open({ id: PANE, ...LOOK, focus: true, rows: height(lists), columns: COLUMNS })
 }
 
 function schedule($: EngineInterface, settings: Settings, ms: number) {
@@ -102,7 +113,7 @@ async function refresh($: EngineInterface, settings: Settings) {
     const lists = source === 'crux' ? await fetchCrux($, user) : await fetchGithub($)
     const fetchedAt = await $.clock.now()
     await update($, reviews, () => ({ ...lists, fetchedAt }))
-    await place($, lists)
+    await announce($, lists)
     failures = 0
     schedule($, settings, settings.intervalMs)
   } catch (error) {
@@ -157,22 +168,35 @@ export const register: Register = (on, options) => {
   })
 
   on('command.run', { command: 'reviews' }, async $ => {
-    isDismissed = false
     await refreshNow($, settings)
     const state = await read($, reviews)
     if (state?.error) return { text: `Could not read ${source} reviews: ${state.error}` }
     if (!state || state.mine.length + state.waiting.length === 0) {
       return { text: 'No open reviews, and none waiting on you.' }
     }
-    await $.ui.open({ id: PANE, ...LOOK, focus: true, rows: height(state), columns: COLUMNS })
+    await openPane($, state)
 
     return { text: 'Reviews pane opened.' }
   })
 
-  on('ui.close', { id: PANE }, async ($, e, next) => {
-    if (e.origin.kind === 'person') isDismissed = true
+  on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
+    const state = await read($, reviews)
+    const waiting = state?.waiting ?? []
+    if (e.props.hasSurvey || !state || waiting.length === 0) return next(e)
+    const { Box, Button, Text } = $.ui.resolve(e)
+    const [first] = waiting
 
-    return next(e)
+    return (
+      <Box gap={1}>
+        <Text bold color="warning">
+          ● {waiting.length === 1 ? '1 review' : `${waiting.length} reviews`} waiting on you
+        </Text>
+        {waiting.length === 1 && first && (
+          <Text wrap="truncate-end">{first.title}</Text>
+        )}
+        <Button key="open" label="open" dimColor onPress={() => void openPane($, state)} />
+      </Box>
+    )
   })
 
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, e) => {
