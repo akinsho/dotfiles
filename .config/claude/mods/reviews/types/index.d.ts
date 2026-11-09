@@ -13,6 +13,7 @@ export type Reviews = {
   waiting: Review[]
   fetchedAt: number
   error?: string
+  isPaused?: boolean
 }
 
 declare module 'claude-code' {

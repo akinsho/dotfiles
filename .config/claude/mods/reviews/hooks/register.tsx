@@ -1,5 +1,5 @@
 import { atom, read, update } from 'claude-code'
-import type { EngineInterface, Register } from 'claude-code'
+import type { EngineInterface, Register, Timer } from 'claude-code'
 
 import type { Review } from '../types'
 import { cruxPages, GITHUB_QUERY, parseCruxTable, parseGithub } from './providers'
@@ -22,12 +22,18 @@ const reviews = atom({ plugin: 'reviews', key: 'reviews' } as const, null, {
 })
 
 type Provider = 'github' | 'crux'
-type Settings = { provider: string; user: string }
+type Settings = { provider: string; user: string; intervalMs: number }
 
 let source: Provider | undefined
 let isFetching = false
 let isDismissed = false
 let seen = new Set<string>()
+let failures = 0
+let pending: Timer | undefined
+
+// After a failed fetch the next one waits twice as long as the last, and after
+// MAX_FAILURES in a row the pane stops fetching until a refresh by hand.
+const MAX_FAILURES = 5
 
 async function onPath($: EngineInterface, command: string): Promise<boolean> {
   const ran = await $.process
@@ -81,27 +87,46 @@ async function place($: EngineInterface, lists: Lists) {
   }
 }
 
+function schedule($: EngineInterface, settings: Settings, ms: number) {
+  pending?.cancel()
+  pending = $.clock.after(ms, () => void refresh($, settings))
+}
+
 async function refresh($: EngineInterface, settings: Settings) {
   if (isFetching || !source) return
   isFetching = true
+  pending?.cancel()
+  pending = undefined
   try {
     const user = settings.user || (await $.env.get('USER')) || ''
     const lists = source === 'crux' ? await fetchCrux($, user) : await fetchGithub($)
     const fetchedAt = await $.clock.now()
     await update($, reviews, () => ({ ...lists, fetchedAt }))
     await place($, lists)
+    failures = 0
+    schedule($, settings, settings.intervalMs)
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
     const fetchedAt = await $.clock.now()
+    failures += 1
+    const isPaused = failures >= MAX_FAILURES
     await update($, reviews, last => ({
       mine: last?.mine ?? [],
       waiting: last?.waiting ?? [],
       fetchedAt,
       error: message.split('\n')[0],
+      isPaused,
     }))
+    if (!isPaused) schedule($, settings, settings.intervalMs * 2 ** failures)
   } finally {
     isFetching = false
   }
+}
+
+// A refresh by hand starts the backoff over.
+function refreshNow($: EngineInterface, settings: Settings) {
+  failures = 0
+  return refresh($, settings)
 }
 
 async function openUrl($: EngineInterface, url: string) {
@@ -114,6 +139,7 @@ export const register: Register = (on, options) => {
   const settings: Settings = {
     provider: String(options.provider ?? 'auto'),
     user: String(options.user ?? ''),
+    intervalMs: minutes * 60_000,
   }
 
   on('session.start', async ($, e, next) => {
@@ -125,15 +151,14 @@ export const register: Register = (on, options) => {
       name: 'reviews',
       description: 'Show your open reviews and the ones waiting on you',
     })
-    void refresh($, settings)
-    $.clock.every(minutes * 60_000, () => void refresh($, settings))
+    void refreshNow($, settings)
 
     return started
   })
 
   on('command.run', { command: 'reviews' }, async $ => {
     isDismissed = false
-    await refresh($, settings)
+    await refreshNow($, settings)
     const state = await read($, reviews)
     if (state?.error) return { text: `Could not read ${source} reviews: ${state.error}` }
     if (!state || state.mine.length + state.waiting.length === 0) {
@@ -201,12 +226,12 @@ export const register: Register = (on, options) => {
       <Box flexDirection="column" borderStyle="single" borderColor="subtle" paddingX={1}>
         {state?.error && (
           <Text dimColor wrap="truncate-end">
-            Last refresh failed: {state.error}
+            {state.isPaused ? 'Stopped refreshing' : 'Last refresh failed'}: {state.error}
           </Text>
         )}
         {section('Waiting on you', waiting, true)}
         {section('Yours', mine, waiting.length === 0)}
-        <Button key="refresh" label="refresh" hotkey="r" dimColor onPress={() => void refresh($, settings)} />
+        <Button key="refresh" label="refresh" hotkey="r" dimColor onPress={() => void refreshNow($, settings)} />
       </Box>
     )
   })
