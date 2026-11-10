@@ -74,4 +74,8 @@ bin/
 .ccls-cache/
 .project
 build/
+*-kiro.json
+**/.claude/settings.local.json
+**/.claude/worktrees/
+
 # vim:filetype=conf
