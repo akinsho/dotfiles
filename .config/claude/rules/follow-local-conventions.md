@@ -17,6 +17,10 @@ package and team do things, and do it their way.
   out why it is there.
   Before writing or copying a helper, check whether the framework or a library
   the package already uses provides one, and prefer the built-in.
+  When the package does the same thing two ways, use the one newer code uses and
+  the package endorses, not the more common one. Look for anything that marks one
+  way as legacy, deprecated or unapproved, wherever it appears in the code or docs,
+  and treat it as a reason to use the other.
 - **The team's docs.** Best-practice pages linked from the package or from the
   team's wiki and chat channels.
 - **History.** `git log` on the destination branch shows how commit subjects,
