@@ -30,6 +30,12 @@ Write the change once the user agrees. Rules live in the dotfiles repo, so they
 are changed in a worktree, landed per [[git-worktrees]] and pushed, so they
 persist on every machine. New files need linking into `~/.claude/rules/`.
 
+## Keep memories in step with the rules
+
+When a rule is added or changed, look through the saved memories for any it
+contradicts or overlaps, and update or delete them in the same change. When a
+memory and a rule disagree at any time, follow the rule and fix the memory.
+
 ## Why
 
 The user should not have to notice a pattern, ask for a rule, and then word it.
