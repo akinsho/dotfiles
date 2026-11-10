@@ -116,3 +116,15 @@ export function cruxPages(text: string): string[] {
 
   return pages
 }
+
+// CodeReviewReadActions' get-approval-status reads the latest revision unless
+// told otherwise, so an approval listed there still stands.
+export function approvedLatest(text: string, user: string): boolean {
+  const parsed = JSON.parse(text) as {
+    content?: { data?: { allApprovals?: { id: string; type: string }[] } }
+  }
+
+  return (parsed.content?.data?.allApprovals ?? []).some(
+    approval => approval.type === 'USER' && approval.id === user,
+  )
+}

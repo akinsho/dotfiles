@@ -107,7 +107,7 @@ const BAND = {
   props: { hasSurvey: false, isWorking: false, maxRows: 10, bodyColumns: 80, scroll: { offset: 0, bodyRows: 10 }, view: {} },
 } as const
 
-function crux(on: On, text: string) {
+function crux(on: On, answer: string | ((tool: string) => string)) {
   const opened: string[] = []
   const toasts: string[] = []
   const statuses: (string | undefined)[] = []
@@ -126,7 +126,10 @@ function crux(on: On, text: string) {
     return { value: undefined }
   })
   on('session.start', (_, e) => ({ cwd: e.cwd }))
-  on('mcp.call', () => ({ value: { content: [{ type: 'text', text }], isError: false } }))
+  on('mcp.call', (_, e) => {
+    const text = typeof answer === 'string' ? answer : answer(e.tool)
+    return { value: { content: [{ type: 'text', text }], isError: false } }
+  })
 
   return { opened, toasts, statuses }
 }
@@ -193,6 +196,44 @@ test('an empty dashboard clears the status and draws no band', { options: { prov
   const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
   expect(await band.find({ type: 'Text', text: /waiting on you/ })).toBeFalsy()
   await band.unmount()
+})
+
+const APPROVED_BY_ME =
+  JSON.stringify({ content: { status: 'success', content: FROM_USER } }) +
+  JSON.stringify({
+    content: { status: 'success', content: TO_USER.replace('|[\\[MShopRufusExperience\\] fix: open links][2]||', '|[\\[MShopRufusExperience\\] fix: open links][2]|__ akinzo|') },
+  })
+
+function approvedBy(approvers: string[]) {
+  return (tool: string) =>
+    tool === 'CodeReviewReadActions'
+      ? JSON.stringify({ content: { status: 'success', data: { allApprovals: approvers.map(id => ({ id, type: 'USER' })) } } })
+      : APPROVED_BY_ME
+}
+
+test('a review approved on its latest revision no longer waits on you', { options: { provider: 'crux', user: 'akinzo' } }, async ($, on) => {
+  const clock = mock.clock(on)
+  mock.env(on, {})
+  mock.store(on)
+  const seen = crux(on, approvedBy(['akinzo']))
+
+  await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
+  await clock.settle()
+
+  expect(seen.statuses.at(-1)).toBe('reviews: 1 yours')
+  expect(seen.toasts).toEqual([])
+})
+
+test('a review approved on an earlier revision still waits on you', { options: { provider: 'crux', user: 'akinzo' } }, async ($, on) => {
+  const clock = mock.clock(on)
+  mock.env(on, {})
+  mock.store(on)
+  const seen = crux(on, approvedBy([]))
+
+  await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
+  await clock.settle()
+
+  expect(seen.statuses.at(-1)).toBe('reviews: 1 waiting on you · 1 yours')
 })
 
 test('failed fetches back off, then stop until a refresh by hand', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 1 } }, async ($, on) => {

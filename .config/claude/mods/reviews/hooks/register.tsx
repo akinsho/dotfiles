@@ -2,7 +2,7 @@ import { atom, read, update } from 'claude-code'
 import type { EngineInterface, Register, Timer } from 'claude-code'
 
 import type { Review } from '../types'
-import { cruxPages, GITHUB_QUERY, parseCruxTable, parseGithub } from './providers'
+import { approvedLatest, cruxPages, GITHUB_QUERY, parseCruxTable, parseGithub } from './providers'
 import type { Lists } from './providers'
 
 const PANE = 'reviews'
@@ -68,8 +68,31 @@ async function fetchCrux($: EngineInterface, user: string): Promise<Lists> {
     .join('')
   if (result.isError) throw new Error(text.slice(0, 200) || 'builder-mcp failed')
   const [mine = '', waiting = ''] = cruxPages(text)
+  const pending = await Promise.all(
+    parseCruxTable(waiting).map(async review =>
+      review.approvedBy.includes(user) && (await isApproved($, review.id, user)) ? undefined : review,
+    ),
+  )
 
-  return { mine: parseCruxTable(mine), waiting: parseCruxTable(waiting) }
+  return { mine: parseCruxTable(mine), waiting: pending.filter(review => review !== undefined) }
+}
+
+// The dashboard's approvers are checked against the latest revision, so a CR
+// that gained a revision since the person approved it stays waiting on them.
+async function isApproved($: EngineInterface, cr: string, user: string): Promise<boolean> {
+  const result = await $.mcp
+    .call('builder-mcp', 'CodeReviewReadActions', { action: 'get-approval-status', cr })
+    .catch(() => undefined)
+  if (!result || result.isError) return false
+  const text = result.content
+    .map(block => ('text' in block && typeof block.text === 'string' ? block.text : ''))
+    .join('')
+
+  try {
+    return approvedLatest(text, user)
+  } catch {
+    return false
+  }
 }
 
 // Every session shows the counts; the pane opens only on /reviews or the
