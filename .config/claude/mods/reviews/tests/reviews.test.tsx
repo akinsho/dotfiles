@@ -212,19 +212,19 @@ test('failed fetches back off, then stop until a refresh by hand', { options: { 
   await clock.settle()
   expect(calls).toBe(1)
 
-  // Retries wait 2, 4, 8 and 16 minutes; the fifth failure stops the pane.
-  for (const minutes of [2, 4, 8, 16]) {
+  // Retries wait 2 and 4 minutes; the third failure stops the pane.
+  for (const minutes of [2, 4]) {
     await clock.advance(minutes * 60_000 - 1)
     const before = calls
     await clock.advance(1)
     expect(calls).toBe(before + 1)
   }
-  expect(calls).toBe(5)
+  expect(calls).toBe(3)
   await clock.advance(24 * 60 * 60_000)
-  expect(calls).toBe(5)
+  expect(calls).toBe(3)
 
   await $.command.run({ command: 'reviews', args: '' })
-  expect(calls).toBe(6)
+  expect(calls).toBe(4)
 })
 
 test('a successful fetch keeps the regular interval', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 1 } }, async ($, on) => {

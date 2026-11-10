@@ -31,7 +31,7 @@ let pending: Timer | undefined
 
 // After a failed fetch the next one waits twice as long as the last, and after
 // MAX_FAILURES in a row the pane stops fetching until a refresh by hand.
-const MAX_FAILURES = 5
+const MAX_FAILURES = 3
 const TOASTED = 'toasted'
 
 async function onPath($: EngineInterface, command: string): Promise<boolean> {
