@@ -1,8 +1,8 @@
 # Self-Review Before Upload
 
-Before uploading a CR or PR, review it yourself. Uploading means any `cr` or
-`git push` that puts a revision where others can see it — a draft, a new
-revision of an existing CR, or a first upload alike.
+Before uploading a pull request or code review, review it yourself. Uploading
+means any push that puts a revision where others can see it — a draft, a new
+revision of an existing review, or a first upload alike.
 
 Passing tests are not a review. A change can pass every test and still break
 something the tests no longer exercise.
@@ -35,11 +35,11 @@ it found nothing, say what you checked.
 
 | Don't | Do |
 |---|---|
-| `All 813 tests pass, raising the CR.` | `Tests pass. Review found two modal tests now rendering an empty popover; pointed them at the full list. Raising the CR.` |
+| `All 813 tests pass, raising the PR.` | `Tests pass. Review found two modal tests now rendering an empty popover; pointed them at the full list. Raising the PR.` |
 
 ## Why
 
-The person reviewing the CR is the second check, not the first. Anything you
+The person reviewing the change is the second check, not the first. Anything you
 could have caught yourself costs them a review round, and the issues most
 likely to slip past them are the ones the diff doesn't show — a caller in
 another file, or a test that silently stopped testing.

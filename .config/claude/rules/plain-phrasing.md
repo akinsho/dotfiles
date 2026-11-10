@@ -29,7 +29,7 @@ closing zingers read as artificial.
 
 You MUST NOT reach for a specialist word where an everyday one exists. This
 applies to single words, not just sentence shape. Terms from the code — tool
-names, weblab ids, config keys — are fine. Terms borrowed from linguistics,
+names, flag names, config keys — are fine. Terms borrowed from linguistics,
 rhetoric, or spec documents are not.
 
 | Don't | Do |
@@ -81,10 +81,10 @@ and say what it does.
 
 | Don't | Do |
 |---|---|
-| `Our lever is the weblab.` | `Set the weblab back to control.` |
+| `Our lever is the feature flag.` | `Turn the feature flag off.` |
 | `The groundwork goes in and is verified on its own` | `The backend change goes in and is checked on its own` |
 | `a single switch with a known-good backend behind it` | `just the switch, with the backend already checked` |
-| `every new code path sits behind the gate` | `all the new code only runs when the weblab is on` |
+| `every new code path sits behind the gate` | `all the new code only runs when the flag is on` |
 | `Doing it now separates the risk` | `Doing it now keeps the two changes apart` |
 
 ## Why

@@ -1,6 +1,6 @@
 # Text Published Under The User's Name
 
-CR descriptions, commit messages, tickets, PR bodies, review replies, chat messages — anything
+Commit messages, tickets, PR and code review descriptions, review replies, chat messages — anything
 that appears as if the user wrote it — MUST be shown to them and approved before it is published
 or edited. This holds for corrections too: if something already published is wrong, say what is
 wrong and propose the replacement wording, rather than fixing it directly.
@@ -18,8 +18,8 @@ The approval step elsewhere is about the people downstream. Text that goes out
 under their name gets acted on, and wording they did not expect creates questions
 and rework for everyone reading it.
 
-This covers the commit message only. Anything that reaches another person — a CR
-description, a ticket, a PR body, a review reply, a chat message — is still
+This covers the commit message only. Anything that reaches another person — a PR or
+code review description, a ticket, a review reply, a chat message — is still
 drafted in the reply for approval, wherever the work happens.
 
 ## Pitch it at the reader
