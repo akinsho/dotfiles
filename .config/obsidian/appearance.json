@@ -2,8 +2,5 @@
   "cssTheme": "Primary",
   "monospaceFontFamily": "Cartograph CF",
   "showViewHeader": false,
-  "showRibbon": false,
-  "enabledCssSnippets": [
-    "wider-text"
-  ]
+  "showRibbon": false
 }

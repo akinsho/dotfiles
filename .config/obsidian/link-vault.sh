@@ -22,7 +22,6 @@ items=(
   graph.json
   types.json
   plugins
-  snippets
   themes
 )
 
