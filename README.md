@@ -35,6 +35,12 @@ some inspiration, _not complete duplication_. If you see something weird or wron
 I manage my setup using [dotbot](https://github.com/anishathalye/dotbot). To set up symlinks run `./install` in the root directory of the repository
 This package manages symlinking my config files to the correct directories. It's a little more complex than `GNU Stow` but much less than `Ansible`.
 
+#### Obsidian
+
+Vaults live in different places on each machine, so their config isn't linked by `./install`. To share
+`.config/obsidian` with a vault, run `~/dotfiles/.config/obsidian/link-vault.sh <vault>`. Re-run it if
+`--check` reports a file Obsidian has replaced.
+
 #### Fonts
 
 - [Cartograph CF](https://connary.com/cartograph.html) — This beautiful font is not patched as it is a paid font.
