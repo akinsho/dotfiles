@@ -17,6 +17,8 @@ You MUST NOT write a comment that:
 - Explains a language or library feature the reader already knows
 - Pads an entry in a list or config to match the one above it that does have a
   real comment
+- Justifies a value or helper that its name and code already explain, such as why a
+  constant is the size it is or why a helper rebuilds a request
 
 Delete rather than reword. A file with two comments that each earn their place
 reads better than one where every section has a sentence over it, because the
