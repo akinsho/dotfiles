@@ -37,6 +37,23 @@ it found nothing, say what you checked.
 |---|---|
 | `All 813 tests pass, raising the PR.` | `Tests pass. Review found two modal tests now rendering an empty popover; pointed them at the full list. Raising the PR.` |
 
+## Check back after upload
+
+Automated reviewers — security scanners, coverage reports, linters, bot
+reviewers — post on the review a few minutes after each upload, draft or not.
+After every upload, come back once they have run, read every comment they
+left, and deal with each per [[follow-local-conventions]]: fix the ones that
+hold, and say why when one does not.
+
+Don't wait in the foreground or end the work at the upload. Schedule the check
+so it happens without the user asking, and tell them what the automated
+comments said and what you did about them before they publish or ask anyone to
+review.
+
+| Don't | Do |
+|---|---|
+| `Draft raised: CR-123. Ready for reviewers.` | `Draft raised: CR-123. I'll check the automated comments once the analyzers finish.` … `The security scan flagged request data in a log line; logged an enum instead. Coverage passed.` |
+
 ## Why
 
 The person reviewing the change is the second check, not the first. Anything you
