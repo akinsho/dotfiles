@@ -102,7 +102,7 @@ async function announce($: EngineInterface, lists: Lists) {
   const waiting = lists.waiting.length
   const mine = lists.mine.length
   const parts = [waiting > 0 && `${waiting} waiting on you`, mine > 0 && `${mine} yours`].filter(Boolean)
-  $.ui.status(parts.length > 0 ? `reviews: ${parts.join(' · ')}` : undefined)
+  $.ui.status(parts.length > 0 ? parts.join(' · ') : undefined)
 
   if (waiting + mine === 0) await $.ui.close({ id: PANE })
 

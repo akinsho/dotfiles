@@ -144,7 +144,7 @@ test('reviews show as a status and a band, and the pane waits for /reviews', { o
   await clock.settle()
 
   expect(seen.opened).toEqual([])
-  expect(seen.statuses.at(-1)).toBe('reviews: 1 waiting on you · 1 yours')
+  expect(seen.statuses.at(-1)).toBe('1 waiting on you · 1 yours')
   const band = await $.ui.mount({ ...BAND, surface: 'terminal' })
   expect(await band.find({ type: 'Text', text: /1 review waiting on you/ })).toBeTruthy()
   await band.unmount()
@@ -220,7 +220,7 @@ test('a review approved on its latest revision no longer waits on you', { option
   await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
   await clock.settle()
 
-  expect(seen.statuses.at(-1)).toBe('reviews: 1 yours')
+  expect(seen.statuses.at(-1)).toBe('1 yours')
   expect(seen.toasts).toEqual([])
 })
 
@@ -233,7 +233,7 @@ test('a review approved on an earlier revision still waits on you', { options: {
   await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
   await clock.settle()
 
-  expect(seen.statuses.at(-1)).toBe('reviews: 1 waiting on you · 1 yours')
+  expect(seen.statuses.at(-1)).toBe('1 waiting on you · 1 yours')
 })
 
 test('failed fetches back off, then stop until a refresh by hand', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 1 } }, async ($, on) => {
