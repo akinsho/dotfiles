@@ -26,7 +26,7 @@
       "type": "number",
       "title": "Refresh interval (minutes)",
       "default": 5,
-      "description": "How often the pane fetches again"
+      "description": "Least time between fetches, which run only while you type or send prompts"
     }
   },
   "license": "MIT"

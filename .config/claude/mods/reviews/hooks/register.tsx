@@ -1,5 +1,5 @@
 import { atom, read, update } from 'claude-code'
-import type { EngineInterface, Register, Timer } from 'claude-code'
+import type { EngineInterface, Register } from 'claude-code'
 
 import type { Review } from '../types'
 import { approvedLatest, cruxPages, GITHUB_QUERY, parseCruxTable, parseGithub } from './providers'
@@ -27,10 +27,11 @@ type Settings = { provider: string; user: string; intervalMs: number }
 let source: Provider | undefined
 let isFetching = false
 let failures = 0
-let pending: Timer | undefined
+let retryAt = 0
 
-// After a failed fetch the next one waits twice as long as the last, and after
-// MAX_FAILURES in a row the pane stops fetching until a refresh by hand.
+// Fetches run only when the person types or sends a prompt, at most once per
+// interval. After a failed fetch the wait doubles, and after MAX_FAILURES in a
+// row the pane stops fetching until a refresh by hand.
 const MAX_FAILURES = 3
 const TOASTED = 'toasted'
 
@@ -121,16 +122,15 @@ function openPane($: EngineInterface, lists: Lists) {
   return $.ui.open({ id: PANE, ...LOOK, focus: true, rows: height(lists), columns: COLUMNS })
 }
 
-function schedule($: EngineInterface, settings: Settings, ms: number) {
-  pending?.cancel()
-  pending = $.clock.after(ms, () => void refresh($, settings))
+async function refreshIfDue($: EngineInterface, settings: Settings) {
+  if (isFetching || failures >= MAX_FAILURES) return
+  if ((await $.clock.now()) < retryAt) return
+  await refresh($, settings)
 }
 
 async function refresh($: EngineInterface, settings: Settings) {
   if (isFetching || !source) return
   isFetching = true
-  pending?.cancel()
-  pending = undefined
   try {
     const user = settings.user || (await $.env.get('USER')) || ''
     const lists = source === 'crux' ? await fetchCrux($, user) : await fetchGithub($)
@@ -138,11 +138,12 @@ async function refresh($: EngineInterface, settings: Settings) {
     await update($, reviews, () => ({ ...lists, fetchedAt }))
     await announce($, lists)
     failures = 0
-    schedule($, settings, settings.intervalMs)
+    retryAt = fetchedAt + settings.intervalMs
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error)
     const fetchedAt = await $.clock.now()
     failures += 1
+    retryAt = fetchedAt + settings.intervalMs * 2 ** failures
     const isPaused = failures >= MAX_FAILURES
     await update($, reviews, last => ({
       mine: last?.mine ?? [],
@@ -151,7 +152,6 @@ async function refresh($: EngineInterface, settings: Settings) {
       error: message.split('\n')[0],
       isPaused,
     }))
-    if (!isPaused) schedule($, settings, settings.intervalMs * 2 ** failures)
   } finally {
     isFetching = false
   }
@@ -188,6 +188,16 @@ export const register: Register = (on, options) => {
     void refreshNow($, settings)
 
     return started
+  })
+
+  on('prompt.edit', async ($, e, next) => {
+    void refreshIfDue($, settings)
+    return next(e)
+  })
+
+  on('prompt.submit', async ($, e, next) => {
+    if (e.origin.kind === 'composer' || e.origin.kind === 'bridge') void refreshIfDue($, settings)
+    return next(e)
   })
 
   on('command.run', { command: 'reviews' }, async $ => {

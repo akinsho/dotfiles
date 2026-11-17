@@ -236,56 +236,90 @@ test('a review approved on an earlier revision still waits on you', { options: {
   expect(seen.statuses.at(-1)).toBe('1 waiting on you · 1 yours')
 })
 
-test('failed fetches back off, then stop until a refresh by hand', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 1 } }, async ($, on) => {
-  const clock = mock.clock(on)
-  mock.env(on, {})
-  let calls = 0
+const TYPED = { text: 'hi', wait: false, origin: { kind: 'composer' } } as const
+
+function counting(on: On, isError = false) {
+  const calls = { count: 0 }
+  on('ui.status', () => ({ value: undefined }))
+  on('ui.toast', () => ({ value: undefined }))
   on('command.register', () => ({ value: { command: 'reviews' } }))
   on('ui.open', () => ({ value: { isPlaced: true } }))
   on('ui.close', () => ({ value: undefined }))
   on('session.start', (_, e) => ({ cwd: e.cwd }))
+  on('prompt.submit', (_, e) => ({ text: e.text }))
   on('mcp.call', () => {
-    calls += 1
-    return { value: { content: [{ type: 'text', text: 'HTTP error! status: 401' }], isError: true } }
+    calls.count += 1
+    const text = isError ? 'HTTP error! status: 401' : MCP_TEXT
+    return { value: { content: [{ type: 'text', text }], isError } }
   })
 
-  await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
-  await clock.settle()
-  expect(calls).toBe(1)
+  return calls
+}
 
-  // Retries wait 2 and 4 minutes; the third failure stops the pane.
-  for (const minutes of [2, 4]) {
-    await clock.advance(minutes * 60_000 - 1)
-    const before = calls
-    await clock.advance(1)
-    expect(calls).toBe(before + 1)
-  }
-  expect(calls).toBe(3)
-  await clock.advance(24 * 60 * 60_000)
-  expect(calls).toBe(3)
-
-  await $.command.run({ command: 'reviews', args: '' })
-  expect(calls).toBe(4)
-})
-
-test('a successful fetch keeps the regular interval', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 1 } }, async ($, on) => {
+test('a session left alone makes no calls', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 1 } }, async ($, on) => {
   const clock = mock.clock(on)
   mock.env(on, {})
   mock.store(on)
-  on('ui.status', () => ({ value: undefined }))
-  on('ui.toast', () => ({ value: undefined }))
-  let calls = 0
-  on('command.register', () => ({ value: { command: 'reviews' } }))
-  on('ui.open', () => ({ value: { isPlaced: true } }))
-  on('ui.close', () => ({ value: undefined }))
-  on('session.start', (_, e) => ({ cwd: e.cwd }))
-  on('mcp.call', () => {
-    calls += 1
-    return { value: { content: [{ type: 'text', text: MCP_TEXT }], isError: false } }
-  })
+  const calls = counting(on)
 
   await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
   await clock.settle()
-  await clock.advance(3 * 60_000)
-  expect(calls).toBe(4)
+  expect(calls.count).toBe(1)
+
+  await clock.advance(8 * 60 * 60_000)
+  expect(calls.count).toBe(1)
+})
+
+test('a prompt fetches once the interval has passed, and only prompts the person sent count', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 5 } }, async ($, on) => {
+  const clock = mock.clock(on)
+  mock.env(on, {})
+  mock.store(on)
+  const calls = counting(on)
+
+  await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
+  await clock.settle()
+  await clock.advance(60_000)
+  await $.prompt.submit(TYPED)
+  expect(calls.count).toBe(1)
+
+  await clock.advance(8 * 60 * 60_000)
+  await $.prompt.submit({ ...TYPED, origin: { kind: 'plugin', name: 'loop' } })
+  await clock.settle()
+  expect(calls.count).toBe(1)
+
+  await $.prompt.submit(TYPED)
+  await clock.settle()
+  expect(calls.count).toBe(2)
+})
+
+test('failed fetches back off, then stop until a refresh by hand', { options: { provider: 'crux', user: 'akinzo', refreshMinutes: 1 } }, async ($, on) => {
+  const clock = mock.clock(on)
+  mock.env(on, {})
+  mock.store(on)
+  const calls = counting(on, true)
+
+  await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
+  await clock.settle()
+  expect(calls.count).toBe(1)
+
+  // After the first failure a prompt waits 2 minutes to fetch, after the second 4.
+  for (const minutes of [2, 4]) {
+    await clock.advance(minutes * 60_000 - 1)
+    await $.prompt.submit(TYPED)
+    await clock.settle()
+    const before = calls.count
+    await clock.advance(1)
+    await $.prompt.submit(TYPED)
+    await clock.settle()
+    expect(calls.count).toBe(before + 1)
+  }
+  expect(calls.count).toBe(3)
+
+  await clock.advance(24 * 60 * 60_000)
+  await $.prompt.submit(TYPED)
+  await clock.settle()
+  expect(calls.count).toBe(3)
+
+  await $.command.run({ command: 'reviews', args: '' })
+  expect(calls.count).toBe(4)
 })
