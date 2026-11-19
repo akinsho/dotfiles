@@ -41,6 +41,11 @@ Automated reviewers and checkers apply the team's standards unevenly. Treat each
 finding as a claim to check against the code around it. Fix the ones that
 hold. When one does not hold, say why rather than changing the code to satisfy it.
 
+Skip cosmetic findings no tool enforces, such as import order, blank lines or
+wording, unless the change already touches those lines. Each extra edit widens
+the diff a reviewer has to check and the change's blast radius. List them for the
+user instead of applying them.
+
 ## Report it
 
 When starting work in a package that is new to the session, tell the user in a
