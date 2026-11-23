@@ -11,9 +11,14 @@ instead.
 Openers to cut: "two things need to be true:", "there are three things to
 consider", "the reason X is that Y", "it is worth noting that".
 
+The same goes for a summary clause and a colon set up before the content, such as
+"the designs went well past a first release:". Name the subject and say what
+happened.
+
 | Don't | Do |
 |---|---|
 | `Before that can happen, two things need to be true: the backend has to be on, and we need to see whether it works.` | `Before that can happen the backend needs switching on, and we need to see whether it works.` |
+| `Product's designs went well past a first release: context pills, a plus menu and voice input.` | `Product asked for context pills, a plus menu and voice input, which would have greatly expanded the project.` |
 
 ## No rhetorical flourishes
 
